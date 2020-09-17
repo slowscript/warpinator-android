@@ -16,7 +16,7 @@ public class Transfer {
         FAILED, FAILED_UNRECOVERABLE, FILE_NOT_FOUND, FINISHED
     }
     static final class FileType {
-        static final int FILE = 0; static final int DIRECTORY = 1; static final int SYMLINK = 2;
+        static final int FILE = 1; static final int DIRECTORY = 2; static final int SYMLINK = 3;
     }
 
     static final String TAG = "TRANSFER";
@@ -63,16 +63,16 @@ public class Transfer {
             if (chunk.getFileType() == FileType.DIRECTORY) {
                 if (!path.mkdirs()) {
                     errors.add("Failed to create directory " + path.getAbsolutePath());
-                    Log.w(TAG, "Failed to create directory " + path.getAbsolutePath());
+                    Log.e(TAG, "Failed to create directory " + path.getAbsolutePath());
                 }
             }
             else if (chunk.getFileType() == FileType.SYMLINK) {
-                Log.w(TAG, "Symlinks not supported.");
+                Log.e(TAG, "Symlinks not supported.");
                 errors.add("Symlinks not supported.");
             }
             else {
-                try (FileOutputStream fos = new FileOutputStream(path, false)) {
-                    currentStream = fos;
+                try {
+                    currentStream = new FileOutputStream(path, false);
                     currentStream.write(chunk.getChunk().toByteArray());
                     bytesTransferred += chunk.getChunk().size();
                 } catch (Exception e) {
@@ -90,11 +90,14 @@ public class Transfer {
             }
         }
         //TODO: Update UI
+        //return true; //TODO: Return errors to interrupt transfer
+        //TODO: Transfer lastMod
     }
 
     public void finishReceive() {
         if(currentStream != null) {
             try {
+                Log.d(TAG, "Finalizing transfer");
                 currentStream.close();
                 currentRelativePath = "";
             } catch (Exception ignored) {}

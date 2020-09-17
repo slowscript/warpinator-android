@@ -1,8 +1,11 @@
 package slowscript.warpinator;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
             server = new Server(42000, ctx);
             server.Start();
         });
+
+        if (!checkWriteExternalPermission())
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
     }
 
     @Override
@@ -82,5 +89,12 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(() -> {
 
         });
+    }
+
+    private boolean checkWriteExternalPermission()
+    {
+        String permission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+        int res = checkCallingOrSelfPermission(permission);
+        return (res == PackageManager.PERMISSION_GRANTED);
     }
 }

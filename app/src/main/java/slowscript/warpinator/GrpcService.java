@@ -46,6 +46,7 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
             returnVoid(responseObserver);
             return;
         }
+        Log.i(TAG, "Receiving transfer from " + r.userName);
 
         Transfer t = new Transfer();
         t.direction = Transfer.Direction.RECEIVE;

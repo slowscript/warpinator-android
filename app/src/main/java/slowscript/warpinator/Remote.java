@@ -115,6 +115,7 @@ public class Remote {
             Iterator<WarpProto.FileChunk> i = blockingStub.startTransfer(info);
             while (i.hasNext()) {
                 WarpProto.FileChunk c = i.next();
+                Log.v(TAG, "Got chunk");
                 t.receiveFileChunk(c);
             }
             t.finishReceive();
