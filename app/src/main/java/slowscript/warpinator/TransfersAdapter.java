@@ -46,6 +46,7 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
             holder.btnDecline.setVisibility(View.INVISIBLE);
         }
         holder.btnStop.setVisibility(t.status == Transfer.Status.TRANSFERRING ? View.VISIBLE : View.INVISIBLE);
+        holder.btnStop.setOnClickListener((v) -> t.stop(false));
         //Main label
         String text = t.fileCount == 1 ? t.singleName: t.fileCount + " files";
         text += " (" + Formatter.formatFileSize(activity, t.totalSize) + ")";

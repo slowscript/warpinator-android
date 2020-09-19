@@ -36,6 +36,21 @@ public class Transfer {
     private ArrayList<String> errors = new ArrayList<>();
     public long bytesTransferred;
 
+    // -- COMMON --
+    public void stop(boolean error) {
+        Log.i(TAG, "Transfer stopped");
+        ctx.remotes.get(remoteUUID).stopTransfer(this, error);
+        onStopped(error);
+    }
+
+    public void onStopped(boolean error) {
+        if (direction == Transfer.Direction.RECEIVE)
+            stopReceiving();
+        else stopSending();
+        if (!error)
+            status = Status.STOPPED;
+        updateUI();
+    }
 
     public void makeDeclined() {
         status = Status.DECLINED;
@@ -51,6 +66,8 @@ public class Transfer {
             ctx.transfersView.updateTransfer(remoteUUID, privId);
     }
 
+
+    // -- RECEIVE --
     public void prepareReceive() {
         if (BuildConfig.DEBUG && direction != Direction.RECEIVE) {
             throw new AssertionError("Assertion failed");
@@ -79,12 +96,7 @@ public class Transfer {
     public boolean receiveFileChunk(WarpProto.FileChunk chunk) {
         if (!chunk.getRelativePath().equals(currentRelativePath)) {
             //End old file
-            if (currentStream != null) {
-                try {
-                    currentStream.close();
-                    currentStream = null;
-                } catch (IOException ignored) {}
-            }
+            closeStream();
             //Begin new file
             currentRelativePath = chunk.getRelativePath();
             File path = new File(Utils.getSaveDir(), currentRelativePath); //FIXME: Can this escape saveDir?
@@ -100,6 +112,8 @@ public class Transfer {
             }
             else {
                 try {
+                    if(path.exists())
+                        path.delete();
                     currentStream = new FileOutputStream(path, false);
                     currentStream.write(chunk.getChunk().toByteArray());
                     bytesTransferred += chunk.getChunk().size();
@@ -117,17 +131,40 @@ public class Transfer {
                 errors.add("Failed to write to file " + currentRelativePath);
             }
         }
-        //TODO: Update UI
-        //return true; //TODO: Return errors to interrupt transfer
+        updateUI();
+        return status == Status.TRANSFERRING; //True if not interrupted
         //TODO: Transfer lastMod
     }
 
     public void finishReceive() {
+        Log.d(TAG, "Finalizing transfer");
+        closeStream();
+        if(errors.size() > 0)
+            status = Status.FINISHED_WITH_ERRORS;
+        else status = Status.FINISHED;
+        updateUI();
+    }
+
+    private void stopReceiving() {
+        closeStream();
+        File f = new File(Utils.getSaveDir(), currentRelativePath);
+        f.delete(); //Delete incomplete file
+    }
+
+    private void failReceive() {
+        //TODO: Avoid looping STOP command before using
+        closeStream();
+        //Don't overwrite other reason for stopping
+        if (status == Status.TRANSFERRING)
+            status = Status.FAILED;
+        stop(true);
+    }
+
+    private void closeStream() {
         if(currentStream != null) {
             try {
-                Log.d(TAG, "Finalizing transfer");
                 currentStream.close();
-                currentRelativePath = "";
+                currentStream = null;
             } catch (Exception ignored) {}
         }
     }

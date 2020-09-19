@@ -46,7 +46,6 @@ public class Remote {
     public RemoteStatus status;
 
     ArrayList<Transfer> transfers = new ArrayList<>();
-    Transfer t; //Current transfer
 
     ManagedChannel channel;
     WarpGrpc.WarpBlockingStub blockingStub;
@@ -131,18 +130,20 @@ public class Remote {
     }
 
     public void startReceiveTransfer(Transfer _t) {
-        t = _t;
         new Thread(() -> {
-            WarpProto.OpInfo info = WarpProto.OpInfo.newBuilder().setIdent(Server.current.uuid)
-                    .setTimestamp(t.startTime).setReadableName(Utils.getDeviceName()).build();
+            Transfer t = _t;
+            WarpProto.OpInfo info = WarpProto.OpInfo.newBuilder()
+                    .setIdent(Server.current.uuid)
+                    .setTimestamp(t.startTime)
+                    .setReadableName(Utils.getDeviceName()).build();
             Iterator<WarpProto.FileChunk> i = blockingStub.startTransfer(info);
-            while (i.hasNext()) {
+            boolean interrupted = false;
+            while (i.hasNext() && !interrupted) {
                 WarpProto.FileChunk c = i.next();
-                Log.v(TAG, "Got chunk");
-                t.receiveFileChunk(c);
+                interrupted = t.receiveFileChunk(c);
             }
-            t.finishReceive();
-            //TODO: Set UI to finished, show errors
+            if (!interrupted)
+                t.finishReceive();
         }).start();
     }
 
@@ -153,6 +154,19 @@ public class Remote {
                 .setReadableName(Utils.getDeviceName())
                 .build();
         asyncStub.cancelTransferOpRequest(info, null);
+    }
+
+    public void stopTransfer(Transfer t, boolean error) {
+        WarpProto.OpInfo i = WarpProto.OpInfo.newBuilder()
+                .setIdent(Server.current.uuid)
+                .setTimestamp(t.startTime)
+                .setReadableName(Utils.getDeviceName())
+                .build();
+        WarpProto.StopInfo info = WarpProto.StopInfo.newBuilder()
+                .setError(error)
+                .setInfo(i)
+                .build();
+        asyncStub.stopTransfer(info, null);
     }
 
     // -- PRIVATE HELPERS --
