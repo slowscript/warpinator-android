@@ -1,5 +1,7 @@
 package slowscript.warpinator;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
@@ -39,6 +41,7 @@ public class Remote {
     public String hostname;
     public String displayName;
     public String uuid;
+    public Bitmap picture;
 
     public RemoteStatus status;
 
@@ -86,11 +89,26 @@ public class Remote {
                 return;
             }
 
-            //Good to go
+            //Connection ready
             status = RemoteStatus.CONNECTED;
+
+            //Get name
             WarpProto.RemoteMachineInfo info = blockingStub.getRemoteMachineInfo(WarpProto.LookupName.getDefaultInstance());
             displayName = info.getDisplayName();
             userName = info.getUserName();
+            //Get avatar
+            try {
+                Iterator<WarpProto.RemoteMachineAvatar> avatar = blockingStub.getRemoteMachineAvatar(WarpProto.LookupName.getDefaultInstance());
+                ByteString bs = avatar.next().getAvatarChunk();
+                while (avatar.hasNext()) {
+                    WarpProto.RemoteMachineAvatar a = avatar.next();
+                    bs.concat(a.getAvatarChunk());
+                }
+                byte[] bytes = bs.toByteArray();
+                picture = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            } catch (Exception e) { //Profile picture not found, etc.
+                picture = null;
+            }
 
             MainActivity.ctx.updateRemoteList();
             Log.i(TAG, "Connection established with " + hostname);
