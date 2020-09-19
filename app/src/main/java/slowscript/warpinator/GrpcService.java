@@ -50,7 +50,7 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
 
         Transfer t = new Transfer();
         t.direction = Transfer.Direction.RECEIVE;
-        t.otherUUID = remoteUUID;
+        t.remoteUUID = remoteUUID;
         t.startTime = request.getInfo().getTimestamp();
         t.status = Transfer.Status.WAITING_PERMISSION;
         t.totalSize = request.getSize();
@@ -61,22 +61,20 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
         t.topLevelDirs = Arrays.copyOf(a, a.length, String[].class);
 
         r.transfers.add(t);
+        t.privId = r.transfers.size()-1;
         t.prepareReceive();
 
         returnVoid(responseObserver);
-
-        //FIXME: Remove hack
-        r.startReceiveTransfer(t);
     }
 
     @Override
     public void pauseTransferOp(WarpProto.OpInfo request, StreamObserver<WarpProto.VoidType> responseObserver) {
-        super.pauseTransferOp(request, responseObserver);
+        super.pauseTransferOp(request, responseObserver); //Not implemented in upstream either
     }
 
     @Override
     public void acceptTransferOpRequest(WarpProto.OpInfo request, StreamObserver<WarpProto.VoidType> responseObserver) {
-        super.acceptTransferOpRequest(request, responseObserver);
+        super.acceptTransferOpRequest(request, responseObserver); //Not implemented in upstream either
     }
 
     @Override
@@ -86,7 +84,15 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
 
     @Override
     public void cancelTransferOpRequest(WarpProto.OpInfo request, StreamObserver<WarpProto.VoidType> responseObserver) {
-        super.cancelTransferOpRequest(request, responseObserver);
+        Log.d(TAG, "Transfer cancelled by the other side");
+        Transfer t = getTransfer(request);
+        if (t == null) {
+            returnVoid(responseObserver);
+            return;
+        }
+        t.makeDeclined();
+
+        returnVoid(responseObserver);
     }
 
     @Override
@@ -97,6 +103,20 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
     @Override
     public void ping(WarpProto.LookupName request, StreamObserver<WarpProto.VoidType> responseObserver) {
         returnVoid(responseObserver);
+    }
+
+    Transfer getTransfer(WarpProto.OpInfo info) {
+        String remoteUUID = info.getIdent();
+        Remote r = MainActivity.ctx.remotes.get(remoteUUID);
+        if (r == null) {
+            Log.w(TAG, "Could not find corresponding remote");
+            return null;
+        }
+        Transfer t = r.findTransfer(info.getTimestamp());
+        if (t == null) {
+            Log.w(TAG, "Could not find corresponding transfer");
+        }
+        return t;
     }
 
     void returnVoid(StreamObserver<WarpProto.VoidType> responseObserver) {

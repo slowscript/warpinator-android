@@ -103,7 +103,12 @@ public class Remote {
         status = RemoteStatus.DISCONNECTED;
     }
 
-    public void sendFiles() {
+    public Transfer findTransfer(long timestamp) {
+        for (Transfer t : transfers) {
+            if(t.startTime == timestamp)
+                return t;
+        }
+        return null;
 
     }
 
@@ -121,6 +126,15 @@ public class Remote {
             t.finishReceive();
             //TODO: Set UI to finished, show errors
         }).start();
+    }
+
+    public void declineTransfer(Transfer t) {
+        WarpProto.OpInfo info = WarpProto.OpInfo.newBuilder()
+                .setIdent(Server.current.uuid)
+                .setTimestamp(t.startTime)
+                .setReadableName(Utils.getDeviceName())
+                .build();
+        asyncStub.cancelTransferOpRequest(info, null);
     }
 
     // -- PRIVATE HELPERS --

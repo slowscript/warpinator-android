@@ -37,7 +37,7 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
 
         holder.cardView.setOnClickListener((view) -> {
             Intent i = new Intent(app, TransfersActivity.class);
-            i.putExtra("index", position);
+            i.putExtra("remote", r.uuid);
             app.startActivity(i);
         });
     }

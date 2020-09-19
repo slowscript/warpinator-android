@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private String TAG = "MAIN";
 
     public static MainActivity ctx;
+    public TransfersActivity transfersView;
 
     private Server server;
 
@@ -83,12 +84,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void updateRemoteList() {
         runOnUiThread(() -> adapter.notifyDataSetChanged());
-    }
-
-    public void updateTransfers() {
-        runOnUiThread(() -> {
-
-        });
     }
 
     private boolean checkWriteExternalPermission()

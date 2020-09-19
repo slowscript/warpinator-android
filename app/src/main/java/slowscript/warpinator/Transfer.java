@@ -11,9 +11,9 @@ import java.util.List;
 
 public class Transfer {
     public enum Direction { SEND, RECEIVE }
-    public enum Status { INITIALIZING, WAITING_PERMISSION, DENIED_BY_SENDER, DENIED_BY_RECEIVER,
-        TRANSFERRING, PAUSED, STOPPED_BY_SENDER, STOPPED_BY_RECEIVER,
-        FAILED, FAILED_UNRECOVERABLE, FILE_NOT_FOUND, FINISHED
+    public enum Status { INITIALIZING, WAITING_PERMISSION, DECLINED,
+        TRANSFERRING, PAUSED, STOPPED,
+        FAILED, FAILED_UNRECOVERABLE, FILE_NOT_FOUND, FINISHED, FINISHED_WITH_ERRORS
     }
     static final class FileType {
         static final int FILE = 1; static final int DIRECTORY = 2; static final int SYMLINK = 3;
@@ -23,7 +23,7 @@ public class Transfer {
 
     public Status status;
     public Direction direction;
-    public String otherUUID;
+    public String remoteUUID;
     public long startTime;
     public long totalSize;
     public long fileCount;
@@ -36,6 +36,21 @@ public class Transfer {
     private ArrayList<String> errors = new ArrayList<>();
     public long bytesTransferred;
 
+
+    public void makeDeclined() {
+        status = Status.DECLINED;
+        updateUI();
+    }
+
+    public int getProgress() {
+        return (int)((float)bytesTransferred / totalSize * 100f);
+    }
+
+    void updateUI() {
+        if (ctx.transfersView != null)
+            ctx.transfersView.updateTransfer(remoteUUID, privId);
+    }
+
     public void prepareReceive() {
         if (BuildConfig.DEBUG && direction != Direction.RECEIVE) {
             throw new AssertionError("Assertion failed");
@@ -45,10 +60,23 @@ public class Transfer {
         //Check if will rewrite
 
         //Show in UI
-        MainActivity.ctx.updateTransfers();
+        if (ctx.transfersView != null)
+            ctx.transfersView.updateTransfers(remoteUUID);
     }
 
-    public void receiveFileChunk(WarpProto.FileChunk chunk) {
+    void startReceive() {
+        Log.i(TAG, "Transfer accepted");
+        status = Status.TRANSFERRING;
+        ctx.remotes.get(remoteUUID).startReceiveTransfer(this);
+    }
+
+    void declineReceiveTransfer() {
+        Log.i(TAG, "Transfer declined");
+        ctx.remotes.get(remoteUUID).declineTransfer(this);
+        makeDeclined();
+    }
+
+    public boolean receiveFileChunk(WarpProto.FileChunk chunk) {
         if (!chunk.getRelativePath().equals(currentRelativePath)) {
             //End old file
             if (currentStream != null) {
