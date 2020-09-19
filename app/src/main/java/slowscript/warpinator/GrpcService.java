@@ -2,9 +2,13 @@ package slowscript.warpinator;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import io.grpc.Status;
+import io.grpc.stub.CallStreamObserver;
+import io.grpc.stub.ServerCallStreamObserver;
 import io.grpc.stub.StreamObserver;
 
 public class GrpcService extends WarpGrpc.WarpImplBase {
@@ -20,7 +24,7 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
             haveDuplex = (r.status == Remote.RemoteStatus.CONNECTED)
                         || (r.status == Remote.RemoteStatus.AWAITING_DUPLEX);
         }
-        Log.d(TAG, "Duplex check: " + haveDuplex);
+        Log.d(TAG, "Duplex check result: " + haveDuplex);
         responseObserver.onNext(WarpProto.HaveDuplex.newBuilder().setResponse(haveDuplex).build());
         responseObserver.onCompleted();
     }
@@ -57,8 +61,7 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
         t.fileCount = request.getCount();
         t.singleMime = request.getMimeIfSingle();
         t.singleName = request.getNameIfSingle();
-        Object[] a = request.getTopDirBasenamesList().toArray();
-        t.topLevelDirs = Arrays.copyOf(a, a.length, String[].class);
+        t.topDirBasenames = request.getTopDirBasenamesList();
 
         r.transfers.add(t);
         t.privId = r.transfers.size()-1;
@@ -79,7 +82,11 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
 
     @Override
     public void startTransfer(WarpProto.OpInfo request, StreamObserver<WarpProto.FileChunk> responseObserver) {
-        super.startTransfer(request, responseObserver);
+        Log.d(TAG, "Transfer started by the other side");
+        Transfer t = getTransfer(request);
+        if (t == null)
+            return;
+        t.startSending((ServerCallStreamObserver<WarpProto.FileChunk>) responseObserver);
     }
 
     @Override
@@ -97,7 +104,15 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
 
     @Override
     public void stopTransfer(WarpProto.StopInfo request, StreamObserver<WarpProto.VoidType> responseObserver) {
-        super.stopTransfer(request, responseObserver);
+        Log.d(TAG, "Transfer stopped by the other side");
+        Transfer t = getTransfer(request.getInfo());
+        if (t == null) {
+            returnVoid(responseObserver);
+            return;
+        }
+        t.onStopped(request.getError());
+
+        returnVoid(responseObserver);
     }
 
     @Override

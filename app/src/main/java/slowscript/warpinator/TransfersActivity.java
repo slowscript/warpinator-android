@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class TransfersActivity extends AppCompatActivity {
 
     static final String TAG = "TransferActivity";
+    static final int SEND_FILE_REQ_CODE = 10;
 
     public Remote remote;
 
@@ -62,6 +63,49 @@ public class TransfersActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         MainActivity.ctx.transfersView = null;
+    }
+
+    void openFiles() {
+        Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        i.addCategory(Intent.CATEGORY_OPENABLE);
+        i.setType("*/*");
+        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+
+        startActivityForResult(i, SEND_FILE_REQ_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == SEND_FILE_REQ_CODE && resultCode == Activity.RESULT_OK) {
+            if (data == null)
+                return;
+            Transfer t = new Transfer();
+            t.uris = new ArrayList<>();
+            ClipData cd = data.getClipData();
+            if (cd == null) {
+                Uri u = data.getData();
+                if (u == null) {
+                    Log.w(TAG, "No uri to send");
+                }
+                Log.d(TAG, u.toString());
+                t.uris.add(u);
+            } else {
+                for (int i = 0; i < cd.getItemCount(); i++) {
+                    t.uris.add(cd.getItemAt(i).getUri());
+                    Log.d(TAG, cd.getItemAt(i).getUri().toString());
+                }
+            }
+            t.remoteUUID = remote.uuid;
+            t.prepareSend();
+
+            remote.transfers.add(t);
+            t.privId = remote.transfers.size()-1;
+            updateTransfers(remote.uuid);
+
+            remote.startSendTransfer(t);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public void updateTransfer(String r, int i) {

@@ -4,22 +4,22 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
-import android.widget.Toast;
 
-import java.io.File;
+import com.google.protobuf.ByteString;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
 import javax.net.ssl.SSLException;
 
-import io.grpc.Channel;
 import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
+import io.grpc.Status;
+import io.grpc.StatusException;
+import io.grpc.StatusRuntimeException;
 import io.grpc.netty.GrpcSslContexts;
 import io.grpc.netty.NettyChannelBuilder;
 
@@ -42,7 +42,6 @@ public class Remote {
     public String displayName;
     public String uuid;
     public Bitmap picture;
-
     public RemoteStatus status;
 
     ArrayList<Transfer> transfers = new ArrayList<>();
@@ -126,7 +125,25 @@ public class Remote {
                 return t;
         }
         return null;
+    }
 
+    public void startSendTransfer(Transfer t) {
+        WarpProto.OpInfo info = WarpProto.OpInfo.newBuilder()
+                .setIdent(Server.current.uuid)
+                .setTimestamp(t.startTime)
+                .setReadableName(Utils.getDeviceName())
+                .build();
+        WarpProto.TransferOpRequest op = WarpProto.TransferOpRequest.newBuilder()
+                .setInfo(info)
+                .setSenderName("Android")
+                .setReceiver(uuid)
+                .setSize(t.totalSize)
+                .setCount(t.fileCount)
+                .setNameIfSingle(t.singleName)
+                .setMimeIfSingle(t.singleMime)
+                .addAllTopDirBasenames(t.topDirBasenames)
+                .build();
+        asyncStub.processTransferOpRequest(op, null);
     }
 
     public void startReceiveTransfer(Transfer _t) {
@@ -136,14 +153,20 @@ public class Remote {
                     .setIdent(Server.current.uuid)
                     .setTimestamp(t.startTime)
                     .setReadableName(Utils.getDeviceName()).build();
-            Iterator<WarpProto.FileChunk> i = blockingStub.startTransfer(info);
-            boolean interrupted = false;
-            while (i.hasNext() && !interrupted) {
-                WarpProto.FileChunk c = i.next();
-                interrupted = t.receiveFileChunk(c);
+            try {
+                Iterator<WarpProto.FileChunk> i = blockingStub.startTransfer(info);
+                boolean cancelled = false;
+                while (i.hasNext() && !cancelled) {
+                    WarpProto.FileChunk c = i.next();
+                    cancelled = !t.receiveFileChunk(c);
+                }
+                if (!cancelled)
+                    t.finishReceive();
+            } catch (StatusRuntimeException e) {
+                Log.e(TAG, "Connection error", e);
+                t.status = Transfer.Status.FAILED;
+                t.updateUI();
             }
-            if (!interrupted)
-                t.finishReceive();
         }).start();
     }
 
