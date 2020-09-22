@@ -18,10 +18,8 @@ import javax.net.ssl.SSLException;
 
 import io.grpc.ManagedChannel;
 import io.grpc.Status;
-import io.grpc.StatusException;
 import io.grpc.StatusRuntimeException;
-import io.grpc.netty.GrpcSslContexts;
-import io.grpc.netty.NettyChannelBuilder;
+import io.grpc.okhttp.OkHttpChannelBuilder;
 
 public class Remote {
     public enum RemoteStatus {
@@ -63,8 +61,8 @@ public class Remote {
 
             //Authenticate
             try {
-                channel = NettyChannelBuilder.forAddress(address.getHostAddress(), port)
-                        .sslContext(GrpcSslContexts.forClient().trustManager(Authenticator.getCertificateFile(uuid)).build())
+                channel = OkHttpChannelBuilder.forAddress(address.getHostAddress(), port)
+                        .sslSocketFactory(Authenticator.createSSLSocketFactory(uuid))
                         .build();
                 blockingStub = WarpGrpc.newBlockingStub(channel);
                 asyncStub = WarpGrpc.newStub(channel);

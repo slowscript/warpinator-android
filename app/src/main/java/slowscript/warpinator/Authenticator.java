@@ -12,20 +12,34 @@ import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
+import org.bouncycastle.util.io.pem.PemObject;
+import org.bouncycastle.util.io.pem.PemReader;
 import org.openjax.security.nacl.TweetNaclFast;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+import java.security.GeneralSecurityException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.KeyStore;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.Security;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.Date;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
 
 public class Authenticator {
     private static String TAG = "AUTH";
@@ -174,5 +188,35 @@ public class Authenticator {
         keyPairGenerator.initialize(bitCount, new SecureRandom());
 
         return keyPairGenerator.genKeyPair();
+    }
+
+    public static SSLSocketFactory createSSLSocketFactory(String name) throws GeneralSecurityException, IOException {
+        File crtFile = getCertificateFile(name);
+
+        SSLContext sslContext = SSLContext.getInstance("SSL");
+
+        KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+        trustStore.load(null, null);
+
+        // Read the certificate from disk
+        FileReader fileReader = new FileReader(crtFile);
+        PemReader pemReader = new PemReader(fileReader);
+        PemObject obj = pemReader.readPemObject();
+        pemReader.close();
+        X509Certificate result;
+        try (InputStream in = new ByteArrayInputStream(obj.getContent());) {
+            result = (X509Certificate) CertificateFactory.getInstance("X.509", "BC").generateCertificate(in);
+        }
+
+        // Add it to the trust store
+        trustStore.setCertificateEntry(crtFile.getName(), result);
+
+        // Convert the trust store to trust managers
+        TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+        tmf.init(trustStore);
+        TrustManager[] trustManagers = tmf.getTrustManagers();
+
+        sslContext.init(null, trustManagers, null);
+        return sslContext.getSocketFactory();
     }
 }
