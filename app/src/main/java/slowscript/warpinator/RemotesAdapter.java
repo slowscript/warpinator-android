@@ -30,7 +30,7 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Remote r = (Remote) app.remotes.values().toArray()[position];
+        Remote r = (Remote) MainService.remotes.values().toArray()[position];
         holder.txtName.setText(r.displayName);
         holder.txtUsername.setText(r.userName + "@" + r.hostname);
         holder.txtIP.setText(r.address.getHostAddress() + ":" + r.port);
@@ -45,7 +45,7 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return app.remotes.size();
+        return MainService.remotes.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

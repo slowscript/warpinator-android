@@ -1,5 +1,6 @@
 package slowscript.warpinator;
 
+import android.app.Activity;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -19,8 +20,8 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
         String id = request.getId();
 
         boolean haveDuplex = false;
-        if(MainActivity.ctx.remotes.containsKey(id)) {
-            Remote r = MainActivity.ctx.remotes.get(id);
+        if(MainService.remotes.containsKey(id)) {
+            Remote r = MainService.remotes.get(id);
             haveDuplex = (r.status == Remote.RemoteStatus.CONNECTED)
                         || (r.status == Remote.RemoteStatus.AWAITING_DUPLEX);
         }
@@ -44,7 +45,7 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
     @Override
     public void processTransferOpRequest(WarpProto.TransferOpRequest request, StreamObserver<WarpProto.VoidType> responseObserver) {
         String remoteUUID = request.getInfo().getIdent();
-        Remote r = MainActivity.ctx.remotes.get(remoteUUID);
+        Remote r = MainService.remotes.get(remoteUUID);
         if (r == null) {
             Log.w(TAG, "Received transfer request from unknown remote");
             returnVoid(responseObserver);
@@ -122,7 +123,7 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
 
     Transfer getTransfer(WarpProto.OpInfo info) {
         String remoteUUID = info.getIdent();
-        Remote r = MainActivity.ctx.remotes.get(remoteUUID);
+        Remote r = MainService.remotes.get(remoteUUID);
         if (r == null) {
             Log.w(TAG, "Could not find corresponding remote");
             return null;

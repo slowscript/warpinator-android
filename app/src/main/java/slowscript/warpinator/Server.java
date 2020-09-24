@@ -1,9 +1,10 @@
 package slowscript.warpinator;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
-import android.util.Base64;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,24 +12,19 @@ import org.conscrypt.Conscrypt;
 
 import java.io.File;
 import java.security.Security;
-import java.util.ArrayList;
+import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-
-import javax.net.ssl.SSLContext;
 
 import io.grpc.netty.GrpcSslContexts;
 import io.grpc.netty.NettyServerBuilder;
 import io.netty.handler.ssl.SslContextBuilder;
-import io.netty.handler.ssl.SslHandler;
-import io.netty.handler.ssl.SslProvider;
 
 public class Server {
     private String TAG = "SRV";
+    private static final String SERVICE_TYPE = "_warpinator._tcp.";
 
-    public int PORT;
-    public static final String SERVICE_TYPE = "_warpinator._tcp.";
     public static Server current;
+    public int PORT;
     public String uuid;
 
     private NsdManager nsdManager;
@@ -36,17 +32,21 @@ public class Server {
     private NsdManager.DiscoveryListener discoveryListener;
     private io.grpc.Server gServer;
 
-    private MainActivity app;
+    private SharedPreferences prefs;
+    private MainService svc;
 
-    public Server(int port, MainActivity _app) {
+    public Server(int port, MainService _svc) {
         PORT = port;
-        app = _app;
+        svc = _svc;
 
         current = this;
         Security.insertProviderAt(Conscrypt.newProvider(), 1);
-        uuid = "android-uuid";//UUID.randomUUID().toString(); //FIXME: Save UUID and reuse!!
+        prefs = PreferenceManager.getDefaultSharedPreferences(svc);
+        if(!prefs.contains("uuid"))
+            prefs.edit().putString("uuid", UUID.randomUUID().toString()).apply();
+        uuid = prefs.getString("uuid", "default");
 
-        nsdManager = (NsdManager) app.getSystemService(Context.NSD_SERVICE);
+        nsdManager = (NsdManager) svc.getSystemService(Context.NSD_SERVICE);
         registrationListener = new RegistrationListener();
         discoveryListener = new DiscoveryListener();
     }
@@ -82,7 +82,7 @@ public class Server {
             Log.d(TAG, "GRPC server started");
         } catch(Exception e) {
             Log.e(TAG, "Failed to start GRPC server.", e);
-            Toast.makeText(app, "Failed to start GRPC server", Toast.LENGTH_LONG).show();
+            Toast.makeText(svc, "Failed to start GRPC server", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -177,21 +177,22 @@ public class Server {
                 //TODO: Same subnet check
 
                 //Ignore flush registration
-                if (new String(info.getAttributes().get("type")).equals("flush")) {
+                if (info.getAttributes().containsKey("type") && new String(info.getAttributes().get("type")).equals("flush")) {
                     Log.v(TAG, "Ignoring \"flush\" registration");
                     return;
                 }
 
-                //TODO: Check if remote exists
+                //TODO: Check if remote already exists
 
                 Remote remote = new Remote();
                 remote.address = info.getHost();
-                remote.hostname = new String(info.getAttributes().get("hostname"));
+                if(info.getAttributes().containsKey("hostname"))
+                    remote.hostname = new String(info.getAttributes().get("hostname"));
                 remote.port = info.getPort();
                 remote.serviceName = info.getServiceName();
                 remote.uuid = info.getServiceName();
 
-                app.addRemote(remote);
+                svc.addRemote(remote);
             }
         };
     }

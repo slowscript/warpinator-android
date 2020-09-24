@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 import io.grpc.StatusException;
 import io.grpc.stub.CallStreamObserver;
 
-import static slowscript.warpinator.MainActivity.ctx;
+import static slowscript.warpinator.MainService.svc;
 
 public class Transfer {
     public enum Direction { SEND, RECEIVE }
@@ -55,7 +55,7 @@ public class Transfer {
     // -- COMMON --
     public void stop(boolean error) {
         Log.i(TAG, "Transfer stopped");
-        ctx.remotes.get(remoteUUID).stopTransfer(this, error);
+        MainService.remotes.get(remoteUUID).stopTransfer(this, error);
         onStopped(error);
     }
 
@@ -78,8 +78,8 @@ public class Transfer {
     }
 
     void updateUI() {
-        if (ctx.transfersView != null)
-            ctx.transfersView.updateTransfer(remoteUUID, privId);
+        if (svc.transfersView != null)
+            svc.transfersView.updateTransfer(remoteUUID, privId);
     }
 
     // -- SEND --
@@ -92,11 +92,11 @@ public class Transfer {
         fileCount = uris.size();
         topDirBasenames = new ArrayList<>();
         for (Uri u : uris) {
-            topDirBasenames.add(Utils.getNameFromUri(ctx, u));
+            topDirBasenames.add(Utils.getNameFromUri(svc, u));
         }
         if (fileCount == 1) {
             singleName = topDirBasenames.get(0);
-            singleMime = ctx.getContentResolver().getType(uris.get(0));
+            singleMime = svc.getContentResolver().getType(uris.get(0));
         }
     }
 
@@ -118,7 +118,7 @@ public class Transfer {
                             return;
                         }
                         if (is == null) {
-                            is = ctx.getContentResolver().openInputStream(uris.get(i));
+                            is = svc.getContentResolver().openInputStream(uris.get(i));
                         }
                         if (is.available() < 1) {
                             is.close();
@@ -133,7 +133,7 @@ public class Transfer {
                         }
                         int read = is.read(chunk);
                         WarpProto.FileChunk fc = WarpProto.FileChunk.newBuilder()
-                                .setRelativePath(Utils.getNameFromUri(ctx, uris.get(i)))
+                                .setRelativePath(Utils.getNameFromUri(svc, uris.get(i)))
                                 .setFileType(FileType.FILE)
                                 .setChunk(ByteString.copyFrom(chunk, 0, read))
                                 .setFileMode(644)
@@ -166,7 +166,7 @@ public class Transfer {
     long getTotalSendSize() {
         long size = 0;
         for (Uri u : uris) {
-            Cursor cursor = ctx.getContentResolver().query(u, null, null, null, null);
+            Cursor cursor = svc.getContentResolver().query(u, null, null, null, null);
             int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
             cursor.moveToFirst();
             size += cursor.getLong(sizeIndex);
@@ -185,19 +185,19 @@ public class Transfer {
         //Check if will rewrite
 
         //Show in UI
-        if (ctx.transfersView != null)
-            ctx.transfersView.updateTransfers(remoteUUID);
+        if (svc.transfersView != null)
+            svc.transfersView.updateTransfers(remoteUUID);
     }
 
     void startReceive() {
         Log.i(TAG, "Transfer accepted");
         status = Status.TRANSFERRING;
-        ctx.remotes.get(remoteUUID).startReceiveTransfer(this);
+        MainService.remotes.get(remoteUUID).startReceiveTransfer(this);
     }
 
     void declineReceiveTransfer() {
         Log.i(TAG, "Transfer declined");
-        ctx.remotes.get(remoteUUID).declineTransfer(this);
+        MainService.remotes.get(remoteUUID).declineTransfer(this);
         makeDeclined();
     }
 

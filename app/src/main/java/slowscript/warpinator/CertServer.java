@@ -41,7 +41,7 @@ public class CertServer implements Runnable{
              serverSocket = new DatagramSocket(PORT);
         } catch (SocketException e){
             Log.e(TAG, "Failed to start certificate server", e);
-            Toast.makeText(MainActivity.ctx, "Failed to start certificate server. Try restarting the application.", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainService.svc, "Failed to start certificate server. Try restarting the application.", Toast.LENGTH_LONG).show();
             return;
         }
         byte[] receiveData = new byte[1024];

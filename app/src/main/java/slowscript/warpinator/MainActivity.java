@@ -1,6 +1,7 @@
 package slowscript.warpinator;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
@@ -12,19 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.conscrypt.Conscrypt;
 
 import java.security.Security;
-import java.util.LinkedHashMap;
 
 public class MainActivity extends AppCompatActivity {
 
     private String TAG = "MAIN";
 
-    public static MainActivity ctx;
-    public TransfersActivity transfersView;
-
-    private Server server;
-
-    public LinkedHashMap<String, Remote> remotes = new LinkedHashMap<>();
-
+    static MainActivity current;
     RecyclerView recyclerView;
     RemotesAdapter adapter;
 
@@ -35,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         Security.insertProviderAt(Conscrypt.newProvider(), 1);
 
-        ctx = this;
+        current = this;
 
         recyclerView = findViewById(R.id.recyclerView);
         adapter = new RemotesAdapter(this);
@@ -43,9 +37,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         recyclerView.post(() -> { //Run when UI is ready
-            //TODO: Should run inside of a foreground service
-            server = new Server(42000, ctx);
-            server.Start();
+            if (!Utils.isMyServiceRunning(this, MainService.class))
+                startService(new Intent(this, MainService.class));
         });
 
         if (!checkWriteExternalPermission())
@@ -53,37 +46,10 @@ public class MainActivity extends AppCompatActivity {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        server.Stop();
-        for (Remote r : remotes.values()) {
-            r.disconnect();
-        }
-        remotes.clear();
-    }
-
-    public void addRemote(Remote remote) {
-        //Add to remotes list
-        remotes.put(remote.uuid, remote);
-        //Add to GUI
-        updateRemoteList();
-        //Connect to it
-        remote.connect();
-    }
-
-    public void removeRemote(String uuid) {
-        Remote r = remotes.get(uuid);
-        //Disconnect
-        r.disconnect();
-        //Remove from GUI
-        updateRemoteList();
-        //Remove
-        remotes.remove(uuid);
-    }
-
-    public void updateRemoteList() {
-        runOnUiThread(() -> adapter.notifyDataSetChanged());
+    public static void updateRemoteList() {
+        if (current == null)
+            return;
+        current.runOnUiThread(() -> current.adapter.notifyDataSetChanged());
     }
 
     private boolean checkWriteExternalPermission()

@@ -34,7 +34,7 @@ public class Remote {
 
     public InetAddress address;
     public int port;
-    public String serviceName; //Zeroconf service name
+    public String serviceName; //Zeroconf service name, also uuid
     public String userName;
     public String hostname;
     public String displayName;
@@ -51,6 +51,7 @@ public class Remote {
     public void connect() {
         Log.i(TAG, "Connecting to " + hostname);
         status = RemoteStatus.CONNECTING;
+        MainActivity.updateRemoteList();
         new Thread(() -> {
             //Receive certificate
             if (!receiveCertificate()) {
@@ -70,13 +71,14 @@ public class Remote {
                 Log.e(TAG, "Authentication with remote "+ hostname +" failed: " + e.getMessage(), e);
                 status = RemoteStatus.ERROR;
                 return;
-            } catch (Exception e) { //Is this necessary?
+            } catch (Exception e) {
                 Log.e(TAG, "Failed to connect to remote " + hostname + ". " + e.getMessage(), e);
                 status = RemoteStatus.ERROR;
                 return;
             }
 
             status = RemoteStatus.AWAITING_DUPLEX;
+            MainActivity.updateRemoteList();
 
             //Get duplex
             if (!waitForDuplex()) {
@@ -106,7 +108,7 @@ public class Remote {
                 picture = null;
             }
 
-            MainActivity.ctx.updateRemoteList();
+            MainActivity.updateRemoteList();
             Log.i(TAG, "Connection established with " + hostname);
         }).start();
     }
@@ -146,7 +148,7 @@ public class Remote {
 
     public void startReceiveTransfer(Transfer _t) {
         new Thread(() -> {
-            Transfer t = _t;
+            Transfer t = _t; //_t gets garbage collected or something...
             WarpProto.OpInfo info = WarpProto.OpInfo.newBuilder()
                     .setIdent(Server.current.uuid)
                     .setTimestamp(t.startTime)
@@ -161,8 +163,13 @@ public class Remote {
                 if (!cancelled)
                     t.finishReceive();
             } catch (StatusRuntimeException e) {
-                Log.e(TAG, "Connection error", e);
-                t.status = Transfer.Status.FAILED;
+                if (e.getStatus().getCode() == Status.Code.CANCELLED) {
+                    Log.i(TAG, "Transfer cancelled", e);
+                    t.status = Transfer.Status.STOPPED;
+                } else {
+                    Log.e(TAG, "Connection error", e);
+                    t.status = Transfer.Status.FAILED;
+                }
                 t.updateUI();
             }
         }).start();
@@ -233,7 +240,7 @@ public class Remote {
 
     private boolean waitForDuplex() {
         int tries = 0;
-        while (tries < 5) {
+        while (tries < 10) {
             try {
                 boolean haveDuplex = blockingStub.checkDuplexConnection(
                         WarpProto.LookupName.newBuilder()
@@ -242,11 +249,11 @@ public class Remote {
                 if (haveDuplex)
                     return true;
             } catch (Exception e) {
-                Log.d (TAG, "Attempt " + tries + ": No duplex", e);
+               Log.d(TAG, "Error while checking duplex", e);
             }
-
+            Log.d (TAG, "Attempt " + tries + ": No duplex");
             try {
-                Thread.sleep(1000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) { throw new RuntimeException(e); }
 
             tries++;

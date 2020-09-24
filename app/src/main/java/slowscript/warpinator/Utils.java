@@ -1,5 +1,6 @@
 package slowscript.warpinator;
 
+import android.app.ActivityManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.database.Cursor;
@@ -64,7 +65,7 @@ public class Utils {
 
     public static File getCertsDir()
     {
-        return new File(MainActivity.ctx.getCacheDir(), "certs");
+        return new File(MainService.svc.getCacheDir(), "certs");
     }
 
     public static File getSaveDir() { //FIXME: Use settings for this
@@ -109,6 +110,17 @@ public class Utils {
             return parts[parts.length-1];
         }
         return result;
+    }
+
+    static boolean isMyServiceRunning(Context ctx, Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
+        assert manager != null;
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     //FOR DEBUG PURPOSES

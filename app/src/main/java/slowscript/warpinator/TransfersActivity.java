@@ -39,8 +39,8 @@ public class TransfersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfers);
         String id = getIntent().getStringExtra("remote");
-        remote = MainActivity.ctx.remotes.get(id);
-        MainActivity.ctx.transfersView = this;
+        remote = MainService.remotes.get(id);
+        MainService.svc.transfersView = this;
 
         recyclerView = findViewById(R.id.recyclerView2);
         adapter = new TransfersAdapter(this);
@@ -62,7 +62,7 @@ public class TransfersActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MainActivity.ctx.transfersView = null;
+        MainService.svc.transfersView = null;
     }
 
     void openFiles() {
