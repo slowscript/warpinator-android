@@ -31,6 +31,9 @@ public class MainService extends Service {
         super.onStartCommand(intent, flags, startId);
         svc = this;
 
+        Authenticator.getServerCertificate(); //Generate cert on start if doesn't exist
+        Utils.getSaveDir().mkdirs();
+
         Log.d(TAG, "Service starting...");
         server = new Server(PORT, this);
         server.Start();

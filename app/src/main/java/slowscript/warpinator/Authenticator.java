@@ -205,7 +205,7 @@ public class Authenticator {
         pemReader.close();
         X509Certificate result;
         try (InputStream in = new ByteArrayInputStream(obj.getContent());) {
-            result = (X509Certificate) CertificateFactory.getInstance("X.509", "BC").generateCertificate(in);
+            result = (X509Certificate) CertificateFactory.getInstance("X.509").generateCertificate(in);
         }
 
         // Add it to the trust store

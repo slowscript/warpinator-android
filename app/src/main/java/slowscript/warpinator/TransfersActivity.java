@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.app.Activity;
 import android.content.ClipData;
@@ -47,25 +48,35 @@ public class TransfersActivity extends AppCompatActivity {
         adapter = new TransfersAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //Prevent blinking on update
+        RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
+        if (animator instanceof SimpleItemAnimator) {
+            ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
+        }
 
         txtRemote = findViewById(R.id.txtRemote);
-        txtRemote.setText(remote.displayName + " (" + remote.userName + "@" + remote.hostname + ")");
         txtIP = findViewById(R.id.txtIP);
-        txtIP.setText(remote.address.getHostAddress());
         txtStatus = findViewById(R.id.txtStatus);
-        txtStatus.setText(remote.status.toString());
         imgStatus = findViewById(R.id.imgStatus);
-        imgStatus.setImageResource(Utils.getIconForRemoteStatus(remote.status));
         imgProfile = findViewById(R.id.imgProfile);
-        imgProfile.setImageBitmap(remote.picture);
         btnSend = findViewById(R.id.btnSend);
         btnSend.setOnClickListener((v) -> openFiles());
+
+        updateUI();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         MainService.svc.transfersView = null;
+    }
+
+    public void updateUI() {
+        txtRemote.setText(remote.displayName + " (" + remote.userName + "@" + remote.hostname + ")");
+        txtIP.setText(remote.address.getHostAddress());
+        txtStatus.setText(remote.status.toString());
+        imgStatus.setImageResource(Utils.getIconForRemoteStatus(remote.status));
+        imgProfile.setImageBitmap(remote.picture);
     }
 
     void openFiles() {

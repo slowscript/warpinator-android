@@ -47,9 +47,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void updateRemoteList() {
-        if (current == null)
-            return;
-        current.runOnUiThread(() -> current.adapter.notifyDataSetChanged());
+        if (current != null)
+            current.runOnUiThread(() -> current.adapter.notifyDataSetChanged());
+        if (MainService.svc.transfersView != null)
+            MainService.svc.transfersView.updateUI();
     }
 
     private boolean checkWriteExternalPermission()

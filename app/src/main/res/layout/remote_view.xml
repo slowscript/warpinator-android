@@ -5,11 +5,12 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="64dp"
+    android:layout_margin="3dp"
     android:clickable="true"
+    android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="3dp"
-    app:cardElevation="5dp"
-    android:focusable="true">
+    app:cardElevation="5dp">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

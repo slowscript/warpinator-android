@@ -52,12 +52,13 @@ public class Server {
     }
 
     public void Start() {
-        Authenticator.getServerCertificate(); //Generate cert on start if doesn't exist
-        Utils.getSaveDir().mkdirs();
-        CertServer.Start(PORT);
-        registerService();
-        nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
+        //Start servers
         startGrpcServer();
+        CertServer.Start(PORT);
+        //Announce ourselves
+        registerService();
+        //Start looking for others
+        nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
     }
 
     public void Stop() {
@@ -182,15 +183,20 @@ public class Server {
                     return;
                 }
 
-                //TODO: Check if remote already exists
+                String svcName = info.getServiceName();
+                if (MainService.remotes.containsKey(svcName)) {
+                    Log.d(TAG, "Service already known");
+                    //TODO: Reconnect if not connected
+                    return;
+                }
 
                 Remote remote = new Remote();
                 remote.address = info.getHost();
                 if(info.getAttributes().containsKey("hostname"))
                     remote.hostname = new String(info.getAttributes().get("hostname"));
                 remote.port = info.getPort();
-                remote.serviceName = info.getServiceName();
-                remote.uuid = info.getServiceName();
+                remote.serviceName = svcName;
+                remote.uuid = svcName;
 
                 svc.addRemote(remote);
             }
