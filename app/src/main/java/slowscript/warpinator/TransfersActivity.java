@@ -77,6 +77,7 @@ public class TransfersActivity extends AppCompatActivity {
         txtStatus.setText(remote.status.toString());
         imgStatus.setImageResource(Utils.getIconForRemoteStatus(remote.status));
         imgProfile.setImageBitmap(remote.picture);
+        btnSend.setEnabled(remote.status == Remote.RemoteStatus.CONNECTED);
     }
 
     void openFiles() {

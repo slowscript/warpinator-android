@@ -8,17 +8,21 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import java.util.LinkedHashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainService extends Service {
 
     static String TAG = "SERVICE";
     static int PORT = 42000;
+    static long pingTime = 10_000;
 
     public static Server server;
     public static LinkedHashMap<String, Remote> remotes = new LinkedHashMap<>();
     public TransfersActivity transfersView;
 
     public static MainService svc;
+    Timer pingTimer;
 
     @Nullable
     @Override
@@ -38,15 +42,37 @@ public class MainService extends Service {
         server = new Server(PORT, this);
         server.Start();
 
+        pingTimer = new Timer();
+        pingTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                pingRemotes();
+            }
+        }, 0L, pingTime);
+
         return START_STICKY;
     }
 
-    void stopServer () {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopServer();
+    }
+
+    public void stopServer () {
         server.Stop();
         for (Remote r : remotes.values()) {
             r.disconnect();
         }
         remotes.clear();
+    }
+
+    void pingRemotes() {
+        for (Remote r : remotes.values()) {
+            if (r.status == Remote.RemoteStatus.CONNECTED) {
+                r.ping();
+            }
+        }
     }
 
     public void addRemote(Remote remote) {

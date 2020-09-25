@@ -185,8 +185,15 @@ public class Server {
 
                 String svcName = info.getServiceName();
                 if (MainService.remotes.containsKey(svcName)) {
-                    Log.d(TAG, "Service already known");
-                    //TODO: Reconnect if not connected
+                    Remote r = MainService.remotes.get(svcName);
+                    Log.d(TAG, "Service already known. Status: " + r.status);
+                    if ((r.status == Remote.RemoteStatus.DISCONNECTED) || (r.status == Remote.RemoteStatus.ERROR)) {
+                        //Update hostname, address, port
+                        r.address = info.getHost();
+                        r.port = info.getPort();
+                        Log.d(TAG, "Reconnecting to " + r.hostname);
+                        r.connect();
+                    }
                     return;
                 }
 

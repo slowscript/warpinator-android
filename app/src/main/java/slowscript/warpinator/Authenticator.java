@@ -146,6 +146,7 @@ public class Authenticator {
             byte[] cert = box.open(ciph, nonce);
             if (cert == null) {
                 Log.w(TAG, "Failed to unbox cert. Wrong group code?");
+                //FIXME: Throw???
                 return;
             }
 

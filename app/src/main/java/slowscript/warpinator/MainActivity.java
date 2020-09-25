@@ -36,21 +36,25 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        if (!checkWriteExternalPermission())
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         recyclerView.post(() -> { //Run when UI is ready
             if (!Utils.isMyServiceRunning(this, MainService.class))
                 startService(new Intent(this, MainService.class));
         });
-
-        if (!checkWriteExternalPermission())
-            ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
     }
 
     public static void updateRemoteList() {
         if (current != null)
             current.runOnUiThread(() -> current.adapter.notifyDataSetChanged());
         if (MainService.svc.transfersView != null)
-            MainService.svc.transfersView.updateUI();
+            current.runOnUiThread(() -> MainService.svc.transfersView.updateUI());
     }
 
     private boolean checkWriteExternalPermission()

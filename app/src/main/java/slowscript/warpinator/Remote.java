@@ -1,5 +1,6 @@
 package slowscript.warpinator;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -13,6 +14,7 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLException;
 
@@ -120,6 +122,19 @@ public class Remote {
         status = RemoteStatus.DISCONNECTED;
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    @SuppressLint("CheckResult")
+    public void ping() {
+        try {
+            Log.v(TAG, "Pinging " + hostname);
+            blockingStub.withDeadlineAfter(5L, TimeUnit.SECONDS).ping(WarpProto.LookupName.getDefaultInstance());
+        } catch (Exception e) {
+            Log.d(TAG, "ping: Failed with exception", e);
+            status = RemoteStatus.DISCONNECTED;
+            MainActivity.updateRemoteList();
+        }
+    }
+
     public Transfer findTransfer(long timestamp) {
         for (Transfer t : transfers) {
             if(t.startTime == timestamp)
@@ -224,7 +239,7 @@ public class Remote {
                 } //Received from wrong host. Give it another shot.
             } catch (Exception e) {
                 tryCount++;
-                Log.e(TAG, "What is this?", e);
+                Log.d(TAG, "receiveCertificate: attempt failed " + tryCount, e);
                 try {
                     Thread.sleep(1000);
                 } catch (Exception ignored) { }
@@ -250,7 +265,8 @@ public class Remote {
                 if (haveDuplex)
                     return true;
             } catch (Exception e) {
-               Log.d(TAG, "Error while checking duplex", e);
+               Log.d(TAG, "We are not connected anymore", e);
+               return false;
             }
             Log.d (TAG, "Attempt " + tries + ": No duplex");
             try {

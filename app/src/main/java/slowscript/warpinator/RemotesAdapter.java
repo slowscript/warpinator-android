@@ -42,6 +42,10 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
             i.putExtra("remote", r.uuid);
             app.startActivity(i);
         });
+        holder.cardView.setOnLongClickListener((view) -> {
+            //app.getMenuInflater().inflate();
+            return true;
+        });
     }
 
     @Override
