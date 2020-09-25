@@ -32,6 +32,7 @@ public class TransfersActivity extends AppCompatActivity {
     TextView txtIP;
     TextView txtStatus;
     ImageView imgProfile;
+    ImageView imgStatus;
     Button btnSend;
 
     @Override
@@ -53,6 +54,8 @@ public class TransfersActivity extends AppCompatActivity {
         txtIP.setText(remote.address.getHostAddress());
         txtStatus = findViewById(R.id.txtStatus);
         txtStatus.setText(remote.status.toString());
+        imgStatus = findViewById(R.id.imgStatus);
+        imgStatus.setImageResource(Utils.getIconForRemoteStatus(remote.status));
         imgProfile = findViewById(R.id.imgProfile);
         imgProfile.setImageBitmap(remote.picture);
         btnSend = findViewById(R.id.btnSend);

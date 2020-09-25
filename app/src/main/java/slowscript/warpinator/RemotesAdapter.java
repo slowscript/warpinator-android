@@ -35,6 +35,7 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
         holder.txtUsername.setText(r.userName + "@" + r.hostname);
         holder.txtIP.setText(r.address.getHostAddress() + ":" + r.port);
         holder.imgProfile.setImageBitmap(r.picture);
+        holder.imgStatus.setImageResource(Utils.getIconForRemoteStatus(r.status));
 
         holder.cardView.setOnClickListener((view) -> {
             Intent i = new Intent(app, TransfersActivity.class);

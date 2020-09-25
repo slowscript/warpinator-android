@@ -112,6 +112,21 @@ public class Utils {
         return result;
     }
 
+    public static int getIconForRemoteStatus(Remote.RemoteStatus status) {
+        switch (status) {
+            case CONNECTING:
+                return R.drawable.ic_status_connecting;
+            case AWAITING_DUPLEX:
+                return R.drawable.ic_status_awaiting_duplex;
+            case CONNECTED:
+                return R.drawable.ic_status_connected;
+            case DISCONNECTED:
+            case ERROR:
+            default:
+                return android.R.drawable.ic_delete;
+        }
+    }
+
     static boolean isMyServiceRunning(Context ctx, Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
         assert manager != null;

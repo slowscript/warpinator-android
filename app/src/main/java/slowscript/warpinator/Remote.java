@@ -84,6 +84,7 @@ public class Remote {
             if (!waitForDuplex()) {
                 Log.e(TAG, "Couldn't establish duplex with " + hostname);
                 status = RemoteStatus.ERROR;
+                MainActivity.updateRemoteList();
                 return;
             }
 
