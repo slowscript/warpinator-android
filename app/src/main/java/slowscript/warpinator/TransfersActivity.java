@@ -12,9 +12,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -34,7 +38,8 @@ public class TransfersActivity extends AppCompatActivity {
     TextView txtStatus;
     ImageView imgProfile;
     ImageView imgStatus;
-    Button btnSend;
+    FloatingActionButton fabSend;
+    ImageButton btnReconnect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +64,18 @@ public class TransfersActivity extends AppCompatActivity {
         txtStatus = findViewById(R.id.txtStatus);
         imgStatus = findViewById(R.id.imgStatus);
         imgProfile = findViewById(R.id.imgProfile);
-        btnSend = findViewById(R.id.btnSend);
-        btnSend.setOnClickListener((v) -> openFiles());
+        fabSend = findViewById(R.id.fabSend);
+        fabSend.setOnClickListener((v) -> openFiles());
+        btnReconnect = findViewById(R.id.btnReconnect);
+        btnReconnect.setOnClickListener((v) -> reconnect());
 
+        updateUI();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateTransfers(remote.uuid);
         updateUI();
     }
 
@@ -72,12 +86,21 @@ public class TransfersActivity extends AppCompatActivity {
     }
 
     public void updateUI() {
-        txtRemote.setText(remote.displayName + " (" + remote.userName + "@" + remote.hostname + ")");
-        txtIP.setText(remote.address.getHostAddress());
-        txtStatus.setText(remote.status.toString());
-        imgStatus.setImageResource(Utils.getIconForRemoteStatus(remote.status));
-        imgProfile.setImageBitmap(remote.picture);
-        btnSend.setEnabled(remote.status == Remote.RemoteStatus.CONNECTED);
+        runOnUiThread(() -> { //Will run immediately if on correct thread already
+            txtRemote.setText(remote.displayName + " (" + remote.userName + "@" + remote.hostname + ")");
+            txtIP.setText(remote.address.getHostAddress());
+            txtStatus.setText(remote.status.toString());
+            imgStatus.setImageResource(Utils.getIconForRemoteStatus(remote.status));
+            imgProfile.setImageBitmap(remote.picture);
+            fabSend.setEnabled(remote.status == Remote.RemoteStatus.CONNECTED);
+            btnReconnect.setVisibility((remote.status == Remote.RemoteStatus.ERROR)
+                    || (remote.status == Remote.RemoteStatus.DISCONNECTED)
+                    ? View.VISIBLE : View.INVISIBLE);
+        });
+    }
+
+    void reconnect() {
+        remote.connect();
     }
 
     void openFiles() {
@@ -92,6 +115,7 @@ public class TransfersActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SEND_FILE_REQ_CODE && resultCode == Activity.RESULT_OK) {
             if (data == null)
                 return;
@@ -102,6 +126,7 @@ public class TransfersActivity extends AppCompatActivity {
                 Uri u = data.getData();
                 if (u == null) {
                     Log.w(TAG, "No uri to send");
+                    return;
                 }
                 Log.d(TAG, u.toString());
                 t.uris.add(u);
@@ -120,7 +145,6 @@ public class TransfersActivity extends AppCompatActivity {
 
             remote.startSendTransfer(t);
         }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public void updateTransfer(String r, int i) {

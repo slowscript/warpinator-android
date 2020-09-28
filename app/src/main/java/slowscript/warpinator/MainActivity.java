@@ -4,6 +4,11 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -48,13 +53,39 @@ public class MainActivity extends AppCompatActivity {
             if (!Utils.isMyServiceRunning(this, MainService.class))
                 startService(new Intent(this, MainService.class));
         });
+        updateRemoteList();
     }
 
-    public static void updateRemoteList() {
-        if (current != null)
-            current.runOnUiThread(() -> current.adapter.notifyDataSetChanged());
-        if (MainService.svc.transfersView != null)
-            current.runOnUiThread(() -> MainService.svc.transfersView.updateUI());
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.settings:
+                Toast.makeText(this, "No additional settings yet", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.about:
+                /*Intent intent = new Intent(this, About.class);
+                startActivity(intent);*/
+                return true;
+            case R.id.menu_quit:
+                Log.i(TAG, "Quitting");
+                stopService(new Intent(this, MainService.class));
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void updateRemoteList() {
+        runOnUiThread(() -> adapter.notifyDataSetChanged());
     }
 
     private boolean checkWriteExternalPermission()

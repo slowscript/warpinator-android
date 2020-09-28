@@ -53,11 +53,12 @@ public class Remote {
     public void connect() {
         Log.i(TAG, "Connecting to " + hostname);
         status = RemoteStatus.CONNECTING;
-        MainActivity.updateRemoteList();
+        updateUI();
         new Thread(() -> {
             //Receive certificate
             if (!receiveCertificate()) {
                 status = RemoteStatus.ERROR;
+                updateUI();
                 return;
             }
             Log.d(TAG, "Certificate for " + hostname + " received and saved");
@@ -72,21 +73,23 @@ public class Remote {
             } catch (SSLException e) {
                 Log.e(TAG, "Authentication with remote "+ hostname +" failed: " + e.getMessage(), e);
                 status = RemoteStatus.ERROR;
+                updateUI();
                 return;
             } catch (Exception e) {
                 Log.e(TAG, "Failed to connect to remote " + hostname + ". " + e.getMessage(), e);
                 status = RemoteStatus.ERROR;
+                updateUI();
                 return;
             }
 
             status = RemoteStatus.AWAITING_DUPLEX;
-            MainActivity.updateRemoteList();
+            updateUI();
 
             //Get duplex
             if (!waitForDuplex()) {
                 Log.e(TAG, "Couldn't establish duplex with " + hostname);
                 status = RemoteStatus.ERROR;
-                MainActivity.updateRemoteList();
+                updateUI();
                 return;
             }
 
@@ -111,7 +114,7 @@ public class Remote {
                 picture = null;
             }
 
-            MainActivity.updateRemoteList();
+            updateUI();
             Log.i(TAG, "Connection established with " + hostname);
         }).start();
     }
@@ -127,11 +130,11 @@ public class Remote {
     public void ping() {
         try {
             Log.v(TAG, "Pinging " + hostname);
-            blockingStub.withDeadlineAfter(5L, TimeUnit.SECONDS).ping(WarpProto.LookupName.getDefaultInstance());
+            blockingStub.withDeadlineAfter(10L, TimeUnit.SECONDS).ping(WarpProto.LookupName.getDefaultInstance());
         } catch (Exception e) {
             Log.d(TAG, "ping: Failed with exception", e);
             status = RemoteStatus.DISCONNECTED;
-            MainActivity.updateRemoteList();
+            updateUI();
         }
     }
 
@@ -276,5 +279,13 @@ public class Remote {
             tries++;
         }
         return false;
+    }
+
+    private void updateUI() {
+        if (MainActivity.current != null)
+            MainActivity.current.updateRemoteList();
+        if (MainService.svc.transfersView != null) {
+            MainService.svc.transfersView.updateUI();
+        }
     }
 }

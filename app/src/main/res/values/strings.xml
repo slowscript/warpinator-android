@@ -3,4 +3,7 @@
     <string name="title_activity_transfers">Transfers</string>
     <string name="transfer_queue">Transfer Queue</string>
     <string name="send_files">Send files</string>
+    <string name="quit">Quit</string>
+    <string name="about">About</string>
+    <string name="settings">Settings</string>
 </resources>

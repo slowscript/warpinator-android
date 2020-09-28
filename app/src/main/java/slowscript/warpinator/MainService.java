@@ -79,7 +79,7 @@ public class MainService extends Service {
         //Add to remotes list
         remotes.put(remote.uuid, remote);
         //Add to GUI
-        MainActivity.updateRemoteList();
+        MainActivity.current.updateRemoteList();
         //Connect to it
         remote.connect();
     }
@@ -89,7 +89,7 @@ public class MainService extends Service {
         //Disconnect
         r.disconnect();
         //Remove from GUI
-        MainActivity.updateRemoteList();
+        MainActivity.current.updateRemoteList();
         //Remove
         remotes.remove(uuid);
     }
