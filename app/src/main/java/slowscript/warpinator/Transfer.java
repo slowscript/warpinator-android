@@ -1,9 +1,14 @@
 package slowscript.warpinator;
 
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.OpenableColumns;
 import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
 
 import com.google.protobuf.ByteString;
 
@@ -13,7 +18,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import io.grpc.StatusException;
 import io.grpc.stub.CallStreamObserver;
@@ -80,6 +84,7 @@ public class Transfer {
     void updateUI() {
         if (svc.transfersView != null)
             svc.transfersView.updateTransfer(remoteUUID, privId);
+        //TODO: update notification
     }
 
     // -- SEND --
@@ -185,8 +190,21 @@ public class Transfer {
         //Check if will rewrite
 
         //Show in UI
-        if (svc.transfersView != null)
+        if (svc.transfersView != null && remoteUUID.equals(svc.transfersView.remote.uuid) && svc.transfersView.isTopmost)
             svc.transfersView.updateTransfers(remoteUUID);
+        else {  //Notification
+            Intent intent = new Intent(svc, TransfersActivity.class);
+            intent.putExtra("remote", remoteUUID);
+            PendingIntent pendingIntent = PendingIntent.getActivity(svc, 0, intent, 0);
+            Notification notification = new NotificationCompat.Builder(svc, MainService.CHANNEL_INCOMING)
+                    .setContentTitle("Incoming transfer from " + MainService.remotes.get(remoteUUID).displayName)
+                    .setContentText(fileCount == 1 ? singleName : fileCount + " files")
+                    .setSmallIcon(android.R.drawable.stat_sys_download_done)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true)
+                    .build();
+            svc.notificationMgr.notify(svc.notifId++, notification);
+        }
     }
 
     void startReceive() {

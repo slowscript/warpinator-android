@@ -26,13 +26,15 @@ public class MainService extends Service {
 
     static String TAG = "SERVICE";
     static int PORT = 42000;
-    static String CHANNEL_ID = "MainService";
+    public static String CHANNEL_SERVICE = "MainService";
+    public static String CHANNEL_INCOMING = "IncomingTransfer";
     static String ACTION_STOP = "StopSvc";
     static long pingTime = 10_000;
 
     public static Server server;
     public static LinkedHashMap<String, Remote> remotes = new LinkedHashMap<>();
     public TransfersActivity transfersView;
+    int notifId = 1300;
 
     public static MainService svc;
     public NotificationManagerCompat notificationMgr;
@@ -66,7 +68,7 @@ public class MainService extends Service {
         }, 0L, pingTime);
 
         // Notification related stuff
-        createNotificationChannel();
+        createNotificationChannels();
         Intent openIntent = new Intent(this, MainActivity.class);
         openIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, openIntent, 0);
@@ -76,7 +78,7 @@ public class MainService extends Service {
         PendingIntent stopPendingIntent =
                 PendingIntent.getBroadcast(this, 0, stopIntent, 0);
 
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_SERVICE)
                 .setContentTitle("Warpinator service is running")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentIntent(pendingIntent)
@@ -85,7 +87,7 @@ public class MainService extends Service {
                 .setShowWhen(false)
                 .setOngoing(true).build();
 
-        startForeground(2589, notification);
+        startForeground(0, notification);
 
         return START_STICKY;
     }
@@ -131,16 +133,22 @@ public class MainService extends Service {
         remotes.remove(uuid);
     }
 
-    private void createNotificationChannel() {
+    private void createNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Service running";//getString(R.string.channel_name);
             String description = "Persistent service notification";//getString(R.string.channel_description);
             int importance = NotificationManager.IMPORTANCE_MIN;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            NotificationChannel channel = new NotificationChannel(CHANNEL_SERVICE, name, importance);
             channel.setDescription(description);
+
+            CharSequence name2 = "Incoming transfer";
+            int importance2 = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel2 = new NotificationChannel(CHANNEL_INCOMING, name2, importance2);
+
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             assert notificationManager != null;
             notificationManager.createNotificationChannel(channel);
+            notificationManager.createNotificationChannel(channel2);
         }
     }
 

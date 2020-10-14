@@ -1,11 +1,5 @@
 package slowscript.warpinator;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SimpleItemAnimator;
-
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.Intent;
@@ -13,14 +7,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class TransfersActivity extends AppCompatActivity {
@@ -29,6 +27,7 @@ public class TransfersActivity extends AppCompatActivity {
     static final int SEND_FILE_REQ_CODE = 10;
 
     public Remote remote;
+    public boolean isTopmost = false;
 
     RecyclerView recyclerView;
     TransfersAdapter adapter;
@@ -75,8 +74,15 @@ public class TransfersActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        isTopmost = true;
         updateTransfers(remote.uuid);
         updateUI();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isTopmost = false;
     }
 
     @Override
