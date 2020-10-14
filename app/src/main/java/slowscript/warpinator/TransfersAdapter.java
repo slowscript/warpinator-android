@@ -58,7 +58,8 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
                 break;
             case TRANSFERRING:
                 String status = Formatter.formatFileSize(activity, t.bytesTransferred) + " / " +
-                    Formatter.formatFileSize(activity, t.totalSize) + "(0 MB/s, 0s remaining)";
+                    Formatter.formatFileSize(activity, t.totalSize) + "(" +
+                    Formatter.formatFileSize(activity, t.bytesPerSecond) + "/s, 0s remaining)";
                 holder.txtStatus.setText(status);
                 break;
             default:

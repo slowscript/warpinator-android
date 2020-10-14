@@ -55,6 +55,8 @@ public class Transfer {
     private ArrayList<String> errors = new ArrayList<>();
     private boolean cancelled = false;
     public long bytesTransferred;
+    public long bytesPerSecond;
+    long lastMillis = 0;
 
     // -- COMMON --
     public void stop(boolean error) {
@@ -145,6 +147,9 @@ public class Transfer {
                                 .build();
                         observer.onNext(fc);
                         bytesTransferred += read;
+                        long now = System.currentTimeMillis();
+                        bytesPerSecond = (long)(read / ((now - lastMillis) / 1000f));
+                        lastMillis = now;
                         updateUI();
                     } catch (FileNotFoundException e) {
                         observer.onError(new StatusException(io.grpc.Status.NOT_FOUND));
@@ -220,6 +225,7 @@ public class Transfer {
     }
 
     public boolean receiveFileChunk(WarpProto.FileChunk chunk) {
+        long chunkSize = 0;
         if (!chunk.getRelativePath().equals(currentRelativePath)) {
             //End old file
             closeStream();
@@ -242,7 +248,7 @@ public class Transfer {
                         path.delete();
                     currentStream = new FileOutputStream(path, false);
                     currentStream.write(chunk.getChunk().toByteArray());
-                    bytesTransferred += chunk.getChunk().size();
+                    chunkSize = chunk.getChunk().size();
                 } catch (Exception e) {
                     Log.e(TAG, "Failed to open file for writing: " + currentRelativePath, e);
                     errors.add("Failed to open file for writing: " + currentRelativePath);
@@ -251,13 +257,17 @@ public class Transfer {
         } else {
             try {
                 currentStream.write(chunk.getChunk().toByteArray());
-                bytesTransferred += chunk.getChunk().size();
+                chunkSize = chunk.getChunk().size();
             } catch (Exception e) {
                 Log.e(TAG, "Failed to write to file " + currentRelativePath, e);
                 errors.add("Failed to write to file " + currentRelativePath);
                 //failReceive();
             }
         }
+        bytesTransferred += chunkSize;
+        long now = System.currentTimeMillis();
+        bytesPerSecond = (long)(chunkSize / ((now - lastMillis) / 1000f));
+        lastMillis = now;
         updateUI();
         return status == Status.TRANSFERRING; //True if not interrupted
         //TODO: Transfer lastMod
