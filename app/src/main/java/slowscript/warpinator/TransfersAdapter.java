@@ -1,5 +1,6 @@
 package slowscript.warpinator;
 
+import android.annotation.SuppressLint;
 import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,9 +58,13 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
                 holder.txtStatus.setText("Waiting for permission...");
                 break;
             case TRANSFERRING:
+                long now = System.currentTimeMillis();
+                float avgSpeed = t.bytesTransferred / ((now - t.actualStartTime) / 1000f);
+                int secondsRemaining = (int)((t.totalSize - t.bytesTransferred) / avgSpeed);
                 String status = Formatter.formatFileSize(activity, t.bytesTransferred) + " / " +
                     Formatter.formatFileSize(activity, t.totalSize) + "(" +
-                    Formatter.formatFileSize(activity, t.bytesPerSecond) + "/s, 0s remaining)";
+                    Formatter.formatFileSize(activity, t.bytesPerSecond) + "/s, " +
+                    formatTime(secondsRemaining) +" remaining)";
                 holder.txtStatus.setText(status);
                 break;
             default:
@@ -73,6 +78,26 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
     @Override
     public int getItemCount() {
         return activity.remote.transfers.size();
+    }
+
+    @SuppressLint("DefaultLocale")
+    String formatTime(int seconds) {
+        if (seconds > 60) {
+            int minutes = seconds / 60;
+            if (seconds > 3600) {
+                int hours = seconds / 3600;
+                minutes -= hours * 60;
+                return String.format("%dh %dm", hours, minutes);
+            }
+            seconds -= minutes*60;
+            return String.format("%dm %ds", minutes, seconds);
+        }
+        else if (seconds > 5) {
+            return String.format("%d s", seconds);
+        }
+        else {
+            return "a few seconds";
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

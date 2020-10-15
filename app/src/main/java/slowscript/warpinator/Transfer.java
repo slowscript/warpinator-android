@@ -56,6 +56,7 @@ public class Transfer {
     private boolean cancelled = false;
     public long bytesTransferred;
     public long bytesPerSecond;
+    public long actualStartTime;
     long lastMillis = 0;
 
     // -- COMMON --
@@ -109,6 +110,7 @@ public class Transfer {
 
     public void startSending(CallStreamObserver<WarpProto.FileChunk> observer) {
         status = Status.TRANSFERRING;
+        actualStartTime = System.currentTimeMillis();
         updateUI();
         observer.setOnReadyHandler(new Runnable() {
             int i = 0;
@@ -215,6 +217,7 @@ public class Transfer {
     void startReceive() {
         Log.i(TAG, "Transfer accepted");
         status = Status.TRANSFERRING;
+        actualStartTime = System.currentTimeMillis();
         MainService.remotes.get(remoteUUID).startReceiveTransfer(this);
     }
 

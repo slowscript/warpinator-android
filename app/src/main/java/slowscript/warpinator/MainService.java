@@ -87,7 +87,7 @@ public class MainService extends Service {
                 .setShowWhen(false)
                 .setOngoing(true).build();
 
-        startForeground(0, notification);
+        startForeground(1, notification);
 
         return START_STICKY;
     }
