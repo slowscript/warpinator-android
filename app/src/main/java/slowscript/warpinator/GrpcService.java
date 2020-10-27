@@ -33,7 +33,7 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
     @Override
     public void getRemoteMachineInfo(WarpProto.LookupName request, StreamObserver<WarpProto.RemoteMachineInfo> responseObserver) {
         responseObserver.onNext(WarpProto.RemoteMachineInfo.newBuilder()
-                .setDisplayName("Android").setUserName("android").build()); //TODO: Set username and picture in settings
+                .setDisplayName(Server.displayName).setUserName("android").build()); //TODO: Set username and picture in settings
         responseObserver.onCompleted();
     }
 

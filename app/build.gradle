@@ -50,6 +50,7 @@ dependencies {
     implementation 'org.conscrypt:conscrypt-android:2.5.0'
 
     implementation 'com.github.tony19:logback-android:2.0.0'
+    implementation 'androidx.preference:preference:1.1.1'
 }
 
 protobuf {

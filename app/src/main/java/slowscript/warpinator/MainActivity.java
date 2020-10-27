@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     static MainActivity current;
     RecyclerView recyclerView;
     RemotesAdapter adapter;
+    TextView txtNotFound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new RemotesAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        txtNotFound = findViewById(R.id.txtNotFound);
 
         if (!checkWriteExternalPermission())
             ActivityCompat.requestPermissions(this, new String[]{
@@ -68,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.settings:
-                Toast.makeText(this, "No additional settings yet", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.about:
                 /*Intent intent = new Intent(this, About.class);
@@ -77,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_quit:
                 Log.i(TAG, "Quitting");
                 stopService(new Intent(this, MainService.class));
-                finish();
+                finishAffinity();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -85,7 +89,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateRemoteList() {
-        runOnUiThread(() -> adapter.notifyDataSetChanged());
+        runOnUiThread(() -> {
+            adapter.notifyDataSetChanged();
+            txtNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
+        });
     }
 
     private boolean checkWriteExternalPermission()

@@ -8,13 +8,13 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -23,9 +23,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainService extends Service {
+    private static final String TAG = "SERVICE";
 
-    static String TAG = "SERVICE";
-    static int PORT = 42000;
     public static String CHANNEL_SERVICE = "MainService";
     public static String CHANNEL_INCOMING = "IncomingTransfer";
     static String ACTION_STOP = "StopSvc";
@@ -34,6 +33,7 @@ public class MainService extends Service {
     public static Server server;
     public static LinkedHashMap<String, Remote> remotes = new LinkedHashMap<>();
     public TransfersActivity transfersView;
+    public SharedPreferences prefs;
     int notifId = 1300;
 
     public static MainService svc;
@@ -51,12 +51,14 @@ public class MainService extends Service {
         super.onStartCommand(intent, flags, startId);
         svc = this;
         notificationMgr = NotificationManagerCompat.from(this);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Authenticator.groupCode = prefs.getString("groupCode", Authenticator.DEFAULT_GROUP_CODE);
 
         Authenticator.getServerCertificate(); //Generate cert on start if doesn't exist
         Utils.getSaveDir().mkdirs();
 
         Log.d(TAG, "Service starting...");
-        server = new Server(PORT, this);
+        server = new Server(this);
         server.Start();
 
         pingTimer = new Timer();
@@ -65,7 +67,7 @@ public class MainService extends Service {
             public void run() {
                 pingRemotes();
             }
-        }, 0L, pingTime);
+        }, 5L, pingTime);
 
         // Notification related stuff
         createNotificationChannels();
@@ -137,12 +139,12 @@ public class MainService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Service running";//getString(R.string.channel_name);
             String description = "Persistent service notification";//getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_MIN;
+            int importance = NotificationManager.IMPORTANCE_LOW;
             NotificationChannel channel = new NotificationChannel(CHANNEL_SERVICE, name, importance);
             channel.setDescription(description);
 
             CharSequence name2 = "Incoming transfer";
-            int importance2 = NotificationManager.IMPORTANCE_DEFAULT;
+            int importance2 = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel channel2 = new NotificationChannel(CHANNEL_INCOMING, name2, importance2);
 
             NotificationManager notificationManager = getSystemService(NotificationManager.class);

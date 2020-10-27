@@ -1,10 +1,8 @@
 package slowscript.warpinator;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,7 +10,6 @@ import org.conscrypt.Conscrypt;
 
 import java.io.File;
 import java.security.Security;
-import java.util.Map;
 import java.util.UUID;
 
 import io.grpc.netty.GrpcSslContexts;
@@ -20,11 +17,12 @@ import io.grpc.netty.NettyServerBuilder;
 import io.netty.handler.ssl.SslContextBuilder;
 
 public class Server {
-    private String TAG = "SRV";
+    private static final String TAG = "SRV";
     private static final String SERVICE_TYPE = "_warpinator._tcp.";
 
     public static Server current;
-    public int PORT;
+    static String displayName;
+    public int port;
     public String uuid;
 
     private NsdManager nsdManager;
@@ -32,19 +30,18 @@ public class Server {
     private NsdManager.DiscoveryListener discoveryListener;
     private io.grpc.Server gServer;
 
-    private SharedPreferences prefs;
     private MainService svc;
 
-    public Server(int port, MainService _svc) {
-        PORT = port;
+    public Server(MainService _svc) {
         svc = _svc;
 
         current = this;
         Security.insertProviderAt(Conscrypt.newProvider(), 1);
-        prefs = PreferenceManager.getDefaultSharedPreferences(svc);
-        if(!prefs.contains("uuid"))
-            prefs.edit().putString("uuid", UUID.randomUUID().toString()).apply();
-        uuid = prefs.getString("uuid", "default");
+        if(!svc.prefs.contains("uuid"))
+            svc.prefs.edit().putString("uuid", UUID.randomUUID().toString()).apply();
+        displayName = svc.prefs.getString("displayName", "Android");
+        uuid = svc.prefs.getString("uuid", "default");
+        port = Integer.parseInt(svc.prefs.getString("port", "42000"));
 
         nsdManager = (NsdManager) svc.getSystemService(Context.NSD_SERVICE);
         registrationListener = new RegistrationListener();
@@ -54,7 +51,7 @@ public class Server {
     public void Start() {
         //Start servers
         startGrpcServer();
-        CertServer.Start(PORT);
+        CertServer.Start(port);
         //Announce ourselves
         registerService();
         //Start looking for others
@@ -75,7 +72,7 @@ public class Server {
             File key = new File(Utils.getCertsDir(), ".self.key-pem");
             SslContextBuilder ssl = GrpcSslContexts.forServer(cert, key).sslContextProvider(Conscrypt.newProvider());
             //SslContextBuilder ssl = GrpcSslContexts.configure(SslContextBuilder.forServer(cert, key), Conscrypt.newProvider());
-            gServer = NettyServerBuilder.forPort(PORT)
+            gServer = NettyServerBuilder.forPort(port)
                     .sslContext(ssl.build())
                     .addService(new GrpcService())
                     .build();
@@ -92,7 +89,7 @@ public class Server {
         Log.d(TAG, "Registering as " + uuid);
         serviceInfo.setServiceName(uuid);
         serviceInfo.setServiceType(SERVICE_TYPE);
-        serviceInfo.setPort(PORT);
+        serviceInfo.setPort(port);
 
         //Put boxed cert into attributes
         /*byte[] box = Authenticator.getBoxedCertificate(serviceName);

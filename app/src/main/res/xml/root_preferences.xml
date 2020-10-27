@@ -1,0 +1,62 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="Identity">
+
+        <EditTextPreference
+            android:defaultValue="Android"
+            android:key="displayName"
+            android:title="Display name" />
+
+        <EditTextPreference
+            android:key="picture"
+            android:title="Profile picture"
+            android:defaultValue="nothing"
+            android:enabled="false"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Transfer settings">
+
+        <EditTextPreference
+            android:key="downloadDir"
+            android:title="Downloads directory"
+            android:defaultValue="/storage/emulated/0/Download/"
+            android:enabled="false"/>
+
+        <SwitchPreferenceCompat
+            android:key="notifyIncoming"
+            android:title="Show notification about incoming files"
+            android:defaultValue="true"
+            android:enabled="false"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory>
+
+        <SwitchPreferenceCompat
+            android:title="Run in background"
+            android:key="background"
+            android:defaultValue="true"
+            android:enabled="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Network">
+
+        <EditTextPreference
+            android:key="groupcode"
+            android:title="Group code"
+            android:defaultValue="Warpinator" />
+
+        <EditTextPreference
+            android:title="Port"
+            android:key="port"
+            android:defaultValue="42000" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
