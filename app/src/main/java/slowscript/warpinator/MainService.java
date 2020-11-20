@@ -82,7 +82,7 @@ public class MainService extends Service {
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_SERVICE)
                 .setContentTitle("Warpinator service is running")
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setContentIntent(pendingIntent)
                 .addAction(0, "Stop service", stopPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_LOW)
