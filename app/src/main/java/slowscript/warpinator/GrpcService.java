@@ -1,14 +1,8 @@
 package slowscript.warpinator;
 
-import android.app.Activity;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import io.grpc.Status;
-import io.grpc.stub.CallStreamObserver;
 import io.grpc.stub.ServerCallStreamObserver;
 import io.grpc.stub.StreamObserver;
 
@@ -33,13 +27,13 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
     @Override
     public void getRemoteMachineInfo(WarpProto.LookupName request, StreamObserver<WarpProto.RemoteMachineInfo> responseObserver) {
         responseObserver.onNext(WarpProto.RemoteMachineInfo.newBuilder()
-                .setDisplayName(Server.displayName).setUserName("android").build()); //TODO: Set username and picture in settings
+                .setDisplayName(Server.displayName).setUserName("android").build());
         responseObserver.onCompleted();
     }
 
     @Override
     public void getRemoteMachineAvatar(WarpProto.LookupName request, StreamObserver<WarpProto.RemoteMachineAvatar> responseObserver) {
-        responseObserver.onError(new io.grpc.StatusException(Status.NOT_FOUND));
+        responseObserver.onError(new io.grpc.StatusException(Status.NOT_FOUND)); //TODO: Set picture
     }
 
     @Override

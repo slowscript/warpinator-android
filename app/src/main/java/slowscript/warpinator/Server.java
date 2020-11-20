@@ -25,27 +25,25 @@ public class Server {
     public int port;
     public String uuid;
 
-    private NsdManager nsdManager;
-    private NsdManager.RegistrationListener registrationListener;
-    private NsdManager.DiscoveryListener discoveryListener;
+    private final NsdManager nsdManager;
+    private final NsdManager.RegistrationListener registrationListener;
+    private final NsdManager.DiscoveryListener discoveryListener;
     private io.grpc.Server gServer;
 
-    private MainService svc;
+    private final MainService svc;
 
     public Server(MainService _svc) {
         svc = _svc;
 
         current = this;
         Security.insertProviderAt(Conscrypt.newProvider(), 1);
-        if(!svc.prefs.contains("uuid"))
-            svc.prefs.edit().putString("uuid", UUID.randomUUID().toString()).apply();
-        displayName = svc.prefs.getString("displayName", "Android");
-        uuid = svc.prefs.getString("uuid", "default");
-        port = Integer.parseInt(svc.prefs.getString("port", "42000"));
+        loadSettings();
 
         nsdManager = (NsdManager) svc.getSystemService(Context.NSD_SERVICE);
         registrationListener = new RegistrationListener();
         discoveryListener = new DiscoveryListener();
+
+        svc.prefs.registerOnSharedPreferenceChangeListener((p, k) -> loadSettings());
     }
 
     public void Start() {
@@ -64,6 +62,15 @@ public class Server {
         nsdManager.stopServiceDiscovery(discoveryListener);
         gServer.shutdownNow();
         Log.i(TAG, "Server stopped");
+    }
+
+    void loadSettings() {
+        if(!svc.prefs.contains("uuid"))
+            svc.prefs.edit().putString("uuid", UUID.randomUUID().toString()).apply();
+        uuid = svc.prefs.getString("uuid", "default");
+        displayName = svc.prefs.getString("displayName", "Android");
+        port = Integer.parseInt(svc.prefs.getString("port", "42000"));
+        Authenticator.groupCode = svc.prefs.getString("groupCode", Authenticator.DEFAULT_GROUP_CODE);
     }
 
     void startGrpcServer() {
@@ -107,7 +114,7 @@ public class Server {
         nsdManager.registerService(serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener);
     }
 
-    class RegistrationListener implements NsdManager.RegistrationListener {
+    static class RegistrationListener implements NsdManager.RegistrationListener {
         @Override
         public void onRegistrationFailed(NsdServiceInfo serviceInfo, int errorCode) {
             Log.e(TAG, "Failed to register zeroconf service. Error code: " + errorCode);

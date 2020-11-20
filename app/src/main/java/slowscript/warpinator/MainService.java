@@ -36,7 +36,7 @@ public class MainService extends Service {
     public SharedPreferences prefs;
     int notifId = 1300;
 
-    public static MainService svc;
+    public MainService svc;
     public NotificationManagerCompat notificationMgr;
     Timer pingTimer;
 
@@ -52,7 +52,6 @@ public class MainService extends Service {
         svc = this;
         notificationMgr = NotificationManagerCompat.from(this);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        Authenticator.groupCode = prefs.getString("groupCode", Authenticator.DEFAULT_GROUP_CODE);
 
         Authenticator.getServerCertificate(); //Generate cert on start if doesn't exist
         Utils.getSaveDir().mkdirs();

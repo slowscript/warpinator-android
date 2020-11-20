@@ -47,8 +47,10 @@ public class SettingsActivity extends AppCompatActivity {
 
             EditTextPreference pref = findPreference("port");
             if (pref != null) {
-                pref.setOnBindEditTextListener((edit)->{ edit.setInputType(InputType.TYPE_CLASS_NUMBER);});
+                pref.setOnBindEditTextListener((edit)-> edit.setInputType(InputType.TYPE_CLASS_NUMBER));
             }
         }
+
+
     }
 }
