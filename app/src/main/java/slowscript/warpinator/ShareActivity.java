@@ -23,12 +23,16 @@ import java.util.ArrayList;
 public class ShareActivity extends AppCompatActivity {
 
     static final String TAG = "Share";
+
+    public static ShareActivity current;
+
     RecyclerView recyclerView;
     RemotesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        current = this;
         setContentView(R.layout.activity_share);
         setTitle(R.string.title_activity_share);
 
@@ -83,5 +87,15 @@ public class ShareActivity extends AppCompatActivity {
         };
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    protected void onDestroy() {
+        current = null;
+        super.onDestroy();
+    }
+
+    public void updateRemotes() {
+        runOnUiThread(() -> adapter.notifyDataSetChanged());
     }
 }

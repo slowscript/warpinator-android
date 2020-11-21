@@ -118,8 +118,6 @@ public class MainService extends Service {
     public void addRemote(Remote remote) {
         //Add to remotes list
         remotes.put(remote.uuid, remote);
-        //Add to GUI
-        MainActivity.current.updateRemoteList();
         //Connect to it
         remote.connect();
     }

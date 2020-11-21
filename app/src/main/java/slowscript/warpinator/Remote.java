@@ -287,5 +287,7 @@ public class Remote {
         if (MainService.svc.transfersView != null) {
             MainService.svc.transfersView.updateUI();
         }
+        if (ShareActivity.current != null)
+            ShareActivity.current.updateRemotes();
     }
 }
