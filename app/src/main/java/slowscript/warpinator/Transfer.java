@@ -10,6 +10,7 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
+import com.google.common.io.Files;
 import com.google.protobuf.ByteString;
 
 import java.io.File;
@@ -199,7 +200,7 @@ public class Transfer {
         //Show in UI
         if (svc.transfersView != null && remoteUUID.equals(svc.transfersView.remote.uuid) && svc.transfersView.isTopmost)
             svc.transfersView.updateTransfers(remoteUUID);
-        else {  //Notification
+        else if (svc.server.notifyIncoming) {  //Notification
             Intent intent = new Intent(svc, TransfersActivity.class);
             intent.putExtra("remote", remoteUUID);
             PendingIntent pendingIntent = PendingIntent.getActivity(svc, 0, intent, 0);
@@ -248,7 +249,7 @@ public class Transfer {
             else {
                 try {
                     if(path.exists())
-                        path.delete();
+                        path = handleFileExists(path);
                     currentStream = new FileOutputStream(path, false);
                     currentStream.write(chunk.getChunk().toByteArray());
                     chunkSize = chunk.getChunk().size();
@@ -307,5 +308,22 @@ public class Transfer {
                 currentStream = null;
             } catch (Exception ignored) {}
         }
+    }
+
+    private File handleFileExists(File f) {
+        Log.d(TAG, "Receiving to " + f.getAbsolutePath());
+        if(svc.server.allowOverwrite) {
+            f.delete();
+        } else {
+            String name = f.getParent() + "/" + Files.getNameWithoutExtension(f.getAbsolutePath());
+            String ext = Files.getFileExtension(f.getAbsolutePath());
+            int i = 1;
+            while (f.exists()) {
+                f = new File(String.format("%s(%d).%s", name, i, ext));
+                i++;
+            }
+            Log.d(TAG, "Renamed to " + f.getAbsolutePath());
+        }
+        return f;
     }
 }

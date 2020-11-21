@@ -30,7 +30,7 @@ public class MainService extends Service {
     static String ACTION_STOP = "StopSvc";
     static long pingTime = 10_000;
 
-    public static Server server;
+    public Server server;
     public static LinkedHashMap<String, Remote> remotes = new LinkedHashMap<>();
     public TransfersActivity transfersView;
     public SharedPreferences prefs;
@@ -78,6 +78,9 @@ public class MainService extends Service {
         stopIntent.setAction(ACTION_STOP);
         PendingIntent stopPendingIntent =
                 PendingIntent.getBroadcast(this, 0, stopIntent, 0);
+
+        if(!prefs.getBoolean("background", true))
+            return START_STICKY;
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_SERVICE)
                 .setContentTitle("Warpinator service is running")

@@ -24,6 +24,8 @@ public class Server {
     static String displayName;
     public int port;
     public String uuid;
+    public boolean allowOverwrite;
+    public boolean notifyIncoming;
 
     private final NsdManager nsdManager;
     private final NsdManager.RegistrationListener registrationListener;
@@ -71,6 +73,8 @@ public class Server {
         displayName = svc.prefs.getString("displayName", "Android");
         port = Integer.parseInt(svc.prefs.getString("port", "42000"));
         Authenticator.groupCode = svc.prefs.getString("groupCode", Authenticator.DEFAULT_GROUP_CODE);
+        allowOverwrite = svc.prefs.getBoolean("allowOverwrite", false);
+        notifyIncoming = svc.prefs.getBoolean("notifyIncoming", true);
     }
 
     void startGrpcServer() {
@@ -98,17 +102,6 @@ public class Server {
         serviceInfo.setServiceType(SERVICE_TYPE);
         serviceInfo.setPort(port);
 
-        //Put boxed cert into attributes
-        /*byte[] box = Authenticator.getBoxedCertificate(serviceName);
-        String encoded = Base64.encodeToString(box, Base64.DEFAULT);
-        encoded = encoded.replace('=', '*'); //Attributes cannot contain '='
-        //Log.d(TAG, Utils.bytesToHex(box));
-        String[] enc_array = encoded.split("\n");
-        int i = 0;
-        for (; i < enc_array.length; i++) {
-            serviceInfo.setAttribute(String.valueOf(i), enc_array[i]);
-        }
-        serviceInfo.setAttribute(String.valueOf(i), "");*/
         serviceInfo.setAttribute("hostname", Utils.getDeviceName());
 
         nsdManager.registerService(serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener);

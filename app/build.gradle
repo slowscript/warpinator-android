@@ -51,6 +51,7 @@ dependencies {
 
     implementation 'com.github.tony19:logback-android:2.0.0'
     implementation 'androidx.preference:preference:1.1.1'
+    implementation 'com.google.guava:guava:29.0-android' //This was included by gRPC anyway, so why not use it
 }
 
 protobuf {

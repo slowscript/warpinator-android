@@ -22,14 +22,21 @@
         <EditTextPreference
             android:key="downloadDir"
             android:title="Downloads directory"
-            android:defaultValue="/storage/emulated/0/Download/"
+            android:defaultValue="/storage/emulated/0/Download/Warpinator"
             android:enabled="false"/>
 
         <SwitchPreferenceCompat
             android:key="notifyIncoming"
             android:title="Show notification about incoming files"
             android:defaultValue="true"
-            android:enabled="false"/>
+            android:summary="This may be affected by Android's notification settings" />
+
+        <SwitchPreferenceCompat
+            android:key="allowOverwrite"
+            android:title="Allow overwriting"
+            android:defaultValue="false"
+            android:summaryOn="Incoming files with a name that already exists will overwrite the existing ones"
+            android:summaryOff="Incoming files with a name that already exists will be renamed" />
 
     </PreferenceCategory>
 
@@ -38,8 +45,7 @@
         <SwitchPreferenceCompat
             android:title="Run in background"
             android:key="background"
-            android:defaultValue="true"
-            android:enabled="false" />
+            android:defaultValue="true" />
 
     </PreferenceCategory>
 
