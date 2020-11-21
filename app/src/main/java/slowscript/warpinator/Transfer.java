@@ -145,7 +145,7 @@ public class Transfer {
                                 .setRelativePath(Utils.getNameFromUri(svc, uris.get(i)))
                                 .setFileType(FileType.FILE)
                                 .setChunk(ByteString.copyFrom(chunk, 0, read))
-                                .setFileMode(644)
+                                .setFileMode(0644)
                                 .build();
                         observer.onNext(fc);
                         bytesTransferred += read;

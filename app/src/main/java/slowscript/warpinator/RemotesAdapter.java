@@ -1,5 +1,6 @@
 package slowscript.warpinator;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -14,9 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHolder> {
 
-    MainActivity app;
+    Activity app;
 
-    public RemotesAdapter(MainActivity _app) {
+    public RemotesAdapter(Activity _app) {
         app = _app;
     }
 
@@ -31,11 +32,7 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Remote r = (Remote) MainService.remotes.values().toArray()[position];
-        holder.txtName.setText(r.displayName);
-        holder.txtUsername.setText(r.userName + "@" + r.hostname);
-        holder.txtIP.setText(r.address.getHostAddress() + ":" + r.port);
-        holder.imgProfile.setImageBitmap(r.picture);
-        holder.imgStatus.setImageResource(Utils.getIconForRemoteStatus(r.status));
+        setupViewHolder(holder, r);
 
         holder.cardView.setOnClickListener((view) -> {
             Intent i = new Intent(app, TransfersActivity.class);
@@ -46,6 +43,14 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
             //app.getMenuInflater().inflate();
             return true;
         });
+    }
+
+    void setupViewHolder(ViewHolder holder, Remote r) {
+        holder.txtName.setText(r.displayName);
+        holder.txtUsername.setText(r.userName + "@" + r.hostname);
+        holder.txtIP.setText(r.address.getHostAddress() + ":" + r.port);
+        holder.imgProfile.setImageBitmap(r.picture);
+        holder.imgStatus.setImageResource(Utils.getIconForRemoteStatus(r.status));
     }
 
     @Override

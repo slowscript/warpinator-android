@@ -36,7 +36,7 @@ public class MainService extends Service {
     public SharedPreferences prefs;
     int notifId = 1300;
 
-    public MainService svc;
+    public static MainService svc;
     public NotificationManagerCompat notificationMgr;
     Timer pingTimer;
 
