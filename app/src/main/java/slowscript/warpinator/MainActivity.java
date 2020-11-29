@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -74,8 +75,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.about:
+                //TODO: implement about activity
                 /*Intent intent = new Intent(this, About.class);
                 startActivity(intent);*/
+
+                //A toast to be removed when the about function is implemented
+                Toast.makeText(getApplicationContext(), getText(R.string.not_implemented_toast), Toast.LENGTH_LONG).show();
                 return true;
             case R.id.menu_quit:
                 Log.i(TAG, "Quitting");

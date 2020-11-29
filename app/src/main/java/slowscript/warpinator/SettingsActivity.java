@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,8 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-
-import slowscript.warpinator.R;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -55,6 +53,20 @@ public class SettingsActivity extends AppCompatActivity {
             EditTextPreference pref = findPreference("port");
             if (pref != null) {
                 pref.setOnBindEditTextListener((edit)-> edit.setInputType(InputType.TYPE_CLASS_NUMBER));
+            }
+
+            //gives back feedback on change
+            EditTextPreference[] prefs = {findPreference("displayName"), findPreference("picture"), findPreference("downloadDir"), findPreference("groupcode"), findPreference("port")};
+
+            for (EditTextPreference editTextPreference : prefs) {
+                assert editTextPreference != null;
+                editTextPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        Toast.makeText(getContext(), getString(R.string.setting_changed_successfully_toast, preference.toString()), Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                });
             }
 
             Preference dlPref = findPreference(DOWNLOAD_DIR_PREF);
