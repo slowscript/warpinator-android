@@ -50,7 +50,7 @@
             app:layout_constraintStart_toEndOf="@+id/imgFromTo"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="?attr/actionModeCopyDrawable"
-            app:tint="#646464"
+            app:tint="@color/colorPrimaryDark"
             tools:srcCompat="?attr/actionModeCopyDrawable" />
 
         <ImageView
@@ -61,7 +61,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="#4CAF50"
+            app:tint="@color/colorPrimary"
             tools:srcCompat="@android:drawable/stat_sys_download" />
 
         <ProgressBar
@@ -73,7 +73,7 @@
             android:layout_marginEnd="8dp"
             android:max="100"
             android:progress="50"
-            android:progressTint="#2196F3"
+            android:progressTint="@color/colorAccent"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnStop"

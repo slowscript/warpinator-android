@@ -97,7 +97,9 @@ public class TransfersActivity extends AppCompatActivity {
             txtIP.setText(remote.address.getHostAddress());
             txtStatus.setText(remote.status.toString());
             imgStatus.setImageResource(Utils.getIconForRemoteStatus(remote.status));
-            imgProfile.setImageBitmap(remote.picture);
+            if (remote.picture != null) {
+                imgProfile.setImageBitmap(remote.picture);
+            }
             fabSend.setEnabled(remote.status == Remote.RemoteStatus.CONNECTED);
             btnReconnect.setVisibility((remote.status == Remote.RemoteStatus.ERROR)
                     || (remote.status == Remote.RemoteStatus.DISCONNECTED)

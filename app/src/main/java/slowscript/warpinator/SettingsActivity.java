@@ -29,6 +29,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
     }
 
     @Override
@@ -55,7 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
                 pref.setOnBindEditTextListener((edit)-> edit.setInputType(InputType.TYPE_CLASS_NUMBER));
             }
 
-            //gives back feedback on change
+            //gives back feedback on change (the setting that are not in the list already gibe back a visual response)
             EditTextPreference[] prefs = {findPreference("displayName"), findPreference("picture"), findPreference("downloadDir"), findPreference("groupcode"), findPreference("port")};
 
             for (EditTextPreference editTextPreference : prefs) {
@@ -67,6 +68,7 @@ public class SettingsActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+
             }
 
             Preference dlPref = findPreference(DOWNLOAD_DIR_PREF);

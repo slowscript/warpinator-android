@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -81,11 +82,13 @@ public class MainService extends Service {
         if(!prefs.getBoolean("background", true))
             return START_STICKY;
 
+        String notificationTitle = getString(R.string.warpinator_notification_title);
+        String notificationButton = getString(R.string.warpinator_notification_button);
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_SERVICE)
-                .setContentTitle("Warpinator service is running")
+                .setContentTitle(notificationTitle)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentIntent(pendingIntent)
-                .addAction(0, "Stop service", stopPendingIntent)
+                .addAction(0, notificationButton, stopPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setShowWhen(false)
                 .setOngoing(true).build();

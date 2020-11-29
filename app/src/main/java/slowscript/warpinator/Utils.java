@@ -120,7 +120,7 @@ public class Utils {
             case DISCONNECTED:
             case ERROR:
             default:
-                return android.R.drawable.ic_delete;
+                return R.drawable.ic_error;
         }
     }
 

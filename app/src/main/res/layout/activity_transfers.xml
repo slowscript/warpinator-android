@@ -14,9 +14,10 @@
         android:layout_height="40dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
+        android:scaleType="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tglStar"
-        app:srcCompat="@android:drawable/ic_menu_revert" />
+        app:srcCompat="@drawable/ic_reconnect" />
 
     <ImageView
         android:id="@+id/imgStatus"
@@ -34,7 +35,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_user" />
 
     <TextView
         android:id="@+id/txtStatus"
@@ -75,7 +77,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@android:drawable/list_selector_background"
-        android:button="@android:drawable/btn_star_big_on"
+        android:button="@drawable/ic_star_empty"
         android:textOff=""
         android:textOn=""
         app:layout_constraintEnd_toEndOf="parent"

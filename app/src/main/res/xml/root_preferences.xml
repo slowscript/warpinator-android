@@ -1,31 +1,32 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
-        android:title="Identity">
+    <PreferenceCategory android:title="@string/identity_settings_category">
 
         <slowscript.warpinator.EditTextPreference
             android:defaultValue="Android"
             android:key="displayName"
-            android:title="Display name" />
+            android:title="@string/display_settings_title" />
 
         <Preference
             android:key="picture"
-            android:title="Profile picture"
+            android:title="@string/picture_settings_title"
             android:enabled="false"/>
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Transfer settings">
+        android:title="@string/transfer_setting_category">
 
         <Preference
             android:key="downloadDir"
-            android:title="Downloads directory" />
+            android:title="@string/download_dir_settings_title"
 
         <SwitchPreferenceCompat
             android:key="notifyIncoming"
-            android:title="Show notification about incoming files"
+            android:title="@string/notification_settings_title"
             android:defaultValue="true"
+            <!-- TODO: translate this -->
             android:summary="This may be affected by Android's notification settings" />
 
         <SwitchPreferenceCompat
@@ -40,22 +41,22 @@
     <PreferenceCategory>
 
         <SwitchPreferenceCompat
-            android:title="Run in background"
+            android:title="@string/background_settings_title"
             android:key="background"
             android:defaultValue="true" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Network">
+        android:title="@string/network_setting_category">
 
-        <slowscript.warpinator.EditTextPreference
+        <slowscript.warpinator.EditTextPreference 
             android:key="groupCode"
-            android:title="Group code"
+            android:title="@string/group_code_settings_title"
             android:defaultValue="Warpinator" />
 
         <slowscript.warpinator.EditTextPreference
-            android:title="Port"
+            android:title="@string/port_settings_title"
             android:key="port"
             android:defaultValue="42000" />
 

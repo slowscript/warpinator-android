@@ -9,6 +9,20 @@
     <string name="about">About</string>
     <string name="settings">Settings</string>
     <string name="title_activity_share">Share with</string>
+    <!-- Setting -->
+    <string name="identity_settings_category">Identity</string>
+    <string name="transfer_setting_category">Transfer settings</string>
+    <string name="network_setting_category">Network</string>
+    <string name="display_settings_title">Display name</string>
+    <string name="picture_settings_title">Profile picture</string>
+    <string name="download_dir_settings_title">Downloads directory</string>
+    <string name="notification_settings_title">Show notification about incoming files</string>
+    <string name="background_settings_title">Run in background</string>
+    <string name="group_code_settings_title">Group code</string>
+    <string name="port_settings_title">Port</string>
+    <!--  Notification  -->
+    <string name="warpinator_notification_title">Warpinator service is running</string>
+    <string name="warpinator_notification_button">Stop service</string>
     <!--  Other  -->
     <string name="not_implemented_toast">Not implemented yet</string>
     <string name="setting_changed_successfully_toast">%1$s changed successfully</string>
