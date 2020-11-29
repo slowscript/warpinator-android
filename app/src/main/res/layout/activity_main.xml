@@ -29,7 +29,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintWidth_max="600dp" />
+        app:layout_constraintWidth_max="600dp"
+        tools:itemCount="4"
+        tools:listitem="@layout/remote_view" />
 
     <TextView
         android:id="@+id/txtNotFound"

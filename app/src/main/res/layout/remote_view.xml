@@ -9,7 +9,7 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardCornerRadius="3dp"
+    app:cardCornerRadius="7dp"
     app:cardElevation="5dp">
 
 
@@ -25,7 +25,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imgProfile"
-            app:srcCompat="@android:drawable/checkbox_on_background" />
+            app:srcCompat="@drawable/ic_status_connected" />
 
         <ImageView
             android:id="@+id/imgProfile"
