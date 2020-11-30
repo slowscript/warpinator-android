@@ -13,6 +13,7 @@
     <string name="identity_settings_category">Identity</string>
     <string name="transfer_setting_category">Transfer settings</string>
     <string name="network_setting_category">Network</string>
+    <string name="aspect_setting_category">Aspect</string>
     <string name="display_settings_title">Display name</string>
     <string name="picture_settings_title">Profile picture</string>
     <string name="download_dir_settings_title">Downloads directory</string>
@@ -20,6 +21,21 @@
     <string name="background_settings_title">Run in background</string>
     <string name="group_code_settings_title">Group code</string>
     <string name="port_settings_title">Port</string>
+    <string name="theme_settings_title">Theme</string>
+    <!--  Theme settings -->
+    <string-array name="theme_settings_entries_array"> <!-- do not translate this -->
+        <item>sysDefault</item>
+        <item>lightTheme</item>
+        <item>darkTheme</item>
+    </string-array>
+    <string-array name="theme_settings_array">
+        <item>@string/sysDefault</item>
+        <item>@string/lightTheme</item>
+        <item>@string/darkTheme</item>
+    </string-array>
+    <string name="sysDefault">Use system default</string>
+    <string name="lightTheme">Light Theme</string>
+    <string name="darkTheme">Dark Theme</string>
     <!--  Notification  -->
     <string name="warpinator_notification_title">Warpinator service is running</string>
     <string name="warpinator_notification_button">Stop service</string>

@@ -61,5 +61,14 @@
             android:defaultValue="42000" />
 
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/aspect_setting_category">
+
+        <ListPreference
+            android:defaultValue="sysDefault"
+            android:entries="@array/theme_settings_array"
+            android:entryValues="@array/theme_settings_entries_array"
+            android:key="theme_setting"
+            android:title="@string/theme_settings_title" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

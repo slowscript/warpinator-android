@@ -3,6 +3,7 @@ package slowscript.warpinator;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.text.InputType;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -70,6 +72,26 @@ public class SettingsActivity extends AppCompatActivity {
                 });
 
             }
+
+            //changes theme based on the new value
+            findPreference("theme_setting").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    switch (newValue.toString()){
+                        case "sysDefault":
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                            break;
+                        case "lightTheme":
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                            break;
+                        case "darkTheme":
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                            break;
+                    }
+                    Toast.makeText(getContext(), getString(R.string.setting_changed_successfully_toast, preference.toString()), Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
 
             Preference dlPref = findPreference(DOWNLOAD_DIR_PREF);
             dlPref.setOnPreferenceClickListener((p)->{
