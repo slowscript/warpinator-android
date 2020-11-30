@@ -27,7 +27,14 @@ import java.util.Enumeration;
 public class Utils {
 
     public static String getDeviceName() {
-        return BluetoothAdapter.getDefaultAdapter().getName();
+        String name;
+        try {
+            name = BluetoothAdapter.getDefaultAdapter().getName();
+        }catch (Exception e){
+            Log.d("ERROR", "This device may not support bluetooth - using default name");
+            name = "Andoid Phone";
+        }
+        return name;
     }
 
     public static String getIPAddress() {
