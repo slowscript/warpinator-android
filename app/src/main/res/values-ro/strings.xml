@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Warpinator</string>
+    <string name="title_activity_transfers">Transferuri</string>
+    <string name="transfer_queue">Listă transferuri</string>
+    <string name="send_files">Trimite fișiere</string>
+    <string name="quit">Părăsește</string>
+    <string name="about">Despre</string>
+    <string name="settings">Setări</string>
+    <string name="title_activity_share">Partajează cu</string>
+    <string name="identity_settings_category">Indentitate</string>
+    <string name="transfer_setting_category">Setări transfer</string>
+    <string name="network_setting_category">Rețea</string>
+    <string name="aspect_setting_category">Aspect</string>
+    <string name="display_settings_title">Nume afișat</string>
+    <string name="picture_settings_title">Poză de profil</string>
+    <string name="download_dir_settings_title">Folder descărcare</string>
+    <string name="notification_settings_title">Afișează notificări despre fișiere în primire</string>
+    <string name="background_settings_title">Rulează în fundal</string>
+    <string name="group_code_settings_title">Cod grup</string>
+    <string name="port_settings_title">Port</string>
+    <string name="theme_settings_title">Temă</string>
+    <string name="warpinator_notification_title">Warpinator e pornit</string>
+    <string name="warpinator_notification_button">Oprește</string>
+    <string name="not_implemented_toast">Neimplementat momentan</string>
+    <string name="setting_changed_successfully_toast">%1$s schimbat cu succes</string>
+    <string name="sysDefault">Folosește setările sistemului</string>
+    <string name="lightTheme">Temă albă</string>
+    <string name="darkTheme">Temă întunecată</string>
+    <string name="available_devices">Dispozite disponibile</string>
+    <string name="no_devices_found">Niciun dispozitiv găsit</string>
+    <string name="waiting_for_permission">Așteptând după permisiune…</string>
+</resources>
