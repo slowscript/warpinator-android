@@ -5,20 +5,22 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.DocumentsContract;
 import android.provider.OpenableColumns;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
+import androidx.documentfile.provider.DocumentFile;
 
-import com.google.common.io.Files;
 import com.google.protobuf.ByteString;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 import io.grpc.StatusException;
 import io.grpc.stub.CallStreamObserver;
@@ -35,8 +37,8 @@ public class Transfer {
         static final int FILE = 1; static final int DIRECTORY = 2; static final int SYMLINK = 3;
     }
 
-    static final String TAG = "TRANSFER";
-    static int CHUNK_SIZE = 1024 * 512; //512 kB
+    private static final String TAG = "TRANSFER";
+    private static final int CHUNK_SIZE = 1024 * 512; //512 kB
 
     public Status status;
     public Direction direction;
@@ -52,7 +54,8 @@ public class Transfer {
     public ArrayList<Uri> uris;
 
     private String currentRelativePath;
-    private FileOutputStream currentStream;
+    private Uri currentUri;
+    private OutputStream currentStream;
     private ArrayList<String> errors = new ArrayList<>();
     private boolean cancelled = false;
     public long bytesTransferred;
@@ -195,7 +198,7 @@ public class Transfer {
         }
         //Check enough space
 
-        //Check if will rewrite
+        //TODO: Check if will rewrite and warn
 
         //Show in UI
         if (svc.transfersView != null && remoteUUID.equals(svc.transfersView.remote.uuid) && svc.transfersView.isTopmost)
@@ -235,12 +238,11 @@ public class Transfer {
             closeStream();
             //Begin new file
             currentRelativePath = chunk.getRelativePath();
-            File path = new File(Utils.getSaveDir(), currentRelativePath); //FIXME: Can this escape saveDir?
+            Uri rootUri = Uri.parse(Server.current.downloadDirUri);
+            DocumentFile root = DocumentFile.fromTreeUri(svc, rootUri);
+
             if (chunk.getFileType() == FileType.DIRECTORY) {
-                if (!path.mkdirs()) {
-                    errors.add("Failed to create directory " + path.getAbsolutePath());
-                    Log.e(TAG, "Failed to create directory " + path.getAbsolutePath());
-                }
+                createDirectories(root, rootUri, currentRelativePath, null);
             }
             else if (chunk.getFileType() == FileType.SYMLINK) {
                 Log.e(TAG, "Symlinks not supported.");
@@ -248,9 +250,23 @@ public class Transfer {
             }
             else {
                 try {
-                    if(path.exists())
-                        path = handleFileExists(path);
-                    currentStream = new FileOutputStream(path, false);
+                    String fileName = currentRelativePath;
+                    //Handle overwriting
+                    if(Utils.pathExistsInTree(svc, rootUri, fileName)) {
+                        fileName = handleFileExists(fileName);
+                    }
+                    //Get parent
+                    DocumentFile parent = root;
+                    if (fileName.contains("/")) {
+                        String parentRelPath = fileName.substring(0, fileName.lastIndexOf("/"));
+                        fileName = fileName.substring(fileName.lastIndexOf("/")+1);
+                        Uri dirUri = Utils.getChildUri(rootUri, parentRelPath);
+                        parent = DocumentFile.fromTreeUri(svc, dirUri);
+                    }
+                    //Create file
+                    DocumentFile file = parent.createFile("", fileName);
+                    currentUri = file.getUri();
+                    currentStream = svc.getContentResolver().openOutputStream(currentUri);
                     currentStream.write(chunk.getChunk().toByteArray());
                     chunkSize = chunk.getChunk().size();
                 } catch (Exception e) {
@@ -265,7 +281,7 @@ public class Transfer {
             } catch (Exception e) {
                 Log.e(TAG, "Failed to write to file " + currentRelativePath, e);
                 errors.add("Failed to write to file " + currentRelativePath);
-                //failReceive();
+                //failReceive(); //SHOULD WE REALLY FAIL??
             }
         }
         bytesTransferred += chunkSize;
@@ -288,8 +304,9 @@ public class Transfer {
 
     private void stopReceiving() {
         closeStream();
-        File f = new File(Utils.getSaveDir(), currentRelativePath);
-        f.delete(); //Delete incomplete file
+        //Delete incomplete file
+        DocumentFile f = DocumentFile.fromSingleUri(svc, currentUri);
+        f.delete();
     }
 
     private void failReceive() {
@@ -310,20 +327,51 @@ public class Transfer {
         }
     }
 
-    private File handleFileExists(File f) {
-        Log.d(TAG, "Receiving to " + f.getAbsolutePath());
+    private String handleFileExists(String path) {
+        Uri root = Uri.parse(Server.current.downloadDirUri);
+        DocumentFile f = Utils.getChildFromTree(svc, root, path);
+        Log.d(TAG, "File exists: " + f.getUri());
         if(svc.server.allowOverwrite) {
+            Log.v(TAG, "Overwriting");
             f.delete();
         } else {
-            String name = f.getParent() + "/" + Files.getNameWithoutExtension(f.getAbsolutePath());
-            String ext = Files.getFileExtension(f.getAbsolutePath());
+            String dir = path.substring(0, path.lastIndexOf("/")+1);
+            String _fileName = path.substring(path.lastIndexOf("/")+1);
+
+            String name = _fileName;
+            String ext = "";
+            if(_fileName.contains(".")) {
+                name = _fileName.substring(0, _fileName.indexOf("."));
+                ext = _fileName.substring(_fileName.indexOf("."));
+            }
             int i = 1;
-            while (f.exists()) {
-                f = new File(String.format("%s(%d).%s", name, i, ext));
+            while (Utils.pathExistsInTree(svc, root, path)) {
+                path = dir + name + "(" + i + ")" + ext;
                 i++;
             }
-            Log.d(TAG, "Renamed to " + f.getAbsolutePath());
+            Log.d(TAG, "Renamed to " + path);
         }
-        return f;
+        return path;
+    }
+
+    private void createDirectories(DocumentFile parent, Uri rootUri, String path, @Nullable String done) {
+        String dir = path;
+        String rest  = null;
+        if (path.contains("/")) {
+            dir = path.substring(0, path.indexOf("/"));
+            rest = path.substring(path.indexOf("/")+1);
+        }
+        String absDir = done == null ? dir : done +"/"+ dir; //Path from rootUri - just to check existence
+        DocumentFile newDir = DocumentFile.fromTreeUri(svc, Utils.getChildUri(rootUri, absDir));
+        if (!newDir.exists()) {
+            newDir = parent.createDirectory(dir);
+            if (newDir == null) {
+                errors.add("Failed to create directory " + absDir);
+                Log.e(TAG, "Failed to create directory " + absDir);
+                return;
+            }
+        }
+        if (rest != null)
+            createDirectories(newDir, rootUri, rest, absDir);
     }
 }

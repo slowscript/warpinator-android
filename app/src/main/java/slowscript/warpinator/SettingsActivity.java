@@ -1,14 +1,18 @@
 package slowscript.warpinator;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.MenuItem;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import slowscript.warpinator.R;
@@ -41,6 +45,9 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
+        private static final int CHOOSE_ROOT_REQ_CODE = 10;
+        private static final String DOWNLOAD_DIR_PREF = "downloadDir";
+
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
@@ -49,8 +56,31 @@ public class SettingsActivity extends AppCompatActivity {
             if (pref != null) {
                 pref.setOnBindEditTextListener((edit)-> edit.setInputType(InputType.TYPE_CLASS_NUMBER));
             }
+
+            Preference dlPref = findPreference(DOWNLOAD_DIR_PREF);
+            dlPref.setOnPreferenceClickListener((p)->{
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+
+                startActivityForResult(intent, CHOOSE_ROOT_REQ_CODE);
+                return true;
+            });
         }
 
-
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == CHOOSE_ROOT_REQ_CODE && resultCode == RESULT_OK) {
+                if (data == null)
+                    return;
+                Uri uri = data.getData();
+                getContext().getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                getPreferenceManager().getSharedPreferences().edit()
+                        .putString(DOWNLOAD_DIR_PREF, uri.toString())
+                        .apply();
+            }
+        }
     }
 }

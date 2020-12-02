@@ -2,18 +2,19 @@ package slowscript.warpinator;
 
 import android.app.ActivityManager;
 import android.bluetooth.BluetoothAdapter;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.net.wifi.WifiManager;
+import android.provider.DocumentsContract;
 import android.provider.OpenableColumns;
-import android.text.format.Formatter;
 import android.util.Log;
+
+import androidx.documentfile.provider.DocumentFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
@@ -66,10 +67,6 @@ public class Utils {
     public static File getCertsDir()
     {
         return new File(MainService.svc.getCacheDir(), "certs");
-    }
-
-    public static File getSaveDir() { //FIXME: Use settings for this
-        return new File("/storage/emulated/0/Download/Warpinator");
     }
 
     public static byte[] readAllBytes(File file) throws IOException {
@@ -125,6 +122,32 @@ public class Utils {
             default:
                 return android.R.drawable.ic_delete;
         }
+    }
+
+    public static Uri getChildUri(Uri treeUri, String path) {
+        String rootID = DocumentsContract.getTreeDocumentId(treeUri);
+        String docID = rootID + "/" + path;
+        return DocumentsContract.buildDocumentUriUsingTree(treeUri, docID);
+    }
+
+    public static DocumentFile getChildFromTree(Context ctx, Uri treeUri, String path) {
+        Uri childUri = getChildUri(treeUri, path);
+        return DocumentFile.fromSingleUri(ctx, childUri);
+    }
+
+    //Just like DocumentFile.exists() but doesn't spam "Failed query" when file is not found
+    public static boolean pathExistsInTree(Context ctx, Uri treeUri, String path) {
+        ContentResolver resolver = ctx.getContentResolver();
+        Uri u = getChildUri(treeUri, path);
+        Cursor c;
+        try {
+            c = resolver.query(u, new String[]{
+                    DocumentsContract.Document.COLUMN_DOCUMENT_ID}, null, null, null);
+            boolean found = c.getCount() > 0;
+            c.close();
+            return found;
+        } catch (Exception ignored) {}
+        return false;
     }
 
     static boolean isMyServiceRunning(Context ctx, Class<?> serviceClass) {

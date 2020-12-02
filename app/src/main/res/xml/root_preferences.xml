@@ -19,11 +19,9 @@
     <PreferenceCategory
         android:title="Transfer settings">
 
-        <EditTextPreference
+        <Preference
             android:key="downloadDir"
-            android:title="Downloads directory"
-            android:defaultValue="/storage/emulated/0/Download/Warpinator"
-            android:enabled="false"/>
+            android:title="Downloads directory" />
 
         <SwitchPreferenceCompat
             android:key="notifyIncoming"

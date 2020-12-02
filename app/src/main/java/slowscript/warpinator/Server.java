@@ -26,6 +26,7 @@ public class Server {
     public String uuid;
     public boolean allowOverwrite;
     public boolean notifyIncoming;
+    public String downloadDirUri;
 
     private final NsdManager nsdManager;
     private final NsdManager.RegistrationListener registrationListener;
@@ -75,6 +76,7 @@ public class Server {
         Authenticator.groupCode = svc.prefs.getString("groupCode", Authenticator.DEFAULT_GROUP_CODE);
         allowOverwrite = svc.prefs.getBoolean("allowOverwrite", false);
         notifyIncoming = svc.prefs.getBoolean("notifyIncoming", true);
+        downloadDirUri = svc.prefs.getString("downloadDir", "");
     }
 
     void startGrpcServer() {

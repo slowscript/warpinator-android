@@ -54,7 +54,6 @@ public class MainService extends Service {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         Authenticator.getServerCertificate(); //Generate cert on start if doesn't exist
-        Utils.getSaveDir().mkdirs();
 
         Log.d(TAG, "Service starting...");
         server = new Server(this);
