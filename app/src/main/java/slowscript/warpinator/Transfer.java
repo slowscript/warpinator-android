@@ -235,7 +235,7 @@ public class Transfer {
         MainService.remotes.get(remoteUUID).startReceiveTransfer(this);
     }
 
-    void declineReceiveTransfer() {
+    void declineTransfer() {
         Log.i(TAG, "Transfer declined");
         MainService.remotes.get(remoteUUID).declineTransfer(this);
         makeDeclined();

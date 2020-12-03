@@ -129,8 +129,8 @@ public class Remote {
     @SuppressLint("CheckResult")
     public void ping() {
         try {
-            Log.v(TAG, "Pinging " + hostname);
-            blockingStub.withDeadlineAfter(10L, TimeUnit.SECONDS).ping(WarpProto.LookupName.getDefaultInstance());
+            //Log.v(TAG, "Pinging " + hostname);
+            blockingStub.withDeadlineAfter(10L, TimeUnit.SECONDS).ping(WarpProto.LookupName.newBuilder().setId(Server.current.uuid).build());
         } catch (Exception e) {
             Log.d(TAG, "ping: Failed with exception", e);
             status = RemoteStatus.DISCONNECTED;

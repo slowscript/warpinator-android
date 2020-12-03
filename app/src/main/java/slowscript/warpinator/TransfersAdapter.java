@@ -37,10 +37,12 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
         holder.progressBar.setVisibility(t.status == Transfer.Status.TRANSFERRING ? View.VISIBLE : View.INVISIBLE);
         holder.progressBar.setProgress(t.getProgress());
         //Buttons
-        if ((t.direction == Transfer.Direction.RECEIVE) && (t.status == Transfer.Status.WAITING_PERMISSION)) {
-            holder.btnAccept.setOnClickListener((v) -> t.startReceive());
-            holder.btnDecline.setOnClickListener((v) -> t.declineReceiveTransfer());
-            holder.btnAccept.setVisibility(View.VISIBLE);
+        if (t.status == Transfer.Status.WAITING_PERMISSION) {
+            if (t.direction == Transfer.Direction.RECEIVE) {
+                holder.btnAccept.setOnClickListener((v) -> t.startReceive());
+                holder.btnAccept.setVisibility(View.VISIBLE);
+            } else holder.btnAccept.setVisibility(View.INVISIBLE);
+            holder.btnDecline.setOnClickListener((v) -> t.declineTransfer());
             holder.btnDecline.setVisibility(View.VISIBLE);
         } else {
             holder.btnAccept.setVisibility(View.INVISIBLE);
