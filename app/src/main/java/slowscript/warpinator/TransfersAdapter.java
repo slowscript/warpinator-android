@@ -55,7 +55,10 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
         //Status label
         switch (t.status) {
             case WAITING_PERMISSION:
-                holder.txtStatus.setText("Waiting for permission...");
+                String str = "Waiting for permission";
+                if (t.overwriteWarning)
+                    str += " (Files may be overwritten!)";
+                holder.txtStatus.setText(str);
                 break;
             case TRANSFERRING:
                 long now = System.currentTimeMillis();

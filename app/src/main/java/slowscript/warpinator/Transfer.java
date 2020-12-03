@@ -52,6 +52,7 @@ public class Transfer {
     int privId;
     //SEND only
     public ArrayList<Uri> uris;
+    public boolean overwriteWarning = false;
 
     private String currentRelativePath;
     private Uri currentUri;
@@ -198,7 +199,16 @@ public class Transfer {
         }
         //Check enough space
 
-        //TODO: Check if will rewrite and warn
+        //Check if will overwrite
+        if (Server.current.allowOverwrite) {
+            Uri treeRoot = Uri.parse(Server.current.downloadDirUri);
+            for (String file : topDirBasenames) {
+                if (Utils.pathExistsInTree(svc, treeRoot, file)) {
+                    overwriteWarning = true;
+                    break;
+                }
+            }
+        }
 
         //Show in UI
         if (svc.transfersView != null && remoteUUID.equals(svc.transfersView.remote.uuid) && svc.transfersView.isTopmost)

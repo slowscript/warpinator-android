@@ -1,6 +1,7 @@
 package slowscript.warpinator;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.util.Log;
@@ -31,6 +32,7 @@ public class Server {
     private final NsdManager nsdManager;
     private final NsdManager.RegistrationListener registrationListener;
     private final NsdManager.DiscoveryListener discoveryListener;
+    private final SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
     private io.grpc.Server gServer;
 
     private final MainService svc;
@@ -46,7 +48,8 @@ public class Server {
         registrationListener = new RegistrationListener();
         discoveryListener = new DiscoveryListener();
 
-        svc.prefs.registerOnSharedPreferenceChangeListener((p, k) -> loadSettings());
+        preferenceChangeListener = (p, k) -> loadSettings();
+        svc.prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
     }
 
     public void Start() {
@@ -63,6 +66,7 @@ public class Server {
         CertServer.Stop();
         nsdManager.unregisterService(registrationListener);
         nsdManager.stopServiceDiscovery(discoveryListener);
+        svc.prefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
         gServer.shutdownNow();
         Log.i(TAG, "Server stopped");
     }
