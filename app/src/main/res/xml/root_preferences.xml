@@ -3,15 +3,14 @@
     <PreferenceCategory
         android:title="Identity">
 
-        <EditTextPreference
+        <slowscript.warpinator.EditTextPreference
             android:defaultValue="Android"
             android:key="displayName"
             android:title="Display name" />
 
-        <EditTextPreference
+        <Preference
             android:key="picture"
             android:title="Profile picture"
-            android:defaultValue="nothing"
             android:enabled="false"/>
 
     </PreferenceCategory>
@@ -50,12 +49,12 @@
     <PreferenceCategory
         android:title="Network">
 
-        <EditTextPreference
-            android:key="groupcode"
+        <slowscript.warpinator.EditTextPreference
+            android:key="groupCode"
             android:title="Group code"
             android:defaultValue="Warpinator" />
 
-        <EditTextPreference
+        <slowscript.warpinator.EditTextPreference
             android:title="Port"
             android:key="port"
             android:defaultValue="42000" />
