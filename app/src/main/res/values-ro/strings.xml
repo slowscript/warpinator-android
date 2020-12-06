@@ -30,4 +30,6 @@
     <string name="available_devices">Dispozite disponibile</string>
     <string name="no_devices_found">Niciun dispozitiv găsit</string>
     <string name="waiting_for_permission">Așteptând după permisiune…</string>
+    <string name="files_overwritten_warning">(Fișierele s-ar putea să fie suprascrise!)</string>
+    <string name="notification_settings_summary">Poate să fie afectate de setările de notificări ale telefonului</string>
 </resources>

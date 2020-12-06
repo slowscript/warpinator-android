@@ -13,6 +13,7 @@
     <string name="no_devices_found">No devices found</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">Waiting for permission…</string>
+    <string name="files_overwritten_warning">(Files may be overwritten!)</string>
     <!--  Setting  -->
     <string name="identity_settings_category">Identity</string>
     <string name="transfer_setting_category">Transfer settings</string>
@@ -26,6 +27,7 @@
     <string name="group_code_settings_title">Group code</string>
     <string name="port_settings_title">Port</string>
     <string name="theme_settings_title">Theme</string>
+    <string name="notification_settings_summary">This may be affected by Android\'s notification settings</string>
     <!--  Theme settings -->
     <string-array name="theme_settings_entries_array"> <!-- do not translate this -->
         <item>sysDefault</item>

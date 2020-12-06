@@ -20,14 +20,13 @@
 
         <Preference
             android:key="downloadDir"
-            android:title="@string/download_dir_settings_title"
+            android:title="@string/download_dir_settings_title" />
 
         <SwitchPreferenceCompat
             android:key="notifyIncoming"
             android:title="@string/notification_settings_title"
             android:defaultValue="true"
-            <!-- TODO: translate this -->
-            android:summary="This may be affected by Android's notification settings" />
+            android:summary="@string/notification_settings_summary" />
 
         <SwitchPreferenceCompat
             android:key="allowOverwrite"

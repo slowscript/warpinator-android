@@ -32,7 +32,7 @@ public class Utils {
             name = BluetoothAdapter.getDefaultAdapter().getName();
         }catch (Exception e){
             Log.d("ERROR", "This device may not support bluetooth - using default name");
-            name = "Andoid Phone";
+            name = "Android Phone";
         }
         return name;
     }
