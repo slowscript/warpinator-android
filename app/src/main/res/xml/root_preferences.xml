@@ -1,32 +1,32 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
-        android:title="Identity">
+    <PreferenceCategory android:title="@string/identity_settings_category">
 
         <slowscript.warpinator.EditTextPreference
             android:defaultValue="Android"
             android:key="displayName"
-            android:title="Display name" />
+            android:title="@string/display_settings_title" />
 
         <Preference
             android:key="picture"
-            android:title="Profile picture"
+            android:title="@string/picture_settings_title"
             android:enabled="false"/>
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Transfer settings">
+        android:title="@string/transfer_setting_category">
 
         <Preference
             android:key="downloadDir"
-            android:title="Downloads directory" />
+            android:title="@string/download_dir_settings_title" />
 
         <SwitchPreferenceCompat
             android:key="notifyIncoming"
-            android:title="Show notification about incoming files"
+            android:title="@string/notification_settings_title"
             android:defaultValue="true"
-            android:summary="This may be affected by Android's notification settings" />
+            android:summary="@string/notification_settings_summary" />
 
         <SwitchPreferenceCompat
             android:key="allowOverwrite"
@@ -40,25 +40,34 @@
     <PreferenceCategory>
 
         <SwitchPreferenceCompat
-            android:title="Run in background"
+            android:title="@string/background_settings_title"
             android:key="background"
             android:defaultValue="true" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Network">
+        android:title="@string/network_setting_category">
 
-        <slowscript.warpinator.EditTextPreference
+        <slowscript.warpinator.EditTextPreference 
             android:key="groupCode"
-            android:title="Group code"
+            android:title="@string/group_code_settings_title"
             android:defaultValue="Warpinator" />
 
         <slowscript.warpinator.EditTextPreference
-            android:title="Port"
+            android:title="@string/port_settings_title"
             android:key="port"
             android:defaultValue="42000" />
 
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/aspect_setting_category">
+
+        <ListPreference
+            android:defaultValue="sysDefault"
+            android:entries="@array/theme_settings_array"
+            android:entryValues="@array/theme_settings_entries_array"
+            android:key="theme_setting"
+            android:title="@string/theme_settings_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>

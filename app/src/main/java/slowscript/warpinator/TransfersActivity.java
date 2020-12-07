@@ -3,6 +3,7 @@ package slowscript.warpinator;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -97,7 +98,12 @@ public class TransfersActivity extends AppCompatActivity {
             txtIP.setText(remote.address.getHostAddress());
             txtStatus.setText(remote.status.toString());
             imgStatus.setImageResource(Utils.getIconForRemoteStatus(remote.status));
-            imgProfile.setImageBitmap(remote.picture);
+            if (remote.picture != null) {
+                imgProfile.setImageBitmap(remote.picture);
+            }
+            else {
+                imgProfile.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.iconTint)));
+            }
             fabSend.setEnabled(remote.status == Remote.RemoteStatus.CONNECTED);
             btnReconnect.setVisibility((remote.status == Remote.RemoteStatus.ERROR)
                     || (remote.status == Remote.RemoteStatus.DISCONNECTED)

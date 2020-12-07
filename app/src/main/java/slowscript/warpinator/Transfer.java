@@ -5,7 +5,6 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.DocumentsContract;
 import android.provider.OpenableColumns;
 import android.util.Log;
 

@@ -5,17 +5,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.MenuItem;
-import android.widget.EditText;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-
-import slowscript.warpinator.R;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -31,6 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
     }
 
     @Override
@@ -56,6 +54,25 @@ public class SettingsActivity extends AppCompatActivity {
             if (pref != null) {
                 pref.setOnBindEditTextListener((edit)-> edit.setInputType(InputType.TYPE_CLASS_NUMBER));
             }
+
+            //changes theme based on the new value
+            findPreference("theme_setting").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    switch (newValue.toString()){
+                        case "sysDefault":
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                            break;
+                        case "lightTheme":
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                            break;
+                        case "darkTheme":
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                            break;
+                    }
+                    return true;
+                }
+            });
 
             Preference dlPref = findPreference(DOWNLOAD_DIR_PREF);
             dlPref.setOnPreferenceClickListener((p)->{

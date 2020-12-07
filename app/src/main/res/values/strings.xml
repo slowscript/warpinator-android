@@ -1,5 +1,7 @@
 <resources>
+    <!--  App Name  -->
     <string name="app_name">Warpinator</string>
+    <!--  Main Activity  -->
     <string name="title_activity_transfers">Transfers</string>
     <string name="transfer_queue">Transfer Queue</string>
     <string name="send_files">Send files</string>
@@ -7,4 +9,43 @@
     <string name="about">About</string>
     <string name="settings">Settings</string>
     <string name="title_activity_share">Share with</string>
+    <string name="available_devices">Available devices</string>
+    <string name="no_devices_found">No devices found</string>
+    <!--  Transfers activity  -->
+    <string name="waiting_for_permission">Waiting for permission…</string>
+    <string name="files_overwritten_warning">(Files may be overwritten!)</string>
+    <!--  Setting  -->
+    <string name="identity_settings_category">Identity</string>
+    <string name="transfer_setting_category">Transfer settings</string>
+    <string name="network_setting_category">Network</string>
+    <string name="aspect_setting_category">Aspect</string>
+    <string name="display_settings_title">Display name</string>
+    <string name="picture_settings_title">Profile picture</string>
+    <string name="download_dir_settings_title">Downloads directory</string>
+    <string name="notification_settings_title">Show notification about incoming files</string>
+    <string name="background_settings_title">Run in background</string>
+    <string name="group_code_settings_title">Group code</string>
+    <string name="port_settings_title">Port</string>
+    <string name="theme_settings_title">Theme</string>
+    <string name="notification_settings_summary">This may be affected by Android\'s notification settings</string>
+    <!--  Theme settings -->
+    <string-array name="theme_settings_entries_array"> <!-- do not translate this -->
+        <item>sysDefault</item>
+        <item>lightTheme</item>
+        <item>darkTheme</item>
+    </string-array>
+    <string-array name="theme_settings_array">
+        <item>@string/sysDefault</item>
+        <item>@string/lightTheme</item>
+        <item>@string/darkTheme</item>
+    </string-array>
+    <string name="sysDefault">Use system default</string>
+    <string name="lightTheme">Light Theme</string>
+    <string name="darkTheme">Dark Theme</string>
+    <!--  Notification  -->
+    <string name="warpinator_notification_title">Warpinator service is running</string>
+    <string name="warpinator_notification_button">Stop service</string>
+    <!--  Other  -->
+    <string name="not_implemented_toast">Not implemented yet</string>
+    <string name="setting_changed_successfully_toast">%1$s changed successfully</string>
 </resources>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground"
-    android:backgroundTint="#23B39DDB"
+    android:backgroundTint="#2375698A"
     tools:context=".TransfersActivity">
 
     <ImageButton
@@ -13,10 +13,12 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
+        android:scaleType="center"
+        android:tint="@color/iconTint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tglStar"
-        app:srcCompat="@android:drawable/ic_menu_revert" />
+        app:srcCompat="@drawable/ic_reconnect" />
 
     <ImageView
         android:id="@+id/imgStatus"
@@ -34,7 +36,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_user" />
 
     <TextView
         android:id="@+id/txtStatus"
@@ -75,7 +78,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@android:drawable/list_selector_background"
-        android:button="@android:drawable/btn_star_big_on"
+        android:button="@drawable/ic_star_empty"
+        android:buttonTint="@color/iconTint"
         android:textOff=""
         android:textOn=""
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +95,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtStatus">
+        app:layout_constraintTop_toBottomOf="@+id/txtStatus"
+        tools:listitem="@layout/transfer_view">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -101,8 +106,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/colorPrimaryDark"
+        android:backgroundTint="#3C3C3C"
         android:clickable="true"
+        app:backgroundTint="#3C3C3C"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/stat_sys_upload" />

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:text="Available devices"
+        android:text="@string/available_devices"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -29,14 +29,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintWidth_max="600dp" />
+        app:layout_constraintWidth_max="600dp"
+        tools:itemCount="4"
+        tools:listitem="@layout/remote_view" />
 
     <TextView
         android:id="@+id/txtNotFound"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="No devices found"
+        android:text="@string/no_devices_found"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
