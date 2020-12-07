@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.provider.OpenableColumns;
 import android.util.Log;
@@ -216,10 +217,13 @@ public class Transfer {
             Intent intent = new Intent(svc, TransfersActivity.class);
             intent.putExtra("remote", remoteUUID);
             PendingIntent pendingIntent = PendingIntent.getActivity(svc, 0, intent, 0);
+            Uri notifSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             Notification notification = new NotificationCompat.Builder(svc, MainService.CHANNEL_INCOMING)
                     .setContentTitle("Incoming transfer from " + MainService.remotes.get(remoteUUID).displayName)
                     .setContentText(fileCount == 1 ? singleName : fileCount + " files")
                     .setSmallIcon(android.R.drawable.stat_sys_download_done)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setSound(notifSound)
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true)
                     .build();
@@ -231,6 +235,7 @@ public class Transfer {
         Log.i(TAG, "Transfer accepted");
         status = Status.TRANSFERRING;
         actualStartTime = System.currentTimeMillis();
+        updateUI();
         MainService.remotes.get(remoteUUID).startReceiveTransfer(this);
     }
 

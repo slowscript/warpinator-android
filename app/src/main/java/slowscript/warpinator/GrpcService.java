@@ -33,7 +33,9 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
 
     @Override
     public void getRemoteMachineAvatar(WarpProto.LookupName request, StreamObserver<WarpProto.RemoteMachineAvatar> responseObserver) {
-        responseObserver.onError(new io.grpc.StatusException(Status.NOT_FOUND)); //TODO: Set picture
+        responseObserver.onNext(WarpProto.RemoteMachineAvatar.newBuilder()
+                .setAvatarChunk(Server.current.getProfilePictureBytes()).build());
+        responseObserver.onCompleted();
     }
 
     @Override

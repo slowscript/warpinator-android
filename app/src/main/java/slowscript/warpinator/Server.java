@@ -2,15 +2,25 @@ package slowscript.warpinator;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.core.content.res.ResourcesCompat;
+
+import com.google.protobuf.ByteString;
+
 import org.conscrypt.Conscrypt;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.security.Security;
+import java.util.Random;
 import java.util.UUID;
 
 import io.grpc.netty.GrpcSslContexts;
@@ -25,6 +35,7 @@ public class Server {
     static String displayName;
     public int port;
     public String uuid;
+    public String profilePicture;
     public boolean allowOverwrite;
     public boolean notifyIncoming;
     public String downloadDirUri;
@@ -81,6 +92,7 @@ public class Server {
         allowOverwrite = svc.prefs.getBoolean("allowOverwrite", false);
         notifyIncoming = svc.prefs.getBoolean("notifyIncoming", true);
         downloadDirUri = svc.prefs.getString("downloadDir", "");
+        profilePicture = svc.prefs.getString("profile", String.valueOf(new Random().nextInt(12)));
     }
 
     void startGrpcServer() {
@@ -211,5 +223,27 @@ public class Server {
                 svc.addRemote(remote);
             }
         };
+    }
+
+    Bitmap getProfilePicture(String picture) {
+        int[] colors = new int[] {0xfff44336, 0xffe91e63, 0xff9c27b0, 0xff3f51b5, 0xff2196f3, 0xff4caf50,
+                0xff8bc34a, 0xffcddc39, 0xffffeb3b, 0xffffc107, 0xffff9800, 0xffff5722};
+        int i = Integer.parseInt(picture); //Could be also a content uri in the future
+        Drawable foreground = ResourcesCompat.getDrawable(svc.getResources(), R.mipmap.ic_launcher_foreground, null);
+        Bitmap bmp = Bitmap.createBitmap(96, 96, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bmp);
+        Paint paint = new Paint();
+        paint.setColor(colors[i]);
+        canvas.drawCircle(48,48,48, paint);
+        foreground.setBounds(0,0,96,96);
+        foreground.draw(canvas);
+        return bmp;
+    }
+
+    ByteString getProfilePictureBytes() {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        Bitmap bmp = getProfilePicture(profilePicture);
+        bmp.compress(Bitmap.CompressFormat.PNG, 90, os);
+        return ByteString.copyFrom(os.toByteArray());
     }
 }
