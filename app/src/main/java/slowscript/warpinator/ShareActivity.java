@@ -1,22 +1,17 @@
 package slowscript.warpinator;
 
-import android.content.ClipData;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -87,6 +82,11 @@ public class ShareActivity extends AppCompatActivity {
         };
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefs.getString("downloadDir", "").equals("")) {
+            MainActivity.askForDirectoryAccess(this);
+        }
     }
 
     @Override

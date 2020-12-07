@@ -50,4 +50,6 @@
     <!--  Other  -->
     <string name="not_implemented_toast">Not implemented yet</string>
     <string name="setting_changed_successfully_toast">%1$s changed successfully</string>
+    <string name="please_select_download_dir">This is likely the first time you are launching this application.
+        Please select a directory where you want Warpinator to save files into.</string>
 </resources>

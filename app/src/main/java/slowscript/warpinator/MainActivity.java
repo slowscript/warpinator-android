@@ -1,9 +1,8 @@
 package slowscript.warpinator;
 
-import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -14,9 +13,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,13 +47,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         txtNotFound = findViewById(R.id.txtNotFound);
 
-        if (!checkWriteExternalPermission())
-            ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-
         //initializes theme based on preferences
-        SharedPreferences prefs;
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         switch (prefs.getString("theme_setting", "sysDefault")){
             case "sysDefault":
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
@@ -65,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
             case "darkTheme":
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 break;
+        }
+
+        if (prefs.getString("downloadDir", "").equals("")) {
+            askForDirectoryAccess(this);
         }
     }
 
@@ -117,10 +115,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private boolean checkWriteExternalPermission()
-    {
-        String permission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-        int res = checkCallingOrSelfPermission(permission);
-        return (res == PackageManager.PERMISSION_GRANTED);
+    public static void askForDirectoryAccess(Activity a) {
+        new AlertDialog.Builder(a)
+            .setTitle(R.string.download_dir_settings_title)
+            .setMessage(R.string.please_select_download_dir)
+            .setPositiveButton(android.R.string.ok, (b,c) -> {
+                Intent intent = new Intent(a, SettingsActivity.class);
+                intent.putExtra("pickDir", true);
+                a.startActivity(intent);
+            })
+            .show();
     }
 }

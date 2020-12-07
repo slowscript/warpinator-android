@@ -18,28 +18,39 @@ import androidx.preference.SwitchPreferenceCompat;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    SettingsFragment fragment;
+    boolean pickDir;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
+        fragment = new SettingsFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.settings, new SettingsFragment())
+                .replace(R.id.settings, fragment)
                 .commit();
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        pickDir = getIntent().getBooleanExtra("pickDir", false);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(pickDir) {
+            pickDir = false; //Only once
+            fragment.pickDirectory();
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                super.onBackPressed();
-                return true;
+        // Respond to the action bar's Up/Home button
+        if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -97,14 +108,18 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
             dlPref.setOnPreferenceClickListener((p)->{
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-
-                startActivityForResult(intent, CHOOSE_ROOT_REQ_CODE);
+                pickDirectory();
                 return true;
             });
+        }
+
+        public void pickDirectory() {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+
+            startActivityForResult(intent, CHOOSE_ROOT_REQ_CODE);
         }
 
         @Override
