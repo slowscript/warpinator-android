@@ -2,9 +2,7 @@ package slowscript.warpinator;
 
 import android.util.Base64;
 import android.util.Log;
-import android.widget.Toast;
 
-import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -32,8 +30,8 @@ public class CertServer implements Runnable{
     public static void Stop() {
         //It's a UDP server, it doesn't lock anything so this shouldn't matter
         //Close should cancel the receive method
-        serverSocket.close();
         running = false;
+        serverSocket.close();
     }
 
     public void run() {
@@ -41,7 +39,6 @@ public class CertServer implements Runnable{
              serverSocket = new DatagramSocket(PORT);
         } catch (SocketException e){
             Log.e(TAG, "Failed to start certificate server", e);
-            Toast.makeText(MainService.svc, "Failed to start certificate server. Try restarting the application.", Toast.LENGTH_LONG).show();
             return;
         }
         byte[] receiveData = new byte[1024];
@@ -64,7 +61,9 @@ public class CertServer implements Runnable{
                     Log.d(TAG, "Certificate sent");
                 }
             } catch (Exception e) {
-                Log.w (TAG, "Error while running CertServer. Restarting. || " + e.getMessage());
+                if (running) {
+                    Log.w(TAG, "Error while running CertServer. Restarting. || " + e.getMessage());
+                }
             }
         }
     }

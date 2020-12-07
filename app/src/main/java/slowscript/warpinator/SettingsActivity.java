@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreferenceCompat;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -45,36 +47,55 @@ public class SettingsActivity extends AppCompatActivity {
     public static class SettingsFragment extends PreferenceFragmentCompat {
         private static final int CHOOSE_ROOT_REQ_CODE = 10;
         private static final String DOWNLOAD_DIR_PREF = "downloadDir";
+        private static final String PORT_PREF = "port";
+        private static final String GROUPCODE_PREF = "groupCode";
+        private static final String BACKGROUND_PREF = "background";
+        private static final String THEME_PREF = "theme_setting";
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
-            EditTextPreference pref = findPreference("port");
-            if (pref != null) {
-                pref.setOnBindEditTextListener((edit)-> edit.setInputType(InputType.TYPE_CLASS_NUMBER));
-            }
+            EditTextPreference gcPref = findPreference(GROUPCODE_PREF);
+            SwitchPreferenceCompat bgPref = findPreference(BACKGROUND_PREF);
+            Preference dlPref = findPreference(DOWNLOAD_DIR_PREF);
+            Preference themePref = findPreference(THEME_PREF);
+            EditTextPreference portPref = findPreference(PORT_PREF);
+            portPref.setOnBindEditTextListener((edit)-> edit.setInputType(InputType.TYPE_CLASS_NUMBER));
 
-            //changes theme based on the new value
-            findPreference("theme_setting").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    switch (newValue.toString()){
-                        case "sysDefault":
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                            break;
-                        case "lightTheme":
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                            break;
-                        case "darkTheme":
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                            break;
-                    }
+            //Warn about preference not being applied immediately
+            for (Preference pref : new Preference[]{gcPref, bgPref}) {
+                pref.setOnPreferenceChangeListener((p,v) -> {
+                    Toast.makeText(getContext(), R.string.requires_restart_warning, Toast.LENGTH_SHORT).show();
                     return true;
+                });
+            }
+            //Ensure port number is correct
+            portPref.setOnPreferenceChangeListener((p, val) -> {
+                int port = Integer.parseInt((String)val);
+                if (port > 65535 || port < 1024) {
+                    Toast.makeText(getContext(), R.string.port_range_warning, Toast.LENGTH_LONG).show();
+                    return false;
                 }
+                Toast.makeText(getContext(), R.string.requires_restart_warning, Toast.LENGTH_SHORT).show();
+                return true;
+            });
+            //Change theme based on the new value
+            themePref.setOnPreferenceChangeListener((preference, newValue) -> {
+                switch (newValue.toString()){
+                    case "sysDefault":
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                        break;
+                    case "lightTheme":
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        break;
+                    case "darkTheme":
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        break;
+                }
+                return true;
             });
 
-            Preference dlPref = findPreference(DOWNLOAD_DIR_PREF);
             dlPref.setOnPreferenceClickListener((p)->{
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

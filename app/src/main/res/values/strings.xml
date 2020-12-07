@@ -28,6 +28,8 @@
     <string name="port_settings_title">Port</string>
     <string name="theme_settings_title">Theme</string>
     <string name="notification_settings_summary">This may be affected by Android\'s notification settings</string>
+    <string name="port_range_warning">Port number must be between 1024 and 65535</string>
+    <string name="requires_restart_warning">Changing this setting requires the application to be restarted</string>
     <!--  Theme settings -->
     <string-array name="theme_settings_entries_array"> <!-- do not translate this -->
         <item>sysDefault</item>
