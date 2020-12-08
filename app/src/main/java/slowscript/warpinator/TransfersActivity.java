@@ -100,8 +100,8 @@ public class TransfersActivity extends AppCompatActivity {
             imgStatus.setImageResource(Utils.getIconForRemoteStatus(remote.status));
             if (remote.picture != null) {
                 imgProfile.setImageBitmap(remote.picture);
-            }
-            else {
+                imgProfile.setImageTintList(null);
+            } else { //Keep default, apply tint
                 imgProfile.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.iconTint)));
             }
             fabSend.setEnabled(remote.status == Remote.RemoteStatus.CONNECTED);

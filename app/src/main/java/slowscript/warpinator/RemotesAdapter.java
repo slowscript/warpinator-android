@@ -51,8 +51,8 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
         holder.txtIP.setText(r.address.getHostAddress() + ":" + r.port);
         if(r.picture != null) {
             holder.imgProfile.setImageBitmap(r.picture);
-        }
-        else {
+            holder.imgProfile.setImageTintList(null);
+        } else { //Keep default, apply tint
             holder.imgProfile.setImageTintList(ColorStateList.valueOf(app.getResources().getColor(R.color.iconTint)));
         }
         holder.imgStatus.setImageResource(Utils.getIconForRemoteStatus(r.status));

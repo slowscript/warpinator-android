@@ -92,7 +92,8 @@ public class Transfer {
     void updateUI() {
         if (svc.transfersView != null)
             svc.transfersView.updateTransfer(remoteUUID, privId);
-        //TODO: update notification
+        //Update notification
+        svc.updateProgress();
     }
 
     // -- SEND --

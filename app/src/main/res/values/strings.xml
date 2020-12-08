@@ -47,6 +47,8 @@
     <!--  Notification  -->
     <string name="warpinator_notification_title">Warpinator service is running</string>
     <string name="warpinator_notification_button">Stop service</string>
+    <string name="transfers_complete">All transfers are complete</string>
+    <string name="transfer_notification">%.1f%%, %d transfers, %s/s</string>
     <!--  Other  -->
     <string name="not_implemented_toast">Not implemented yet</string>
     <string name="setting_changed_successfully_toast">%1$s changed successfully</string>

@@ -13,6 +13,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.text.format.Formatter;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -20,14 +21,19 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainService extends Service {
     private static final String TAG = "SERVICE";
 
     public static String CHANNEL_SERVICE = "MainService";
     public static String CHANNEL_INCOMING = "IncomingTransfer";
+    public static String CHANNEL_PROGRESS = "TransferProgress";
     static String ACTION_STOP = "StopSvc";
     static long pingTime = 10_000;
 
@@ -39,7 +45,9 @@ public class MainService extends Service {
 
     public static MainService svc;
     public NotificationManagerCompat notificationMgr;
+    NotificationCompat.Builder notifBuilder = null;
     Timer pingTimer;
+    ExecutorService executor = Executors.newSingleThreadExecutor();
 
     @Nullable
     @Override
@@ -110,6 +118,48 @@ public class MainService extends Service {
             r.disconnect();
         }
         remotes.clear();
+        executor.shutdown();
+        pingTimer.cancel();
+    }
+
+    public void updateProgress() {
+        //Do this on another thread as we don't want to block a sender or receiver thread
+        executor.submit(this::updateNotification);
+    }
+
+    void updateNotification() {
+        if (notifBuilder == null) {
+            notifBuilder = new NotificationCompat.Builder(this, CHANNEL_PROGRESS);
+            notifBuilder.setSmallIcon(R.drawable.ic_notification)
+                    .setOngoing(true)
+                    .setPriority(NotificationCompat.PRIORITY_LOW);
+        }
+        int numTransfers = 0;
+        long bytesDone = 0;
+        long bytesTotal = 0;
+        long bytesPerSecond = 0;
+        for (Remote r : remotes.values()) {
+            for (Transfer t : r.transfers) {
+                if (t.status == Transfer.Status.TRANSFERRING) {
+                    numTransfers++;
+                    bytesDone += t.bytesTransferred;
+                    bytesTotal += t.totalSize;
+                    bytesPerSecond += t.bytesPerSecond;
+                }
+            }
+        }
+        int progress = (int)((float)bytesDone / bytesTotal * 1000f);
+        if (numTransfers > 0) {
+            notifBuilder.setOngoing(true);
+            notifBuilder.setProgress(1000, progress, false);
+            notifBuilder.setContentTitle(String.format(Locale.getDefault(), getString(R.string.transfer_notification),
+                    progress/10f, numTransfers, Formatter.formatFileSize(this, bytesPerSecond)));
+        } else {
+            notifBuilder.setProgress(0, 0, false);
+            notifBuilder.setContentTitle(getString(R.string.transfers_complete));
+            notifBuilder.setOngoing(false);
+        }
+        notificationMgr.notify(2, notifBuilder.build());
     }
 
     void pingRemotes() {
@@ -149,10 +199,15 @@ public class MainService extends Service {
             int importance2 = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel channel2 = new NotificationChannel(CHANNEL_INCOMING, name2, importance2);
 
+            CharSequence name3 = "Transfer progress";
+            int importance3 = NotificationManager.IMPORTANCE_LOW;
+            NotificationChannel channel3 = new NotificationChannel(CHANNEL_PROGRESS, name3, importance3);
+
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             assert notificationManager != null;
             notificationManager.createNotificationChannel(channel);
             notificationManager.createNotificationChannel(channel2);
+            notificationManager.createNotificationChannel(channel3);
         }
     }
 
