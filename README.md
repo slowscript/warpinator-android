@@ -2,7 +2,8 @@
 
 This is an unofficial reimplementation of Linux Mint's file sharing tool [Warpinator](https://github.com/linuxmint/warpinator) for Android.
 
-Implementation of the protocol is mostly complete (although sometimes buggy) but the UI still needs some work.
+## Download
+Get the APK from the "Releases" page
 
 ## Building
 

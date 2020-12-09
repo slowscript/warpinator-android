@@ -10,7 +10,7 @@ android {
         minSdkVersion 21 //Required by NSD (attributes)
         targetSdkVersion 29
         versionCode 100
-        versionName "1.0"
+        versionName "0.1b"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
