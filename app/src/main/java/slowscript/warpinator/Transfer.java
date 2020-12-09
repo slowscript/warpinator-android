@@ -17,6 +17,7 @@ import com.google.protobuf.ByteString;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -279,7 +280,8 @@ public class Transfer {
                         parent = DocumentFile.fromTreeUri(svc, dirUri);
                     }
                     //Create file
-                    DocumentFile file = parent.createFile("", fileName);
+                    String mime = guessMimeType(fileName);
+                    DocumentFile file = parent.createFile(mime, fileName);
                     currentUri = file.getUri();
                     currentStream = svc.getContentResolver().openOutputStream(currentUri);
                     currentStream.write(chunk.getChunk().toByteArray());
@@ -388,5 +390,14 @@ public class Transfer {
         }
         if (rest != null)
             createDirectories(newDir, rootUri, rest, absDir);
+    }
+
+    private String guessMimeType(String name) {
+        //We don't care about knowing the EXACT mime type
+        //This is only to prevent fail on some devices that reject empty mime type
+        String mime = URLConnection.guessContentTypeFromName(name);
+        if (mime == null)
+            mime = "application/octet-stream";
+        return mime;
     }
 }
