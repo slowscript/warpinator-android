@@ -73,10 +73,10 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
                 holder.txtStatus.setText(status);
                 break;
             default:
-                holder.txtStatus.setText(t.status.toString());
+                holder.txtStatus.setText(activity.getResources().getStringArray(R.array.transfer_states)[t.status.ordinal()]);
         }
         //Images
-        holder.imgFromTo.setImageResource(t.direction == Transfer.Direction.SEND ? android.R.drawable.stat_sys_upload : android.R.drawable.stat_sys_download);
+        holder.imgFromTo.setImageResource(t.direction == Transfer.Direction.SEND ? R.drawable.ic_upload : R.drawable.ic_download);
 
     }
 

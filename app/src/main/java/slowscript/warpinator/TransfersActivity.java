@@ -1,5 +1,6 @@
 package slowscript.warpinator;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,9 +35,9 @@ public class TransfersActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     TransfersAdapter adapter;
 
+    TextView txtName;
     TextView txtRemote;
     TextView txtIP;
-    TextView txtStatus;
     ImageView imgProfile;
     ImageView imgStatus;
     FloatingActionButton fabSend;
@@ -44,6 +46,7 @@ public class TransfersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.anim_push_up, R.anim.anim_null);
         setContentView(R.layout.activity_transfers);
         String id = getIntent().getStringExtra("remote");
         remote = MainService.remotes.get(id);
@@ -59,15 +62,19 @@ public class TransfersActivity extends AppCompatActivity {
             ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
         }
 
+        txtName = findViewById(R.id.txtDisplayName);
         txtRemote = findViewById(R.id.txtRemote);
         txtIP = findViewById(R.id.txtIP);
-        txtStatus = findViewById(R.id.txtStatus);
         imgStatus = findViewById(R.id.imgStatus);
         imgProfile = findViewById(R.id.imgProfile);
         fabSend = findViewById(R.id.fabSend);
         fabSend.setOnClickListener((v) -> openFiles());
         btnReconnect = findViewById(R.id.btnReconnect);
         btnReconnect.setOnClickListener((v) -> reconnect());
+
+        imgStatus.setOnClickListener(view -> {
+            Toast.makeText(getBaseContext(), getResources().getStringArray(R.array.connected_states)[remote.status.ordinal()], Toast.LENGTH_LONG).show();
+        });
 
         updateUI();
     }
@@ -92,12 +99,24 @@ public class TransfersActivity extends AppCompatActivity {
         MainService.svc.transfersView = null;
     }
 
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        TransfersActivity.this.overridePendingTransition(R.anim.anim_null, R.anim.anim_push_down);
+    }
+
+    @SuppressLint("SetTextI18n")
     public void updateUI() {
         runOnUiThread(() -> { //Will run immediately if on correct thread already
-            txtRemote.setText(remote.displayName + " (" + remote.userName + "@" + remote.hostname + ")");
+            txtName.setText(remote.displayName);
+            txtRemote.setText(remote.userName + "@" + remote.hostname);
             txtIP.setText(remote.address.getHostAddress());
-            txtStatus.setText(remote.status.toString());
             imgStatus.setImageResource(Utils.getIconForRemoteStatus(remote.status));
+            if (remote.status == Remote.RemoteStatus.ERROR || remote.status == Remote.RemoteStatus.DISCONNECTED) {
+                imgStatus.setImageTintList(null);
+            } else {
+                imgStatus.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.iconsOrTextTint)));
+            }
             if (remote.picture != null) {
                 imgProfile.setImageBitmap(remote.picture);
                 imgProfile.setImageTintList(null);
