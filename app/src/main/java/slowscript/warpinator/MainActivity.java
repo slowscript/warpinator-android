@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     static MainActivity current;
     RecyclerView recyclerView;
     RemotesAdapter adapter;
-    TextView txtNotFound;
+    LinearLayout layoutNotFound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new RemotesAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        txtNotFound = findViewById(R.id.txtNotFound);
+        layoutNotFound = findViewById(R.id.layoutNotFound);
 
         //initializes theme based on preferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     public void updateRemoteList() {
         runOnUiThread(() -> {
             adapter.notifyDataSetChanged();
-            txtNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
+            layoutNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
         });
     }
 

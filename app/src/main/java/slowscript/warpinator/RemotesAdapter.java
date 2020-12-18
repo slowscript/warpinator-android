@@ -53,9 +53,14 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
             holder.imgProfile.setImageBitmap(r.picture);
             holder.imgProfile.setImageTintList(null);
         } else { //Keep default, apply tint
-            holder.imgProfile.setImageTintList(ColorStateList.valueOf(app.getResources().getColor(R.color.iconTint)));
+            holder.imgProfile.setImageTintList(ColorStateList.valueOf(app.getResources().getColor(R.color.whiteOnPurple)));
         }
         holder.imgStatus.setImageResource(Utils.getIconForRemoteStatus(r.status));
+        if (r.status == Remote.RemoteStatus.ERROR || r.status == Remote.RemoteStatus.DISCONNECTED) {
+            holder.imgStatus.setImageTintList(null);
+        } else {
+            holder.imgStatus.setImageTintList(ColorStateList.valueOf(app.getResources().getColor(R.color.whiteOnPurple)));
+        }
     }
 
     @Override

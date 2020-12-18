@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#66479E</color>
-    <color name="iconTint">#333333</color>
+    <color name="colorPrimary">#6500AD</color>
+    <color name="colorPrimaryDark">#4F0087</color>
+    <color name="colorAccent">#6500AD</color>
+    <color name="background">#D1D1D1</color>
+    <color name="backgroundDark">#C2C2C2</color>
+    <color name="iconsOrTextTint">#454545</color>
+    <color name="whiteOnPurple">#CFCFCF</color>
 </resources>

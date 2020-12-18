@@ -10,7 +10,7 @@
     <string name="settings">Settings</string>
     <string name="title_activity_share">Share with</string>
     <string name="available_devices">Available devices</string>
-    <string name="no_devices_found">No devices found</string>
+    <string name="no_devices_found">No other devices found</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">Waiting for permission…</string>
     <string name="files_overwritten_warning">(Files may be overwritten!)</string>

@@ -102,7 +102,7 @@ public class TransfersActivity extends AppCompatActivity {
                 imgProfile.setImageBitmap(remote.picture);
                 imgProfile.setImageTintList(null);
             } else { //Keep default, apply tint
-                imgProfile.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.iconTint)));
+                imgProfile.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.iconsOrTextTint)));
             }
             fabSend.setEnabled(remote.status == Remote.RemoteStatus.CONNECTED);
             btnReconnect.setVisibility((remote.status == Remote.RemoteStatus.ERROR)

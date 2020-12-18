@@ -15,7 +15,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:scaleType="center"
-        android:tint="@color/iconTint"
+        android:tint="@color/iconsOrTextTint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tglStar"
         app:srcCompat="@drawable/ic_reconnect" />
@@ -79,7 +79,7 @@
         android:layout_marginEnd="16dp"
         android:background="@android:drawable/list_selector_background"
         android:button="@drawable/ic_star_empty"
-        android:buttonTint="@color/iconTint"
+        android:buttonTint="@color/iconsOrTextTint"
         android:textOff=""
         android:textOn=""
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="iconTint">#FFC5C4C6</color>
+    <color name="background">#2B2B2B</color>
+    <color name="backgroundDark">#262626</color>
+    <color name="iconsOrTextTint">#CFCFCF</color>
 </resources>
