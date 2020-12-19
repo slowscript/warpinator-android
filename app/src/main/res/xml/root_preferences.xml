@@ -23,10 +23,10 @@
             android:title="@string/download_dir_settings_title" />
 
         <SwitchPreferenceCompat
-            android:key="notifyIncoming"
-            android:title="@string/notification_settings_title"
             android:defaultValue="true"
-            android:summary="@string/notification_settings_summary" />
+            android:key="notifyIncoming"
+            android:summary="@string/notification_settings_summary"
+            android:title="@string/notification_settings_title" />
 
         <SwitchPreferenceCompat
             android:key="allowOverwrite"

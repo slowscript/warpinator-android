@@ -6,7 +6,15 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionBarPopupTheme">@style/PopupMenu</item>
+        <item name="android:textColor">@color/iconsOrTextTint</item>
     </style>
+
+    <style name="PopupMenu" parent="Widget.AppCompat.ListPopupWindow">
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:textColorPrimary">@color/iconsOrTextTint</item>
+    </style>
+
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
