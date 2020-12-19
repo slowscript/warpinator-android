@@ -1,35 +1,61 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Warpinator</string>
     <string name="title_activity_transfers">Transferuri</string>
-    <string name="transfer_queue">Listă transferuri</string>
     <string name="send_files">Trimite fișiere</string>
-    <string name="quit">Părăsește</string>
+    <string name="quit">Părăsește aplicația</string>
     <string name="about">Despre</string>
     <string name="settings">Setări</string>
-    <string name="title_activity_share">Partajează cu</string>
+    <string name="title_activity_share">Partajează</string>
+    <string name="available_devices">Dispozitive</string>
+    <string name="no_devices_found">Niciun alt dispozitiv găsit</string>
+    <string name="waiting_for_permission">Așteaptând permisiunea…</string>
+    <string name="files_overwritten_warning">(S-ar putea ca fișierele să fie suprapuse!)</string>
+    <string name="version">Versiune: %1$s</string>
+    <string name="about_description">Un port neofficial pentru Warpinator \nTrimite și primește fișiere prin internet.</string>
+    <string name="warranty_html">Acest program nu are nicio garanție.&lt;br>Vedeți &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>, de la versiunea a 3-a încoace pentru mai multe detalii.</string>
     <string name="identity_settings_category">Indentitate</string>
-    <string name="transfer_setting_category">Setări transfer</string>
+    <string name="transfer_setting_category">Setări de transfer</string>
     <string name="network_setting_category">Rețea</string>
     <string name="aspect_setting_category">Aspect</string>
-    <string name="display_settings_title">Nume afișat</string>
+    <string name="display_settings_title">Numele afișat</string>
     <string name="picture_settings_title">Poză de profil</string>
-    <string name="download_dir_settings_title">Folder descărcare</string>
-    <string name="notification_settings_title">Afișează notificări despre fișiere în primire</string>
+    <string name="download_dir_settings_title">Folder de descărcări</string>
+    <string name="notification_settings_title">Primește notificări despre primiri</string>
     <string name="background_settings_title">Rulează în fundal</string>
-    <string name="group_code_settings_title">Cod grup</string>
+    <string name="group_code_settings_title">Cod de grup</string>
     <string name="port_settings_title">Port</string>
     <string name="theme_settings_title">Temă</string>
-    <string name="warpinator_notification_title">Warpinator e pornit</string>
-    <string name="warpinator_notification_button">Oprește</string>
-    <string name="not_implemented_toast">Neimplementat momentan</string>
-    <string name="setting_changed_successfully_toast">%1$s schimbat cu succes</string>
-    <string name="sysDefault">Folosește setările sistemului</string>
-    <string name="lightTheme">Temă albă</string>
+    <string name="notification_settings_summary">Poate fi afectat de setările de notificări ale sistemului</string>
+    <string name="port_range_warning">Portul trebuie să fie între 1024 și 65535</string>
+    <string name="requires_restart_warning">Schimbarea acestei setări necesită repornirea aplicației</string>    <string name="sysDefault">Use system default</string>
+    <string name="lightTheme">Temă deschisă</string>
     <string name="darkTheme">Temă întunecată</string>
-    <string name="available_devices">Dispozite disponibile</string>
-    <string name="no_devices_found">Niciun dispozitiv găsit</string>
-    <string name="waiting_for_permission">Așteptând după permisiune…</string>
-    <string name="files_overwritten_warning">(Fișierele s-ar putea să fie suprascrise!)</string>
-    <string name="notification_settings_summary">Poate să fie afectate de setările de notificări ale telefonului</string>
+    <string name="warpinator_notification_title">Serviciul Warpinator rulează</string>
+    <string name="warpinator_notification_button">Oprește</string>
+    <string name="transfers_complete">Toate transferurile sunt complete</string>
+    <string name="transfer_notification">%.1f%%, %d transferuri, %s/s</string>
+    <string name="please_select_download_dir">Este probabil prima dată când folosiți această aplicație.
+         Vă rugăm să selectați un folder în care doriți ca Warpinator să salveze fișierele.</string>
+    <string-array name="connected_states">
+        <item>Conectat</item>
+        <item>Deconectat</item>
+        <item>Se conectează</item>
+        <item>Conectare eșuată</item>
+        <item>Se așteaptă duplex-ul</item>
+    </string-array>
+    <string-array name="transfer_states">
+        <item>Inițializare</item>
+        <item>Se așteaptă permisiunea…</item>
+        <item>Refuzat</item>
+        <item>Se transferă</item>
+        <item>Întrerupt</item>
+        <item>Oprit</item>
+        <item>Eșuat</item>
+        <item>Eșec irecuperabil</item>
+        <item>Fișierul nu a fost găsit</item>
+        <item>Terminat</item>
+        <item>Terminat cu erori</item>
+    </string-array>
+    <string name="overwrite_settings_title">Permite suprascrierea</string>
+    <string name="overwrite_settings_summary_on">Fișierele primite vor suprascrie fișierele cu același nume</string>
+    <string name="overwrite_settings_summary_off">Fișierele primite nu vor suprascrie fișierele cu același nume, ci vor fi redenumite</string>
 </resources>

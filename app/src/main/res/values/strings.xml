@@ -1,9 +1,8 @@
 <resources>
     <!--  App Name  -->
-    <string name="app_name">Warpinator</string>
+    <string name="app_name" translatable="false">Warpinator</string>
     <!--  Main Activity  -->
     <string name="title_activity_transfers">Transfers</string>
-    <string name="transfer_queue">Transfer Queue</string>
     <string name="send_files">Send files</string>
     <string name="quit">Quit</string>
     <string name="about">About</string>
@@ -27,6 +26,7 @@
     <string name="picture_settings_title">Profile picture</string>
     <string name="download_dir_settings_title">Downloads directory</string>
     <string name="notification_settings_title">Show notification about incoming files</string>
+    <string name="overwrite_settings_title">Allow overwriting</string>
     <string name="background_settings_title">Run in background</string>
     <string name="group_code_settings_title">Group code</string>
     <string name="port_settings_title">Port</string>
@@ -34,6 +34,8 @@
     <string name="notification_settings_summary">This may be affected by Android\'s notification settings</string>
     <string name="port_range_warning">Port number must be between 1024 and 65535</string>
     <string name="requires_restart_warning">Changing this setting requires the application to be restarted</string>
+    <string name="overwrite_settings_summary_on">Incoming files with a name that already exists will overwrite the existing ones</string>
+    <string name="overwrite_settings_summary_off">Incoming files with a name that already exists will be renamed</string>
     <!--  Theme settings -->
     <string-array name="theme_settings_entries_array"> <!-- do not translate this -->
         <item>sysDefault</item>
@@ -54,7 +56,6 @@
     <string name="transfers_complete">All transfers are complete</string>
     <string name="transfer_notification">%.1f%%, %d transfers, %s/s</string>
     <!--  Other  -->
-    <string name="not_implemented_toast">Not implemented yet</string>
     <string name="please_select_download_dir">This is likely the first time you are launching this application.
         Please select a directory where you want Warpinator to save files into.</string>
     <string-array name="connected_states">
@@ -72,7 +73,7 @@
         <item>Paused</item>
         <item>Stopped</item>
         <item>Failed</item>
-        <item>Unrecoverable fail</item>
+        <item>Unrecoverable failure</item>
         <item>File not found</item>
         <item>Finished</item>
         <item>Finished with errors</item>
