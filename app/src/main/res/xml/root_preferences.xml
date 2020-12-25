@@ -23,17 +23,17 @@
             android:title="@string/download_dir_settings_title" />
 
         <SwitchPreferenceCompat
-            android:key="notifyIncoming"
-            android:title="@string/notification_settings_title"
             android:defaultValue="true"
-            android:summary="@string/notification_settings_summary" />
+            android:key="notifyIncoming"
+            android:summary="@string/notification_settings_summary"
+            android:title="@string/notification_settings_title" />
 
         <SwitchPreferenceCompat
             android:key="allowOverwrite"
-            android:title="Allow overwriting"
+            android:title="@string/overwrite_settings_title"
             android:defaultValue="false"
-            android:summaryOn="Incoming files with a name that already exists will overwrite the existing ones"
-            android:summaryOff="Incoming files with a name that already exists will be renamed" />
+            android:summaryOn="@string/overwrite_settings_summary_on"
+            android:summaryOff="@string/overwrite_settings_summary_off" />
 
     </PreferenceCategory>
 

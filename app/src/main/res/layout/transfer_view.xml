@@ -3,10 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="64dp"
     android:layout_margin="3dp"
-    app:cardCornerRadius="15dp"
-    app:cardElevation="5dp">
+    app:cardBackgroundColor="@color/colorPrimary"
+    app:cardCornerRadius="25dp"
+    app:cardElevation="5dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="false">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,6 +20,8 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginEnd="8dp"
+            android:background="#00000000"
+            android:tint="#C14747"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -27,7 +32,8 @@
             android:id="@+id/btnAccept"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:backgroundTint="#4CAF50"
+            android:background="#00000000"
+            android:tint="#54D53C"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnDecline"
             app:layout_constraintTop_toTopOf="parent"
@@ -39,7 +45,9 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginEnd="8dp"
+            android:background="#00000000"
             android:src="@drawable/ic_stop"
+            android:tint="#9F1111"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -54,9 +62,8 @@
             app:layout_constraintStart_toEndOf="@+id/imgFromTo"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            app:srcCompat="?attr/actionModeCopyDrawable"
-            app:tint="#DCEFDC"
-            tools:srcCompat="?attr/actionModeCopyDrawable" />
+            app:srcCompat="@drawable/ic_copy"
+            app:tint="@color/whiteOnPurple" />
 
         <ImageView
             android:id="@+id/imgFromTo"
@@ -67,20 +74,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            app:tint="#DCEFDC"
-            tools:srcCompat="@android:drawable/stat_sys_download" />
+            app:srcCompat="@drawable/ic_download"
+            app:tint="@color/whiteOnPurple" />
 
+        <!-- The card will clip the parts that overflow. Don't change constraints nor size -->
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_height="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
             android:max="100"
             android:progress="50"
-            android:progressTint="@color/colorAccent"
+            android:progressTint="@color/whiteOnPurple"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -94,23 +101,22 @@
             android:layout_marginEnd="8dp"
             android:ellipsize="marquee"
             android:singleLine="true"
-            android:text="files (size)"
+            android:text="Files..."
+            android:textColor="@color/whiteOnPurple"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/txtStatus"
             app:layout_constraintEnd_toStartOf="@+id/btnAccept"
-            app:layout_constraintStart_toEndOf="@+id/imgIcon" />
+            app:layout_constraintStart_toEndOf="@+id/imgIcon"
+            app:layout_constraintTop_toTopOf="@+id/imgIcon" />
 
         <TextView
             android:id="@+id/txtStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="Waiting for permission"
+            android:text="Waiting for permission..."
+            android:textColor="@color/whiteOnPurple"
             android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/progressBar"
-            app:layout_constraintStart_toEndOf="@+id/imgIcon"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.83" />
+            app:layout_constraintStart_toStartOf="@+id/txtTransfer"
+            app:layout_constraintTop_toBottomOf="@+id/txtTransfer" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

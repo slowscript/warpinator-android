@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     static MainActivity current;
     RecyclerView recyclerView;
     RemotesAdapter adapter;
-    TextView txtNotFound;
+    LinearLayout layoutNotFound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new RemotesAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        txtNotFound = findViewById(R.id.txtNotFound);
+        layoutNotFound = findViewById(R.id.layoutNotFound);
 
         //initializes theme based on preferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -91,12 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.about:
-                //TODO: implement about activity
-                /*Intent intent = new Intent(this, About.class);
-                startActivity(intent);*/
-
-                //A toast to be removed when the about function is implemented
-                Toast.makeText(getApplicationContext(), getText(R.string.not_implemented_toast), Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, AboutActivity.class));
                 return true;
             case R.id.menu_quit:
                 Log.i(TAG, "Quitting");
@@ -111,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     public void updateRemoteList() {
         runOnUiThread(() -> {
             adapter.notifyDataSetChanged();
-            txtNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
+            layoutNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
         });
     }
 

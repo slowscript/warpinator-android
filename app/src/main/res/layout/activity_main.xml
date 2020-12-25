@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/background">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
         android:text="@string/available_devices"
-        android:textSize="18sp"
+        android:textAllCaps="true"
+        android:textColor="@color/iconsOrTextTint"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,18 +34,37 @@
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintWidth_max="600dp"
         tools:itemCount="4"
-        tools:listitem="@layout/remote_view" />
+        tools:listitem="@layout/remote_view"/>
 
-    <TextView
-        android:id="@+id/txtNotFound"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/layoutNotFound"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/no_devices_found"
-        android:textAlignment="center"
-        android:textSize="24sp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recyclerView" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:scaleX="1"
+            android:scaleY="1"
+            app:srcCompat="@drawable/ic_meh"
+            app:tint="@color/iconsOrTextTint" />
+
+        <TextView
+            android:id="@+id/txtNotFound"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/no_devices_found"
+            android:textAlignment="center"
+            android:textColor="@color/iconsOrTextTint"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
