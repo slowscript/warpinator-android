@@ -16,8 +16,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".ProfileChooser"
+            android:label="@string/picture_settings_title"
+            android:theme="@style/AppTheme.Dialog"/>
+
         <activity android:name=".AboutActivity"
-            android:label="@string/about"/>
+            android:label="@string/about" />
+
         <activity android:name=".ShareActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -28,12 +34,13 @@
                 <data android:mimeType="*/*" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SettingsActivity"
+
+        <activity android:name=".SettingsActivity"
             android:label="@string/settings" />
-        <activity
-            android:name=".TransfersActivity"
+
+        <activity android:name=".TransfersActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,8 +49,7 @@
             </intent-filter>
         </activity>
 
-        <receiver
-            android:name=".MainService$StopSvcReceiver"
+        <receiver android:name=".MainService$StopSvcReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="StopSvc" />

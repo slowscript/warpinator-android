@@ -6,8 +6,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -92,7 +94,9 @@ public class Server {
         allowOverwrite = svc.prefs.getBoolean("allowOverwrite", false);
         notifyIncoming = svc.prefs.getBoolean("notifyIncoming", true);
         downloadDirUri = svc.prefs.getString("downloadDir", "");
-        profilePicture = svc.prefs.getString("profile", String.valueOf(new Random().nextInt(12)));
+        if(!svc.prefs.contains("profile"))
+            svc.prefs.edit().putString("profile",  String.valueOf(new Random().nextInt(12))).apply();
+        profilePicture = svc.prefs.getString("profile", "0");
     }
 
     void startGrpcServer() {
@@ -228,6 +232,13 @@ public class Server {
     Bitmap getProfilePicture(String picture) {
         int[] colors = new int[] {0xfff44336, 0xffe91e63, 0xff9c27b0, 0xff3f51b5, 0xff2196f3, 0xff4caf50,
                 0xff8bc34a, 0xffcddc39, 0xffffeb3b, 0xffffc107, 0xffff9800, 0xffff5722};
+        if (picture.startsWith("content")) {
+            try {
+                return MediaStore.Images.Media.getBitmap(svc.getContentResolver(), Uri.parse(picture));
+            } catch (Exception e) {
+                picture = "0";
+            }
+        }
         int i = Integer.parseInt(picture); //Could be also a content uri in the future
         Drawable foreground = ResourcesCompat.getDrawable(svc.getResources(), R.mipmap.ic_launcher_foreground, null);
         Bitmap bmp = Bitmap.createBitmap(96, 96, Bitmap.Config.ARGB_8888);

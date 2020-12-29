@@ -41,6 +41,7 @@
     <string name="requires_restart_warning">Changing this setting requires the application to be restarted</string>
     <string name="overwrite_settings_summary_on">Incoming files with a name that already exists will overwrite the existing ones</string>
     <string name="overwrite_settings_summary_off">Incoming files with a name that already exists will be renamed</string>
+    <string name="custom">Custom</string>
     <!--  Theme settings -->
     <string-array name="theme_settings_entries_array"> <!-- do not translate this -->
         <item>sysDefault</item>

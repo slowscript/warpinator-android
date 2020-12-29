@@ -62,6 +62,7 @@ public class SettingsActivity extends AppCompatActivity {
         private static final String GROUPCODE_PREF = "groupCode";
         private static final String BACKGROUND_PREF = "background";
         private static final String THEME_PREF = "theme_setting";
+        private static final String PROFILE_PREF = "profile";
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -71,6 +72,7 @@ public class SettingsActivity extends AppCompatActivity {
             SwitchPreferenceCompat bgPref = findPreference(BACKGROUND_PREF);
             Preference dlPref = findPreference(DOWNLOAD_DIR_PREF);
             Preference themePref = findPreference(THEME_PREF);
+            Preference profilePref = findPreference(PROFILE_PREF);
             EditTextPreference portPref = findPreference(PORT_PREF);
             portPref.setOnBindEditTextListener((edit)-> edit.setInputType(InputType.TYPE_CLASS_NUMBER));
 
@@ -109,6 +111,11 @@ public class SettingsActivity extends AppCompatActivity {
 
             dlPref.setOnPreferenceClickListener((p)->{
                 pickDirectory();
+                return true;
+            });
+            profilePref.setOnPreferenceClickListener((p)->{
+                Intent i = new Intent(getContext(), ProfileChooser.class);
+                startActivity(i);
                 return true;
             });
         }

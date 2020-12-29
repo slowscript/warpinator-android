@@ -9,9 +9,8 @@
             android:title="@string/display_settings_title" />
 
         <Preference
-            android:key="picture"
-            android:title="@string/picture_settings_title"
-            android:enabled="false"/>
+            android:key="profile"
+            android:title="@string/picture_settings_title" />
 
     </PreferenceCategory>
 
