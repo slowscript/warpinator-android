@@ -246,7 +246,7 @@ public class Remote {
                 } //Received from wrong host. Give it another shot.
             } catch (Exception e) {
                 tryCount++;
-                Log.d(TAG, "receiveCertificate: attempt failed " + tryCount, e);
+                Log.d(TAG, "receiveCertificate: attempt " + tryCount + " failed: " + e.getMessage());
                 try {
                     Thread.sleep(1000);
                 } catch (Exception ignored) { }

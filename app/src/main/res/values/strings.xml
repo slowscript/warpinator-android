@@ -16,8 +16,12 @@
     <string name="files_overwritten_warning">(Files may be overwritten!)</string>
     <!--  About activity  -->
     <string name="version">Version: %1$s</string>
-    <string name="about_description">This is an unofficial port of Warpinator. \nSend and Receive files across the network.</string>
-    <string name="warranty_html">This program comes with absolutely no warranty.&lt;br>See the &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>, version 3 or later for details.</string>
+    <string name="about_description">This is an unofficial port of Warpinator. \nSend and receive files across local network.</string>
+    <string name="warranty_html">
+        This program is open source software licensed under &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>.&lt;br>
+        You can obtain the source code from &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
+        &lt;br>
+        This program comes with absolutely no warranty.&lt;br>See the terms of the license for more details.</string>
     <!--  Setting  -->
     <string name="identity_settings_category">Identity</string>
     <string name="transfer_setting_category">Transfer settings</string>

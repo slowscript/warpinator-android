@@ -3,6 +3,7 @@ package slowscript.warpinator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.documentfile.provider.DocumentFile;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -62,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        if (prefs.getString("downloadDir", "").equals("")) {
+        String dlDir = prefs.getString("downloadDir", "");
+        if (dlDir.equals("") || !Utils.pathExistsInTree(this, Uri.parse(dlDir), "")) {
             askForDirectoryAccess(this);
         }
     }
