@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -39,10 +40,6 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
             i.putExtra("remote", r.uuid);
             app.startActivity(i);
         });
-        holder.cardView.setOnLongClickListener((view) -> {
-            //app.getMenuInflater().inflate();
-            return true;
-        });
     }
 
     void setupViewHolder(ViewHolder holder, Remote r) {
@@ -60,6 +57,11 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
             holder.imgStatus.setImageTintList(null);
         } else {
             holder.imgStatus.setImageTintList(ColorStateList.valueOf(app.getResources().getColor(R.color.whiteOnPurple)));
+        }
+
+        if (r.errorGroupCode) {
+            r.errorGroupCode = false;
+            Toast.makeText(app, R.string.wrong_group_code, Toast.LENGTH_LONG).show();
         }
     }
 

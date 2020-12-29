@@ -44,6 +44,9 @@ public class Remote {
     public Bitmap picture;
     public RemoteStatus status;
 
+    //Error flags
+    public boolean errorGroupCode = false;
+
     ArrayList<Transfer> transfers = new ArrayList<>();
 
     ManagedChannel channel;
@@ -220,6 +223,7 @@ public class Remote {
 
     private boolean receiveCertificate() {
         byte[] received = null;
+        errorGroupCode = false;
         int tryCount = 0;
         while (tryCount < 3) {
             try {
@@ -253,7 +257,10 @@ public class Remote {
             return false;
         }
         byte[] decoded = Base64.decode(received, Base64.DEFAULT);
-        Authenticator.saveBoxedCert(decoded, uuid);
+        if (!Authenticator.saveBoxedCert(decoded, uuid)) {
+            errorGroupCode = true;
+            return false;
+        }
         return true;
     }
 

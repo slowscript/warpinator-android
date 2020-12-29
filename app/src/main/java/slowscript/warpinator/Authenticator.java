@@ -133,7 +133,7 @@ public class Authenticator {
         }
     }
 
-    public static void saveBoxedCert(byte[] bytes, String remoteUuid) {
+    public static boolean saveBoxedCert(byte[] bytes, String remoteUuid) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
 
@@ -146,13 +146,14 @@ public class Authenticator {
             byte[] cert = box.open(ciph, nonce);
             if (cert == null) {
                 Log.w(TAG, "Failed to unbox cert. Wrong group code?");
-                //FIXME: Throw???
-                return;
+                return false;
             }
 
             saveCertOrKey(remoteUuid + ".pem", cert, false);
+            return true;
         } catch (Exception e) {
             Log.e(TAG, "Failed to unbox and save certificate", e);
+            return false;
         }
     }
 
