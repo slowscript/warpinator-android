@@ -53,7 +53,7 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
         t.direction = Transfer.Direction.RECEIVE;
         t.remoteUUID = remoteUUID;
         t.startTime = request.getInfo().getTimestamp();
-        t.status = Transfer.Status.WAITING_PERMISSION;
+        t.setStatus(Transfer.Status.WAITING_PERMISSION);
         t.totalSize = request.getSize();
         t.fileCount = request.getCount();
         t.singleMime = request.getMimeIfSingle();

@@ -140,7 +140,7 @@ public class MainService extends Service {
         long bytesPerSecond = 0;
         for (Remote r : remotes.values()) {
             for (Transfer t : r.transfers) {
-                if (t.status == Transfer.Status.TRANSFERRING) {
+                if (t.getStatus() == Transfer.Status.TRANSFERRING) {
                     numTransfers++;
                     bytesDone += t.bytesTransferred;
                     bytesTotal += t.totalSize;

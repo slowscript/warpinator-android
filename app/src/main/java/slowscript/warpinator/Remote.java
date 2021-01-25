@@ -187,10 +187,10 @@ public class Remote {
             } catch (StatusRuntimeException e) {
                 if (e.getStatus().getCode() == Status.Code.CANCELLED) {
                     Log.i(TAG, "Transfer cancelled", e);
-                    t.status = Transfer.Status.STOPPED;
+                    t.setStatus(Transfer.Status.STOPPED);
                 } else {
                     Log.e(TAG, "Connection error", e);
-                    t.status = Transfer.Status.FAILED;
+                    t.setStatus(Transfer.Status.FAILED);
                 }
                 t.updateUI();
             }

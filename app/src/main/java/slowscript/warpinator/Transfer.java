@@ -20,6 +20,7 @@ import java.io.OutputStream;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.Nullable;
 
@@ -41,7 +42,7 @@ public class Transfer {
     private static final String TAG = "TRANSFER";
     private static final int CHUNK_SIZE = 1024 * 512; //512 kB
 
-    public Status status;
+    private final AtomicReference<Status> status = new AtomicReference<>();
     public Direction direction;
     public String remoteUUID;
     public long startTime;
@@ -53,12 +54,13 @@ public class Transfer {
     int privId;
     //SEND only
     public ArrayList<Uri> uris;
+
     public boolean overwriteWarning = false;
 
     private String currentRelativePath;
     private Uri currentUri;
     private OutputStream currentStream;
-    private ArrayList<String> errors = new ArrayList<>();
+    public final ArrayList<String> errors = new ArrayList<>();
     private boolean cancelled = false;
     public long bytesTransferred;
     public long bytesPerSecond;
@@ -73,16 +75,17 @@ public class Transfer {
     }
 
     public void onStopped(boolean error) {
+        Log.v(TAG, "Stopping transfer");
+        if (!error)
+            setStatus(Status.STOPPED);
         if (direction == Transfer.Direction.RECEIVE)
             stopReceiving();
         else stopSending();
-        if (!error)
-            status = Status.STOPPED;
         updateUI();
     }
 
     public void makeDeclined() {
-        status = Status.DECLINED;
+        setStatus(Status.DECLINED);
         updateUI();
     }
 
@@ -100,7 +103,7 @@ public class Transfer {
     // -- SEND --
     public void prepareSend() {
         //Only uris and remoteUUID are set from before
-        status = Status.WAITING_PERMISSION;
+        setStatus(Status.WAITING_PERMISSION);
         direction = Direction.SEND;
         startTime = System.currentTimeMillis();
         totalSize = getTotalSendSize();
@@ -116,7 +119,7 @@ public class Transfer {
     }
 
     public void startSending(CallStreamObserver<WarpProto.FileChunk> observer) {
-        status = Status.TRANSFERRING;
+        setStatus(Status.TRANSFERRING);
         actualStartTime = System.currentTimeMillis();
         updateUI();
         observer.setOnReadyHandler(new Runnable() {
@@ -142,7 +145,7 @@ public class Transfer {
                             i++;
                             if (i >= uris.size()) {
                                 observer.onCompleted();
-                                status = Status.FINISHED;
+                                setStatus(Status.FINISHED);
                                 updateUI();
                             }
                             continue;
@@ -163,12 +166,12 @@ public class Transfer {
                     } catch (FileNotFoundException e) {
                         observer.onError(new StatusException(io.grpc.Status.NOT_FOUND));
                         errors.add(e.getLocalizedMessage());
-                        status = Status.FAILED;
+                        setStatus(Status.FAILED);
                         updateUI();
                         return;
                     } catch (Exception e) {
                         observer.onError(e);
-                        status = Status.FAILED;
+                        setStatus(Status.FAILED);
                         errors.add(e.getLocalizedMessage());
                         updateUI();
                         return;
@@ -235,7 +238,7 @@ public class Transfer {
 
     void startReceive() {
         Log.i(TAG, "Transfer accepted");
-        status = Status.TRANSFERRING;
+        setStatus(Status.TRANSFERRING);
         actualStartTime = System.currentTimeMillis();
         updateUI();
         MainService.remotes.get(remoteUUID).startReceiveTransfer(this);
@@ -262,7 +265,7 @@ public class Transfer {
             }
             else if (chunk.getFileType() == FileType.SYMLINK) {
                 Log.e(TAG, "Symlinks not supported.");
-                errors.add("Symlinks not supported.");
+                errors.add("Symlinks not supported."); //This one can be ignored
             }
             else {
                 try {
@@ -289,6 +292,7 @@ public class Transfer {
                 } catch (Exception e) {
                     Log.e(TAG, "Failed to open file for writing: " + currentRelativePath, e);
                     errors.add("Failed to open file for writing: " + currentRelativePath);
+                    failReceive();
                 }
             }
         } else {
@@ -296,9 +300,9 @@ public class Transfer {
                 currentStream.write(chunk.getChunk().toByteArray());
                 chunkSize = chunk.getChunk().size();
             } catch (Exception e) {
-                Log.e(TAG, "Failed to write to file " + currentRelativePath, e);
+                Log.e(TAG, "Failed to write to file " + currentRelativePath + ": " + e.getMessage());
                 errors.add("Failed to write to file " + currentRelativePath);
-                //failReceive(); //SHOULD WE REALLY FAIL??
+                failReceive();
             }
         }
         bytesTransferred += chunkSize;
@@ -306,33 +310,36 @@ public class Transfer {
         bytesPerSecond = (long)(chunkSize / ((now - lastMillis) / 1000f));
         lastMillis = now;
         updateUI();
-        return status == Status.TRANSFERRING; //True if not interrupted
+        return getStatus() == Status.TRANSFERRING; //True if not interrupted
         //TODO: Transfer lastMod
     }
 
     public void finishReceive() {
         Log.d(TAG, "Finalizing transfer");
-        closeStream();
         if(errors.size() > 0)
-            status = Status.FINISHED_WITH_ERRORS;
-        else status = Status.FINISHED;
+            setStatus(Status.FINISHED_WITH_ERRORS);
+        else setStatus(Status.FINISHED);
+        closeStream();
         updateUI();
     }
 
     private void stopReceiving() {
+        Log.v(TAG, "Stopping receiving");
         closeStream();
         //Delete incomplete file
-        DocumentFile f = DocumentFile.fromSingleUri(svc, currentUri);
-        f.delete();
+        try {
+            DocumentFile f = DocumentFile.fromSingleUri(svc, currentUri);
+            f.delete();
+        } catch (Exception ignored) {}
     }
 
     private void failReceive() {
-        //TODO: Avoid looping STOP command before using
-        closeStream();
         //Don't overwrite other reason for stopping
-        if (status == Status.TRANSFERRING)
-            status = Status.FAILED;
-        stop(true);
+        if (getStatus() == Status.TRANSFERRING) {
+            Log.v(TAG, "Receiving failed");
+            setStatus(Status.FAILED);
+            stop(true); //Calls stopReceiving for us
+        }
     }
 
     private void closeStream() {
@@ -399,5 +406,13 @@ public class Transfer {
         if (mime == null)
             mime = "application/octet-stream";
         return mime;
+    }
+
+    public void setStatus(Status s) {
+        status.set(s);
+    }
+
+    public Status getStatus() {
+        return status.get();
     }
 }

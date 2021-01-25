@@ -34,10 +34,10 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
         Transfer t = activity.remote.transfers.get(position);
 
         //ProgressBar
-        holder.progressBar.setVisibility(t.status == Transfer.Status.TRANSFERRING ? View.VISIBLE : View.INVISIBLE);
+        holder.progressBar.setVisibility(t.getStatus() == Transfer.Status.TRANSFERRING ? View.VISIBLE : View.INVISIBLE);
         holder.progressBar.setProgress(t.getProgress());
         //Buttons
-        if (t.status == Transfer.Status.WAITING_PERMISSION) {
+        if (t.getStatus() == Transfer.Status.WAITING_PERMISSION) {
             if (t.direction == Transfer.Direction.RECEIVE) {
                 holder.btnAccept.setOnClickListener((v) -> t.startReceive());
                 holder.btnAccept.setVisibility(View.VISIBLE);
@@ -48,14 +48,14 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
             holder.btnAccept.setVisibility(View.INVISIBLE);
             holder.btnDecline.setVisibility(View.INVISIBLE);
         }
-        holder.btnStop.setVisibility(t.status == Transfer.Status.TRANSFERRING ? View.VISIBLE : View.INVISIBLE);
+        holder.btnStop.setVisibility(t.getStatus() == Transfer.Status.TRANSFERRING ? View.VISIBLE : View.INVISIBLE);
         holder.btnStop.setOnClickListener((v) -> t.stop(false));
         //Main label
         String text = t.fileCount == 1 ? t.singleName: t.fileCount + " files";
         text += " (" + Formatter.formatFileSize(activity, t.totalSize) + ")";
         holder.txtTransfer.setText(text);
         //Status label
-        switch (t.status) {
+        switch (t.getStatus()) {
             case WAITING_PERMISSION:
                 String str = activity.getString(R.string.waiting_for_permission);
                 if (t.overwriteWarning)
@@ -73,7 +73,7 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
                 holder.txtStatus.setText(status);
                 break;
             default:
-                holder.txtStatus.setText(activity.getResources().getStringArray(R.array.transfer_states)[t.status.ordinal()]);
+                holder.txtStatus.setText(activity.getResources().getStringArray(R.array.transfer_states)[t.getStatus().ordinal()]);
         }
         //Images
         holder.imgFromTo.setImageResource(t.direction == Transfer.Direction.SEND ? R.drawable.ic_upload : R.drawable.ic_download);
