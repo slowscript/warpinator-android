@@ -275,7 +275,7 @@ public class Remote {
                 if (haveDuplex)
                     return true;
             } catch (Exception e) {
-               Log.d(TAG, "We are not connected anymore", e);
+               Log.d(TAG, "Connection interrupted while waiting for duplex", e);
                return false;
             }
             Log.d (TAG, "Attempt " + tries + ": No duplex");

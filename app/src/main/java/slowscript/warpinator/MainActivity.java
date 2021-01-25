@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         String dlDir = prefs.getString("downloadDir", "");
-        if (dlDir.equals("") || !Utils.pathExistsInTree(this, Uri.parse(dlDir), "")) {
+        if (dlDir.equals("") || !DocumentFile.fromTreeUri(this, Uri.parse(dlDir)).exists()) {
             askForDirectoryAccess(this);
         }
     }
