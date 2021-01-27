@@ -190,6 +190,7 @@ public class Remote {
                     t.setStatus(Transfer.Status.STOPPED);
                 } else {
                     Log.e(TAG, "Connection error", e);
+                    t.errors.add("Connection error: " + e.getLocalizedMessage());
                     t.setStatus(Transfer.Status.FAILED);
                 }
                 t.updateUI();

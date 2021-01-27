@@ -1,6 +1,7 @@
 package slowscript.warpinator;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.common.base.Joiner;
 
 public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.ViewHolder> {
 
@@ -77,7 +80,14 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
         }
         //Images
         holder.imgFromTo.setImageResource(t.direction == Transfer.Direction.SEND ? R.drawable.ic_upload : R.drawable.ic_download);
-
+        holder.root.setOnClickListener((v)-> {
+            if (t.getStatus() == Transfer.Status.FAILED || t.getStatus() == Transfer.Status.FINISHED_WITH_ERRORS) {
+                new AlertDialog.Builder(holder.root.getContext())
+                        .setTitle("Errors during transfer:")
+                        .setMessage(Joiner.on("\n").join(t.errors))
+                        .show();
+            }
+        });
     }
 
     @Override
@@ -115,9 +125,11 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
         TextView txtTransfer;
         TextView txtStatus;
         ProgressBar progressBar;
+        View root;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            root = itemView;
             btnAccept = itemView.findViewById(R.id.btnAccept);
             btnDecline = itemView.findViewById(R.id.btnDecline);
             btnStop = itemView.findViewById(R.id.btnStop);

@@ -78,10 +78,10 @@
         <item>Transferring</item>
         <item>Paused</item>
         <item>Stopped</item>
-        <item>Failed</item>
+        <item>Failed (tap to view errors)</item>
         <item>Unrecoverable failure</item>
         <item>File not found</item>
         <item>Finished</item>
-        <item>Finished with errors</item>
+        <item>Finished with errors (tap to view)</item>
     </string-array>
 </resources>
