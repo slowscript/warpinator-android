@@ -58,4 +58,5 @@
     <string name="overwrite_settings_title">Permite suprascrierea</string>
     <string name="overwrite_settings_summary_on">Fișierele primite vor suprascrie fișierele cu același nume</string>
     <string name="overwrite_settings_summary_off">Fișierele primite nu vor suprascrie fișierele cu același nume, ci vor fi redenumite</string>
+    <string name="boot_settings_title">Pornește împreună cu telefonul</string>
 </resources>

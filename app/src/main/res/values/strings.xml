@@ -33,6 +33,7 @@
     <string name="notification_settings_title">Show notification about incoming files</string>
     <string name="overwrite_settings_title">Allow overwriting</string>
     <string name="background_settings_title">Run in background</string>
+    <string name="boot_settings_title">Start automatically</string>
     <string name="group_code_settings_title">Group code</string>
     <string name="port_settings_title">Port</string>
     <string name="theme_settings_title">Theme</string>
