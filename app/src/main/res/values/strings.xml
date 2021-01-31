@@ -22,6 +22,9 @@
         You can obtain the source code from &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
         &lt;br>
         This program comes with absolutely no warranty.&lt;br>See the terms of the license for more details.</string>
+    <!--  Share activity  -->
+    <string name="devices_to_share_with">Devices to share with</string>
+    <string name="no_share_devices">No available devices to share with</string>
     <!--  Setting  -->
     <string name="identity_settings_category">Identity</string>
     <string name="transfer_setting_category">Transfer settings</string>

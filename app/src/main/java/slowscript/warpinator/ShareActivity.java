@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,7 @@ public class ShareActivity extends AppCompatActivity {
     public static ShareActivity current;
 
     RecyclerView recyclerView;
+    LinearLayout layoutNotFound;
     RemotesAdapter adapter;
 
     @Override
@@ -56,6 +59,7 @@ public class ShareActivity extends AppCompatActivity {
 
         //Set up UI
         recyclerView = findViewById(R.id.recyclerView);
+        layoutNotFound = findViewById(R.id.layoutNotFound);
         adapter = new RemotesAdapter(this) {
             @Override
             public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -96,6 +100,9 @@ public class ShareActivity extends AppCompatActivity {
     }
 
     public void updateRemotes() {
-        runOnUiThread(() -> adapter.notifyDataSetChanged());
+        runOnUiThread(() -> {
+            adapter.notifyDataSetChanged();
+            layoutNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
+        });
     }
 }
