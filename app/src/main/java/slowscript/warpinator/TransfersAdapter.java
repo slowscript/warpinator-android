@@ -117,7 +117,7 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
             return String.format("%d s", seconds);
         }
         else {
-            return "a few seconds";
+            return activity.getString(R.string.a_few_seconds);
         }
     }
 
