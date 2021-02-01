@@ -14,6 +14,7 @@
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">Waiting for permission…</string>
     <string name="files_overwritten_warning">(Files may be overwritten!)</string>
+    <string name="remaining">remaining</string>
     <!--  About activity  -->
     <string name="version">Version: %1$s</string>
     <string name="about_description">This is an unofficial port of Warpinator. \nSend and receive files across local network.</string>

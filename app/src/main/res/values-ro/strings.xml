@@ -61,4 +61,5 @@
     <string name="boot_settings_title">Pornește împreună cu telefonul</string>
     <string name="devices_to_share_with">Dispozitive cu care să partajați</string>
     <string name="no_share_devices">Nu s-au găsit dispozitive cu care să partajați</string>
+    <string name="remaining">rămase</string>
 </resources>
