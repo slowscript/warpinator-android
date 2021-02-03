@@ -43,6 +43,7 @@ public class Remote {
     public String uuid;
     public Bitmap picture;
     public RemoteStatus status;
+    public boolean serviceAvailable;
 
     //Error flags
     public boolean errorGroupCode = false;
@@ -289,7 +290,7 @@ public class Remote {
         return false;
     }
 
-    private void updateUI() {
+    public void updateUI() {
         if (MainActivity.current != null)
             MainActivity.current.updateRemoteList();
         if (MainService.svc.transfersView != null) {

@@ -72,8 +72,12 @@ public class TransfersActivity extends AppCompatActivity {
         btnReconnect = findViewById(R.id.btnReconnect);
         btnReconnect.setOnClickListener((v) -> reconnect());
 
+        //Connection status toast
         imgStatus.setOnClickListener(view -> {
-            Toast.makeText(getBaseContext(), getResources().getStringArray(R.array.connected_states)[remote.status.ordinal()], Toast.LENGTH_LONG).show();
+            String s = getResources().getStringArray(R.array.connected_states)[remote.status.ordinal()];
+            if (!remote.serviceAvailable)
+                s += " (Service unavailable)";
+            Toast.makeText(getBaseContext(), s, Toast.LENGTH_LONG).show();
         });
 
         updateUI();
@@ -113,7 +117,9 @@ public class TransfersActivity extends AppCompatActivity {
             txtIP.setText(remote.address.getHostAddress());
             imgStatus.setImageResource(Utils.getIconForRemoteStatus(remote.status));
             if (remote.status == Remote.RemoteStatus.ERROR || remote.status == Remote.RemoteStatus.DISCONNECTED) {
-                imgStatus.setImageTintList(null);
+                if (!remote.serviceAvailable)
+                    imgStatus.setImageResource(R.drawable.ic_unavailable);
+                else imgStatus.setImageTintList(null);
             } else {
                 imgStatus.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.iconsOrTextTint)));
             }

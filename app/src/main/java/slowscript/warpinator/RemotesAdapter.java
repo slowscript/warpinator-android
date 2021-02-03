@@ -54,7 +54,9 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
         }
         holder.imgStatus.setImageResource(Utils.getIconForRemoteStatus(r.status));
         if (r.status == Remote.RemoteStatus.ERROR || r.status == Remote.RemoteStatus.DISCONNECTED) {
-            holder.imgStatus.setImageTintList(null);
+            if (!r.serviceAvailable)
+                holder.imgStatus.setImageResource(R.drawable.ic_unavailable);
+            else holder.imgStatus.setImageTintList(null);
         } else {
             holder.imgStatus.setImageTintList(ColorStateList.valueOf(app.getResources().getColor(R.color.whiteOnPurple)));
         }

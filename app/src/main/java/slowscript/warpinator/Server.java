@@ -177,10 +177,13 @@ public class Server {
         }
         @Override
         public void onServiceLost(final NsdServiceInfo info) {
-            Log.v(TAG, "Service lost: " + info.getServiceName());
-            //remotes.remove()
-            //remotes.removeIf(r -> r.serviceName == info.getServiceName());
-            //TODO: Remove remote
+            String svcName = info.getServiceName();
+            Log.v(TAG, "Service lost: " + svcName);
+            if (MainService.remotes.containsKey(svcName)) {
+                Remote r = MainService.remotes.get(svcName);
+                r.serviceAvailable = false;
+                r.updateUI();
+            }
         }
     }
 
@@ -210,6 +213,7 @@ public class Server {
                         //Update hostname, address, port
                         r.address = info.getHost();
                         r.port = info.getPort();
+                        r.serviceAvailable = true;
                         Log.d(TAG, "Reconnecting to " + r.hostname);
                         r.connect();
                     }
@@ -223,6 +227,7 @@ public class Server {
                 remote.port = info.getPort();
                 remote.serviceName = svcName;
                 remote.uuid = svcName;
+                remote.serviceAvailable = true;
 
                 svc.addRemote(remote);
             }
