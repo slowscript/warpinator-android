@@ -29,7 +29,7 @@
     <!--  Share activity  -->
     <string name="devices_to_share_with">Devices to share with</string>
     <string name="no_share_devices">No available devices to share with</string>
-    <string name="unsupported_intent">Unsupported intent action</string>
+    <string name="unsupported_intent">We received an unsupported intent action</string>
     <string name="nothing_to_share">Nothing to share</string>
     <!--  Setting  -->
     <string name="identity_settings_category">Identity</string>

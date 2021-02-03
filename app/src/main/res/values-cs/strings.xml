@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_transfers">Přenosy</string>
+    <string name="send_files">Poslat soubory</string>
+    <string name="quit">Ukončit</string>
+    <string name="about">O aplikaci</string>
+    <string name="settings">Nastavení</string>
+    <string name="title_activity_share">Sdílet</string>
+    <string name="available_devices">Dostupná zařízení</string>
+    <string name="no_devices_found">Žádná zařízení nenalezena</string>
+    <string name="wrong_group_code">Spojení selhalo: špatný kód skupiny</string>
+    <string name="waiting_for_permission">Čeká na přijetí…</string>
+    <string name="files_overwritten_warning">(Soubory mohou být přepsány!)</string>
+    <string name="remaining">zbývá</string>
+    <string name="a_few_seconds">několik vteřin</string>
+    <string name="service_unavailable">, není dostupné</string>
+    <string name="errors_during_transfer">Chyby během přenosu:</string>
+    <string name="version">Verze: %1$s</string>
+    <string name="about_description">Toto je neoficiální port Warpinatoru. \nPosílejte a přijímejte soubory v místní síti.</string>
+    <string name="warranty_html">
+        Tento program je svobodný software licencovaný pod &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>.&lt;br>
+        Zdrojový kód můžete nalézt na &lt;a href="https://github.com/slowscript/warpinator-android/">GitHubu&lt;/a>.&lt;br>
+        &lt;br>
+        Tento program je šířen bez jakékoliv záruky.&lt;br>Více informací naleznete v podmínkách licence.</string>
+    <string name="devices_to_share_with">Dostupná zařízení</string>
+    <string name="nothing_to_share">Neobdrželi jsme nic ke sdílení</string>
+    <string name="identity_settings_category">Identita</string>
+    <string name="transfer_setting_category">Přenos</string>
+    <string name="network_setting_category">Síť</string>
+    <string name="aspect_setting_category">Vzhled</string>
+    <string name="display_settings_title">Zobrazované jméno</string>
+    <string name="picture_settings_title">Profilový obrázek</string>
+    <string name="download_dir_settings_title">Složka pro stahování</string>
+    <string name="notification_settings_title">Zobrazit oznámení o příchozích souborech</string>
+    <string name="overwrite_settings_title">Povolit přepisování</string>
+    <string name="background_settings_title">Běžet na pozadí</string>
+    <string name="boot_settings_title">Spouštět při startu</string>
+    <string name="group_code_settings_title">Kód skupiny</string>
+    <string name="port_settings_title">Port</string>
+    <string name="theme_settings_title">Motiv</string>
+    <string name="notification_settings_summary">Toto může být ovlivněno systémovým nastavením oznámení</string>
+    <string name="port_range_warning">Port musí být mezi 1024 a 65535</string>
+    <string name="requires_restart_warning">Změna tohoto nastavení vyžaduje restart aplikace</string>
+    <string name="overwrite_settings_summary_on">Příchozí soubory se jménem které již existuje budou přepsány</string>
+    <string name="overwrite_settings_summary_off">Příchozí soubory se jménem které již existuje budou přejmenovány</string>
+    <string name="custom">Vlastní</string>
+    <string name="unsupported_provider">Zvolili jste obsah nepodporovaného poskytovatele. Vyberte prosím složku z vnitřního úložiště.</string>
+    <string name="sysDefault">Motiv systému</string>
+    <string name="lightTheme">Světlý motiv</string>
+    <string name="darkTheme">Tmavý motiv</string>
+    <string name="warpinator_notification_title">Služba Warpinatoru běží</string>
+    <string name="warpinator_notification_button">Zastavit</string>
+    <string name="transfers_complete">Všechny přenosy byly dokončeny</string>
+    <string name="transfer_notification">%.1f%%, %d přenosů, %s/s</string>
+    <string name="incoming_transfer">%s posílá soubory</string>
+    <string name="num_files">%d souborů</string>
+    <string name="service_running">Služba běží</string>
+    <string name="incoming_transfer_channel">Příchozí přenos</string>
+    <string name="transfer_progress_channel">Průběh přenosu</string>
+    <string name="please_select_download_dir">Pravděpodobně tuto aplikaci spouštíte poprvé. Vyberte prosím složku kam má Warpinator ukládat soubory.</string>
+    <string name="notification_channel_description">Oznámení o bežící službě</string>
+    <string name="no_share_devices">Žádná zařízení se kterými by bylo možné sdílet</string>
+    <string name="unsupported_intent">Přijali jsme příkaz který není podporován</string>
+    <string-array name="connected_states">
+        <item>Připojeno</item>
+        <item>Odpojeno</item>
+        <item>Připojuje se</item>
+        <item>Připojení selhalo</item>
+        <item>Čeká se na obousměrné přpojení</item>
+    </string-array>
+    <string-array name="transfer_states">
+        <item>Inicializuje se</item>
+        <item>Čeká na přijetí…</item>
+        <item>Odmítnuto</item>
+        <item>Probíhá</item>
+        <item>Pozastaveno</item>
+        <item>Zastaveno</item>
+        <item>Selhalo (stisknutím zobrazíte chyby)</item>
+        <item>Nenapravitelná chyba</item>
+        <item>Soubor nenalezen</item>
+        <item>Dokončeno</item>
+        <item>Dokončeno s chybami (stisknutím zobrazíte)</item>
+    </string-array>
+</resources>
