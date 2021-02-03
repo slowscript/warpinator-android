@@ -18,6 +18,10 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
             Remote r = MainService.remotes.get(id);
             haveDuplex = (r.status == Remote.RemoteStatus.CONNECTED)
                         || (r.status == Remote.RemoteStatus.AWAITING_DUPLEX);
+            //The other side is trying to connect with use after a connection failed
+            if (r.status == Remote.RemoteStatus.ERROR || r.status == Remote.RemoteStatus.DISCONNECTED) {
+                r.connect(); //Try reconnecting
+            }
         }
         Log.d(TAG, "Duplex check result: " + haveDuplex);
         responseObserver.onNext(WarpProto.HaveDuplex.newBuilder().setResponse(haveDuplex).build());
