@@ -67,12 +67,9 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
                 holder.txtStatus.setText(str);
                 break;
             case TRANSFERRING:
-                long now = System.currentTimeMillis();
-                float avgSpeed = t.bytesTransferred / ((now - t.actualStartTime) / 1000f);
-                int secondsRemaining = (int)((t.totalSize - t.bytesTransferred) / avgSpeed);
-                String status = Formatter.formatFileSize(activity, t.bytesTransferred) + " / " +
-                    Formatter.formatFileSize(activity, t.totalSize) + "(" +
-                    Formatter.formatFileSize(activity, t.bytesPerSecond) + "/s, " + formatTime(secondsRemaining);
+                String status = Formatter.formatFileSize(activity, t.bytesTransferred) + "/" +
+                    Formatter.formatFileSize(activity, t.totalSize) + " (" +
+                    Formatter.formatFileSize(activity, t.bytesPerSecond) + "/s, " + getRemainingTime(t) + ")";
                 holder.txtStatus.setText(status);
                 break;
             default:
@@ -87,11 +84,8 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
                         .setMessage(Joiner.on("\n").join(t.errors))
                         .show();
             } else if (t.getStatus() == Transfer.Status.TRANSFERRING) {
-                long now = System.currentTimeMillis();
-                float avgSpeed = t.bytesTransferred / ((now - t.actualStartTime) / 1000f);
-                int secondsRemaining = (int)((t.totalSize - t.bytesTransferred) / avgSpeed);
-                String remainingTime = formatTime(secondsRemaining) + " " + activity.getString(R.string.remaining);
-                Toast.makeText(activity, remainingTime, Toast.LENGTH_SHORT).show();
+                String remaining = getRemainingTime(t) + " " + activity.getString(R.string.remaining);
+                Toast.makeText(activity, remaining, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -99,6 +93,13 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
     @Override
     public int getItemCount() {
         return activity.remote.transfers.size();
+    }
+
+    String getRemainingTime(Transfer t) {
+        long now = System.currentTimeMillis();
+        float avgSpeed = t.bytesTransferred / ((now - t.actualStartTime) / 1000f);
+        int secondsRemaining = (int)((t.totalSize - t.bytesTransferred) / avgSpeed);
+        return formatTime(secondsRemaining);
     }
 
     @SuppressLint("DefaultLocale")
