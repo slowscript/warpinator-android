@@ -81,7 +81,11 @@ public class Authenticator {
         //Try loading it first
         try {
             Log.d(TAG, "Loading server certificate...");
-            return loadCertificate(".self");
+            File f = getCertificateFile(".self");
+            X509Certificate cert = getX509fromFile(f);
+            cert.checkValidity(); //Will throw if expired (and we generate a new one)
+
+            return Utils.readAllBytes(f);
         } catch (Exception ignored) {}
 
         //Create new one if doesn't exist yet
@@ -184,6 +188,18 @@ public class Authenticator {
         return Utils.readAllBytes(cert);
     }
 
+    private static X509Certificate getX509fromFile(File f) throws GeneralSecurityException, IOException {
+        FileReader fileReader = new FileReader(f);
+        PemReader pemReader = new PemReader(fileReader);
+        PemObject obj = pemReader.readPemObject();
+        pemReader.close();
+        X509Certificate result;
+        try (InputStream in = new ByteArrayInputStream(obj.getContent());) {
+            result = (X509Certificate) CertificateFactory.getInstance("X.509").generateCertificate(in);
+        }
+        return result;
+    }
+
     private static KeyPair createKeyPair(String algorithm, int bitCount) throws NoSuchAlgorithmException
     {
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(algorithm);
@@ -201,17 +217,10 @@ public class Authenticator {
         trustStore.load(null, null);
 
         // Read the certificate from disk
-        FileReader fileReader = new FileReader(crtFile);
-        PemReader pemReader = new PemReader(fileReader);
-        PemObject obj = pemReader.readPemObject();
-        pemReader.close();
-        X509Certificate result;
-        try (InputStream in = new ByteArrayInputStream(obj.getContent());) {
-            result = (X509Certificate) CertificateFactory.getInstance("X.509").generateCertificate(in);
-        }
+        X509Certificate cert = getX509fromFile(crtFile);
 
         // Add it to the trust store
-        trustStore.setCertificateEntry(crtFile.getName(), result);
+        trustStore.setCertificateEntry(crtFile.getName(), cert);
 
         // Convert the trust store to trust managers
         TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
