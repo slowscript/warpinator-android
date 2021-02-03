@@ -48,6 +48,7 @@
     <string name="overwrite_settings_summary_on">Incoming files with a name that already exists will overwrite the existing ones</string>
     <string name="overwrite_settings_summary_off">Incoming files with a name that already exists will be renamed</string>
     <string name="custom">Custom</string>
+    <string name="unsupported_provider">You have selected an unsupported content provider. Please select a directory on your internal storage.</string>
     <!--  Theme settings -->
     <string-array name="theme_settings_entries_array"> <!-- do not translate this -->
         <item>sysDefault</item>

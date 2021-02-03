@@ -3,7 +3,9 @@ package slowscript.warpinator;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.DocumentsProvider;
 import android.text.InputType;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -57,6 +59,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
         private static final int CHOOSE_ROOT_REQ_CODE = 10;
+        private static final String TAG = "Settings";
         private static final String DOWNLOAD_DIR_PREF = "downloadDir";
         private static final String PORT_PREF = "port";
         private static final String GROUPCODE_PREF = "groupCode";
@@ -136,6 +139,12 @@ public class SettingsActivity extends AppCompatActivity {
                 if (data == null)
                     return;
                 Uri uri = data.getData();
+                //Validate URI
+                Log.d(TAG, "Uri authority: " + uri.getAuthority());
+                if (!uri.getAuthority().equals("com.android.externalstorage.documents")) {
+                    Toast.makeText(getContext(), R.string.unsupported_provider, Toast.LENGTH_LONG).show();
+                    return;
+                }
                 getContext().getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 getPreferenceManager().getSharedPreferences().edit()
                         .putString(DOWNLOAD_DIR_PREF, uri.toString())
