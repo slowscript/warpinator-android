@@ -43,13 +43,13 @@ public class ShareActivity extends AppCompatActivity {
         } else if (Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction())) {
             uris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
         } else {
-            Toast.makeText(this, "Unsupported intent action", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.unsupported_intent, Toast.LENGTH_LONG).show();
             return;
         }
 
         if (uris == null || uris.size() < 1) {
             Log.d(TAG, "Nothing to share");
-            Toast.makeText(this, "Nothing to share", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.nothing_to_share, Toast.LENGTH_LONG).show();
             return;
         }
 

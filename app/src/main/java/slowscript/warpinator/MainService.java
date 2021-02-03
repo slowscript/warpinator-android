@@ -189,17 +189,17 @@ public class MainService extends Service {
 
     private void createNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Service running";//getString(R.string.channel_name);
-            String description = "Persistent service notification";//getString(R.string.channel_description);
+            CharSequence name = getString(R.string.service_running);
+            String description = getString(R.string.notification_channel_description);
             int importance = NotificationManager.IMPORTANCE_LOW;
             NotificationChannel channel = new NotificationChannel(CHANNEL_SERVICE, name, importance);
             channel.setDescription(description);
 
-            CharSequence name2 = "Incoming transfer";
+            CharSequence name2 = getString(R.string.incoming_transfer_channel);
             int importance2 = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel channel2 = new NotificationChannel(CHANNEL_INCOMING, name2, importance2);
 
-            CharSequence name3 = "Transfer progress";
+            CharSequence name3 = getString(R.string.transfer_progress_channel);
             int importance3 = NotificationManager.IMPORTANCE_LOW;
             NotificationChannel channel3 = new NotificationChannel(CHANNEL_PROGRESS, name3, importance3);
 

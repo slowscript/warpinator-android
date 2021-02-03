@@ -224,8 +224,8 @@ public class Transfer {
             PendingIntent pendingIntent = PendingIntent.getActivity(svc, 0, intent, 0);
             Uri notifSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             Notification notification = new NotificationCompat.Builder(svc, MainService.CHANNEL_INCOMING)
-                    .setContentTitle("Incoming transfer from " + MainService.remotes.get(remoteUUID).displayName)
-                    .setContentText(fileCount == 1 ? singleName : fileCount + " files")
+                    .setContentTitle(svc.getString(R.string.incoming_transfer, MainService.remotes.get(remoteUUID).displayName))
+                    .setContentText(fileCount == 1 ? singleName : svc.getString(R.string.num_files, fileCount))
                     .setSmallIcon(android.R.drawable.stat_sys_download_done)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setSound(notifSound)

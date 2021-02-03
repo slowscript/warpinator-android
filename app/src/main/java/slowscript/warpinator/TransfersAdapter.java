@@ -55,7 +55,7 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
         holder.btnStop.setVisibility(t.getStatus() == Transfer.Status.TRANSFERRING ? View.VISIBLE : View.INVISIBLE);
         holder.btnStop.setOnClickListener((v) -> t.stop(false));
         //Main label
-        String text = t.fileCount == 1 ? t.singleName: t.fileCount + " files";
+        String text = t.fileCount == 1 ? t.singleName: activity.getString(R.string.num_files, t.fileCount);
         text += " (" + Formatter.formatFileSize(activity, t.totalSize) + ")";
         holder.txtTransfer.setText(text);
         //Status label
@@ -80,7 +80,7 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
         holder.root.setOnClickListener((v)-> {
             if (t.getStatus() == Transfer.Status.FAILED || t.getStatus() == Transfer.Status.FINISHED_WITH_ERRORS) {
                 new AlertDialog.Builder(holder.root.getContext())
-                        .setTitle("Errors during transfer:")
+                        .setTitle(R.string.errors_during_transfer)
                         .setMessage(Joiner.on("\n").join(t.errors))
                         .show();
             } else if (t.getStatus() == Transfer.Status.TRANSFERRING) {
@@ -115,7 +115,7 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
             return String.format("%dm %ds", minutes, seconds);
         }
         else if (seconds > 5) {
-            return String.format("%d s", seconds);
+            return String.format("%ds", seconds);
         }
         else {
             return activity.getString(R.string.a_few_seconds);

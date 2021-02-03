@@ -76,7 +76,7 @@ public class TransfersActivity extends AppCompatActivity {
         imgStatus.setOnClickListener(view -> {
             String s = getResources().getStringArray(R.array.connected_states)[remote.status.ordinal()];
             if (!remote.serviceAvailable)
-                s += " (Service unavailable)";
+                s += getString(R.string.service_unavailable);
             Toast.makeText(getBaseContext(), s, Toast.LENGTH_LONG).show();
         });
 
