@@ -49,13 +49,20 @@
         <item>Se transferă</item>
         <item>Întrerupt</item>
         <item>Oprit</item>
-        <item>Eșuat</item>
+        <item>Eșuat (atinge pentru detalii)</item>
         <item>Eșec irecuperabil</item>
         <item>Fișierul nu a fost găsit</item>
         <item>Terminat</item>
-        <item>Terminat cu erori</item>
+        <item>Terminat cu erori (atinge pentru detalii)</item>
     </string-array>
     <string name="overwrite_settings_title">Permite suprascrierea</string>
     <string name="overwrite_settings_summary_on">Fișierele primite vor suprascrie fișierele cu același nume</string>
     <string name="overwrite_settings_summary_off">Fișierele primite nu vor suprascrie fișierele cu același nume, ci vor fi redenumite</string>
+    <string name="boot_settings_title">Pornește împreună cu telefonul</string>
+    <string name="custom">Personalizat</string>
+    <string name="wrong_group_code">Conexiune eșuata: cod de grup greșit</string>
+    <string name="devices_to_share_with">Dispozitive cu care să partajați</string>
+    <string name="no_share_devices">Nu s-au găsit dispozitive cu care să partajați</string>
+    <string name="remaining">rămase</string>
+    <string name="a_few_seconds">câteva secunde</string>
 </resources>

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -71,8 +72,7 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
                 int secondsRemaining = (int)((t.totalSize - t.bytesTransferred) / avgSpeed);
                 String status = Formatter.formatFileSize(activity, t.bytesTransferred) + " / " +
                     Formatter.formatFileSize(activity, t.totalSize) + "(" +
-                    Formatter.formatFileSize(activity, t.bytesPerSecond) + "/s, " +
-                    formatTime(secondsRemaining) +" remaining)";
+                    Formatter.formatFileSize(activity, t.bytesPerSecond) + "/s, " + formatTime(secondsRemaining);
                 holder.txtStatus.setText(status);
                 break;
             default:
@@ -86,6 +86,12 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
                         .setTitle("Errors during transfer:")
                         .setMessage(Joiner.on("\n").join(t.errors))
                         .show();
+            } else if (t.getStatus() == Transfer.Status.TRANSFERRING) {
+                long now = System.currentTimeMillis();
+                float avgSpeed = t.bytesTransferred / ((now - t.actualStartTime) / 1000f);
+                int secondsRemaining = (int)((t.totalSize - t.bytesTransferred) / avgSpeed);
+                String remainingTime = formatTime(secondsRemaining) + " " + activity.getString(R.string.remaining);
+                Toast.makeText(activity, remainingTime, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -111,7 +117,7 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
             return String.format("%d s", seconds);
         }
         else {
-            return "a few seconds";
+            return activity.getString(R.string.a_few_seconds);
         }
     }
 
@@ -121,7 +127,6 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
         AppCompatImageButton btnDecline;
         AppCompatImageButton btnStop;
         ImageView imgFromTo;
-        ImageView imgIcon;
         TextView txtTransfer;
         TextView txtStatus;
         ProgressBar progressBar;
@@ -134,7 +139,6 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
             btnDecline = itemView.findViewById(R.id.btnDecline);
             btnStop = itemView.findViewById(R.id.btnStop);
             imgFromTo = itemView.findViewById(R.id.imgFromTo);
-            imgIcon = itemView.findViewById(R.id.imgIcon);
             txtStatus = itemView.findViewById(R.id.txtStatus);
             txtTransfer = itemView.findViewById(R.id.txtTransfer);
             progressBar = itemView.findViewById(R.id.progressBar);
