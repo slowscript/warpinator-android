@@ -10,7 +10,7 @@
     <string name="waiting_for_permission">Așteaptând permisiunea…</string>
     <string name="files_overwritten_warning">(S-ar putea ca fișierele să fie suprapuse!)</string>
     <string name="version">Versiune: %1$s</string>
-    <string name="about_description">Un port neofficial pentru Warpinator \nTrimite și primește fișiere prin internet.</string>
+    <string name="about_description">Un port neofficial pentru Warpinator. \nTrimite și primește fișiere prin internet.</string>
     <string name="warranty_html">Acest program nu are nicio garanție.&lt;br>Vedeți &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>, de la versiunea a 3-a încoace pentru mai multe detalii.</string>
     <string name="identity_settings_category">Indentitate</string>
     <string name="transfer_setting_category">Setări de transfer</string>
@@ -65,4 +65,15 @@
     <string name="no_share_devices">Nu s-au găsit dispozitive cu care să partajați</string>
     <string name="remaining">rămase</string>
     <string name="a_few_seconds">câteva secunde</string>
+    <string name="service_unavailable">, serviciu indisponibil</string>
+    <string name="errors_during_transfer">Erori în timpul transferului:</string>
+    <string name="unsupported_intent">Am primit o comandă neacceptată</string>
+    <string name="nothing_to_share">Nimic de împărtășit</string>
+    <string name="unsupported_provider">Ați selectat conținut de la un furnizor neacceptat. Vă rugăm să selectați un folder din spațiul de stocare intern.</string>
+    <string name="incoming_transfer">%s trimite fișiere</string>
+    <string name="num_files">%d fișiere</string>
+    <string name="service_running">Serviciu rulează</string>
+    <string name="notification_channel_description">Notificare persistentă pentru serviciu</string>
+    <string name="incoming_transfer_channel">Transferuri primite</string>
+    <string name="transfer_progress_channel">Progresul transferului</string>
 </resources>
