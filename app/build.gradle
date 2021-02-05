@@ -45,7 +45,9 @@ dependencies {
     implementation 'org.bouncycastle:bcpkix-jdk15on:1.65' //Cannot update - class version 59
     implementation 'io.grpc:grpc-netty:1.32.1'
     implementation 'io.grpc:grpc-okhttp:1.32.1'
-    implementation 'io.grpc:grpc-protobuf:1.32.1'
+    implementation ('io.grpc:grpc-protobuf:1.32.1') {
+        exclude group: 'com.google.api.grpc', module: 'proto-google-common-protos'
+    }
     implementation 'io.grpc:grpc-stub:1.32.1'
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
     implementation 'org.conscrypt:conscrypt-android:2.5.0'
