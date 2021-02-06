@@ -35,6 +35,7 @@ import java.security.Security;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Date;
+import java.util.List;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -84,7 +85,10 @@ public class Authenticator {
             File f = getCertificateFile(".self");
             X509Certificate cert = getX509fromFile(f);
             cert.checkValidity(); //Will throw if expired (and we generate a new one)
-
+            String ip = (String)((List<?>)cert.getSubjectAlternativeNames().toArray()[0]).get(1);
+            if (!ip.equals(Utils.getIPAddress()))
+                throw new Exception(); //Throw if IPs don't match (and regenerate cert)
+            
             return Utils.readAllBytes(f);
         } catch (Exception ignored) {}
 
