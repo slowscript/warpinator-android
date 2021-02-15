@@ -1,0 +1,104 @@
+<resources>
+    <!--  App Name  -->
+    <string name="app_name" translatable="false">Warpinator</string>
+    <!--  Main Activity  -->
+    <string name="title_activity_transfers">Transferências</string>
+    <string name="send_files">Enviar arquivos</string>
+    <string name="quit">Sair</string>
+    <string name="about">Sobre</string>
+    <string name="settings">Configurações</string>
+    <string name="title_activity_share">Compartilhe com</string>
+    <string name="available_devices">Dispositivos disponíveis</string>
+    <string name="no_devices_found">Nenhum outro dispositivo encontrado</string>
+    <string name="wrong_group_code">Conexão falhou: Código de grupo errado</string>
+    <!--  Transfers activity  -->
+    <string name="waiting_for_permission">Aguardando a permissão…</string>
+    <string name="files_overwritten_warning">(Arquivos podem ser sobrescritos!)</string>
+    <string name="remaining">faltando</string>
+    <string name="a_few_seconds">alguns segundos</string>
+    <string name="service_unavailable">, serviço indisponível</string>
+    <string name="errors_during_transfer">Erros durante a transferência:</string>
+    <!--  About activity  -->
+    <string name="version">Versão: %1$s</string>
+    <string name="about_description">Este é um Fork não-oficial do Warpinator. \nEnvie e receba arquivos via rede local.</string>
+    <string name="warranty_html">
+        Este programa é um software livre, licenciado sob &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">Licença Pública Geral GNU&lt;/a>.&lt;br>
+        Você pode obter o código fonte em &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
+        &lt;br>
+        Este programa vem sem absolutamente nenhuma garantia.&lt;br>Veja os termos da licença para mais detalhes.</string>
+    <!--  Share activity  -->
+    <string name="devices_to_share_with">Pode compartilhar arquivos com esses dispositivos</string>
+    <string name="no_share_devices">Nenhum dispositivo disponível para compartilhar</string>
+    <string name="unsupported_intent">Ação de intenção não suportada</string>
+    <string name="nothing_to_share">Nada para compartilhar</string>
+    <!--  Setting  -->
+    <string name="identity_settings_category">Identificação</string>
+    <string name="transfer_setting_category">Configurações de transferência</string>
+    <string name="network_setting_category">Rede</string>
+    <string name="aspect_setting_category">Aparência</string>
+    <string name="display_settings_title">Nome exibido</string>
+    <string name="picture_settings_title">Foto de perfil</string>
+    <string name="download_dir_settings_title">Pasta de downloads</string>
+    <string name="notification_settings_title">Mostrar notificações sobre arquivos recebidos</string>
+    <string name="overwrite_settings_title">Permitir sobrescrever</string>
+    <string name="background_settings_title">Executar em segundo plano</string>
+    <string name="boot_settings_title">Iniciar automaticamente</string>
+    <string name="group_code_settings_title">Código de grupo</string>
+    <string name="port_settings_title">Porta</string>
+    <string name="theme_settings_title">Tema</string>
+    <string name="notification_settings_summary">Isto pode ser afetado pelas configurações de notificações do Android</string>
+    <string name="port_range_warning">O número da Porta deve estar entre 1024 e 65535</string>
+    <string name="requires_restart_warning">Alteração desta configuração exige reiniciar o App</string>
+    <string name="overwrite_settings_summary_on">Os arquivos recebidos com o mesmo nome substituirão os já existentes</string>
+    <string name="overwrite_settings_summary_off">Os arquivos recebidos com o mesmo nome serão renomeados</string>
+    <string name="custom">Personalizado</string>
+    <string name="unsupported_provider">Você selecionou um conteúdo não suportado. Favor selecionar uma pasta no seu armazenamento interno.</string>
+    <!--  Theme settings -->
+    <string-array name="theme_settings_entries_array"> <!-- do not translate this -->
+        <item>sysDefault</item>
+        <item>lightTheme</item>
+        <item>darkTheme</item>
+    </string-array>
+    <string-array name="theme_settings_array">
+        <item>@string/sysDefault</item>
+        <item>@string/lightTheme</item>
+        <item>@string/darkTheme</item>
+    </string-array>
+    <string name="sysDefault">Usar padrão do sistema</string>
+    <string name="lightTheme">Tema Claro</string>
+    <string name="darkTheme">Tema Escuro</string>
+    <!--  Notification  -->
+    <string name="warpinator_notification_title">Warpinator está funcionando</string>
+    <string name="warpinator_notification_button">Terminar serviço</string>
+    <string name="transfers_complete">Todas as transferências são concluídas</string>
+    <string name="transfer_notification">%.1f%%, %d transferências, %s/s</string>
+    <string name="incoming_transfer">Transferência recebida de %s</string>
+    <string name="num_files">%d arquivos</string>
+    <string name="service_running">Serviço em execução</string>
+    <string name="notification_channel_description">Notificação de serviço persistente</string>
+    <string name="incoming_transfer_channel">Transferência recebida</string>
+    <string name="transfer_progress_channel">Progresso da transferência</string>
+    <!--  Other  -->
+    <string name="please_select_download_dir">Esta é provavelmente a primeira vez que você está abrindo este aplicativo.
+        Favor selecionar uma pasta onde você quer que o Warpinator salve seus arquivos.</string>
+    <string-array name="connected_states">
+        <item>Conectado</item>
+        <item>Desconectado</item>
+        <item>Conectando</item>
+        <item>Conexão falhou</item>
+        <item>Aguardando duplex</item>
+    </string-array>
+    <string-array name="transfer_states">
+        <item>Inicializando</item>
+        <item>Aguardando a permissão…</item>
+        <item>Recusado</item>
+        <item>Transferindo</item>
+        <item>Pausado</item>
+        <item>Parado</item>
+        <item>Falhou (toque para ver os erros)</item>
+        <item>Falha irrecuperável</item>
+        <item>Arquivo não encontrado</item>
+        <item>Concluído</item>
+        <item>Concluído com erros (toque para ver)</item>
+    </string-array>
+</resources>
