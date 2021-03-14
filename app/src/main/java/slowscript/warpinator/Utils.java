@@ -6,15 +6,19 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.provider.DocumentsContract;
 import android.provider.OpenableColumns;
+import android.text.format.Formatter;
 import android.util.Log;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.documentfile.provider.DocumentFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
@@ -24,14 +28,18 @@ import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.Enumeration;
 
+import static android.content.Context.WIFI_SERVICE;
+
 public class Utils {
+
+    private static final String TAG = "Utils";
 
     public static String getDeviceName() {
         String name;
         try {
             name = BluetoothAdapter.getDefaultAdapter().getName();
         }catch (Exception e){
-            Log.d("ERROR", "This device may not support bluetooth - using default name");
+            Log.d(TAG, "This device may not support bluetooth - using default name");
             name = "Android Phone";
         }
         return name;
@@ -39,12 +47,47 @@ public class Utils {
 
     public static String getIPAddress() {
         try {
-            //TODO: Choose Iface
-            final String ip = getIPForIfaceName("wlan0").getHostAddress();
+            String ip = getWifiIP(); //Works for most cases
+            if (ip == null) //Get IP of WiFi interface, fallback to wlan0 - works for hotspot
+                ip = getIPForIfaceName(getWifiInterface()).getHostAddress();
+            if (ip == null) //Get IP of some random active iface (except loopback and data)
+                ip = getIPForIface(getActiveIface()).getHostAddress();
             return ip != null ? ip : "IP Unknown";
         } catch (Exception ex) {
-            Log.e("Utils", "Couldn't get IP address");
+            Log.e(TAG, "Couldn't get IP address");
             return "Error getting IP";
+        }
+    }
+
+    static String getWifiIP() {
+        WifiManager wifiManager = (WifiManager) MainService.svc.getSystemService(WIFI_SERVICE);
+        int ip = wifiManager.getConnectionInfo().getIpAddress();
+        if (ip == 0) return null;
+        return Formatter.formatIpAddress(ip);
+    }
+
+    static NetworkInterface getActiveIface() throws SocketException {
+        Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
+        NetworkInterface ni;
+        while (nis.hasMoreElements()) {
+            ni = nis.nextElement();
+            if ((!ni.isLoopback()) && ni.isUp()) {
+                String name = ni.getDisplayName();
+                if (name.contains("dummy") || name.contains("rmnet"))
+                    continue;
+                Log.d(TAG, ni.getDisplayName());
+                return ni;
+            }
+        }
+        return null;
+    }
+
+    static String getWifiInterface() {
+        try {
+            Method m = Class.forName("android.os.SystemProperties").getMethod("get", String.class);
+            return (String) m.invoke(null, "wifi.interface");
+        } catch(Throwable ignored) {
+            return "wlan0";
         }
     }
 
