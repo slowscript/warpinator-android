@@ -22,6 +22,8 @@ import io.grpc.ManagedChannel;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.okhttp.OkHttpChannelBuilder;
+import io.grpc.stub.ClientResponseObserver;
+import io.grpc.stub.StreamObserver;
 
 public class Remote {
     public enum RemoteStatus {
@@ -125,7 +127,9 @@ public class Remote {
 
     public void disconnect() {
         Log.i(TAG, "Disconnecting " + hostname);
-        channel.shutdownNow();
+        try {
+            channel.shutdownNow();
+        } catch (Exception ignored){}
         status = RemoteStatus.DISCONNECTED;
     }
 
@@ -166,7 +170,7 @@ public class Remote {
                 .setMimeIfSingle(t.singleMime)
                 .addAllTopDirBasenames(t.topDirBasenames)
                 .build();
-        asyncStub.processTransferOpRequest(op, null);
+        asyncStub.processTransferOpRequest(op, new Utils.VoidObserver());
     }
 
     public void startReceiveTransfer(Transfer _t) {
@@ -205,7 +209,7 @@ public class Remote {
                 .setTimestamp(t.startTime)
                 .setReadableName(Utils.getDeviceName())
                 .build();
-        asyncStub.cancelTransferOpRequest(info, null);
+        asyncStub.cancelTransferOpRequest(info, new Utils.VoidObserver());
     }
 
     public void stopTransfer(Transfer t, boolean error) {
@@ -218,7 +222,7 @@ public class Remote {
                 .setError(error)
                 .setInfo(i)
                 .build();
-        asyncStub.stopTransfer(info, null);
+        asyncStub.stopTransfer(info, new Utils.VoidObserver());
     }
 
     // -- PRIVATE HELPERS --

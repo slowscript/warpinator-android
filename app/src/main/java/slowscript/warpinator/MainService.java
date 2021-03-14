@@ -123,7 +123,8 @@ public class MainService extends Service {
             return;
         server.Stop();
         for (Remote r : remotes.values()) {
-            r.disconnect();
+            if (r.status == Remote.RemoteStatus.CONNECTED)
+                r.disconnect();
         }
         remotes.clear();
         executor.shutdown();

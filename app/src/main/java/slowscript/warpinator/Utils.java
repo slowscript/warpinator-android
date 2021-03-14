@@ -28,6 +28,8 @@ import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.Enumeration;
 
+import io.grpc.stub.StreamObserver;
+
 import static android.content.Context.WIFI_SERVICE;
 
 public class Utils {
@@ -242,5 +244,13 @@ public class Utils {
             hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
         }
         return new String(hexChars);
+    }
+
+    static class VoidObserver implements StreamObserver<WarpProto.VoidType> {
+        @Override public void onNext(WarpProto.VoidType value) {}
+        @Override public void onError(Throwable t) {
+            Log.e(TAG, "Call failed with exception", t);
+        }
+        @Override public void onCompleted() { }
     }
 }

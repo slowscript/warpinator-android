@@ -49,6 +49,10 @@ public class TransfersActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.anim_push_up, R.anim.anim_null);
         setContentView(R.layout.activity_transfers);
         String id = getIntent().getStringExtra("remote");
+        if (!MainService.remotes.containsKey(id)) {
+            finish();
+            return;
+        }
         remote = MainService.remotes.get(id);
         MainService.svc.transfersView = this;
 

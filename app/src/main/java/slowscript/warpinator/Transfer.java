@@ -188,11 +188,14 @@ public class Transfer {
     long getTotalSendSize() {
         long size = 0;
         for (Uri u : uris) {
-            Cursor cursor = svc.getContentResolver().query(u, null, null, null, null);
-            int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
-            cursor.moveToFirst();
-            size += cursor.getLong(sizeIndex);
-            cursor.close();
+            try (Cursor cursor = svc.getContentResolver().query(u, null, null, null, null)) {
+                int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
+                cursor.moveToFirst();
+                size += cursor.getLong(sizeIndex);
+            } catch (Exception e) {
+                Log.w(TAG, "Bad URI", e);
+                uris.remove(u);
+            }
         }
         return size;
     }
@@ -257,6 +260,11 @@ public class Transfer {
             closeStream();
             //Begin new file
             currentRelativePath = chunk.getRelativePath();
+            if ("".equals(Server.current.downloadDirUri)) {
+                errors.add(svc.getString(R.string.error_download_dir));
+                failReceive();
+                return false;
+            }
             Uri rootUri = Uri.parse(Server.current.downloadDirUri);
             DocumentFile root = DocumentFile.fromTreeUri(svc, rootUri);
 
