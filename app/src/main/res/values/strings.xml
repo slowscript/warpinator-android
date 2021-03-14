@@ -11,6 +11,9 @@
     <string name="available_devices">Available devices</string>
     <string name="no_devices_found">No other devices found</string>
     <string name="wrong_group_code">Connection failed: Wrong group code</string>
+    <string name="connection_error">Connection error</string>
+    <string name="not_connected_to_wifi">You are not connected to WiFi or LAN. Use your hotspot if neither is available.
+    Restart the application when you are connected.</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">Waiting for permission…</string>
     <string name="files_overwritten_warning">(Files may be overwritten!)</string>

@@ -5,6 +5,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.provider.DocumentsContract;
@@ -85,12 +87,14 @@ public class Utils {
     }
 
     static String getWifiInterface() {
+        String iface = null;
         try {
             Method m = Class.forName("android.os.SystemProperties").getMethod("get", String.class);
-            return (String) m.invoke(null, "wifi.interface");
-        } catch(Throwable ignored) {
-            return "wlan0";
-        }
+            iface = (String) m.invoke(null, "wifi.interface");
+        } catch(Throwable ignored) {}
+        if (iface == null || iface.isEmpty())
+            iface = "wlan0";
+        return iface;
     }
 
     public static String dumpInterfaces() {
@@ -146,6 +150,7 @@ public class Utils {
         new AlertDialog.Builder(ctx)
                 .setTitle(title)
                 .setMessage(msg)
+                .setPositiveButton(android.R.string.ok, null)
                 .show();
     }
 
@@ -231,6 +236,28 @@ public class Utils {
                 return true;
             }
         }
+        return false;
+    }
+
+    public static boolean isConnectedToWiFiOrEthernet(Context ctx) {
+        ConnectivityManager connManager = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert connManager != null;
+        NetworkInfo wifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo ethernet = connManager.getNetworkInfo(ConnectivityManager.TYPE_ETHERNET);
+        return (wifi != null && wifi.isConnected()) || (ethernet != null && ethernet.isConnected());
+    }
+
+    public static boolean isHotspotOn(Context ctx) {
+        WifiManager manager = (WifiManager) ctx.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        assert manager != null;
+        try {
+            final Method method = manager.getClass().getDeclaredMethod("isWifiApEnabled");
+            method.setAccessible(true); //in the case of visibility change in future APIs
+            return (Boolean) method.invoke(manager);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to get hotspot state", e);
+        }
+
         return false;
     }
 

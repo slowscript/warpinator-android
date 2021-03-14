@@ -55,7 +55,7 @@ public class ShareActivity extends AppCompatActivity {
 
         //Start service (if not running)
         if (!Utils.isMyServiceRunning(this, MainService.class))
-            startService(new Intent(this, MainService.class));
+            startMainService();
 
         //Set up UI
         recyclerView = findViewById(R.id.recyclerView);
@@ -91,6 +91,14 @@ public class ShareActivity extends AppCompatActivity {
         if (prefs.getString("downloadDir", "").equals("")) {
             MainActivity.askForDirectoryAccess(this);
         }
+    }
+
+    void startMainService() {
+        if (!Utils.isConnectedToWiFiOrEthernet(this) && !Utils.isHotspotOn(this)) {
+            Utils.displayMessage(this, getString(R.string.connection_error), getString(R.string.not_connected_to_wifi));
+            return;
+        }
+        startService(new Intent(this, MainService.class));
     }
 
     @Override

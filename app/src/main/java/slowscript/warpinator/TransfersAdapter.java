@@ -1,7 +1,7 @@
 package slowscript.warpinator;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
+import android.content.Context;
 import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,10 +79,8 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
         holder.imgFromTo.setImageResource(t.direction == Transfer.Direction.SEND ? R.drawable.ic_upload : R.drawable.ic_download);
         holder.root.setOnClickListener((v)-> {
             if (t.getStatus() == Transfer.Status.FAILED || t.getStatus() == Transfer.Status.FINISHED_WITH_ERRORS) {
-                new AlertDialog.Builder(holder.root.getContext())
-                        .setTitle(R.string.errors_during_transfer)
-                        .setMessage(Joiner.on("\n").join(t.errors))
-                        .show();
+                Context c = holder.root.getContext();
+                Utils.displayMessage(c, c.getString(R.string.errors_during_transfer), Joiner.on("\n").join(t.errors));
             } else if (t.getStatus() == Transfer.Status.TRANSFERRING) {
                 String remaining = getRemainingTime(t) + " " + activity.getString(R.string.remaining);
                 Toast.makeText(activity, remaining, Toast.LENGTH_SHORT).show();
