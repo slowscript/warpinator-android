@@ -9,7 +9,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -24,7 +23,6 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -63,6 +61,14 @@ public class MainService extends Service {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         Authenticator.getServerCertificate(); //Generate cert on start if doesn't exist
+        if (Authenticator.certException != null) {
+            Utils.displayMessage(MainActivity.current, "Failed to create certificate",
+                    "A likely reason for this is that your IP address could not be obtained. " +
+                    "Please make sure you are connected to WiFi, then restart the app.\n" +
+                    "\nAvailable interfaces:\n" + Utils.dumpInterfaces() +
+                    "\nException: " + Authenticator.certException.toString());
+            return START_NOT_STICKY;
+        }
 
         Log.d(TAG, "Service starting...");
         server = new Server(this);
@@ -108,11 +114,13 @@ public class MainService extends Service {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         stopServer();
+        super.onDestroy();
     }
 
     public void stopServer () {
+        if (server == null) //I have no idea how this can happen
+            return;
         server.Stop();
         for (Remote r : remotes.values()) {
             r.disconnect();

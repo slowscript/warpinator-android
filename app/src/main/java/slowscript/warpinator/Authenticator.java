@@ -53,6 +53,7 @@ public class Authenticator {
 
     static String cert_begin = "-----BEGIN CERTIFICATE-----\n";
     static String cert_end = "-----END CERTIFICATE-----";
+    static Exception certException = null;
 
     public static byte[] getBoxedCertificate() {
         byte[] bytes = new byte[0];
@@ -63,12 +64,7 @@ public class Authenticator {
             TweetNaclFast.SecretBox box = new TweetNaclFast.SecretBox(key);
             byte[] nonce = TweetNaclFast.makeSecretBoxNonce();
             byte[] res = box.box(getServerCertificate(), nonce);
-            /*
-            final byte[] key = md.digest("hello".getBytes("UTF-8"));
-            TweetNaclFast.SecretBox box = new TweetNaclFast.SecretBox(key);
-            byte[] nonce = "123456789012345678901234".getBytes();
-            byte[] res = box.box("Hello".getBytes(), nonce);
-            */
+
             bytes = new byte[24 + res.length];
             System.arraycopy(nonce, 0, bytes, 0, 24);
             System.arraycopy(res, 0, bytes, 24, res.length);
@@ -94,7 +90,8 @@ public class Authenticator {
 
         //Create new one if doesn't exist yet
         byte[] cert = createCertificate(Utils.getDeviceName());
-        saveCertOrKey(".self.pem", cert, false);
+        if (cert != null)
+            saveCertOrKey(".self.pem", cert, false);
         return cert;
     }
 
@@ -135,8 +132,8 @@ public class Authenticator {
             return cert.getEncoded();
         }
         catch(Exception e) {
-            Log.e(TAG, "Failed to create certificate");
-            e.printStackTrace();
+            Log.e(TAG, "Failed to create certificate", e);
+            certException = e;
             return null;
         }
     }

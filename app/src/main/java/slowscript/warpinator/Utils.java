@@ -91,6 +91,20 @@ public class Utils {
         }
     }
 
+    public static String dumpInterfaces() {
+        StringBuilder res = new StringBuilder();
+        try {
+            Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
+            while (nis.hasMoreElements()) {
+                NetworkInterface ni = nis.nextElement();
+                if (ni.isUp()) {
+                    res.append(ni.getDisplayName()); res.append("\n");
+                }
+            }
+        } catch (Exception e) {res.append(e.getMessage());}
+        return String.valueOf(res);
+    }
+
     public static InetAddress getIPForIfaceName(String ifaceName) throws SocketException {
         Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
         NetworkInterface ni;
@@ -124,6 +138,13 @@ public class Utils {
         byte[] b = new byte[(int)f.length()];
         f.readFully(b);
         return b;
+    }
+
+    public static void displayMessage(Context ctx, String title, String msg) {
+        new AlertDialog.Builder(ctx)
+                .setTitle(title)
+                .setMessage(msg)
+                .show();
     }
 
     public static String bytesToHumanReadable(long bytes) {
