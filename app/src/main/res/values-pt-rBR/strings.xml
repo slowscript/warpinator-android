@@ -1,6 +1,5 @@
 <resources>
     <!--  App Name  -->
-    <string name="app_name" translatable="false">Warpinator</string>
     <!--  Main Activity  -->
     <string name="title_activity_transfers">Transferências</string>
     <string name="send_files">Enviar arquivos</string>

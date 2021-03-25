@@ -76,4 +76,11 @@
     <string name="notification_channel_description">Notificare persistentă pentru serviciu</string>
     <string name="incoming_transfer_channel">Transferuri primite</string>
     <string name="transfer_progress_channel">Progresul transferului</string>
+    <string name="connection_error">Eroare de conexiune</string>
+    <string name="not_connected_to_wifi">Nu sunteți conectat la WiFi sau LAN. Folosește hotspot-ul dacă niciuna nu este disponibilă.
+        Repornește aplicația când ești conectat.</string>
+    <string name="error_download_dir">Trebuie să selectezi un folder de descărcări în setări</string>
+    <string name="accept_settings_title">Accepta automat transferurile</string>
+    <string name="accept_setting_summary_on">Transferurile vor fi acceptate automat</string>
+    <string name="accept_setting_summary_off">Transferurile trebuie acceptate manual</string>
 </resources>

@@ -218,6 +218,8 @@ public class Transfer {
             }
         }
 
+        boolean autoAccept = svc.prefs.getBoolean("autoAccept", false);
+
         //Show in UI
         if (svc.transfersView != null && remoteUUID.equals(svc.transfersView.remote.uuid) && svc.transfersView.isTopmost)
             svc.transfersView.updateTransfers(remoteUUID);
@@ -237,6 +239,7 @@ public class Transfer {
                     .build();
             svc.notificationMgr.notify(svc.notifId++, notification);
         }
+        if (autoAccept) this.startReceive();
     }
 
     void startReceive() {
