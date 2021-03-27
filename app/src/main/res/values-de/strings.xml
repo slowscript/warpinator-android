@@ -10,7 +10,7 @@
     <string name="no_devices_found">Keine Geräte gefunden</string>
     <string name="wrong_group_code">Verbindung fehlgeschlagen: Falscher Gruppenschlüssel</string>
 	<string name="connection_error">Verbindungsfehler</string>
-    <string name="not_connected_to_wifi">Sie sind mit keinem WiFi oder LAN verbunden. Nutzen Sie den Hotspot wenn nichts anderes verfügbar ist.
+    <string name="not_connected_to_wifi">Sie sind mit keinem WiFi oder LAN verbunden. Nutzen Sie den Hotspot, wenn nichts anderes verfügbar ist.
         Starten Sie die Anwendung neu, wenn Sie verbunden sind.</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">Warte auf Genehmigung…</string>
