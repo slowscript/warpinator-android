@@ -52,6 +52,9 @@ public class ShareActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.nothing_to_share, Toast.LENGTH_LONG).show();
             return;
         }
+        Log.d(TAG, "Sharing " + uris.size() + " files");
+        for (Uri u : uris)
+            Log.v(TAG, u.toString());
 
         //Start service (if not running)
         if (!Utils.isMyServiceRunning(this, MainService.class))
@@ -68,6 +71,8 @@ public class ShareActivity extends AppCompatActivity {
 
                 //Send to selected remote
                 holder.cardView.setOnClickListener((view) -> {
+                	if (remote.status != Remote.RemoteStatus.CONNECTED)
+                		return;
                     Transfer t = new Transfer();
                     t.uris = uris;
                     t.remoteUUID = remote.uuid;
@@ -80,12 +85,12 @@ public class ShareActivity extends AppCompatActivity {
                     Intent i = new Intent(app, TransfersActivity.class);
                     i.putExtra("remote", remote.uuid);
                     app.startActivity(i);
-                    finish();
                 });
             }
         };
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        layoutNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (prefs.getString("downloadDir", "").equals("")) {
