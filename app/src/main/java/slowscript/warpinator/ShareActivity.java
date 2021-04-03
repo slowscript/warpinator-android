@@ -64,6 +64,7 @@ public class ShareActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         layoutNotFound = findViewById(R.id.layoutNotFound);
         adapter = new RemotesAdapter(this) {
+            boolean sent = false;
             @Override
             public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
                 Remote remote = (Remote) MainService.remotes.values().toArray()[position];
@@ -71,7 +72,7 @@ public class ShareActivity extends AppCompatActivity {
 
                 //Send to selected remote
                 holder.cardView.setOnClickListener((view) -> {
-                	if (remote.status != Remote.RemoteStatus.CONNECTED)
+                	if (remote.status != Remote.RemoteStatus.CONNECTED || sent)
                 		return;
                     Transfer t = new Transfer();
                     t.uris = uris;
@@ -84,7 +85,9 @@ public class ShareActivity extends AppCompatActivity {
 
                     Intent i = new Intent(app, TransfersActivity.class);
                     i.putExtra("remote", remote.uuid);
+                    i.putExtra("shareMode", true);
                     app.startActivity(i);
+                    sent = true;
                 });
             }
         };

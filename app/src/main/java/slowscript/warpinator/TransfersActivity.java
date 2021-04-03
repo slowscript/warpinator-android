@@ -31,6 +31,7 @@ public class TransfersActivity extends AppCompatActivity {
 
     public Remote remote;
     public boolean isTopmost = false;
+    boolean shareMode = false;
 
     RecyclerView recyclerView;
     TransfersAdapter adapter;
@@ -49,6 +50,7 @@ public class TransfersActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.anim_push_up, R.anim.anim_null);
         setContentView(R.layout.activity_transfers);
         String id = getIntent().getStringExtra("remote");
+        shareMode = getIntent().getBooleanExtra("shareMode", false);
         if (!MainService.remotes.containsKey(id)) {
             finish();
             return;
@@ -84,8 +86,10 @@ public class TransfersActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), s, Toast.LENGTH_LONG).show();
         });
 
+
         updateUI();
     }
+
 
     @Override
     protected void onResume() {
@@ -109,8 +113,21 @@ public class TransfersActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        super.onBackPressed();
-        TransfersActivity.this.overridePendingTransition(R.anim.anim_null, R.anim.anim_push_down);
+        if (shareMode) {
+            if (transferInProgress())
+                Toast.makeText(this, R.string.dont_close_when_sharing, Toast.LENGTH_LONG).show();
+            else finishAffinity(); //Close everything incl. ShareActivity
+        } else {
+            super.onBackPressed();
+            TransfersActivity.this.overridePendingTransition(R.anim.anim_null, R.anim.anim_push_down);
+        }
+    }
+    private boolean transferInProgress() {
+        for (Transfer t : remote.transfers) {
+            if (t.direction == Transfer.Direction.SEND && (t.getStatus() == Transfer.Status.WAITING_PERMISSION || t.getStatus() == Transfer.Status.TRANSFERRING))
+                return true;
+        }
+        return false;
     }
 
     @SuppressLint("SetTextI18n")

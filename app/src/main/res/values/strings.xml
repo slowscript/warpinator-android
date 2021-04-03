@@ -21,6 +21,7 @@
     <string name="a_few_seconds">a few seconds</string>
     <string name="service_unavailable">, service unavailable</string>
     <string name="errors_during_transfer">Errors during transfer:</string>
+    <string name="dont_close_when_sharing">Closing this activity while sharing might cause the transfer to fail</string>
     <!--  About activity  -->
     <string name="version">Version: %1$s</string>
     <string name="about_description">This is an unofficial port of Warpinator. \nSend and receive files across local network.</string>
