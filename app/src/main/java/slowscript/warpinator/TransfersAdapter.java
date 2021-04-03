@@ -54,6 +54,16 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
         }
         holder.btnStop.setVisibility(t.getStatus() == Transfer.Status.TRANSFERRING ? View.VISIBLE : View.INVISIBLE);
         holder.btnStop.setOnClickListener((v) -> t.stop(false));
+        if (t.direction == Transfer.Direction.SEND && (t.getStatus() == Transfer.Status.FAILED ||
+                t.getStatus() == Transfer.Status.STOPPED || t.getStatus() == Transfer.Status.FINISHED_WITH_ERRORS ||
+                t.getStatus() == Transfer.Status.DECLINED)) {
+            holder.btnRetry.setVisibility(View.VISIBLE);
+            holder.btnRetry.setOnClickListener((v) -> {
+                t.setStatus(Transfer.Status.WAITING_PERMISSION);
+                t.updateUI();
+                activity.remote.startSendTransfer(t);
+            });
+        } else holder.btnRetry.setVisibility(View.INVISIBLE);
         //Main label
         String text = t.fileCount == 1 ? t.singleName: activity.getString(R.string.num_files, t.fileCount);
         text += " (" + Formatter.formatFileSize(activity, t.totalSize) + ")";
@@ -125,6 +135,7 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
         AppCompatImageButton btnAccept;
         AppCompatImageButton btnDecline;
         AppCompatImageButton btnStop;
+        AppCompatImageButton btnRetry;
         ImageView imgFromTo;
         TextView txtTransfer;
         TextView txtStatus;
@@ -137,6 +148,7 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
             btnAccept = itemView.findViewById(R.id.btnAccept);
             btnDecline = itemView.findViewById(R.id.btnDecline);
             btnStop = itemView.findViewById(R.id.btnStop);
+            btnRetry = itemView.findViewById(R.id.btnRetry);
             imgFromTo = itemView.findViewById(R.id.imgFromTo);
             txtStatus = itemView.findViewById(R.id.txtStatus);
             txtTransfer = itemView.findViewById(R.id.txtTransfer);

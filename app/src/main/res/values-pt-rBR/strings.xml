@@ -59,8 +59,7 @@
     <string name="overwrite_settings_summary_off">Os arquivos recebidos com o mesmo nome serão substituídos</string>
     <string name="custom">Personalizado</string>
     <string name="unsupported_provider">Você selecionou um conteúdo não suportado. Por favor selecione uma pasta no seu armazenamento.</string>
-    <!--  Theme settings -->    
-    </string-array>
+    <!--  Theme settings -->
     <string name="sysDefault">Usar padrão do sistema</string>
     <string name="lightTheme">Tema claro</string>
     <string name="darkTheme">Tema escuro</string>
