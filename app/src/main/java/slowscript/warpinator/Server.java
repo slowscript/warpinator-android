@@ -234,18 +234,18 @@ public class Server {
         };
     }
 
-    Bitmap getProfilePicture(String picture) {
+    static Bitmap getProfilePicture(String picture, Context ctx) {
         int[] colors = new int[] {0xfff44336, 0xffe91e63, 0xff9c27b0, 0xff3f51b5, 0xff2196f3, 0xff4caf50,
                 0xff8bc34a, 0xffcddc39, 0xffffeb3b, 0xffffc107, 0xffff9800, 0xffff5722};
         if (picture.startsWith("content")) {
             try {
-                return MediaStore.Images.Media.getBitmap(svc.getContentResolver(), Uri.parse(picture));
+                return MediaStore.Images.Media.getBitmap(ctx.getContentResolver(), Uri.parse(picture));
             } catch (Exception e) {
                 picture = "0";
             }
         }
         int i = Integer.parseInt(picture); //Could be also a content uri in the future
-        Drawable foreground = ResourcesCompat.getDrawable(svc.getResources(), R.mipmap.ic_launcher_foreground, null);
+        Drawable foreground = ResourcesCompat.getDrawable(ctx.getResources(), R.mipmap.ic_launcher_foreground, null);
         Bitmap bmp = Bitmap.createBitmap(96, 96, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bmp);
         Paint paint = new Paint();
@@ -258,7 +258,7 @@ public class Server {
 
     ByteString getProfilePictureBytes() {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        Bitmap bmp = getProfilePicture(profilePicture);
+        Bitmap bmp = getProfilePicture(profilePicture, svc);
         bmp.compress(Bitmap.CompressFormat.PNG, 90, os);
         return ByteString.copyFrom(os.toByteArray());
     }

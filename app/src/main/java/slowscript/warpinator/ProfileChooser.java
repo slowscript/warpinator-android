@@ -34,12 +34,12 @@ public class ProfileChooser extends AppCompatActivity {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String picture = prefs.getString("profile", "0");
-        imgCurrent.setImageBitmap(Server.current.getProfilePicture(picture));
+        imgCurrent.setImageBitmap(Server.current.getProfilePicture(picture, this));
 
         for (int i = 0; i < 12; i++) {
             final int idx = i;
             ImageButton btn = new ImageButton(this);
-            btn.setImageBitmap(Server.current.getProfilePicture(String.valueOf(idx)));
+            btn.setImageBitmap(Server.current.getProfilePicture(String.valueOf(idx), this));
             btn.setOnClickListener((v)->{
                 prefs.edit().putString("profile", String.valueOf(idx)).apply();
                 finish();

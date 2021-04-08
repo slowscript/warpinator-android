@@ -123,6 +123,7 @@ public class Transfer {
     public void startSending(CallStreamObserver<WarpProto.FileChunk> observer) {
         setStatus(Status.TRANSFERRING);
         actualStartTime = System.currentTimeMillis();
+        bytesTransferred = 0;
         updateUI();
         observer.setOnReadyHandler(new Runnable() {
             int i = 0;

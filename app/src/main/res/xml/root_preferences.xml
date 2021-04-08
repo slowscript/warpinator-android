@@ -34,7 +34,7 @@
             android:summaryOn="@string/overwrite_settings_summary_on"
             android:summaryOff="@string/overwrite_settings_summary_off" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="autoAccept"
             android:defaultValue="false"
             android:title="@string/accept_settings_title"

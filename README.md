@@ -15,5 +15,5 @@ Build with Android Studio or with this command (you will need to install Android
 
 ```
 export ANDROID_SDK_ROOT=$HOME/Android/Sdk
-./gradlew build
+./gradlew :app:assembleDebug
 ```

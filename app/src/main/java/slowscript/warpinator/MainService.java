@@ -62,11 +62,13 @@ public class MainService extends Service {
 
         Authenticator.getServerCertificate(); //Generate cert on start if doesn't exist
         if (Authenticator.certException != null) {
+            if (MainActivity.current != null) {
             Utils.displayMessage(MainActivity.current, "Failed to create certificate",
                     "A likely reason for this is that your IP address could not be obtained. " +
                     "Please make sure you are connected to WiFi, then restart the app.\n" +
                     "\nAvailable interfaces:\n" + Utils.dumpInterfaces() +
                     "\nException: " + Authenticator.certException.toString());
+            }
             return START_NOT_STICKY;
         }
 
