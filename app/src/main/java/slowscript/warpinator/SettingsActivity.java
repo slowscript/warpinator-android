@@ -2,7 +2,9 @@ package slowscript.warpinator;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.provider.DocumentsProvider;
 import android.text.InputType;
 import android.util.Log;
@@ -43,6 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onStart();
         if(pickDir) {
             pickDir = false; //Only once
+            fragment.pickDirOnStart = true;
             fragment.pickDirectory();
         }
     }
@@ -60,12 +63,15 @@ public class SettingsActivity extends AppCompatActivity {
     public static class SettingsFragment extends PreferenceFragmentCompat {
         private static final int CHOOSE_ROOT_REQ_CODE = 10;
         private static final String TAG = "Settings";
+        private static final String INIT_URI = "content://com.android.externalstorage.documents/document/primary:";
+                
         private static final String DOWNLOAD_DIR_PREF = "downloadDir";
         private static final String PORT_PREF = "port";
         private static final String GROUPCODE_PREF = "groupCode";
         private static final String BACKGROUND_PREF = "background";
         private static final String THEME_PREF = "theme_setting";
         private static final String PROFILE_PREF = "profile";
+        public boolean pickDirOnStart = false;
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -128,6 +134,8 @@ public class SettingsActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, Uri.parse(INIT_URI));
 
             startActivityForResult(intent, CHOOSE_ROOT_REQ_CODE);
         }
@@ -149,6 +157,12 @@ public class SettingsActivity extends AppCompatActivity {
                 getPreferenceManager().getSharedPreferences().edit()
                         .putString(DOWNLOAD_DIR_PREF, uri.toString())
                         .apply();
+
+                // Close activity if started only for initial dl directory selection
+                if (pickDirOnStart) {
+                    pickDirOnStart = false;
+                    getActivity().finish();
+                }
             }
         }
     }
