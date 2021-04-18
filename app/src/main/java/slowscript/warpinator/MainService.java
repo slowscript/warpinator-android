@@ -25,6 +25,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.RejectedExecutionException;
 
 public class MainService extends Service {
     private static final String TAG = "SERVICE";
@@ -135,7 +136,11 @@ public class MainService extends Service {
 
     public void updateProgress() {
         //Do this on another thread as we don't want to block a sender or receiver thread
-        executor.submit(this::updateNotification);
+        try {
+            executor.submit(this::updateNotification);
+        } catch (RejectedExecutionException e) {
+            Log.e(TAG, "Rejected execution exception: " + e.getMessage());
+        }
     }
 
     void updateNotification() {

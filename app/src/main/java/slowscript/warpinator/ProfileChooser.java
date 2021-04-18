@@ -7,6 +7,7 @@ import androidx.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -65,8 +66,9 @@ public class ProfileChooser extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CHOOSE_PICTURE_REQ_CODE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
-                String uri = data.getData().toString();
-                prefs.edit().putString("profile", uri).apply();
+                Uri u = data.getData();
+                getContentResolver().takePersistableUriPermission(u, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                prefs.edit().putString("profile", u.toString()).apply();
                 finish();
             }
         }
