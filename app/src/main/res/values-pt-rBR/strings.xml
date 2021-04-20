@@ -21,7 +21,7 @@
     <string name="a_few_seconds">alguns segundos</string>
     <string name="service_unavailable">, serviço indisponível</string>
     <string name="errors_during_transfer">Erros durante a transferência:</string>
-    <string name="dont_close_when_sharing">Ao encerrar esta atividade durante compartilhamento pode causar em falha da transferência</string>
+    <string name="dont_close_when_sharing">Ao encerrar este processo durante compartilhamento pode causar uma falha da transferência</string>
     <!--  About activity  -->
     <string name="version">Versão: %1$s</string>
     <string name="about_description">Este é um Fork não-oficial do Warpinator. \nEnvie e receba arquivos via rede local.</string>
