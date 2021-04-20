@@ -21,6 +21,7 @@
     <string name="a_few_seconds">alguns segundos</string>
     <string name="service_unavailable">, serviço indisponível</string>
     <string name="errors_during_transfer">Erros durante a transferência:</string>
+    <string name="dont_close_when_sharing">Ao encerrar esta atividade durante compartilhamento pode causar em falha da transferência</string>
     <!--  About activity  -->
     <string name="version">Versão: %1$s</string>
     <string name="about_description">Este é um Fork não-oficial do Warpinator. \nEnvie e receba arquivos via rede local.</string>
@@ -57,7 +58,7 @@
     <string name="requires_restart_warning">Alteração desta configuração exige reiniciar o App</string>
     <string name="overwrite_settings_summary_on">Os arquivos recebidos com o mesmo nome substituirão os já existentes</string>
     <string name="overwrite_settings_summary_off">Os arquivos recebidos com o mesmo nome serão substituídos</string>
-    <string name="custom">Personalizado</string>
+    <string name="custom">Personalizar</string>
     <string name="unsupported_provider">Você selecionou um conteúdo não suportado. Por favor selecione uma pasta no seu armazenamento.</string>
     <!--  Theme settings -->
     <string name="sysDefault">Usar padrão do sistema</string>
@@ -69,7 +70,7 @@
     <string name="transfers_complete">Todas as transferências concluídas</string>
     <string name="transfer_notification">%.1f%%, %d transferências, %s/s</string>
     <string name="incoming_transfer">Transferência(s) recebida(s) de %s</string>
-    <string name="num_files">%d arquivos</string>
+    <string name="num_files">%d arquivo(s)</string>
     <string name="service_running">Serviço em execução</string>
     <string name="notification_channel_description">Notificação de serviço persistente</string>
     <string name="incoming_transfer_channel">Transferência recebida</string>
