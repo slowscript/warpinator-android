@@ -261,6 +261,13 @@ public class Utils {
         return false;
     }
 
+    public static void sleep(long millis)
+    {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e){}
+    }
+
     //FOR DEBUG PURPOSES
     private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
     public static String bytesToHex(byte[] bytes) {

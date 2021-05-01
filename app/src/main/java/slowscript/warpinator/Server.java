@@ -69,10 +69,21 @@ public class Server {
         //Start servers
         startGrpcServer();
         CertServer.Start(port);
-        //Announce ourselves
-        registerService();
+        new Thread(this::initThread).start();
+    }
+
+    void initThread()
+    {
         //Start looking for others
         nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
+        Utils.sleep(1000);
+        Log.v(TAG, "Flush registration");
+        registerService(true);
+        Utils.sleep(1000);
+        nsdManager.unregisterService(registrationListener);;
+        Utils.sleep(500);
+        Log.v(TAG, "Real registration");
+        registerService(false);
     }
 
     public void Stop() {
@@ -117,7 +128,7 @@ public class Server {
         }
     }
 
-    void registerService() {
+    void registerService(boolean flush) {
         NsdServiceInfo serviceInfo = new NsdServiceInfo();
         Log.d(TAG, "Registering as " + uuid);
         serviceInfo.setServiceName(uuid);
@@ -125,6 +136,8 @@ public class Server {
         serviceInfo.setPort(port);
 
         serviceInfo.setAttribute("hostname", Utils.getDeviceName());
+        String type = flush ? "flush" : "real";
+        serviceInfo.setAttribute("type", type);
 
         nsdManager.registerService(serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener);
     }
