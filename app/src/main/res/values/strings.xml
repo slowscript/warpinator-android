@@ -61,16 +61,6 @@
     <string name="custom">Custom</string>
     <string name="unsupported_provider">You have selected an unsupported content provider. Please select a directory on your internal storage.</string>
     <!--  Theme settings -->
-    <string-array name="theme_settings_entries_array"> <!-- do not translate this -->
-        <item>sysDefault</item>
-        <item>lightTheme</item>
-        <item>darkTheme</item>
-    </string-array>
-    <string-array name="theme_settings_array">
-        <item>@string/sysDefault</item>
-        <item>@string/lightTheme</item>
-        <item>@string/darkTheme</item>
-    </string-array>
     <string name="sysDefault">Use system default</string>
     <string name="lightTheme">Light Theme</string>
     <string name="darkTheme">Dark Theme</string>
