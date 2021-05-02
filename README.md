@@ -17,3 +17,7 @@ Build with Android Studio or with this command (you will need to install Android
 export ANDROID_SDK_ROOT=$HOME/Android/Sdk
 ./gradlew :app:assembleDebug
 ```
+
+## Translations
+
+[Warpinator for Android](https://play.google.com/store/apps/details?id=slowscript.warpinator) can be translated just like any other Android application. Just copy `strings.xml` from `/app/src/main/res/values` to `/app/src/main/res/values-xx` where `xx` is the code of the language you are translating to. Then translate everything in the new xml file and submit a [PR](https://github.com/slowscript/warpinator-android/pulls).
