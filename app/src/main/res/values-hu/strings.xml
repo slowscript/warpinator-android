@@ -59,16 +59,6 @@
     <string name="custom">Egyéni</string>
     <string name="unsupported_provider">Nem támogatott tartalomszolgáltatót választott. Válasszon egy könyvtárat a belső tárhelyről.</string>
     <!--  Theme settings -->
-    <string-array name="theme_settings_entries_array"> <!-- do not translate this -->
-        <item>sysDefault</item>
-        <item>lightTheme</item>
-        <item>darkTheme</item>
-    </string-array>
-    <string-array name="theme_settings_array">
-        <item>@string/sysDefault</item>
-        <item>@string/lightTheme</item>
-        <item>@string/darkTheme</item>
-    </string-array>
     <string name="sysDefault">A rendszer alapértelmezett használata</string>
     <string name="lightTheme">Világos téma</string>
     <string name="darkTheme">Sötét téma</string>
