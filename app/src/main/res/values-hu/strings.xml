@@ -12,54 +12,54 @@
     <string name="no_devices_found">Nem található más eszköz</string>
     <string name="wrong_group_code">A kapcsolat sikertelen: Helytelen csoportkód</string>
     <string name="connection_error">Csatlakozási hiba</string>
-    <string name="not_connected_to_wifi">You are not connected to WiFi or LAN. Use your hotspot if neither is available.
-        Restart the application when you are connected.</string>
+    <string name="not_connected_to_wifi">Nincs csatlakoztatva a WiFi-hez vagy a helyi hálózathoz. Használja az elérési pontját, ha egyik sem érhető el.
+        Indítsa újra az alkalmazást, amikor csatlakozik.</string>
     <!--  Transfers activity  -->
-    <string name="waiting_for_permission">Waiting for permission…</string>
-    <string name="files_overwritten_warning">(Files may be overwritten!)</string>
-    <string name="remaining">remaining</string>
-    <string name="a_few_seconds">a few seconds</string>
-    <string name="service_unavailable">, service unavailable</string>
-    <string name="errors_during_transfer">Errors during transfer:</string>
-    <string name="dont_close_when_sharing">Closing this activity while sharing might cause the transfer to fail</string>
+    <string name="waiting_for_permission">Engedélyre vár…</string>
+    <string name="files_overwritten_warning">(Lehetséges, hogy a fájlokat felülírják!)</string>
+    <string name="remaining">maradt</string>
+    <string name="a_few_seconds">néhány másodperc</string>
+    <string name="service_unavailable">, a szolgáltatás nem elérhető</string>
+    <string name="errors_during_transfer">Átviteli hibák:</string>
+    <string name="dont_close_when_sharing">A tevékenység bezárása megosztás közben az átvitel sikertelenségét okozhatja </string>
     <!--  About activity  -->
-    <string name="version">Version: %1$s</string>
-    <string name="about_description">This is an unofficial port of Warpinator. \nSend and receive files across local network.</string>
+    <string name="version">Változat: %1$s</string>
+    <string name="about_description">Ez a Warpinator nem hivatalos portja.\nFájlok küldése és fogadása helyi hálózaton keresztül.</string>
     <string name="warranty_html">
-        This program is open source software licensed under &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>.&lt;br>
-        You can obtain the source code from &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
+        Ez a program nyílt forráskódú szoftver, amelyet a &lt;a href="https://hu.wikisource.org/wiki/GNU_General_Public_License_(magyar)">GNU általános nyilvános licencével&lt;/a>licenceltek.&lt;br>
+        A forráskódot a következő helyeken szerezheti be: &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
         &lt;br>
-        This program comes with absolutely no warranty.&lt;br>See the terms of the license for more details.</string>
+        Ez a program semmilyen garanciával nem jár.&lt;br>További részletekért tekintse meg a licenc feltételeit.</string>
     <!--  Share activity  -->
-    <string name="devices_to_share_with">Devices to share with</string>
-    <string name="no_share_devices">No available devices to share with</string>
-    <string name="unsupported_intent">We received an unsupported intent action</string>
-    <string name="nothing_to_share">Nothing to share</string>
+    <string name="devices_to_share_with">Megosztandó eszközök</string>
+    <string name="no_share_devices">Nincs elérhető eszköz, amellyel meg lehetne osztani </string>
+    <string name="unsupported_intent">Kaptunk egy nem támogatott szándékú műveletet</string>
+    <string name="nothing_to_share">Nincs mit megosztani</string>
     <!--  Setting  -->
-    <string name="identity_settings_category">Identity</string>
-    <string name="transfer_setting_category">Transfer settings</string>
-    <string name="network_setting_category">Network</string>
-    <string name="aspect_setting_category">Aspect</string>
-    <string name="display_settings_title">Display name</string>
-    <string name="picture_settings_title">Profile picture</string>
-    <string name="download_dir_settings_title">Downloads directory</string>
-    <string name="notification_settings_title">Show notification about incoming files</string>
-    <string name="overwrite_settings_title">Allow overwriting</string>
-    <string name="accept_settings_title">Automatically accept transfers</string>
-    <string name="accept_setting_summary_on">Transfers will be accepted automatically</string>
-    <string name="accept_setting_summary_off">Every transfer needs to be accepted by you</string>
-    <string name="background_settings_title">Run in background</string>
-    <string name="boot_settings_title">Start automatically</string>
-    <string name="group_code_settings_title">Group code</string>
-    <string name="port_settings_title">Port</string>
-    <string name="theme_settings_title">Theme</string>
-    <string name="notification_settings_summary">This may be affected by Android\'s notification settings</string>
-    <string name="port_range_warning">Port number must be between 1024 and 65535</string>
-    <string name="requires_restart_warning">Changing this setting requires the application to be restarted</string>
-    <string name="overwrite_settings_summary_on">Incoming files with a name that already exists will overwrite the existing ones</string>
-    <string name="overwrite_settings_summary_off">Incoming files with a name that already exists will be renamed</string>
-    <string name="custom">Custom</string>
-    <string name="unsupported_provider">You have selected an unsupported content provider. Please select a directory on your internal storage.</string>
+    <string name="identity_settings_category">Azonosító</string>
+    <string name="transfer_setting_category">Átviteli beállítások</string>
+    <string name="network_setting_category">Hálózat</string>
+    <string name="aspect_setting_category">Oldalarány</string>
+    <string name="display_settings_title">Megjelenítendő név</string>
+    <string name="picture_settings_title">Profilkép</string>
+    <string name="download_dir_settings_title">Letöltési könyvtár</string>
+    <string name="notification_settings_title">Értesítés megjelenítése a bejövő fájlokról</string>
+    <string name="overwrite_settings_title">Felülírás engedélyezése</string>
+    <string name="accept_settings_title">Önműködően átvitelek elfogadása</string>
+    <string name="accept_setting_summary_on">Átviteleket önműködően elfogadják</string>
+    <string name="accept_setting_summary_off">Kérjen minden átvitel elfogadását</string>
+    <string name="background_settings_title">Futtatás a háttérben</string>
+    <string name="boot_settings_title">Önműködő indítás</string>
+    <string name="group_code_settings_title">Csoportkód</string>
+    <string name="port_settings_title">Kikötő</string>
+    <string name="theme_settings_title">Téma</string>
+    <string name="notification_settings_summary">Ezt befolyásolhatják az Android értesítési beállításai</string>
+    <string name="port_range_warning">A kikötőszámnak 1024 és 65535 között kell lennie</string>
+    <string name="requires_restart_warning">A beállítás megváltoztatásához újra kell indítani az alkalmazást</string>
+    <string name="overwrite_settings_summary_on">A már létező nevű bejövő fájlok felülírják a meglévő fájlokat</string>
+    <string name="overwrite_settings_summary_off">A már létező nevű bejövő fájlokat átnevezzük</string>
+    <string name="custom">Egyéni</string>
+    <string name="unsupported_provider">Nem támogatott tartalomszolgáltatót választott. Válasszon egy könyvtárat a belső tárhelyről.</string>
     <!--  Theme settings -->
     <string-array name="theme_settings_entries_array"> <!-- do not translate this -->
         <item>sysDefault</item>
@@ -71,11 +71,11 @@
         <item>@string/lightTheme</item>
         <item>@string/darkTheme</item>
     </string-array>
-    <string name="sysDefault">Use system default</string>
-    <string name="lightTheme">Light Theme</string>
-    <string name="darkTheme">Dark Theme</string>
+    <string name="sysDefault">A rendszer alapértelmezett használata</string>
+    <string name="lightTheme">Világos téma</string>
+    <string name="darkTheme">Sötét téma</string>
     <!--  Notification  -->
-    <string name="warpinator_notification_title">Warpinator service is running</string>
+    <string name="warpinator_notification_title">A Warpinator szolgáltatás fut</string>
     <string name="warpinator_notification_button">Stop service</string>
     <string name="transfers_complete">All transfers are complete</string>
     <string name="transfer_notification">%.1f%%, %d transfers, %s/s</string>
