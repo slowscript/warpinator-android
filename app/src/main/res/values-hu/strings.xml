@@ -2,7 +2,7 @@
     <!--  App Name  -->
     <string name="app_name" translatable="false">Warpinator</string>
     <!--  Main Activity  -->
-    <string name="title_activity_transfers">Átvitelek</string>
+    <string name="title_activity_transfers">Átvitelok</string>
     <string name="send_files">Fájlok küldése</string>
     <string name="quit">Kilépés</string>
     <string name="about">Névjegy</string>
@@ -45,9 +45,9 @@
     <string name="download_dir_settings_title">Letöltési könyvtár</string>
     <string name="notification_settings_title">Értesítés megjelenítése a bejövő fájlokról</string>
     <string name="overwrite_settings_title">Felülírás engedélyezése</string>
-    <string name="accept_settings_title">Önműködően átvitelek elfogadása</string>
-    <string name="accept_setting_summary_on">Átviteleket önműködően elfogadják</string>
-    <string name="accept_setting_summary_off">Kérjen minden átvitel elfogadását</string>
+    <string name="accept_settings_title">Önműködően átutalások befogadása</string>
+    <string name="accept_setting_summary_on">Átutalásokat önműködően elfogadják</string>
+    <string name="accept_setting_summary_off">Kérjen minden átutalás elfogadását</string>
     <string name="background_settings_title">Futtatás a háttérben</string>
     <string name="boot_settings_title">Önműködő indítás</string>
     <string name="group_code_settings_title">Csoportkód</string>
@@ -76,37 +76,37 @@
     <string name="darkTheme">Sötét téma</string>
     <!--  Notification  -->
     <string name="warpinator_notification_title">A Warpinator szolgáltatás fut</string>
-    <string name="warpinator_notification_button">Stop service</string>
-    <string name="transfers_complete">All transfers are complete</string>
-    <string name="transfer_notification">%.1f%%, %d transfers, %s/s</string>
-    <string name="incoming_transfer">Incoming transfer from %s</string>
-    <string name="num_files">%d files</string>
-    <string name="service_running">Service running</string>
-    <string name="notification_channel_description">Persistent service notification</string>
-    <string name="incoming_transfer_channel">Incoming transfer</string>
-    <string name="transfer_progress_channel">Transfer progress</string>
+    <string name="warpinator_notification_button">Szolgáltatás leállítása</string>
+    <string name="transfers_complete">Minden átvitel elfejeződött</string>
+    <string name="transfer_notification">%.1f%%, %d átvitel, %s/s</string>
+    <string name="incoming_transfer">Bejövő átvitel innen: %s</string>
+    <string name="num_files">%d fájl</string>
+    <string name="service_running">A szolgáltatás fut</string>
+    <string name="notification_channel_description">Tartós szolgáltatási értesítés</string>
+    <string name="incoming_transfer_channel">Bejövő átvitel</string>
+    <string name="transfer_progress_channel">Az átvitel előrehaladása</string>
     <!--  Other  -->
-    <string name="please_select_download_dir">This is likely the first time you are launching this application.
-        Please select a directory where you want Warpinator to save files into.</string>
-    <string name="error_download_dir">You have to select a download directory in the settings</string>
+    <string name="please_select_download_dir">Valószínűleg ez az első alkalom, amikor elindítja ezt az alkalmazást.
+        Kérjük, válasszon egy könyvtárat, ahová a Warpinator menti a fájlokat.</string>
+    <string name="error_download_dir">A beállításokban ki kell választania egy letöltési könyvtárat</string>
     <string-array name="connected_states">
-        <item>Connected</item>
-        <item>Disconnected</item>
-        <item>Connecting</item>
-        <item>Connection failed</item>
-        <item>Awaiting duplex</item>
+        <item>Csatlakoztatva</item>
+        <item>Kapcsolat bontva</item>
+        <item>Csatlakozás…</item>
+        <item>Sikertelen csatlakozás</item>
+        <item>Kétirányú várakozása…</item>
     </string-array>
     <string-array name="transfer_states">
-        <item>Initializing</item>
-        <item>Waiting for permission…</item>
-        <item>Declined</item>
-        <item>Transferring</item>
-        <item>Paused</item>
-        <item>Stopped</item>
-        <item>Failed (tap to view errors)</item>
-        <item>Unrecoverable failure</item>
-        <item>File not found</item>
-        <item>Finished</item>
-        <item>Finished with errors (tap to view)</item>
+        <item>Előkészítés</item>
+        <item>Engedélyre vár…</item>
+        <item>Elutasítva</item>
+        <item>Átvitel folyamatban</item>
+        <item>Szüneteltetve</item>
+        <item>Leállítva</item>
+        <item>Sikertelen (érintse meg a hibák megtekintéséhez)</item>
+        <item>Helyrehozhatatlan hiba</item>
+        <item>Nem található a fájl</item>
+        <item>Befejezve</item>
+        <item>Befejezve hibákkal (érintse meg a hibák megtekintéséhez)</item>
     </string-array>
 </resources>
