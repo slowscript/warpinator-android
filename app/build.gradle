@@ -9,15 +9,15 @@ android {
         applicationId 'slowscript.warpinator'
         minSdkVersion 21 //Required by NSD (attributes)
         targetSdkVersion 29
-        versionCode 1000
-        versionName "1.0"
+        versionCode 1010
+        versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

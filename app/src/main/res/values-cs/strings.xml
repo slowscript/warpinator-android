@@ -9,12 +9,16 @@
     <string name="available_devices">Dostupná zařízení</string>
     <string name="no_devices_found">Žádná zařízení nenalezena</string>
     <string name="wrong_group_code">Spojení selhalo: špatný kód skupiny</string>
+    <string name="connection_error">Chyba spojení</string>
+    <string name="not_connected_to_wifi">Nejste připojeni k WiFi ani k LAN. Pokud ani jedno není k dispozici,
+    použijte hotspot. Až budete připojeni restartujte aplikaci.</string>
     <string name="waiting_for_permission">Čeká na přijetí…</string>
     <string name="files_overwritten_warning">(Soubory mohou být přepsány!)</string>
     <string name="remaining">zbývá</string>
     <string name="a_few_seconds">několik vteřin</string>
     <string name="service_unavailable">, služba není dostupná</string>
     <string name="errors_during_transfer">Chyby během přenosu:</string>
+    <string name="dont_close_when_sharing">Zavření této aktivity během sdílení může způsobit že odesílání selže</string>
     <string name="version">Verze: %1$s</string>
     <string name="about_description">Toto je neoficiální port Warpinatoru. \nPosílejte a přijímejte soubory v místní síti.</string>
     <string name="warranty_html">
@@ -33,6 +37,9 @@
     <string name="download_dir_settings_title">Složka pro stahování</string>
     <string name="notification_settings_title">Zobrazit oznámení o příchozích souborech</string>
     <string name="overwrite_settings_title">Povolit přepisování</string>
+    <string name="accept_settings_title">Automaticky přijímat přenosy</string>
+    <string name="accept_setting_summary_on">Přenos bude přijat automaticky</string>
+    <string name="accept_setting_summary_off">Každý přenos bude vyžadovat vaše schválení</string>
     <string name="background_settings_title">Běžet na pozadí</string>
     <string name="boot_settings_title">Spouštět při startu</string>
     <string name="group_code_settings_title">Kód skupiny</string>
@@ -58,6 +65,7 @@
     <string name="incoming_transfer_channel">Příchozí přenos</string>
     <string name="transfer_progress_channel">Průběh přenosu</string>
     <string name="please_select_download_dir">Pravděpodobně tuto aplikaci spouštíte poprvé. Vyberte prosím složku kam má Warpinator ukládat soubory.</string>
+    <string name="error_download_dir">Vyberte složku pro ukládání souborů v nastavení</string>
     <string name="notification_channel_description">Oznámení o bežící službě</string>
     <string name="no_share_devices">Žádná zařízení se kterými by bylo možné sdílet</string>
     <string name="unsupported_intent">Přijali jsme příkaz který není podporován</string>

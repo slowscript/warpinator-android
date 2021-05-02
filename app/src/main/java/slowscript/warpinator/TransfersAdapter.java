@@ -1,7 +1,7 @@
 package slowscript.warpinator;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
+import android.content.Context;
 import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +54,16 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
         }
         holder.btnStop.setVisibility(t.getStatus() == Transfer.Status.TRANSFERRING ? View.VISIBLE : View.INVISIBLE);
         holder.btnStop.setOnClickListener((v) -> t.stop(false));
+        if (t.direction == Transfer.Direction.SEND && (t.getStatus() == Transfer.Status.FAILED ||
+                t.getStatus() == Transfer.Status.STOPPED || t.getStatus() == Transfer.Status.FINISHED_WITH_ERRORS ||
+                t.getStatus() == Transfer.Status.DECLINED)) {
+            holder.btnRetry.setVisibility(View.VISIBLE);
+            holder.btnRetry.setOnClickListener((v) -> {
+                t.setStatus(Transfer.Status.WAITING_PERMISSION);
+                t.updateUI();
+                activity.remote.startSendTransfer(t);
+            });
+        } else holder.btnRetry.setVisibility(View.INVISIBLE);
         //Main label
         String text = t.fileCount == 1 ? t.singleName: activity.getString(R.string.num_files, t.fileCount);
         text += " (" + Formatter.formatFileSize(activity, t.totalSize) + ")";
@@ -79,10 +89,8 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
         holder.imgFromTo.setImageResource(t.direction == Transfer.Direction.SEND ? R.drawable.ic_upload : R.drawable.ic_download);
         holder.root.setOnClickListener((v)-> {
             if (t.getStatus() == Transfer.Status.FAILED || t.getStatus() == Transfer.Status.FINISHED_WITH_ERRORS) {
-                new AlertDialog.Builder(holder.root.getContext())
-                        .setTitle(R.string.errors_during_transfer)
-                        .setMessage(Joiner.on("\n").join(t.errors))
-                        .show();
+                Context c = holder.root.getContext();
+                Utils.displayMessage(c, c.getString(R.string.errors_during_transfer), Joiner.on("\n").join(t.errors));
             } else if (t.getStatus() == Transfer.Status.TRANSFERRING) {
                 String remaining = getRemainingTime(t) + " " + activity.getString(R.string.remaining);
                 Toast.makeText(activity, remaining, Toast.LENGTH_SHORT).show();
@@ -127,6 +135,7 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
         AppCompatImageButton btnAccept;
         AppCompatImageButton btnDecline;
         AppCompatImageButton btnStop;
+        AppCompatImageButton btnRetry;
         ImageView imgFromTo;
         TextView txtTransfer;
         TextView txtStatus;
@@ -139,6 +148,7 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
             btnAccept = itemView.findViewById(R.id.btnAccept);
             btnDecline = itemView.findViewById(R.id.btnDecline);
             btnStop = itemView.findViewById(R.id.btnStop);
+            btnRetry = itemView.findViewById(R.id.btnRetry);
             imgFromTo = itemView.findViewById(R.id.imgFromTo);
             txtStatus = itemView.findViewById(R.id.txtStatus);
             txtTransfer = itemView.findViewById(R.id.txtTransfer);

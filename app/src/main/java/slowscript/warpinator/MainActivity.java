@@ -75,9 +75,17 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         recyclerView.post(() -> { //Run when UI is ready
             if (!Utils.isMyServiceRunning(this, MainService.class))
-                startService(new Intent(this, MainService.class));
+                startMainService();
         });
         updateRemoteList();
+    }
+
+    void startMainService() {
+        if (!Utils.isConnectedToWiFiOrEthernet(this) && !Utils.isHotspotOn(this)) {
+            Utils.displayMessage(this, getString(R.string.connection_error), getString(R.string.not_connected_to_wifi));
+            return;
+        }
+        startService(new Intent(this, MainService.class));
     }
 
     @Override

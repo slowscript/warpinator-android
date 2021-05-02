@@ -11,6 +11,9 @@
     <string name="available_devices">Available devices</string>
     <string name="no_devices_found">No other devices found</string>
     <string name="wrong_group_code">Connection failed: Wrong group code</string>
+    <string name="connection_error">Connection error</string>
+    <string name="not_connected_to_wifi">You are not connected to WiFi or LAN. Use your hotspot if neither is available.
+        Restart the application when you are connected.</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">Waiting for permission…</string>
     <string name="files_overwritten_warning">(Files may be overwritten!)</string>
@@ -18,6 +21,7 @@
     <string name="a_few_seconds">a few seconds</string>
     <string name="service_unavailable">, service unavailable</string>
     <string name="errors_during_transfer">Errors during transfer:</string>
+    <string name="dont_close_when_sharing">Closing this activity while sharing might cause the transfer to fail</string>
     <!--  About activity  -->
     <string name="version">Version: %1$s</string>
     <string name="about_description">This is an unofficial port of Warpinator. \nSend and receive files across local network.</string>
@@ -41,6 +45,9 @@
     <string name="download_dir_settings_title">Downloads directory</string>
     <string name="notification_settings_title">Show notification about incoming files</string>
     <string name="overwrite_settings_title">Allow overwriting</string>
+    <string name="accept_settings_title">Automatically accept transfers</string>
+    <string name="accept_setting_summary_on">Transfers will be accepted automatically</string>
+    <string name="accept_setting_summary_off">Every transfer needs to be accepted by you</string>
     <string name="background_settings_title">Run in background</string>
     <string name="boot_settings_title">Start automatically</string>
     <string name="group_code_settings_title">Group code</string>
@@ -54,16 +61,6 @@
     <string name="custom">Custom</string>
     <string name="unsupported_provider">You have selected an unsupported content provider. Please select a directory on your internal storage.</string>
     <!--  Theme settings -->
-    <string-array name="theme_settings_entries_array"> <!-- do not translate this -->
-        <item>sysDefault</item>
-        <item>lightTheme</item>
-        <item>darkTheme</item>
-    </string-array>
-    <string-array name="theme_settings_array">
-        <item>@string/sysDefault</item>
-        <item>@string/lightTheme</item>
-        <item>@string/darkTheme</item>
-    </string-array>
     <string name="sysDefault">Use system default</string>
     <string name="lightTheme">Light Theme</string>
     <string name="darkTheme">Dark Theme</string>
@@ -81,6 +78,7 @@
     <!--  Other  -->
     <string name="please_select_download_dir">This is likely the first time you are launching this application.
         Please select a directory where you want Warpinator to save files into.</string>
+    <string name="error_download_dir">You have to select a download directory in the settings</string>
     <string-array name="connected_states">
         <item>Connected</item>
         <item>Disconnected</item>

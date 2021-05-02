@@ -109,6 +109,19 @@
             app:layout_constraintStart_toStartOf="@+id/txtTransfer"
             app:layout_constraintTop_toBottomOf="@+id/txtTransfer" />
 
+        <ImageButton
+            android:id="@+id/btnRetry"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:background="#00000000"
+            android:src="@drawable/ic_reconnect"
+            android:tint="@color/whiteOnPurple"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

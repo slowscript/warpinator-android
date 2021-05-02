@@ -12,8 +12,10 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.documentfile.provider.DocumentFile;
 
+import com.google.common.base.Strings;
 import com.google.protobuf.ByteString;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -113,14 +115,15 @@ public class Transfer {
             topDirBasenames.add(Utils.getNameFromUri(svc, u));
         }
         if (fileCount == 1) {
-            singleName = topDirBasenames.get(0);
-            singleMime = svc.getContentResolver().getType(uris.get(0));
+            singleName = Strings.nullToEmpty(topDirBasenames.get(0));
+            singleMime = Strings.nullToEmpty(svc.getContentResolver().getType(uris.get(0)));
         }
     }
 
     public void startSending(CallStreamObserver<WarpProto.FileChunk> observer) {
         setStatus(Status.TRANSFERRING);
         actualStartTime = System.currentTimeMillis();
+        bytesTransferred = 0;
         updateUI();
         observer.setOnReadyHandler(new Runnable() {
             int i = 0;
@@ -173,6 +176,7 @@ public class Transfer {
                         observer.onError(e);
                         setStatus(Status.FAILED);
                         errors.add(e.getLocalizedMessage());
+                        Log.e(TAG, "Error sending files", e);
                         updateUI();
                         return;
                     }
@@ -188,11 +192,20 @@ public class Transfer {
     long getTotalSendSize() {
         long size = 0;
         for (Uri u : uris) {
-            Cursor cursor = svc.getContentResolver().query(u, null, null, null, null);
-            int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
-            cursor.moveToFirst();
-            size += cursor.getLong(sizeIndex);
-            cursor.close();
+            try {
+                if (u.toString().startsWith("content:")) {
+                    Cursor cursor = svc.getContentResolver().query(u, null, null, null, null);
+                    int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
+                    cursor.moveToFirst();
+                    size += cursor.getLong(sizeIndex);
+                    cursor.close();
+                } else {
+                    String p = u.getPath();
+                    size += new File(p).length();
+                }
+            } catch (Exception e) {
+                Log.w(TAG, "Bad URI: " + u);
+            }
         }
         return size;
     }
@@ -215,6 +228,8 @@ public class Transfer {
             }
         }
 
+        boolean autoAccept = svc.prefs.getBoolean("autoAccept", false);
+
         //Show in UI
         if (svc.transfersView != null && remoteUUID.equals(svc.transfersView.remote.uuid) && svc.transfersView.isTopmost)
             svc.transfersView.updateTransfers(remoteUUID);
@@ -234,6 +249,7 @@ public class Transfer {
                     .build();
             svc.notificationMgr.notify(svc.notifId++, notification);
         }
+        if (autoAccept) this.startReceive();
     }
 
     void startReceive() {
@@ -257,6 +273,11 @@ public class Transfer {
             closeStream();
             //Begin new file
             currentRelativePath = chunk.getRelativePath();
+            if ("".equals(Server.current.downloadDirUri)) {
+                errors.add(svc.getString(R.string.error_download_dir));
+                failReceive();
+                return false;
+            }
             Uri rootUri = Uri.parse(Server.current.downloadDirUri);
             DocumentFile root = DocumentFile.fromTreeUri(svc, rootUri);
 

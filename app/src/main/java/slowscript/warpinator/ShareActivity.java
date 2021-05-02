@@ -52,15 +52,19 @@ public class ShareActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.nothing_to_share, Toast.LENGTH_LONG).show();
             return;
         }
+        Log.d(TAG, "Sharing " + uris.size() + " files");
+        for (Uri u : uris)
+            Log.v(TAG, u.toString());
 
         //Start service (if not running)
         if (!Utils.isMyServiceRunning(this, MainService.class))
-            startService(new Intent(this, MainService.class));
+            startMainService();
 
         //Set up UI
         recyclerView = findViewById(R.id.recyclerView);
         layoutNotFound = findViewById(R.id.layoutNotFound);
         adapter = new RemotesAdapter(this) {
+            boolean sent = false;
             @Override
             public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
                 Remote remote = (Remote) MainService.remotes.values().toArray()[position];
@@ -68,6 +72,8 @@ public class ShareActivity extends AppCompatActivity {
 
                 //Send to selected remote
                 holder.cardView.setOnClickListener((view) -> {
+                	if (remote.status != Remote.RemoteStatus.CONNECTED || sent)
+                		return;
                     Transfer t = new Transfer();
                     t.uris = uris;
                     t.remoteUUID = remote.uuid;
@@ -79,18 +85,28 @@ public class ShareActivity extends AppCompatActivity {
 
                     Intent i = new Intent(app, TransfersActivity.class);
                     i.putExtra("remote", remote.uuid);
+                    i.putExtra("shareMode", true);
                     app.startActivity(i);
-                    finish();
+                    sent = true;
                 });
             }
         };
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        layoutNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (prefs.getString("downloadDir", "").equals("")) {
             MainActivity.askForDirectoryAccess(this);
         }
+    }
+
+    void startMainService() {
+        if (!Utils.isConnectedToWiFiOrEthernet(this) && !Utils.isHotspotOn(this)) {
+            Utils.displayMessage(this, getString(R.string.connection_error), getString(R.string.not_connected_to_wifi));
+            return;
+        }
+        startService(new Intent(this, MainService.class));
     }
 
     @Override

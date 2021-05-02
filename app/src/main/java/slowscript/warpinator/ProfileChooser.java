@@ -7,6 +7,7 @@ import androidx.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -34,12 +35,12 @@ public class ProfileChooser extends AppCompatActivity {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String picture = prefs.getString("profile", "0");
-        imgCurrent.setImageBitmap(Server.current.getProfilePicture(picture));
+        imgCurrent.setImageBitmap(Server.current.getProfilePicture(picture, this));
 
         for (int i = 0; i < 12; i++) {
             final int idx = i;
             ImageButton btn = new ImageButton(this);
-            btn.setImageBitmap(Server.current.getProfilePicture(String.valueOf(idx)));
+            btn.setImageBitmap(Server.current.getProfilePicture(String.valueOf(idx), this));
             btn.setOnClickListener((v)->{
                 prefs.edit().putString("profile", String.valueOf(idx)).apply();
                 finish();
@@ -65,8 +66,9 @@ public class ProfileChooser extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CHOOSE_PICTURE_REQ_CODE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
-                String uri = data.getData().toString();
-                prefs.edit().putString("profile", uri).apply();
+                Uri u = data.getData();
+                getContentResolver().takePersistableUriPermission(u, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                prefs.edit().putString("profile", u.toString()).apply();
                 finish();
             }
         }

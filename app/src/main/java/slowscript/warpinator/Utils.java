@@ -5,16 +5,22 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.provider.DocumentsContract;
 import android.provider.OpenableColumns;
+import android.text.format.Formatter;
 import android.util.Log;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.documentfile.provider.DocumentFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
@@ -24,14 +30,20 @@ import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.Enumeration;
 
+import io.grpc.stub.StreamObserver;
+
+import static android.content.Context.WIFI_SERVICE;
+
 public class Utils {
+
+    private static final String TAG = "Utils";
 
     public static String getDeviceName() {
         String name;
         try {
             name = BluetoothAdapter.getDefaultAdapter().getName();
         }catch (Exception e){
-            Log.d("ERROR", "This device may not support bluetooth - using default name");
+            Log.d(TAG, "This device may not support bluetooth - using default name");
             name = "Android Phone";
         }
         return name;
@@ -39,13 +51,64 @@ public class Utils {
 
     public static String getIPAddress() {
         try {
-            //TODO: Choose Iface
-            final String ip = getIPForIfaceName("wlan0").getHostAddress();
+            String ip = getWifiIP(); //Works for most cases
+            if (ip == null) //Get IP of WiFi interface, fallback to wlan0 - works for hotspot
+                ip = getIPForIfaceName(getWifiInterface()).getHostAddress();
+            if (ip == null) //Get IP of some random active iface (except loopback and data)
+                ip = getIPForIface(getActiveIface()).getHostAddress();
             return ip != null ? ip : "IP Unknown";
         } catch (Exception ex) {
-            Log.e("Utils", "Couldn't get IP address");
+            Log.e(TAG, "Couldn't get IP address");
             return "Error getting IP";
         }
+    }
+
+    static String getWifiIP() {
+        WifiManager wifiManager = (WifiManager) MainService.svc.getSystemService(WIFI_SERVICE);
+        int ip = wifiManager.getConnectionInfo().getIpAddress();
+        if (ip == 0) return null;
+        return Formatter.formatIpAddress(ip);
+    }
+
+    static NetworkInterface getActiveIface() throws SocketException {
+        Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
+        NetworkInterface ni;
+        while (nis.hasMoreElements()) {
+            ni = nis.nextElement();
+            if ((!ni.isLoopback()) && ni.isUp()) {
+                String name = ni.getDisplayName();
+                if (name.contains("dummy") || name.contains("rmnet"))
+                    continue;
+                Log.d(TAG, ni.getDisplayName());
+                return ni;
+            }
+        }
+        return null;
+    }
+
+    static String getWifiInterface() {
+        String iface = null;
+        try {
+            Method m = Class.forName("android.os.SystemProperties").getMethod("get", String.class);
+            iface = (String) m.invoke(null, "wifi.interface");
+        } catch(Throwable ignored) {}
+        if (iface == null || iface.isEmpty())
+            iface = "wlan0";
+        return iface;
+    }
+
+    public static String dumpInterfaces() {
+        StringBuilder res = new StringBuilder();
+        try {
+            Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
+            while (nis.hasMoreElements()) {
+                NetworkInterface ni = nis.nextElement();
+                if (ni.isUp()) {
+                    res.append(ni.getDisplayName()); res.append("\n");
+                }
+            }
+        } catch (Exception e) {res.append(e.getMessage());}
+        return String.valueOf(res);
     }
 
     public static InetAddress getIPForIfaceName(String ifaceName) throws SocketException {
@@ -81,6 +144,14 @@ public class Utils {
         byte[] b = new byte[(int)f.length()];
         f.readFully(b);
         return b;
+    }
+
+    public static void displayMessage(Context ctx, String title, String msg) {
+        new AlertDialog.Builder(ctx)
+                .setTitle(title)
+                .setMessage(msg)
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
     }
 
     public static String bytesToHumanReadable(long bytes) {
@@ -168,6 +239,35 @@ public class Utils {
         return false;
     }
 
+    public static boolean isConnectedToWiFiOrEthernet(Context ctx) {
+        ConnectivityManager connManager = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert connManager != null;
+        NetworkInfo wifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo ethernet = connManager.getNetworkInfo(ConnectivityManager.TYPE_ETHERNET);
+        return (wifi != null && wifi.isConnected()) || (ethernet != null && ethernet.isConnected());
+    }
+
+    public static boolean isHotspotOn(Context ctx) {
+        WifiManager manager = (WifiManager) ctx.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        assert manager != null;
+        try {
+            final Method method = manager.getClass().getDeclaredMethod("isWifiApEnabled");
+            method.setAccessible(true); //in the case of visibility change in future APIs
+            return (Boolean) method.invoke(manager);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to get hotspot state", e);
+        }
+
+        return false;
+    }
+
+    public static void sleep(long millis)
+    {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e){}
+    }
+
     //FOR DEBUG PURPOSES
     private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
     public static String bytesToHex(byte[] bytes) {
@@ -178,5 +278,13 @@ public class Utils {
             hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
         }
         return new String(hexChars);
+    }
+
+    static class VoidObserver implements StreamObserver<WarpProto.VoidType> {
+        @Override public void onNext(WarpProto.VoidType value) {}
+        @Override public void onError(Throwable t) {
+            Log.e(TAG, "Call failed with exception", t);
+        }
+        @Override public void onCompleted() { }
     }
 }
