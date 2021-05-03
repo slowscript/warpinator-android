@@ -39,7 +39,9 @@ public class ShareActivity extends AppCompatActivity {
         ArrayList<Uri> uris;
         if(Intent.ACTION_SEND.equals(intent.getAction())) {
             uris = new ArrayList<>();
-            uris.add((Uri)intent.getParcelableExtra(Intent.EXTRA_STREAM));
+            Uri u = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            if (u != null)
+                uris.add(u);
         } else if (Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction())) {
             uris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
         } else {
