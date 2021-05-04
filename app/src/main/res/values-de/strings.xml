@@ -19,6 +19,7 @@
     <string name="a_few_seconds">ein paar Sekunden</string>
     <string name="service_unavailable">, Service nicht verfügbar</string>
     <string name="errors_during_transfer">Fehler während Transfer:</string>
+    <string name="dont_close_when_sharing">Das Schließen dieser Aktivität während der Übertragung könnte zum fehlschlagen des Transfers führen</string>
     <!--  About activity  -->
     <string name="version">Version: %1$s</string>
     <string name="about_description">Dies ist eine inoffizieller Portierung von Warpinator. \nSenden und Empfangen von Dateien im lokalen Netzwerk.</string>
