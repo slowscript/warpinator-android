@@ -83,10 +83,6 @@ public class Server {
         try {
             InetAddress addr = InetAddress.getByName(Utils.getIPAddress());
             jmdns = JmDNS.create(addr);
-            Log.d(TAG, "------- JMDNS::::");
-            Log.d(TAG, jmdns.getHostName());
-            Log.d(TAG, jmdns.getName());
-            Log.d(TAG, jmdns.getInetAddress().toString());
 
             //Start looking for others
             jmdns.addServiceListener(SERVICE_TYPE, serviceListener);
@@ -169,7 +165,7 @@ public class Server {
         return new ServiceListener() {
             @Override
             public void serviceAdded(ServiceEvent event) {
-                Log.d(TAG, "Service added: " + event.getInfo());
+                Log.d(TAG, "Service found: " + event.getInfo());
             }
 
             @Override
@@ -186,7 +182,7 @@ public class Server {
             @Override
             public void serviceResolved(ServiceEvent event) {
                 ServiceInfo info = event.getInfo();
-                Log.d(TAG, "!!*** Service resolved: " + info.getName());
+                Log.d(TAG, "*** Service resolved: " + info.getName());
                 if (info.getName().equals(uuid)) {
                     Log.v(TAG, "That's me. Ignoring.");
                     return;
