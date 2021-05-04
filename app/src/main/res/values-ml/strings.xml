@@ -1,0 +1,102 @@
+<resources>
+    <!--  App Name  -->
+    <string name="app_name" translatable="false">Warpinator</string>
+    <!--  Main Activity  -->
+    <string name="title_activity_transfers">കൈമാറ്റങ്ങൾ</string>
+    <string name="send_files">ഫയലുകൾ അയയ്‌ക്കുക</string>
+    <string name="quit">ഉപേക്ഷിക്കുക</string>
+    <string name="about">അറിയുക</string>
+    <string name="settings">ക്രമീകരണങ്ങൾ</string>
+    <string name="title_activity_share">പങ്കിടുക</string>
+    <string name="available_devices">ലഭ്യമായ ഉപകരണങ്ങൾ</string>
+    <string name="no_devices_found">മറ്റ് ഉപകരണങ്ങളൊന്നും കണ്ടെത്തിയില്ല</string>
+    <string name="wrong_group_code">കണക്ഷൻ പരാജയപ്പെട്ടു: തെറ്റായ ഗ്രൂപ്പ് കോഡ്</string>
+    <string name="connection_error">കണക്ഷൻ തകരാറ്</string>
+    <string name="not_connected_to_wifi">നിങ്ങൾ വൈഫൈ അല്ലെങ്കിൽ ലാനിലേക്ക് കണക്റ്റു ചെയ്‌തിട്ടില്ല. ഒന്നും ലഭ്യമല്ലെങ്കിൽ നിങ്ങളുടെ ഹോട്ട്‌സ്പോട്ട് ഉപയോഗിക്കുക.
+         നിങ്ങൾ കണക്റ്റു ചെയ്‌തിരിക്കുമ്പോൾ അപ്ലിക്കേഷൻ പുനരാരംഭിക്കുക.</string>
+    <!--  Transfers activity  -->
+    <string name="waiting_for_permission">അനുമതിക്കായി കാത്തിരിക്കുന്നു…</string>
+    <string name="files_overwritten_warning">(ഫയലുകൾ തിരുത്തപ്പെട്ടേക്കാം!)</string>
+    <string name="remaining">ബാക്കിയുള്ളത് </string>
+    <string name="a_few_seconds">ചില നിമിഷങ്ങൾ കൂടി </string>
+    <string name="service_unavailable">, സേവനം ലഭ്യമല്ല</string>
+    <string name="errors_during_transfer">കൈമാറ്റം ചെയ്യുമ്പോൾ പിശകുകൾ:</string>
+    <string name="dont_close_when_sharing">പങ്കിടുമ്പോൾ ഈ പ്രവർത്തനം നിർത്തുന്നത് കൈമാറ്റം പരാജയപ്പെടാൻ കാരണമായേക്കാം</string>
+    <!--  About activity  -->
+    <string name="version">പതിപ്പ്:% 1 $ s</string>
+    <string name="about_description">ഇത് വാർ‌പിനേറ്ററിന്റെ അനൗദ്യോഗിക ബഹുരൂപമാണ്. \nപ്രാദേശിക ശൃംഖലയിൽ ഫയലുകൾ അയക്കാം, സ്വീകരിക്കാം.</string>
+    <string name="warranty_html">
+        ഈ പ്രോഗ്രാം ഓപ്പൺ സോഴ്‌സ് സോഫ്റ്റ്‌വെയറാണ് under &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">ഗ്നു ജനറൽ പബ്ലിക് ലൈസൻസ് &lt;/a>.&lt;br>
+        നിങ്ങൾക്ക് എവിടെ നിന്ന് ഉറവിട കോഡ് ലഭിക്കും &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
+        &lt;br>
+        ഈ പ്രോഗ്രാമിന് യാതൊരു വാറന്റിയുമില്ല.&lt;br>See the terms of the license for more details.</string>
+    <!--  Share activity  -->
+    <string name="devices_to_share_with">പങ്കിടാനുള്ള ഉപകരണങ്ങൾ</string>
+    <string name="no_share_devices">പങ്കിടാൻ ലഭ്യമായ ഉപകരണങ്ങളൊന്നുമില്ല</string>
+    <string name="unsupported_intent">ഞങ്ങൾക്ക് പിന്തുണയ്‌ക്കാത്ത ഒരു ഇടപെടൽ ലഭിച്ചു</string>
+    <string name="nothing_to_share">പങ്കിടാൻ ഒന്നുമില്ല</string>
+    <!--  Setting  -->
+    <string name="identity_settings_category">വ്യക്തിത്വം </string>
+    <string name="transfer_setting_category">കൈമാറ്റ ക്രമീകരണങ്ങൾ</string>
+    <string name="network_setting_category">ശ്രിംഘല</string>
+    <string name="aspect_setting_category">വീക്ഷണം</string>
+    <string name="display_settings_title">പ്രദർശന നാമം</string>
+    <string name="picture_settings_title">പ്രൊഫൈൽ ചിത്രം</string>
+    <string name="download_dir_settings_title">ഡൗൺലോഡ് നുള്ള  ഡയറക്ടറി</string>
+    <string name="notification_settings_title">വരുന്ന ഫയലുകളെക്കുറിച്ചുള്ള അറിയിപ്പ് കാണിക്കുക</string>
+    <string name="overwrite_settings_title">പുനരാലേഖനം അനുവദിക്കുക</string>
+    <string name="accept_settings_title">കൈമാറ്റങ്ങൾ സ്വപ്രേരിതമായി സ്വീകരിക്കുക</string>
+    <string name="accept_setting_summary_on">കൈമാറ്റങ്ങൾ സ്വപ്രേരിതമായി സ്വീകരിക്കും</string>
+    <string name="accept_setting_summary_off">എല്ലാ കൈമാറ്റങ്ങളും നിങ്ങൾ അംഗീകരിക്കേണ്ടതുണ്ട്</string>
+    <string name="background_settings_title">പശ്ചാത്തലത്തിൽ പ്രവർത്തിപ്പിക്കുക</string>
+    <string name="boot_settings_title">യാന്ത്രികമായി ആരംഭിക്കുക</string>
+    <string name="group_code_settings_title">ഗ്രൂപ്പ് കോഡ്</string>
+    <string name="port_settings_title">പോർട്ട്</string>
+    <string name="theme_settings_title">ഉടുപ്പ് </string>
+    <string name="notification_settings_summary">ഇത് ആൻഡ്രോയിഡ് ന്റെ അറിയിപ്പ് ക്രമീകരണങ്ങളെ ബാധിച്ചേക്കാം</string>
+    <string name="port_range_warning">പോർട്ട് നമ്പർ 1024 നും 65535 നും ഇടയിലായിരിക്കണം</string>
+    <string name="requires_restart_warning">ഈ ക്രമീകരണം മാറ്റുന്നതിന് അപ്ലിക്കേഷൻ പുനരാരംഭിക്കേണ്ടതുണ്ട്</string>
+    <string name="overwrite_settings_summary_on">ഇതിനകം നിലവിലുള്ള ഒരു പേരിനൊപ്പം വരുന്ന ഫയലുകൾ നിലവിലുള്ളവയെ പുനരാലേഖനം ചെയ്യും</string>
+    <string name="overwrite_settings_summary_off">ഇതിനകം നിലവിലുള്ള ഒരു പേരുള്ള വരുന്ന ഫയലുകളുടെ പേരുമാറ്റപ്പെടും</string>
+    <string name="custom">വ്യത്യസ്തം</string>
+    <string name="unsupported_provider">നിങ്ങൾ പിന്തുണയ്‌ക്കാത്ത ഉള്ളടക്ക ദാതാവിനെ തിരഞ്ഞെടുത്തു. നിങ്ങളുടെ ആന്തരിക സംഭരണത്തിൽ ഒരു ഡയറക്ടറി തിരഞ്ഞെടുക്കുക.</string>
+    <!--  Theme settings -->
+    <string name="sysDefault">സിസ്റ്റം സ്ഥിരസ്ഥിതി ഉപയോഗിക്കുക</string>
+    <string name="lightTheme">പ്രകാശമുള്ള ആവരണം</string>
+    <string name="darkTheme">ഇരുണ്ട ആവരണം</string>
+    <!--  Notification  -->
+    <string name="warpinator_notification_title">വാർ‌പിനേറ്റർ സേവനം പ്രവർത്തിക്കുന്നു</string>
+    <string name="warpinator_notification_button">സേവനം നിർത്തുക</string>
+    <string name="transfers_complete">എല്ലാ കൈമാറ്റങ്ങളും പൂർത്തിയായി</string>
+    <string name="transfer_notification">%.1f%%, %d കൈമാറ്റങ്ങൾ, %s/s</string>
+    <string name="incoming_transfer">%s നിന്ന് കൈമാറ്റം വരുന്നു</string>
+    <string name="num_files">%d ഫയലുകൾ</string>
+    <string name="service_running">സേവനം പ്രവർത്തിക്കുന്നു</string>
+    <string name="notification_channel_description">സ്ഥിരമായ സേവന അറിയിപ്പ് </string>
+    <string name="incoming_transfer_channel">അകത്തേക്കുള്ള കൈമാറ്റം</string>
+    <string name="transfer_progress_channel">കൈമാറ്റം പുരോഗതി</string>
+    <!--  Other  -->
+    <string name="please_select_download_dir">നിങ്ങൾ ആദ്യമായാണ് ഈ അപ്ലിക്കേഷൻ സമാരംഭിക്കുന്നത്.
+        ഫയലുകൾ‌ സംരക്ഷിക്കാൻ‌ വാർ‌പിനേറ്റർ‌ ആഗ്രഹിക്കുന്ന ഒരു ഡയറക്‌ടറി ദയവായി തിരഞ്ഞെടുക്കുക.</string>
+    <string name="error_download_dir">ക്രമീകരണങ്ങളിൽ നിങ്ങൾ ഒരു ഡൗൺലോഡ് ഡയറക്ടറി തിരഞ്ഞെടുക്കണം</string>
+    <string-array name="connected_states">
+        <item>ബന്ധിപ്പിച്ചു</item>
+        <item>വിച്ഛേദിച്ചു</item>
+        <item>ബന്ധിപ്പിക്കുന്നു</item>
+        <item>ബന്ധിപ്പിക്കൽ പരാജയപ്പെട്ടു</item>
+        <item>ഡ്യുപ്ലെക്‌സിനായി കാത്തിരിക്കുന്നു</item>
+    </string-array>
+    <string-array name="transfer_states">
+        <item>സമാരംഭിക്കുന്നു</item>
+        <item>അനുമതിക്കായി കാത്തിരിക്കുന്നു…</item>
+        <item>നിരസിച്ചു</item>
+        <item>കൈമാറുന്നു</item>
+        <item>താൽക്കാലികമായി നിർത്തി</item>
+        <item>നിർത്തി</item>
+        <item>പരാജയപ്പെട്ടു (പിശകുകൾ കാണാൻ തൊടുക)</item>
+        <item>വീണ്ടെടുക്കാനാവാത്ത പരാജയം</item>
+        <item>ഫയൽ കണ്ടെത്തിയില്ല</item>
+        <item>പൂർത്തിയായി</item>
+        <item>പിശകുകളോടെ പൂർത്തിയാക്കി (കാണാൻ തൊടുക))</item>
+    </string-array>
+</resources>
