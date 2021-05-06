@@ -19,7 +19,8 @@
 
         <Preference
             android:key="downloadDir"
-            android:title="@string/download_dir_settings_title" />
+            android:title="@string/download_dir_settings_title"
+            app:summary="/downloads/direcory" />
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
