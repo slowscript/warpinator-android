@@ -120,6 +120,13 @@ public class SettingsActivity extends AppCompatActivity {
                 return true;
             });
 
+
+            dlPref.setSummary(Uri
+                    .parse(getPreferenceManager()
+                            .getSharedPreferences()
+                            .getString(DOWNLOAD_DIR_PREF, ""))
+                    .getPath()
+            );
             dlPref.setOnPreferenceClickListener((p)->{
                 pickDirectory();
                 return true;
@@ -155,6 +162,7 @@ public class SettingsActivity extends AppCompatActivity {
                     Toast.makeText(getContext(), R.string.unsupported_provider, Toast.LENGTH_LONG).show();
                     return;
                 }
+                findPreference(DOWNLOAD_DIR_PREF).setSummary(uri.getPath());
                 getContext().getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 getPreferenceManager().getSharedPreferences().edit()
                         .putString(DOWNLOAD_DIR_PREF, uri.toString())
