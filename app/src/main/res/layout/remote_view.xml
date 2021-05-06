@@ -40,23 +40,31 @@
 
         <TextView
             android:id="@+id/txtUsername"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             android:text="username@hostname"
             android:textColor="@color/whiteOnPurple"
+            app:layout_constraintEnd_toStartOf="@+id/imgStatus"
             app:layout_constraintStart_toEndOf="@+id/imgProfile"
             app:layout_constraintTop_toBottomOf="@+id/txtName" />
 
         <TextView
             android:id="@+id/txtName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             android:text="Display Name"
             android:textColor="@color/whiteOnPurple"
             android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/imgStatus"
             app:layout_constraintStart_toEndOf="@+id/imgProfile"
             app:layout_constraintTop_toTopOf="parent" />
 
