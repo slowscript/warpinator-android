@@ -42,6 +42,7 @@
     <string name="accept_setting_summary_off">Každý přenos bude vyžadovat vaše schválení</string>
     <string name="background_settings_title">Běžet na pozadí</string>
     <string name="boot_settings_title">Spouštět při startu</string>
+    <string name="export_log_settings_tile">Zapisovat ladící záznamy do souboru</string>
     <string name="group_code_settings_title">Kód skupiny</string>
     <string name="port_settings_title">Port</string>
     <string name="theme_settings_title">Motiv</string>

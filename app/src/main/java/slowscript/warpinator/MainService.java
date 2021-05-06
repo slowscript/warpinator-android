@@ -19,6 +19,8 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Timer;
@@ -47,6 +49,7 @@ public class MainService extends Service {
     NotificationCompat.Builder notifBuilder = null;
     Timer pingTimer;
     ExecutorService executor = Executors.newSingleThreadExecutor();
+    Process logcatProcess;
 
     @Nullable
     @Override
@@ -60,6 +63,8 @@ public class MainService extends Service {
         svc = this;
         notificationMgr = NotificationManagerCompat.from(this);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefs.getBoolean("debugLog", false))
+            logcatProcess = launchLogcat();
 
         Authenticator.getServerCertificate(); //Generate cert on start if doesn't exist
         if (Authenticator.certException != null) {
@@ -141,6 +146,21 @@ public class MainService extends Service {
         } catch (RejectedExecutionException e) {
             Log.e(TAG, "Rejected execution exception: " + e.getMessage());
         }
+    }
+
+    public Process launchLogcat() {
+        File output = new File(getExternalFilesDir(null), "latest.log");
+        Process process;
+        String cmd = "logcat -f " + output.getAbsolutePath() + "\n";
+        try {
+            output.delete(); //Delete original file
+            process = Runtime.getRuntime().exec(cmd);
+            Log.d(TAG, "---- Logcat started ----");
+        } catch (IOException e) {
+            process = null;
+            Log.e(TAG, "Failed to start logging to file");
+        }
+        return process;
     }
 
     void updateNotification() {

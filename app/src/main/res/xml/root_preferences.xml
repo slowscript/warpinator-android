@@ -55,6 +55,10 @@
             android:defaultValue="false"
             app:dependency="background"
             app:disableDependentsState="true" />
+        <SwitchPreferenceCompat
+            android:title="@string/export_log_settings_tile"
+            android:key="debugLog"
+            android:defaultValue="false" />
 
     </PreferenceCategory>
 
