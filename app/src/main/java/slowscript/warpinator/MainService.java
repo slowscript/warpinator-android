@@ -20,7 +20,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Timer;
@@ -156,9 +155,9 @@ public class MainService extends Service {
             output.delete(); //Delete original file
             process = Runtime.getRuntime().exec(cmd);
             Log.d(TAG, "---- Logcat started ----");
-        } catch (IOException e) {
+        } catch (Exception e) {
             process = null;
-            Log.e(TAG, "Failed to start logging to file");
+            Log.e(TAG, "Failed to start logging to file", e);
         }
         return process;
     }

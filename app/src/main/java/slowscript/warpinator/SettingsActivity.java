@@ -1,5 +1,6 @@
 package slowscript.warpinator;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -19,6 +20,8 @@ import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
+
+import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -145,8 +148,11 @@ public class SettingsActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
                 intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, Uri.parse(INIT_URI));
-
-            startActivityForResult(intent, CHOOSE_ROOT_REQ_CODE);
+            try {
+                startActivityForResult(intent, CHOOSE_ROOT_REQ_CODE);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(getContext(), "Your phone's vendor did not implement a required dialog. This will be fixed in a future release.", Toast.LENGTH_LONG).show();
+            }
         }
 
         @Override
@@ -157,8 +163,8 @@ public class SettingsActivity extends AppCompatActivity {
                     return;
                 Uri uri = data.getData();
                 //Validate URI
-                Log.d(TAG, "Uri authority: " + uri.getAuthority());
-                if (!uri.getAuthority().equals("com.android.externalstorage.documents")) {
+                Log.d(TAG, "Selected directory: " + uri);
+                if (uri == null || !Objects.equals(uri.getAuthority(), "com.android.externalstorage.documents")) {
                     Toast.makeText(getContext(), R.string.unsupported_provider, Toast.LENGTH_LONG).show();
                     return;
                 }
