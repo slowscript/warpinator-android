@@ -84,28 +84,37 @@ public class Server {
             InetAddress addr = InetAddress.getByName(Utils.getIPAddress());
             jmdns = JmDNS.create(addr);
 
-            //Start looking for others
-            jmdns.addServiceListener(SERVICE_TYPE, serviceListener);
-            Utils.sleep(1000);
-            Log.v(TAG, "Flush registration");
+            /*Log.v(TAG, "Flush registration");
             registerService(true);
             Utils.sleep(1000);
             jmdns.unregisterAllServices();
-            Utils.sleep(500);
+            Utils.sleep(500);*/
             Log.v(TAG, "Real registration");
             registerService(false);
+            Utils.sleep(500);
+            //Start looking for others
+            jmdns.addServiceListener(SERVICE_TYPE, serviceListener);
         }
         catch (Exception e) {
             Log.e(TAG, "Failed to init JmDNS", e);
         }
     }
 
+    void stopMDNS() {
+        if (jmdns != null) {
+            try {
+                jmdns.unregisterAllServices();
+                jmdns.removeServiceListener(SERVICE_TYPE, serviceListener);
+                jmdns.close();
+            } catch (Exception e) {
+                Log.w(TAG, "Failed to close JmDNS");
+            }
+        }
+    }
+
     public void Stop() {
         CertServer.Stop();
-        if (jmdns != null) {
-            jmdns.unregisterAllServices();
-            jmdns.removeServiceListener(SERVICE_TYPE, serviceListener);
-        }
+        stopMDNS();
         svc.prefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
         gServer.shutdownNow();
         Log.i(TAG, "Server stopped");
@@ -183,6 +192,7 @@ public class Server {
             public void serviceResolved(ServiceEvent event) {
                 ServiceInfo info = event.getInfo();
                 Log.d(TAG, "*** Service resolved: " + info.getName());
+                Log.d(TAG, "Details: " + info);
                 if (info.getName().equals(uuid)) {
                     Log.v(TAG, "That's me. Ignoring.");
                     return;
@@ -200,14 +210,16 @@ public class Server {
                 if (MainService.remotes.containsKey(svcName)) {
                     Remote r = MainService.remotes.get(svcName);
                     Log.d(TAG, "Service already known. Status: " + r.status);
+                    if(props.contains("hostname"))
+                        r.hostname = info.getPropertyString("hostname");
+                    r.serviceAvailable = true;
                     if ((r.status == Remote.RemoteStatus.DISCONNECTED) || (r.status == Remote.RemoteStatus.ERROR)) {
                         //Update hostname, address, port
                         r.address = info.getInetAddresses()[0];
                         r.port = info.getPort();
-                        r.serviceAvailable = true;
                         Log.d(TAG, "Reconnecting to " + r.hostname);
                         r.connect();
-                    }
+                    } else r.updateUI();
                     return;
                 }
 
