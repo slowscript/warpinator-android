@@ -1,0 +1,16 @@
+Warpinator dla Androida jest nieoficjalną wersją programu do udostępniania plików dla systemu Linux Mint. Jest w pełni zgodny z oryginalnym protokołem, przez co pozwala na wygodne przesyłanie plików pomiędzy urządzeniami z Androidem i Linuxem.
+
+Funkcje:
+- Automatyczne wykrywanie urządzeń w sieci lokalnej
+- Działa w sieci Wi-Fi lub z wykorzystaniem hotspotu, nie wymaga połączenia z internetem
+- Przesyłaj dowolne pliki szybko i wygodnie
+- Odbieraj całe foldery plików
+- Przesyłaj wiele plików na raz
+- Udostępniaj pliki z innych aplikacji
+- Ogranicz dostęp, używając kodu grupy
+- Możliwość uruchamiania po włączeniu urządzenia
+- Nie wymaga Twojej lokalizacji, ani innych niepotrzebnych uprawnień
+
+Ta aplikacja jest otwartym oprogramowaniem, dostępnym na licencji GNU General Public License v3.
+
+Możesz pobrać kod źródłowy ze strony https://github.com/slowscript/warpinator-android

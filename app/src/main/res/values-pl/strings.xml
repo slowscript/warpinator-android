@@ -1,0 +1,98 @@
+<resources>
+    <!--  App Name  -->
+    <string name="app_name" translatable="false">Warpinator</string>
+    <!--  Main Activity  -->
+    <string name="title_activity_transfers">Przesyłanie plików</string>
+    <string name="send_files">Wysłane pliki</string>
+    <string name="quit">Wyjdź</string>
+    <string name="about">O programie</string>
+    <string name="settings">Ustawienia</string>
+    <string name="title_activity_share">Wyślij do</string>
+    <string name="available_devices">Dostępne urządzenia</string>
+    <string name="no_devices_found">Nie znaleziono innych urządzeń</string>
+    <string name="wrong_group_code">Nie udało się połączyć: błędny kod grupy</string>
+    <string name="connection_error">Błąd połączenia</string>
+    <string name="not_connected_to_wifi">Urządzenie nie jest połączone z siecią Wi-Fi lub LAN. Użyj hotspotu Wi-Fi, jeżeli inne połączenia nie są dostępne.
+Uruchom ponownie aplikację po połączeniu.</string>
+    <string name="waiting_for_permission">Oczekiwanie na zgodę…</string>
+    <string name="files_overwritten_warning">(Pliki mogą zostać nadpisane!)</string>
+    <string name="remaining">pozostało</string>
+    <string name="a_few_seconds">kilka sekund</string>
+    <string name="service_unavailable">, usługa niedostępna</string>
+    <string name="errors_during_transfer">Błędy podczas przesyłania:</string>
+    <string name="dont_close_when_sharing">Zamknięcie tej usługi podczas przesyłania plików może spowodować, że przesyłanie się nie powiedzie</string>
+    <string name="version">Wersja: %1$s</string>
+    <string name="about_description">Ta aplikacja jest nieoficjalną wersją programu Warpinator dla systemu Android.\nWysyłaj i odbieraj pliki w sieci lokalnej.</string>
+    <string name="warranty_html">
+        Ta aplikacja jest otwartym oprogramowaniem, dostępnym na licencji &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>.&lt;br>
+        Możesz pobrać kod źródłowy z serwisu &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
+        &lt;br>
+        Ta aplikacja jest dostarczona bez jakichkolwiek gwarancji.&lt;br>Sprawdź zasady licencji w celu uzyskania szczegółowych informacji.</string>
+    <string name="devices_to_share_with">Dostępne urządzenia</string>
+    <string name="no_share_devices">Brak dostępnych urządzeń</string>
+    <string name="unsupported_intent">Otrzymano nieobsługiwane żądanie</string>
+    <string name="nothing_to_share">Nie ma nic do udostępnienia</string>
+    <!--  Setting  -->
+    <string name="identity_settings_category">Tożsamość</string>
+    <string name="transfer_setting_category">Ustawienia przesyłania</string>
+    <string name="network_setting_category">Sieć</string>
+    <string name="aspect_setting_category">Wygląd</string>
+    <string name="display_settings_title">Wyświetlana nazwa</string>
+    <string name="picture_settings_title">Obrazek profilowy</string>
+    <string name="download_dir_settings_title">Folder na odebrane pliki</string>
+    <string name="notification_settings_title">Pokaż powiadomienie o przychodzących plikach</string>
+    <string name="overwrite_settings_title">Zezwól na nadpisywanie</string>
+    <string name="accept_settings_title">Automatycznie akceptuj pliki</string>
+    <string name="accept_setting_summary_on">Przychodzące pliki będą automatycznie akceptowane</string>
+    <string name="accept_setting_summary_off">Wszystkie przychodzące pliki muszą być zaakceptowane przez Ciebie</string>
+    <string name="background_settings_title">Działaj w tle</string>
+    <string name="boot_settings_title">Uruchamiaj automatycznie</string>
+    <string name="export_log_settings_tile">Zapisz logi debugowania do pliku</string>
+    <string name="group_code_settings_title">Kod grupy</string>
+    <string name="port_settings_title">Port</string>
+    <string name="theme_settings_title">Motyw aplikacji</string>
+    <string name="notification_settings_summary">Może zależeć od ustawień powiadomień Androida</string>
+    <string name="port_range_warning">Numer portu musi być pomiędzy 1024 a 65535</string>
+    <string name="requires_restart_warning">Zmaina tego ustawienia wymaga ponownego uruchomienia aplikacji</string>
+    <string name="overwrite_settings_summary_on">Przychodzące pliki nadpiszą istniejące pliki o takiej samej nazwie</string>
+    <string name="overwrite_settings_summary_off">Jeżeli istnieją już pliki o identycznej nazwie, nazwy przychodzących plików zostaną zmienione</string>
+    <string name="custom">Własny</string>
+    <string name="unsupported_provider">Wybrałeś pliki z nieobsługiwanego źródła. Wybierz katalog w pamięci urządzenia.</string>
+    <string name="sysDefault">Użyj motywu systemu</string>
+    <string name="lightTheme">Jasny motyw</string>
+    <string name="darkTheme">Ciemny motyw</string>
+    <string name="warpinator_notification_title">Warpinator działa w tle</string>
+    <string name="warpinator_notification_button">Zatrzymaj</string>
+    <string name="transfers_complete">Przesyłanie zakończone</string>
+    <string name="transfer_notification">%.1f%%, %d transfer(y), %s/s</string>
+    <string name="incoming_transfer">Przychodzące pliki od %s</string>
+    <string name="num_files">%d plik(i)</string>
+    <string name="service_running">Warpinator jest aktywny</string>
+    <string name="notification_channel_description">Stałe powiadomienie o działaniu w tle</string>
+    <string name="incoming_transfer_channel">Przychodzące pliki</string>
+    <string name="transfer_progress_channel">Postęp przesyłania plików</string>
+    <!--  Other  -->
+    <string name="please_select_download_dir">Uruchamiasz aplikację po raz pierwszy.
+        Wybierz folder, w którym Warpinator będzie zapisywał otrzymane pliki.</string>
+    <string name="error_download_dir">Musisz wybrać folder dla pobieranych plików w ustawieniach aplikacji</string>
+    <string-array name="connected_states">
+        <item>Połączony</item>
+        <item>Rozłączony</item>
+        <item>Łączenie</item>
+        <item>Połączenie się nie powiodło</item>
+        <item>Oczekiwanie na połączenie dwukierunkowe</item>
+    </string-array>
+    <string-array name="transfer_states">
+        <item>Inicjalizacja</item>
+        <item>Oczekiwanie na zgodę…</item>
+        <item>Odmówiono zgody</item>
+        <item>Przesyłanie</item>
+        <item>Wstrzymane</item>
+        <item>Zatrzymane</item>
+        <item>Wystąpił błąd, dotknij aby poznać szczegóły</item>
+        <item>Błąd niemożliwy do naprawienia</item>
+        <item>Nie znaleziono pliku</item>
+        <item>Ukończone</item>
+        <item>Ukończono z błędami (dotknij aby poznać szczegóły)</item>
+    </string-array>
+</resources>
