@@ -1,0 +1,15 @@
+Warpinator pro Android je neoficiální port stejnojmenného nástroje pro sdílení souborů od vývojářů Linux Mintu. Je plně kompatibilní s originálním protokolem a umožňuje snadný přenos souborů mezi zařízeními s Androidem a Linuxem. 
+
+Vlastnosti:
+- Automatické nalezení kompatibilních zařízení v místní síti
+- Funguje na WiFi nebo hotspotu, není potřeba připojení k internetu
+- Přenese jakýkoliv typ souboru rychle a jednoduše
+- Umí přijímat celé složky
+- Zvládne více přenosů souběžně
+- Sdílení souborů z jiných aplikací
+- Umožňuje omezit která zařízení se mohou připojit pomocí kódu skupiny
+- Možnost spustit při startu systému
+- Nevyžaduje informace o pozici ani jiná zbytečná oprávnění
+
+Tato aplikace je svobodný software licencovaný pod GNU General Public License v3.
+Zdrojový kód můžete získat na https://github.com/slowscript/warpinator-android
