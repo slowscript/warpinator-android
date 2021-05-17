@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -49,6 +50,7 @@ public class MainService extends Service {
     Timer pingTimer;
     ExecutorService executor = Executors.newSingleThreadExecutor();
     Process logcatProcess;
+    WifiManager.MulticastLock lock;
 
     @Nullable
     @Override
@@ -75,6 +77,16 @@ public class MainService extends Service {
                     "\nException: " + Authenticator.certException.toString());
             }
             return START_NOT_STICKY;
+        }
+
+        android.net.wifi.WifiManager wifi =
+                (android.net.wifi.WifiManager)
+                        getApplicationContext().getSystemService(android.content.Context.WIFI_SERVICE);
+        if (wifi != null) {
+            lock = wifi.createMulticastLock("WarpMDNSLock");
+            lock.setReferenceCounted(true);
+            lock.acquire();
+            Log.d(TAG, "Multicast lock acquired");
         }
 
         Log.d(TAG, "Service starting...");
@@ -136,6 +148,8 @@ public class MainService extends Service {
         remotes.clear();
         executor.shutdown();
         pingTimer.cancel();
+        if (lock != null)
+            lock.release();
     }
 
     public void updateProgress() {
