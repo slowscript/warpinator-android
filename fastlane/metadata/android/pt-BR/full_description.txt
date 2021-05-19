@@ -1,0 +1,16 @@
+Warpinator para Android é um porte não-oficial da ferramenta de compartilhamento de arquivos (com o mesmo nome) criado pela equipe de Linux Mint. É completamente compatível com o protocolo original e permite as transferências descomplicadas de arquivos entre os dispositivos de Android e Linux.
+
+Funcionalidades:
+- Descoberta automática de serviços compatíveis na rede local
+- Funciona via WiFi ou hotspot, sem necessidade de conexão à internet
+- Transferência de qualquer tipo de arquivos de forma rápida e fácil
+- Transferência de pastas inteiras
+- Possibilidade de transferências paralelas
+- Compartilhamento de arquivos via outros Apps
+- Controle sobre quem pode conectar-se via um código de grupo
+- Opção de executar o App ao iniciar
+- Não precisa da sua localização ou qualquer outra permissão desnecessária
+
+Este é um App de software livre, licenciado sob a Licença Pública Geral GNU v3.
+Você pode obter o código fonte em
+ https://github.com/slowscript/warpinator-android
