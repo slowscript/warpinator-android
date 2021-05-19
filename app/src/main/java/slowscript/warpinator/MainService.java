@@ -25,6 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
@@ -35,11 +36,13 @@ public class MainService extends Service {
     public static String CHANNEL_SERVICE = "MainService";
     public static String CHANNEL_INCOMING = "IncomingTransfer";
     public static String CHANNEL_PROGRESS = "TransferProgress";
+    static int SVC_NOTIFICATION_ID = 1;
+    static int PROGRESS_NOTIFICATION_ID = 2;
     static String ACTION_STOP = "StopSvc";
     static long pingTime = 10_000;
 
     public Server server;
-    public static LinkedHashMap<String, Remote> remotes = new LinkedHashMap<>();
+    public static ConcurrentHashMap<String, Remote> remotes = new ConcurrentHashMap<>();
     public TransfersActivity transfersView;
     public SharedPreferences prefs;
     int notifId = 1300;
@@ -126,7 +129,7 @@ public class MainService extends Service {
                 .setShowWhen(false)
                 .setOngoing(true).build();
 
-        startForeground(1, notification);
+        startForeground(SVC_NOTIFICATION_ID, notification);
 
         return START_STICKY;
     }
@@ -145,6 +148,7 @@ public class MainService extends Service {
             if (r.status == Remote.RemoteStatus.CONNECTED)
                 r.disconnect();
         }
+        notificationMgr.cancelAll();
         remotes.clear();
         executor.shutdown();
         pingTimer.cancel();
@@ -208,7 +212,7 @@ public class MainService extends Service {
             notifBuilder.setContentTitle(getString(R.string.transfers_complete));
             notifBuilder.setOngoing(false);
         }
-        notificationMgr.notify(2, notifBuilder.build());
+        notificationMgr.notify(PROGRESS_NOTIFICATION_ID, notifBuilder.build());
     }
 
     void pingRemotes() {

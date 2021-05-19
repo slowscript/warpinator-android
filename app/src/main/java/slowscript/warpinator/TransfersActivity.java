@@ -108,7 +108,8 @@ public class TransfersActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MainService.svc.transfersView = null;
+        if (MainService.svc != null) //Sometimes it crashes here when MainService finishes first
+            MainService.svc.transfersView = null;
     }
 
     @Override

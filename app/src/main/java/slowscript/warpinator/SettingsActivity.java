@@ -151,7 +151,7 @@ public class SettingsActivity extends AppCompatActivity {
             try {
                 startActivityForResult(intent, CHOOSE_ROOT_REQ_CODE);
             } catch (ActivityNotFoundException e) {
-                Toast.makeText(getContext(), "Your phone's vendor did not implement a required dialog. This will be fixed in a future release.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Your phone's vendor did not implement a required dialog. This will be worked around in a future release.", Toast.LENGTH_LONG).show();
             }
         }
 
