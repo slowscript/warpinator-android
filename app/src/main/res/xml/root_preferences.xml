@@ -19,7 +19,8 @@
 
         <Preference
             android:key="downloadDir"
-            android:title="@string/download_dir_settings_title" />
+            android:title="@string/download_dir_settings_title"
+            app:summary="/downloads/direcory" />
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
@@ -55,6 +56,10 @@
             android:defaultValue="false"
             app:dependency="background"
             app:disableDependentsState="true" />
+        <SwitchPreferenceCompat
+            android:title="@string/export_log_settings_tile"
+            android:key="debugLog"
+            android:defaultValue="false" />
 
     </PreferenceCategory>
 

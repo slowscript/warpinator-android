@@ -39,13 +39,14 @@ public class Utils {
     private static final String TAG = "Utils";
 
     public static String getDeviceName() {
-        String name;
+        String name = null;
         try {
             name = BluetoothAdapter.getDefaultAdapter().getName();
         }catch (Exception e){
             Log.d(TAG, "This device may not support bluetooth - using default name");
-            name = "Android Phone";
         }
+        if (name == null)
+	        name = "Android Phone";
         return name;
     }
 

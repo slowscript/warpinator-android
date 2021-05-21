@@ -111,6 +111,10 @@ public class Authenticator {
 
             long now = System.currentTimeMillis();
 
+            //Only allowed chars
+            hostname = hostname.replaceAll("[^a-zA-Z0-9]", "");
+            if (hostname.trim().isEmpty())
+                hostname = "android";
             //Build certificate
             X500Name name = new X500Name("CN="+hostname);
             BigInteger serial = new BigInteger(Long.toString(now)); //Use current time as serial num

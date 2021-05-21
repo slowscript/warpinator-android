@@ -262,7 +262,10 @@ public class Transfer {
 
     void declineTransfer() {
         Log.i(TAG, "Transfer declined");
-        MainService.remotes.get(remoteUUID).declineTransfer(this);
+        Remote r = MainService.remotes.get(remoteUUID);
+        if (r != null)
+            r.declineTransfer(this);
+        else Log.w(TAG, "Transfer was from an unknown remote");
         makeDeclined();
     }
 

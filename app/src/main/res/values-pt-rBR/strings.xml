@@ -21,7 +21,7 @@
     <string name="a_few_seconds">alguns segundos</string>
     <string name="service_unavailable">, serviço indisponível</string>
     <string name="errors_during_transfer">Erros durante a transferência:</string>
-    <string name="dont_close_when_sharing">Ao encerrar este processo durante compartilhamento pode causar uma falha da transferência</string>
+    <string name="dont_close_when_sharing">Ao encerrar este processo durante compartilhamento você pode causar uma falha da transferência</string>
     <!--  About activity  -->
     <string name="version">Versão: %1$s</string>
     <string name="about_description">Este é um Fork não-oficial do Warpinator. \nEnvie e receba arquivos via rede local.</string>
@@ -50,18 +50,19 @@
     <string name="accept_setting_summary_off">Cada transferência precisa ser aceita por você</string>
     <string name="background_settings_title">Executar em segundo plano</string>
     <string name="boot_settings_title">Iniciar automaticamente</string>
+    <string name="export_log_settings_tile">Salvar o registro de depuração no arquivo</string>
     <string name="group_code_settings_title">Código de grupo</string>
     <string name="port_settings_title">Porta</string>
     <string name="theme_settings_title">Tema</string>
     <string name="notification_settings_summary">Isto pode ser afetado pelas configurações de notificações do Android</string>
     <string name="port_range_warning">Defina número da Porta entre 1024 e 65535</string>
-    <string name="requires_restart_warning">Alteração desta configuração exige reiniciar o App</string>
-    <string name="overwrite_settings_summary_on">Os arquivos recebidos com o mesmo nome substituirão os já existentes</string>
-    <string name="overwrite_settings_summary_off">Os arquivos recebidos com o mesmo nome serão substituídos</string>
+    <string name="requires_restart_warning">Alteração desta configuração exige reinício do App</string>
+    <string name="overwrite_settings_summary_on">Os arquivos recebidos que tem o mesmo nome substituirão os já existentes</string>
+    <string name="overwrite_settings_summary_off">Os arquivos recebidos que tem o mesmo nome serão renomeados</string>
     <string name="custom">Personalizar</string>
     <string name="unsupported_provider">Você selecionou um conteúdo não suportado. Por favor selecione uma pasta no seu armazenamento.</string>
     <!--  Theme settings -->
-    <string name="sysDefault">Usar padrão do sistema</string>
+    <string name="sysDefault">Padrão do sistema</string>
     <string name="lightTheme">Tema claro</string>
     <string name="darkTheme">Tema escuro</string>
     <!--  Notification  -->

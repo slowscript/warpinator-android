@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -19,10 +20,12 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
@@ -33,11 +36,13 @@ public class MainService extends Service {
     public static String CHANNEL_SERVICE = "MainService";
     public static String CHANNEL_INCOMING = "IncomingTransfer";
     public static String CHANNEL_PROGRESS = "TransferProgress";
+    static int SVC_NOTIFICATION_ID = 1;
+    static int PROGRESS_NOTIFICATION_ID = 2;
     static String ACTION_STOP = "StopSvc";
     static long pingTime = 10_000;
 
     public Server server;
-    public static LinkedHashMap<String, Remote> remotes = new LinkedHashMap<>();
+    public static ConcurrentHashMap<String, Remote> remotes = new ConcurrentHashMap<>();
     public TransfersActivity transfersView;
     public SharedPreferences prefs;
     int notifId = 1300;
@@ -47,6 +52,8 @@ public class MainService extends Service {
     NotificationCompat.Builder notifBuilder = null;
     Timer pingTimer;
     ExecutorService executor = Executors.newSingleThreadExecutor();
+    Process logcatProcess;
+    WifiManager.MulticastLock lock;
 
     @Nullable
     @Override
@@ -60,6 +67,8 @@ public class MainService extends Service {
         svc = this;
         notificationMgr = NotificationManagerCompat.from(this);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefs.getBoolean("debugLog", false))
+            logcatProcess = launchLogcat();
 
         Authenticator.getServerCertificate(); //Generate cert on start if doesn't exist
         if (Authenticator.certException != null) {
@@ -71,6 +80,16 @@ public class MainService extends Service {
                     "\nException: " + Authenticator.certException.toString());
             }
             return START_NOT_STICKY;
+        }
+
+        android.net.wifi.WifiManager wifi =
+                (android.net.wifi.WifiManager)
+                        getApplicationContext().getSystemService(android.content.Context.WIFI_SERVICE);
+        if (wifi != null) {
+            lock = wifi.createMulticastLock("WarpMDNSLock");
+            lock.setReferenceCounted(true);
+            lock.acquire();
+            Log.d(TAG, "Multicast lock acquired");
         }
 
         Log.d(TAG, "Service starting...");
@@ -110,7 +129,7 @@ public class MainService extends Service {
                 .setShowWhen(false)
                 .setOngoing(true).build();
 
-        startForeground(1, notification);
+        startForeground(SVC_NOTIFICATION_ID, notification);
 
         return START_STICKY;
     }
@@ -129,9 +148,12 @@ public class MainService extends Service {
             if (r.status == Remote.RemoteStatus.CONNECTED)
                 r.disconnect();
         }
+        notificationMgr.cancelAll();
         remotes.clear();
         executor.shutdown();
         pingTimer.cancel();
+        if (lock != null)
+            lock.release();
     }
 
     public void updateProgress() {
@@ -141,6 +163,21 @@ public class MainService extends Service {
         } catch (RejectedExecutionException e) {
             Log.e(TAG, "Rejected execution exception: " + e.getMessage());
         }
+    }
+
+    public Process launchLogcat() {
+        File output = new File(getExternalFilesDir(null), "latest.log");
+        Process process;
+        String cmd = "logcat -f " + output.getAbsolutePath() + "\n";
+        try {
+            output.delete(); //Delete original file
+            process = Runtime.getRuntime().exec(cmd);
+            Log.d(TAG, "---- Logcat started ----");
+        } catch (Exception e) {
+            process = null;
+            Log.e(TAG, "Failed to start logging to file", e);
+        }
+        return process;
     }
 
     void updateNotification() {
@@ -175,7 +212,7 @@ public class MainService extends Service {
             notifBuilder.setContentTitle(getString(R.string.transfers_complete));
             notifBuilder.setOngoing(false);
         }
-        notificationMgr.notify(2, notifBuilder.build());
+        notificationMgr.notify(PROGRESS_NOTIFICATION_ID, notifBuilder.build());
     }
 
     void pingRemotes() {

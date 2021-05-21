@@ -1,5 +1,6 @@
 package slowscript.warpinator;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -19,6 +20,8 @@ import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
+
+import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -71,6 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
         private static final String BACKGROUND_PREF = "background";
         private static final String THEME_PREF = "theme_setting";
         private static final String PROFILE_PREF = "profile";
+        private static final String DEBUGLOG_PREF = "debugLog";
         public boolean pickDirOnStart = false;
 
         @Override
@@ -79,6 +83,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             EditTextPreference gcPref = findPreference(GROUPCODE_PREF);
             SwitchPreferenceCompat bgPref = findPreference(BACKGROUND_PREF);
+            SwitchPreferenceCompat debugPref = findPreference(DEBUGLOG_PREF);
             Preference dlPref = findPreference(DOWNLOAD_DIR_PREF);
             Preference themePref = findPreference(THEME_PREF);
             Preference profilePref = findPreference(PROFILE_PREF);
@@ -86,7 +91,7 @@ public class SettingsActivity extends AppCompatActivity {
             portPref.setOnBindEditTextListener((edit)-> edit.setInputType(InputType.TYPE_CLASS_NUMBER));
 
             //Warn about preference not being applied immediately
-            for (Preference pref : new Preference[]{gcPref, bgPref}) {
+            for (Preference pref : new Preference[]{gcPref, bgPref, debugPref}) {
                 pref.setOnPreferenceChangeListener((p,v) -> {
                     Toast.makeText(getContext(), R.string.requires_restart_warning, Toast.LENGTH_SHORT).show();
                     return true;
@@ -118,6 +123,13 @@ public class SettingsActivity extends AppCompatActivity {
                 return true;
             });
 
+
+            dlPref.setSummary(Uri
+                    .parse(getPreferenceManager()
+                            .getSharedPreferences()
+                            .getString(DOWNLOAD_DIR_PREF, ""))
+                    .getPath()
+            );
             dlPref.setOnPreferenceClickListener((p)->{
                 pickDirectory();
                 return true;
@@ -136,8 +148,11 @@ public class SettingsActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
                 intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, Uri.parse(INIT_URI));
-
-            startActivityForResult(intent, CHOOSE_ROOT_REQ_CODE);
+            try {
+                startActivityForResult(intent, CHOOSE_ROOT_REQ_CODE);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(getContext(), "Your phone's vendor did not implement a required dialog. This will be worked around in a future release.", Toast.LENGTH_LONG).show();
+            }
         }
 
         @Override
@@ -148,11 +163,12 @@ public class SettingsActivity extends AppCompatActivity {
                     return;
                 Uri uri = data.getData();
                 //Validate URI
-                Log.d(TAG, "Uri authority: " + uri.getAuthority());
-                if (!uri.getAuthority().equals("com.android.externalstorage.documents")) {
+                Log.d(TAG, "Selected directory: " + uri);
+                if (uri == null || !Objects.equals(uri.getAuthority(), "com.android.externalstorage.documents")) {
                     Toast.makeText(getContext(), R.string.unsupported_provider, Toast.LENGTH_LONG).show();
                     return;
                 }
+                findPreference(DOWNLOAD_DIR_PREF).setSummary(uri.getPath());
                 getContext().getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 getPreferenceManager().getSharedPreferences().edit()
                         .putString(DOWNLOAD_DIR_PREF, uri.toString())

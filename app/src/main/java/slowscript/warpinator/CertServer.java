@@ -31,7 +31,8 @@ public class CertServer implements Runnable{
         //It's a UDP server, it doesn't lock anything so this shouldn't matter
         //Close should cancel the receive method
         running = false;
-        serverSocket.close();
+        if (serverSocket != null)
+            serverSocket.close();
     }
 
     public void run() {
