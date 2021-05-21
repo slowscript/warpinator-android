@@ -1,4 +1,4 @@
-A Warpinator Android számára a Linux Mint azonos nevű fájlmegosztó eszközének nem hivatalos portja. Teljes mértékben kompatibilis az eredeti protokollal, és lehetővé teszi a fájlok egyszerű átvitelét Android és Linux eszközök között.
+A Warpinator Androidhoz a Linux Mint azonos nevű fájlmegosztó eszközének nem hivatalos portja. Teljes mértékben kompatibilis az eredeti protokollal, és lehetővé teszi a fájlok egyszerű átvitelét Android és Linux eszközök között.
 
 Jellemzők:
 - Önműködő felfedezés a helyi hálózaton
