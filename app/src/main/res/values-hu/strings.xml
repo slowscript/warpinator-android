@@ -48,6 +48,7 @@
     <string name="accept_setting_summary_off">Kérjen minden átutalás elfogadását</string>
     <string name="background_settings_title">Futtatás a háttérben</string>
     <string name="boot_settings_title">Önműködő indítás</string>
+    <string name="export_log_settings_tile">Hibakeresési napló írása fájlba</string>
     <string name="group_code_settings_title">Csoportkód</string>
     <string name="port_settings_title">Kikötő</string>
     <string name="theme_settings_title">Téma</string>
