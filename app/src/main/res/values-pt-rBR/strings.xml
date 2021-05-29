@@ -69,7 +69,7 @@
     <string name="warpinator_notification_title">Warpinator está funcionando</string>
     <string name="warpinator_notification_button">Terminar serviço</string>
     <string name="transfers_complete">Todas as transferências concluídas</string>
-    <string name="transfer_notification">%.1f%%, %d transferências, %s/s</string>
+    <string name="transfer_notification">%1$.1f%%, %2$d transferências, %3$s/s</string>
     <string name="incoming_transfer">Transferência(s) recebida(s) de %s</string>
     <string name="num_files">%d arquivo(s)</string>
     <string name="service_running">Serviço em execução</string>

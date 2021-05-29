@@ -67,7 +67,7 @@
     <string name="warpinator_notification_title">Warpinator-Dienst wird ausgeführt</string>
     <string name="warpinator_notification_button">Dienst anhalten</string>
     <string name="transfers_complete">Alle Transfer fertiggestellt</string>
-    <string name="transfer_notification">%.1f%%, %d Transfers, %s/s</string>
+    <string name="transfer_notification">%1$.1f%%, %2$d Transfers, %3$s/s</string>
     <string name="incoming_transfer">Eingehender Transfer von %s</string>
     <string name="num_files">%d Dateien</string>
     <string name="service_running">Dienst wird ausgeführt</string>

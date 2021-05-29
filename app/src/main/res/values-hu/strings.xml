@@ -67,7 +67,7 @@
     <string name="warpinator_notification_title">A Warpinator szolgáltatás fut</string>
     <string name="warpinator_notification_button">Szolgáltatás leállítása</string>
     <string name="transfers_complete">Minden átvitel elfejeződött</string>
-    <string name="transfer_notification">%.1f%%, %d átvitel, %s/s</string>
+    <string name="transfer_notification">%1$.1f%%, %2$d átvitel, %3$s/s</string>
     <string name="incoming_transfer">Bejövő átvitel innen: %s</string>
     <string name="num_files">%d fájl</string>
     <string name="service_running">A szolgáltatás fut</string>
