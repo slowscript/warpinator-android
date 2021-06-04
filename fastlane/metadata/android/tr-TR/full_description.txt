@@ -1,0 +1,15 @@
+Android için Warpinator, Linux Mint'in aynı adı taşıyan dosya paylaşım aracının resmi olmayan bir bağlantı noktasıdır. Orijinal protokolle tamamen uyumludur ve dosyaların Android ve Linux cihazlar arasında kolayca aktarılmasına olanak tanır.
+
+Özellikler:
+- Yerel ağda uyumlu servislerin otomatik keşfi
+- WiFi veya hotspot üzerinde çalışır, internet bağlantısı gerekmez
+- Her tür dosyayı hızlı ve kolay bir şekilde aktarın
+- Tüm dizinleri al
+- Paralel olarak birden fazla aktarımı çalıştırın
+- Diğer uygulamalardan dosya paylaşın
+- Grup kodu kullanarak kimlerin bağlanabileceğini sınırlayın
+- Önyüklemede başlatma seçeneği
+- Konumunuzu veya diğer gereksiz izinleri gerektirmez
+
+Bu uygulama, GNU Genel Kamu Lisansı v3 kapsamında lisanslanmış ücretsiz bir yazılımdır.
+Kaynak kodunu https://github.com/slowscript/warpinator-android adresinden edinebilirsiniz.
