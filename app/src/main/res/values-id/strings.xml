@@ -1,0 +1,103 @@
+<resources>
+    <!--  App Name  -->
+    <string name="app_name" translatable="false">Warpinator</string>
+    <!--  Main Activity  -->
+    <string name="title_activity_transfers">Transfer</string>
+    <string name="send_files">Mengirim berkas</string>
+    <string name="quit">Keluar</string>
+    <string name="about">Tentang</string>
+    <string name="settings">Pengaturan</string>
+    <string name="title_activity_share">Bagikan dengan</string>
+    <string name="available_devices">Perangkat yang tersedia</string>
+    <string name="no_devices_found">Tidak ada perangkat yang ditemukan</string>
+    <string name="wrong_group_code">Koneksi gagal: Salah kode grup</string>
+    <string name="connection_error">Koneksi gagal</string>
+    <string name="not_connected_to_wifi">Anda tidak terkoneksi ke WiFi atau LAN. Gunakan hotspot jika keduanya tidak tersedia.
+        Jalankan ulang aplikasi ketika anda sudah terkoneksi.</string>
+    <!--  Transfers activity  -->
+    <string name="waiting_for_permission">Menunggu perizinan…</string>
+    <string name="files_overwritten_warning">(Berkas mungkin akan tertimpa!)</string>
+    <string name="remaining">tersisa</string>
+    <string name="a_few_seconds">Beberapa detik</string>
+    <string name="service_unavailable">, Layanan tidak tersedia</string>
+    <string name="errors_during_transfer">Kesalahan saat melakukan transfer:</string>
+    <string name="dont_close_when_sharing">Menutup aktivitas ini saat sedang berbagi mungkin akan menimbulkan kegagalan transfer berkas</string>
+    <!--  About activity  -->
+    <string name="version">Versi: %1$s</string>
+    <string name="about_description">Ini adalah port tidak resmi dari Warpinator. \nKirim dan terima berkas melintasi jaringan lokal .</string>
+    <string name="warranty_html">
+        Program ini merupakan perangkat lunak open source dilisensikan di bawah &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>.&lt;br>
+        Anda dapat mendapatkan kode sumbernya dari &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
+        &lt;br>
+        Program ini dihadirkan tanpa garansi sama sekali.&lt;br>Lihat ketentuan lisensinya untuk keterangan lebih rinci.</string>
+    <!--  Share activity  -->
+    <string name="devices_to_share_with">Perangkat untuk berbagi</string>
+    <string name="no_share_devices">Tidak ada perangkat yang dapat digunakan untuk berbagi</string>
+    <string name="unsupported_intent">Aplikasi mendapatkan perintah aksi yang tidak didukung</string>
+    <string name="nothing_to_share">Tidak ada hal untuk dibagikan</string>
+    <!--  Setting  -->
+    <string name="identity_settings_category">Identitas</string>
+    <string name="transfer_setting_category">Pengaturan transfer</string>
+    <string name="network_setting_category">Jaringan</string>
+    <string name="aspect_setting_category">Aspek</string>
+    <string name="display_settings_title">Nama yang ditampilkan</string>
+    <string name="picture_settings_title">Foto profil</string>
+    <string name="download_dir_settings_title">Direktori unduhan</string>
+    <string name="notification_settings_title">Tampilkan notifkasi tentang berkas yang sedang dikirim</string>
+    <string name="overwrite_settings_title">Perbolehkan menimpa berkas</string>
+    <string name="accept_settings_title">Terima transfer secara otomatis</string>
+    <string name="accept_setting_summary_on">Transfer berkas akan diterima secara otomatis</string>
+    <string name="accept_setting_summary_off">Setiap aktivitas transfer perlu anda setujui</string>
+    <string name="background_settings_title">Tetap berjalan di latar belakang</string>
+    <string name="boot_settings_title">Mulai secara otomatis</string>
+    <string name="export_log_settings_tile">Tulis catatan debug pada file</string>
+    <string name="group_code_settings_title">Kode grup</string>
+    <string name="port_settings_title">Port</string>
+    <string name="theme_settings_title">Tema</string>
+    <string name="notification_settings_summary">Ini mungkin dapat terpengaruh pengaturan notifikasi Android</string>
+    <string name="port_range_warning">Nomor port harus diantara 1024 hingga 65535</string>
+    <string name="requires_restart_warning">Pergantian pengaturan ini membutuhkan aplikasi di jalankan ulang</string>
+    <string name="overwrite_settings_summary_on">Berkas yang masuk dengan nama berkas yang sudah ada sebelumnya akan ditimpa</string>
+    <string name="overwrite_settings_summary_off">Berkas yang masuk dengan nama berkas yang sudah ada akan diganti namanya</string>
+    <string name="custom">Custom</string>
+    <string name="unsupported_provider">Anda telah memilih penyedia konten yang tidak didukung. Tolong pilih direktori yang ada pada penyimmpanan internal anda.</string>
+    <!--  Theme settings -->
+    <string name="sysDefault">Gunakan default sistem</string>
+    <string name="lightTheme">Tema Terang</string>
+    <string name="darkTheme">Tema Gelap</string>
+    <!--  Notification  -->
+    <string name="warpinator_notification_title">Layanan Warpinator sedang berjalan</string>
+    <string name="warpinator_notification_button">Hentikan layanan</string>
+    <string name="transfers_complete">Seluruh transfer sudah selesai</string>
+    <string name="transfer_notification">%1$.1f%%, %2$d transfer, %3$s/s</string>
+    <string name="incoming_transfer">Transfer masuk dari %s</string>
+    <string name="num_files">%d berkas</string>
+    <string name="service_running">Layanan sedang berjalan</string>
+    <string name="notification_channel_description">Notifikasi layanan tetap</string>
+    <string name="incoming_transfer_channel">Tranfer masuk</string>
+    <string name="transfer_progress_channel">Kemajuan transfer</string>
+    <!--  Other  -->
+    <string name="please_select_download_dir">Ini mungkin baru pertama kalinya anda menjalankan aplikasi.
+        Tolong pilih direktori dimana kamu ingin Warpinator untuk menyimpan berkas.</string>
+    <string name="error_download_dir">Anda harus memilih direktori unduhan pada pengaturan </string>
+    <string-array name="connected_states">
+        <item>Tersambung</item>
+        <item>Terputus</item>
+        <item>Sedang menyambungkan</item>
+        <item>Sambungan gagal</item>
+        <item>Menunggu duplex</item>
+    </string-array>
+    <string-array name="transfer_states">
+        <item>Inisialisasi</item>
+        <item>Menunggu perizinan…</item>
+        <item>Ditolak</item>
+        <item>Sedang mengirim</item>
+        <item>Dijeda</item>
+        <item>Dihentikan</item>
+        <item>Gagal (ketuk untuk melihat error)</item>
+        <item>Kegagalan yang tidak dapat dipulihkan</item>
+        <item>File tidak ditemukan</item>
+        <item>Selesai</item>
+        <item>Selesai dengan error (ketuk untuk melihat)</item>
+    </string-array>
+</resources>

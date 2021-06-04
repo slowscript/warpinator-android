@@ -1,0 +1,103 @@
+<resources>
+    <!--  App Name  -->
+    <string name="app_name" translatable="false">Warpinator</string>
+    <!--  Main Activity  -->
+    <string name="title_activity_transfers">Aktarımlar</string>
+    <string name="send_files">Dosyaları gönder</string>
+    <string name="quit">Çık</string>
+    <string name="about">Hakkında</string>
+    <string name="settings">Ayarlar</string>
+    <string name="title_activity_share">İle paylaş</string>
+    <string name="available_devices">Kullanılabilir aygıtlar</string>
+    <string name="no_devices_found">Başka aygıt bulunamadı</string>
+    <string name="wrong_group_code">Bağlantı başarısız oldu: Yanlış grup kodu</string>
+    <string name="connection_error">Bağlantı hatası</string>
+    <string name="not_connected_to_wifi">WiFi veya LAN\'a bağlı değilsiniz. Hiçbiri mevcut değilse, etkin noktanızı kullanın.
+        Bağlandığınızda uygulamayı yeniden başlatın.</string>
+    <!--  Transfers activity  -->
+    <string name="waiting_for_permission">İzin bekleniyor…</string>
+    <string name="files_overwritten_warning">(Dosyaların üzerine yazılabilir!)</string>
+    <string name="remaining">kalan</string>
+    <string name="a_few_seconds">birkaç saniye</string>
+    <string name="service_unavailable">, hizmet kullanılamıyor</string>
+    <string name="errors_during_transfer">Aktarım sırasındaki hatalar:</string>
+    <string name="dont_close_when_sharing">Paylaşım sırasında bu etkinliği kapatmak, aktarımın başarısız olmasına neden olabilir</string>
+    <!--  About activity  -->
+    <string name="version">Sürüm: %1$s</string>
+    <string name="about_description">Bu, Warpinator\'ın resmi olmayan bir sürümüdür. \nYerel ağ üzerinden dosya gönderin ve alın.</string>
+    <string name="warranty_html">
+        Bu program lisanslı açık kaynaklı yazılımdır. &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU Genel Kamu Lisansı&lt;/a>.&lt;br>
+        Kaynak kodunu adresinden edinebilirsiniz. &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
+        &lt;br>
+        Bu program kesinlikle hiçbir garanti vermez.&lt;br>Daha fazla ayrıntı için lisans koşullarına bakın.</string>
+    <!--  Share activity  -->
+    <string name="devices_to_share_with">Paylaşılacak aygıtlar</string>
+    <string name="no_share_devices">Paylaşılacak uygun aygıt yok</string>
+    <string name="unsupported_intent">Desteklenmeyen bir niyet eylemi aldık</string>
+    <string name="nothing_to_share">Paylaşacak bir şey yok</string>
+    <!--  Setting  -->
+    <string name="identity_settings_category">Kimlik</string>
+    <string name="transfer_setting_category">Aktarım ayarları</string>
+    <string name="network_setting_category">Ağ</string>
+    <string name="aspect_setting_category">Görünüş</string>
+    <string name="display_settings_title">Ekran adı</string>
+    <string name="picture_settings_title">Profil fotoğrafı</string>
+    <string name="download_dir_settings_title">İndirilenler dizini</string>
+    <string name="notification_settings_title">Gelen dosyalar hakkında bildirim göster</string>
+    <string name="overwrite_settings_title">Üzerine yazmaya izin ver</string>
+    <string name="accept_settings_title">Aktarımları otomatik olarak kabul et</string>
+    <string name="accept_setting_summary_on">Aktarımlar otomatik olarak kabul edilecektir.</string>
+    <string name="accept_setting_summary_off">Her transferin sizin tarafınızdan kabul edilmesi gerekiyor</string>
+    <string name="background_settings_title">Arka planda çalıştır</string>
+    <string name="boot_settings_title">Otomatik olarak başla</string>
+    <string name="export_log_settings_tile">Dosyaya hata ayıklama günlüğü yaz</string>
+    <string name="group_code_settings_title">Grup kodu</string>
+    <string name="port_settings_title">Bağlantı noktası</string>
+    <string name="theme_settings_title">Tema</string>
+    <string name="notification_settings_summary">Bu, Android\'in bildirim ayarlarından etkilenebilir</string>
+    <string name="port_range_warning">Bağlantı noktası numarası 1024 ile 65535 arasında olmalıdır</string>
+    <string name="requires_restart_warning">Bu ayarın değiştirilmesi uygulamanın yeniden başlatılmasını gerektirir</string>
+    <string name="overwrite_settings_summary_on">Zaten var olan bir ada sahip gelen dosyalar, mevcut olanların üzerine yazacaktır.</string>
+    <string name="overwrite_settings_summary_off">Zaten var olan bir ada sahip gelen dosyalar yeniden adlandırılacak</string>
+    <string name="custom">Özel</string>
+    <string name="unsupported_provider">Desteklenmeyen bir içerik sağlayıcı seçtiniz. Lütfen dahili depolama alanınızda bir dizin seçin.</string>
+    <!--  Theme settings -->
+    <string name="sysDefault">Sistem varsayılanını kullan</string>
+    <string name="lightTheme">Aydınlık Tema</string>
+    <string name="darkTheme">Karanlık Tema</string>
+    <!--  Notification  -->
+    <string name="warpinator_notification_title">Warpinator servisi çalışıyor</string>
+    <string name="warpinator_notification_button">Hizmeti durdur</string>
+    <string name="transfers_complete">Tüm aktarımlar tamamlandı</string>
+    <string name="transfer_notification">%1$.1f%%, %2$d aktarım, %3$s/s</string>
+    <string name="incoming_transfer">%s den gelen transfer</string>
+    <string name="num_files">%d dosyalar</string>
+    <string name="service_running">Hizmet çalışıyor</string>
+    <string name="notification_channel_description">Kalıcı hizmet bildirimi</string>
+    <string name="incoming_transfer_channel">Gelen aktarım</string>
+    <string name="transfer_progress_channel">Aktarım ilerlemesi</string>
+    <!--  Other  -->
+    <string name="please_select_download_dir">Muhtemelen bu uygulamayı ilk kez başlatıyorsunuz.
+        Lütfen Warpinator\'ın dosyaları kaydetmesini istediğiniz bir dizini seçin.</string>
+    <string name="error_download_dir">Ayarlarda bir indirme dizini seçmelisiniz</string>
+    <string-array name="connected_states">
+        <item>Bağlı</item>
+        <item>Bağlantı kesildi</item>
+        <item>Bağlanıyor</item>
+        <item>Bağlantı başarısız</item>
+        <item>Dubleks bekleniyor</item>
+    </string-array>
+    <string-array name="transfer_states">
+        <item>Başlatılıyor</item>
+        <item>İzin bekleniyor…</item>
+        <item>Reddedildi</item>
+        <item>Aktarılıyor</item>
+        <item>Duraklatıldı</item>
+        <item>Durduruldu</item>
+        <item>Başarısız (hataları görüntülemek için dokunun)</item>
+        <item>Kurtarılamaz hata</item>
+        <item>Dosya bulunamadı</item>
+        <item>Tamamlandı</item>
+        <item>Hatalarla tamamlandı (görüntülemek için dokunun)</item>
+    </string-array>
+</resources>

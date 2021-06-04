@@ -59,7 +59,7 @@
     <string name="warpinator_notification_title">Služba Warpinatoru běží</string>
     <string name="warpinator_notification_button">Zastavit</string>
     <string name="transfers_complete">Všechny přenosy byly dokončeny</string>
-    <string name="transfer_notification">%.1f%%, %d přenosů, %s/s</string>
+    <string name="transfer_notification">%1$.1f%%, %2$d přenosů, %3$s/s</string>
     <string name="incoming_transfer">%s posílá soubory</string>
     <string name="num_files">%d souborů</string>
     <string name="service_running">Služba běží</string>

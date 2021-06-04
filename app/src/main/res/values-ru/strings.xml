@@ -1,0 +1,103 @@
+<resources>
+    <!--  App Name  -->
+    <string name="app_name" translatable="false">Warpinator</string>
+    <!--  Main Activity  -->
+    <string name="title_activity_transfers">Передачи</string>
+    <string name="send_files">Отправить файлы</string>
+    <string name="quit">Выход</string>
+    <string name="about">О приложении</string>
+    <string name="settings">Настройки</string>
+    <string name="title_activity_share">Поделиться с</string>
+    <string name="available_devices">Доступные устройства</string>
+    <string name="no_devices_found">Устройства не обнаружены</string>
+    <string name="wrong_group_code">Ошибка подключения: неверный групповой код</string>
+    <string name="connection_error">Ошибка подключения</string>
+    <string name="not_connected_to_wifi">Вы не подключены к Wi-Fi или LAN. Используйте свою точку доступа, если ничего из вышеперечисленного не доступно.
+        После подключения перезапустите приложение.</string>
+    <!--  Transfers activity  -->
+    <string name="waiting_for_permission">Ожидание подтверждения…</string>
+    <string name="files_overwritten_warning">(Файлы могут быть перезаписаны!)</string>
+    <string name="remaining">осталось</string>
+    <string name="a_few_seconds">ещё несколько секунд</string>
+    <string name="service_unavailable">, служба недоступна</string>
+    <string name="errors_during_transfer">Ошибки при передаче:</string>
+    <string name="dont_close_when_sharing">Закрытие этой операции при совместном использовании может привести к сбою передачи</string>
+    <!--  About activity  -->
+    <string name="version">Версия: %1$s</string>
+    <string name="about_description">Это неофициальный порт Warpinator. \nОтправляйте и получайте файлы по локальной сети.</string>
+    <string name="warranty_html">
+        Эта программа представляет собой программное обеспечение с открытым исходным кодом под лицензией &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>.&lt;br>
+        Вы можете получить исходный код здесь - &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
+        &lt;br>
+        Программа поставляется без каких-либо гарантий.&lt;br>Подробнее см. условия лицензии.</string>
+    <!--  Share activity  -->
+    <string name="devices_to_share_with">Устройства, с которыми можно поделиться</string>
+    <string name="no_share_devices">Нет доступных устройств, с которыми можно поделиться</string>
+    <string name="unsupported_intent">Получено неподдерживаемое intent action</string>
+    <string name="nothing_to_share">Нечем поделиться</string>
+    <!--  Setting  -->
+    <string name="identity_settings_category">Идентификация</string>
+    <string name="transfer_setting_category">Настройки передачи</string>
+    <string name="network_setting_category">Сеть</string>
+    <string name="aspect_setting_category">Внешний вид</string>
+    <string name="display_settings_title">Отображаемое имя</string>
+    <string name="picture_settings_title">Изображение профиля</string>
+    <string name="download_dir_settings_title">Каталог для загрузок</string>
+    <string name="notification_settings_title">Показывать уведомления</string>
+    <string name="overwrite_settings_title">Разрешить перезапись</string>
+    <string name="accept_settings_title">Автоподтверждение</string>
+    <string name="accept_setting_summary_on">Передачи будут приняты автоматически</string>
+    <string name="accept_setting_summary_off">Каждая передача должна быть подтверждена вами</string>
+    <string name="background_settings_title">Работа в фоновом режиме</string>
+    <string name="boot_settings_title">Запускать автоматически</string>
+    <string name="export_log_settings_tile">Записывать лог в файл</string>
+    <string name="group_code_settings_title">Групповой код</string>
+    <string name="port_settings_title">Порт</string>
+    <string name="theme_settings_title">Тема</string>
+    <string name="notification_settings_summary">Параметр может зависеть от настроек уведомлений Android</string>
+    <string name="port_range_warning">Номер порта должен быть от 1024 до 65535</string>
+    <string name="requires_restart_warning">Для изменения этого параметра требуется перезапуск приложения</string>
+    <string name="overwrite_settings_summary_on">Входящие файлы с уже имеющимся именем перезапишут существующие</string>
+    <string name="overwrite_settings_summary_off">Входящие файлы с уже имеющимся именем будут переименованы</string>
+    <string name="custom">Другое</string>
+    <string name="unsupported_provider">Вы выбрали неподдерживаемое хранилище данных. Вы выбрали неподдерживаемого поставщика контента. Пожалуйста, выберите каталог во внутренней памяти.</string>
+    <!--  Theme settings -->
+    <string name="sysDefault">Системная по умолчанию</string>
+    <string name="lightTheme">Светлая тема</string>
+    <string name="darkTheme">Тёмная тема</string>
+    <!--  Notification  -->
+    <string name="warpinator_notification_title">Служба Warpinator запущена</string>
+    <string name="warpinator_notification_button">Остановить</string>
+    <string name="transfers_complete">Все передачи завершены</string>
+    <string name="transfer_notification">%1$.1f%%, кол-во передач: %2$d, %3$s/s</string>
+    <string name="incoming_transfer">Входящая передача от %s</string>
+    <string name="num_files">кол-во файлов: %d</string>
+    <string name="service_running">Служба запущена</string>
+    <string name="notification_channel_description">Постоянное уведомление о службе</string>
+    <string name="incoming_transfer_channel">Входящая передача</string>
+    <string name="transfer_progress_channel">Прогресс передачи</string>
+    <!--  Other  -->
+    <string name="please_select_download_dir">Скорее всего, вы впервые запустили это приложение.
+        Пожалуйста, выберите каталог, в который вы бы хотели, чтобы Warpinator сохранял файлы.</string>
+    <string name="error_download_dir">Вы должны выбрать каталог для загрузок в настройках</string>
+    <string-array name="connected_states">
+        <item>Подключено</item>
+        <item>Отключено</item>
+        <item>Подключение</item>
+        <item>Ошибка подключения</item>
+        <item>Ожидание двусторонней связи</item>
+    </string-array>
+    <string-array name="transfer_states">
+        <item>Инициализация</item>
+        <item>Ожидание подтверждения…</item>
+        <item>Отклонено</item>
+        <item>Передаётся</item>
+        <item>Приостановлено</item>
+        <item>Остановлено</item>
+        <item>Не выполнено (нажмите, чтобы посмотреть ошибки)</item>
+        <item>Неизвестная ошибка</item>
+        <item>Файл не найден</item>
+        <item>Завершено</item>
+        <item>Завершено с ошибками (нажмите, чтобы посмотреть)</item>
+    </string-array>
+</resources>

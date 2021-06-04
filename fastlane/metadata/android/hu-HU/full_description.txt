@@ -1,0 +1,15 @@
+A Warpinator Androidhoz a Linux Mint azonos nevű fájlmegosztó eszközének nem hivatalos portja. Teljes mértékben kompatibilis az eredeti protokollal, és lehetővé teszi a fájlok egyszerű átvitelét Android és Linux eszközök között.
+
+Jellemzők:
+- Önműködő felfedezés a helyi hálózaton
+- A WiFi vagy az elérési pont működik, nincs szükség internetkapcsolatra
+- Bármilyen típusú fájlt gyorsan és egyszerűen továbbíthat
+- Teljes címtárok fogadása
+- Futtasson több adatátvitelt párhuzamosan
+- Más alkalmazásokból származó fájlok megosztása
+- Korlátozza, hogy ki tud csatlakozni egy csoportkód használatával
+- Indítási lehetőség indításkor
+- Nem igényli az Ön tartózkodási helyét vagy egyéb felesleges engedélyeket
+
+Ez az alkalmazás ingyenes szoftver, amelyet a GNU általános nyilvános licenc 3. verziója licencelt.
+A forráskódot a https://github.com/slowscript/warpinator-android oldalon szerezheti be
