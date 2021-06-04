@@ -64,7 +64,7 @@ Uruchom ponownie aplikację po połączeniu.</string>
     <string name="warpinator_notification_title">Warpinator działa w tle</string>
     <string name="warpinator_notification_button">Zatrzymaj</string>
     <string name="transfers_complete">Przesyłanie zakończone</string>
-    <string name="transfer_notification">%.1f%%, %d transfer(y), %s/s</string>
+    <string name="transfer_notification">%1$.1f%%, %2$d transfer(y), %3$s/s</string>
     <string name="incoming_transfer">Przychodzące pliki od %s</string>
     <string name="num_files">%d plik(i)</string>
     <string name="service_running">Warpinator jest aktywny</string>

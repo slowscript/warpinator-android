@@ -68,7 +68,7 @@
     <string name="warpinator_notification_title">വാർ‌പിനേറ്റർ സേവനം പ്രവർത്തിക്കുന്നു</string>
     <string name="warpinator_notification_button">സേവനം നിർത്തുക</string>
     <string name="transfers_complete">എല്ലാ കൈമാറ്റങ്ങളും പൂർത്തിയായി</string>
-    <string name="transfer_notification">%.1f%%, %d കൈമാറ്റങ്ങൾ, %s/s</string>
+    <string name="transfer_notification">%1$.1f%%, %2$d കൈമാറ്റങ്ങൾ, %3$s/s</string>
     <string name="incoming_transfer">%s നിന്ന് കൈമാറ്റം വരുന്നു</string>
     <string name="num_files">%d ഫയലുകൾ</string>
     <string name="service_running">സേവനം പ്രവർത്തിക്കുന്നു</string>

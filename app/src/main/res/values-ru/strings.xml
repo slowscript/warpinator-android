@@ -69,7 +69,7 @@
     <string name="warpinator_notification_title">Служба Warpinator запущена</string>
     <string name="warpinator_notification_button">Остановить</string>
     <string name="transfers_complete">Все передачи завершены</string>
-    <string name="transfer_notification">%.1f%%, кол-во передач: %d, %s/s</string>
+    <string name="transfer_notification">%1$.1f%%, кол-во передач: %2$d, %3$s/s</string>
     <string name="incoming_transfer">Входящая передача от %s</string>
     <string name="num_files">кол-во файлов: %d</string>
     <string name="service_running">Служба запущена</string>

@@ -25,7 +25,7 @@
     <string name="a_few_seconds">unos pocos segundos</string>
     <string name="service_unavailable">, servicio no disponible</string>
     <string name="transfers_complete">Todas las transferencias están completas</string>
-    <string name="transfer_notification">%.1f%%, %d transferencias, %s/s</string>
+    <string name="transfer_notification">%1$.1f%%, %2$d transferencias, %3$s/s</string>
     <string name="num_files">%d archivos</string>
     <string name="incoming_transfer">Transferencia entrante de %s</string>
     <string name="sysDefault">Usar predeterminado por sistema</string>
