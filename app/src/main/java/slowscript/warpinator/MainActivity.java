@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +29,8 @@ import java.security.Security;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String TAG = "MAIN";
+    private final String TAG = "MAIN";
+    private final String helpUrl = "https://github.com/slowscript/warpinator-android/blob/master/connection-issues.md";
 
     static MainActivity current;
     RecyclerView recyclerView;
@@ -49,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         layoutNotFound = findViewById(R.id.layoutNotFound);
+        Button btnHelp = findViewById(R.id.btnHelp);
+        btnHelp.setOnClickListener((l) -> {
+            Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
+            startActivity(helpIntent);
+        });
 
         //initializes theme based on preferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
