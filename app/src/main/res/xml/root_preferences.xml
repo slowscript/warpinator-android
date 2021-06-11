@@ -58,6 +58,7 @@
             app:disableDependentsState="true" />
         <SwitchPreferenceCompat
             android:title="@string/export_log_settings_tile"
+            android:summary="Android/data/slowscript.warpinator/files/"
             android:key="debugLog"
             android:defaultValue="false" />
 

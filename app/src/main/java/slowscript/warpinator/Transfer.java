@@ -124,6 +124,7 @@ public class Transfer {
         setStatus(Status.TRANSFERRING);
         actualStartTime = System.currentTimeMillis();
         bytesTransferred = 0;
+        cancelled = false;
         updateUI();
         observer.setOnReadyHandler(new Runnable() {
             int i = 0;
@@ -173,11 +174,11 @@ public class Transfer {
                         updateUI();
                         return;
                     } catch (Exception e) {
-                        observer.onError(e);
+                        Log.e(TAG, "Error sending files", e);
                         setStatus(Status.FAILED);
                         errors.add(e.getLocalizedMessage());
-                        Log.e(TAG, "Error sending files", e);
                         updateUI();
+                        observer.onError(e);
                         return;
                     }
                 }

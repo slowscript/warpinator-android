@@ -103,9 +103,16 @@ public class Remote {
             status = RemoteStatus.CONNECTED;
 
             //Get name
-            WarpProto.RemoteMachineInfo info = blockingStub.getRemoteMachineInfo(WarpProto.LookupName.getDefaultInstance());
-            displayName = info.getDisplayName();
-            userName = info.getUserName();
+            try {
+                WarpProto.RemoteMachineInfo info = blockingStub.getRemoteMachineInfo(WarpProto.LookupName.getDefaultInstance());
+                displayName = info.getDisplayName();
+                userName = info.getUserName();
+            } catch (StatusRuntimeException ex) {
+                status = RemoteStatus.ERROR;
+                Log.e(TAG, "connect: cannot get name: connection broken?", ex);
+                updateUI();
+                return;
+            }
             //Get avatar
             try {
                 Iterator<WarpProto.RemoteMachineAvatar> avatar = blockingStub.getRemoteMachineAvatar(WarpProto.LookupName.getDefaultInstance());

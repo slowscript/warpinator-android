@@ -21,11 +21,11 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import java.io.File;
+import java.util.ConcurrentModificationException;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
@@ -42,7 +42,7 @@ public class MainService extends Service {
     static long pingTime = 10_000;
 
     public Server server;
-    public static ConcurrentHashMap<String, Remote> remotes = new ConcurrentHashMap<>();
+    public static LinkedHashMap<String, Remote> remotes = new LinkedHashMap<>();
     public TransfersActivity transfersView;
     public SharedPreferences prefs;
     public int runningTransfers = 0;
@@ -219,11 +219,13 @@ public class MainService extends Service {
     }
 
     void pingRemotes() {
+        try {
         for (Remote r : remotes.values()) {
             if (r.status == Remote.RemoteStatus.CONNECTED) {
                 r.ping();
             }
         }
+        } catch (ConcurrentModificationException ignored) {}
     }
 
     public void addRemote(Remote remote) {
