@@ -45,6 +45,7 @@ public class MainService extends Service {
     public static ConcurrentHashMap<String, Remote> remotes = new ConcurrentHashMap<>();
     public TransfersActivity transfersView;
     public SharedPreferences prefs;
+    public int runningTransfers = 0;
     int notifId = 1300;
 
     public static MainService svc;
@@ -187,14 +188,14 @@ public class MainService extends Service {
                     .setOngoing(true)
                     .setPriority(NotificationCompat.PRIORITY_LOW);
         }
-        int numTransfers = 0;
+        runningTransfers = 0;
         long bytesDone = 0;
         long bytesTotal = 0;
         long bytesPerSecond = 0;
         for (Remote r : remotes.values()) {
             for (Transfer t : r.transfers) {
                 if (t.getStatus() == Transfer.Status.TRANSFERRING) {
-                    numTransfers++;
+                    runningTransfers++;
                     bytesDone += t.bytesTransferred;
                     bytesTotal += t.totalSize;
                     bytesPerSecond += t.bytesPerSecond;
@@ -202,17 +203,19 @@ public class MainService extends Service {
             }
         }
         int progress = (int)((float)bytesDone / bytesTotal * 1000f);
-        if (numTransfers > 0) {
+        if (runningTransfers > 0) {
             notifBuilder.setOngoing(true);
             notifBuilder.setProgress(1000, progress, false);
             notifBuilder.setContentTitle(String.format(Locale.getDefault(), getString(R.string.transfer_notification),
-                    progress/10f, numTransfers, Formatter.formatFileSize(this, bytesPerSecond)));
+                    progress/10f, runningTransfers, Formatter.formatFileSize(this, bytesPerSecond)));
         } else {
             notifBuilder.setProgress(0, 0, false);
             notifBuilder.setContentTitle(getString(R.string.transfers_complete));
             notifBuilder.setOngoing(false);
         }
-        notificationMgr.notify(PROGRESS_NOTIFICATION_ID, notifBuilder.build());
+        if (runningTransfers > 0 || transfersView == null || !transfersView.isTopmost)
+            notificationMgr.notify(PROGRESS_NOTIFICATION_ID, notifBuilder.build());
+        else notificationMgr.cancel(PROGRESS_NOTIFICATION_ID);
     }
 
     void pingRemotes() {

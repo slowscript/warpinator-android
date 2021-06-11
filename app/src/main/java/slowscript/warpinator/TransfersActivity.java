@@ -97,6 +97,8 @@ public class TransfersActivity extends AppCompatActivity {
         isTopmost = true;
         updateTransfers(remote.uuid);
         updateUI();
+        if (MainService.svc.runningTransfers == 0)
+            MainService.svc.notificationMgr.cancel(MainService.PROGRESS_NOTIFICATION_ID);
     }
 
     @Override

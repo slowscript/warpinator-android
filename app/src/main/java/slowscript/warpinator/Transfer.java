@@ -233,7 +233,7 @@ public class Transfer {
         //Show in UI
         if (svc.transfersView != null && remoteUUID.equals(svc.transfersView.remote.uuid) && svc.transfersView.isTopmost)
             svc.transfersView.updateTransfers(remoteUUID);
-        else if (svc.server.notifyIncoming) {  //Notification
+        else if (svc.server.notifyIncoming && !autoAccept) {  //Notification
             Intent intent = new Intent(svc, TransfersActivity.class);
             intent.putExtra("remote", remoteUUID);
             PendingIntent pendingIntent = PendingIntent.getActivity(svc, 0, intent, 0);
