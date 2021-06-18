@@ -43,7 +43,7 @@ public class Server {
     private static final String SERVICE_TYPE = "_warpinator._tcp.local.";
 
     public static Server current;
-    static String displayName;
+    public String displayName;
     public int port;
     public String uuid;
     public String profilePicture;
@@ -78,8 +78,20 @@ public class Server {
         new Thread(this::startMDNS).start();
     }
 
-    void startMDNS()
-    {
+    public void Stop() {
+        for (Remote r : MainService.remotes.values()) {
+            if (r.status == Remote.RemoteStatus.CONNECTED)
+                r.disconnect();
+        }
+        MainService.remotes.clear();
+        CertServer.Stop();
+        stopMDNS();
+        svc.prefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
+        gServer.shutdownNow();
+        Log.i(TAG, "Server stopped");
+    }
+
+    void startMDNS() {
         try {
             InetAddress addr = InetAddress.getByName(Utils.getIPAddress());
             jmdns = JmDNS.create(addr);
@@ -97,6 +109,7 @@ public class Server {
         }
         catch (Exception e) {
             Log.e(TAG, "Failed to init JmDNS", e);
+            LocalBroadcasts.displayToast(svc, "Failed to start JmDNS", 0);
         }
     }
 
@@ -107,17 +120,9 @@ public class Server {
                 jmdns.removeServiceListener(SERVICE_TYPE, serviceListener);
                 jmdns.close();
             } catch (Exception e) {
-                Log.w(TAG, "Failed to close JmDNS");
+                Log.w(TAG, "Failed to close JmDNS", e);
             }
         }
-    }
-
-    public void Stop() {
-        CertServer.Stop();
-        stopMDNS();
-        svc.prefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
-        gServer.shutdownNow();
-        Log.i(TAG, "Server stopped");
     }
 
     void loadSettings() {
@@ -168,6 +173,13 @@ public class Server {
         } catch (IOException e) {
             Log.e(TAG, "Failed to register service.", e);
         }
+    }
+
+    void addRemote(Remote remote) {
+        //Add to remotes list
+        MainService.remotes.put(remote.uuid, remote);
+        //Connect to it
+        remote.connect();
     }
 
     ServiceListener newServiceListener() {
@@ -232,7 +244,7 @@ public class Server {
                 remote.uuid = svcName;
                 remote.serviceAvailable = true;
 
-                svc.addRemote(remote);
+                addRemote(remote);
             }
         };
     }

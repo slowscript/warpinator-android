@@ -1,6 +1,9 @@
 package slowscript.warpinator;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,18 +25,17 @@ public class ShareActivity extends AppCompatActivity {
 
     static final String TAG = "Share";
 
-    public static ShareActivity current;
-
     RecyclerView recyclerView;
     LinearLayout layoutNotFound;
     RemotesAdapter adapter;
+    BroadcastReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        current = this;
         setContentView(R.layout.activity_share);
         setTitle(R.string.title_activity_share);
+        receiver = newBroadcastReceiver();
 
         //Get uris to send
         Intent intent = getIntent();
@@ -112,12 +115,52 @@ public class ShareActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        current = null;
-        super.onDestroy();
+    protected void onResume() {
+        super.onResume();
+        IntentFilter f = new IntentFilter(LocalBroadcasts.ACTION_UPDATE_REMOTES);
+        f.addAction(LocalBroadcasts.ACTION_DISPLAY_MESSAGE);
+        f.addAction(LocalBroadcasts.ACTION_DISPLAY_TOAST);
+        f.addAction(LocalBroadcasts.ACTION_CLOSE_ALL);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, f);
     }
 
-    public void updateRemotes() {
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+    }
+
+    private BroadcastReceiver newBroadcastReceiver() {
+        Context ctx = this;
+        return new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if (action == null)
+                    return;
+                switch (action) {
+                    case LocalBroadcasts.ACTION_UPDATE_REMOTES:
+                        updateRemotes();
+                        break;
+                    case LocalBroadcasts.ACTION_DISPLAY_MESSAGE:
+                        String title = intent.getStringExtra("title");
+                        String msg = intent.getStringExtra("msg");
+                        Utils.displayMessage(ctx, title, msg);
+                        break;
+                    case LocalBroadcasts.ACTION_DISPLAY_TOAST:
+                        msg = intent.getStringExtra("msg");
+                        int length = intent.getIntExtra("length", 0);
+                        Toast.makeText(ctx, msg, length).show();
+                        break;
+                    case LocalBroadcasts.ACTION_CLOSE_ALL:
+                        finishAffinity();
+                        break;
+                }
+            }
+        };
+    }
+
+    private void updateRemotes() {
         runOnUiThread(() -> {
             adapter.notifyDataSetChanged();
             layoutNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);

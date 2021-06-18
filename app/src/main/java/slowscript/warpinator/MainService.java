@@ -41,16 +41,15 @@ public class MainService extends Service {
     static String ACTION_STOP = "StopSvc";
     static long pingTime = 10_000;
 
-    public Server server;
-    public static LinkedHashMap<String, Remote> remotes = new LinkedHashMap<>();
-    public TransfersActivity transfersView;
     public SharedPreferences prefs;
     public int runningTransfers = 0;
     int notifId = 1300;
 
     public static MainService svc;
+    public static LinkedHashMap<String, Remote> remotes = new LinkedHashMap<>();
     public NotificationManagerCompat notificationMgr;
     NotificationCompat.Builder notifBuilder = null;
+    Server server;
     Timer pingTimer;
     ExecutorService executor = Executors.newSingleThreadExecutor();
     Process logcatProcess;
@@ -73,13 +72,11 @@ public class MainService extends Service {
 
         Authenticator.getServerCertificate(); //Generate cert on start if doesn't exist
         if (Authenticator.certException != null) {
-            if (MainActivity.current != null) {
-            Utils.displayMessage(MainActivity.current, "Failed to create certificate",
+            LocalBroadcasts.displayMessage(this, "Failed to create certificate",
                     "A likely reason for this is that your IP address could not be obtained. " +
                     "Please make sure you are connected to WiFi, then restart the app.\n" +
                     "\nAvailable interfaces:\n" + Utils.dumpInterfaces() +
                     "\nException: " + Authenticator.certException.toString());
-            }
             return START_NOT_STICKY;
         }
 
@@ -141,16 +138,11 @@ public class MainService extends Service {
         super.onDestroy();
     }
 
-    public void stopServer () {
+    private void stopServer () {
         if (server == null) //I have no idea how this can happen
             return;
         server.Stop();
-        for (Remote r : remotes.values()) {
-            if (r.status == Remote.RemoteStatus.CONNECTED)
-                r.disconnect();
-        }
         notificationMgr.cancelAll();
-        remotes.clear();
         executor.shutdown();
         pingTimer.cancel();
         if (lock != null)
@@ -166,7 +158,7 @@ public class MainService extends Service {
         }
     }
 
-    public Process launchLogcat() {
+    Process launchLogcat() {
         File output = new File(getExternalFilesDir(null), "latest.log");
         Process process;
         String cmd = "logcat -f " + output.getAbsolutePath() + "\n";
@@ -213,7 +205,7 @@ public class MainService extends Service {
             notifBuilder.setContentTitle(getString(R.string.transfers_complete));
             notifBuilder.setOngoing(false);
         }
-        if (runningTransfers > 0 || transfersView == null || !transfersView.isTopmost)
+        if (runningTransfers > 0 || TransfersActivity.topmostRemote != null)
             notificationMgr.notify(PROGRESS_NOTIFICATION_ID, notifBuilder.build());
         else notificationMgr.cancel(PROGRESS_NOTIFICATION_ID);
     }
@@ -226,23 +218,6 @@ public class MainService extends Service {
             }
         }
         } catch (ConcurrentModificationException ignored) {}
-    }
-
-    public void addRemote(Remote remote) {
-        //Add to remotes list
-        remotes.put(remote.uuid, remote);
-        //Connect to it
-        remote.connect();
-    }
-
-    public void removeRemote(String uuid) {
-        Remote r = remotes.get(uuid);
-        //Disconnect
-        r.disconnect();
-        //Remove from GUI
-        MainActivity.current.updateRemoteList();
-        //Remove
-        remotes.remove(uuid);
     }
 
     private void createNotificationChannels() {
@@ -274,8 +249,7 @@ public class MainService extends Service {
         public void onReceive(Context context, Intent intent) {
             if (ACTION_STOP.equals(intent.getAction())) {
                 context.stopService(new Intent(context, MainService.class));
-                if (MainActivity.current != null)
-                    MainActivity.current.finishAffinity();
+                LocalBroadcasts.closeAll(context);
             }
         }
     }

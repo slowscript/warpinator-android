@@ -22,8 +22,6 @@ import io.grpc.ManagedChannel;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.okhttp.OkHttpChannelBuilder;
-import io.grpc.stub.ClientResponseObserver;
-import io.grpc.stub.StreamObserver;
 
 public class Remote {
     public enum RemoteStatus {
@@ -302,12 +300,6 @@ public class Remote {
     }
 
     public void updateUI() {
-        if (MainActivity.current != null)
-            MainActivity.current.updateRemoteList();
-        if (MainService.svc.transfersView != null) {
-            MainService.svc.transfersView.updateUI();
-        }
-        if (ShareActivity.current != null)
-            ShareActivity.current.updateRemotes();
+        LocalBroadcasts.updateRemotes(MainService.svc);
     }
 }

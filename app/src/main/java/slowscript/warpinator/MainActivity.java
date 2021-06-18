@@ -1,7 +1,10 @@
 package slowscript.warpinator;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,13 +16,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.documentfile.provider.DocumentFile;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,10 +35,10 @@ public class MainActivity extends AppCompatActivity {
     private final String TAG = "MAIN";
     private final String helpUrl = "https://github.com/slowscript/warpinator-android/blob/master/connection-issues.md";
 
-    static MainActivity current;
     RecyclerView recyclerView;
     RemotesAdapter adapter;
     LinearLayout layoutNotFound;
+    BroadcastReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         Security.insertProviderAt(Conscrypt.newProvider(), 1);
 
-        current = this;
-
+        receiver = newBroadcastReceiver();
         recyclerView = findViewById(R.id.recyclerView);
         adapter = new RemotesAdapter(this);
         recyclerView.setAdapter(adapter);
@@ -85,6 +87,19 @@ public class MainActivity extends AppCompatActivity {
                 startMainService();
         });
         updateRemoteList();
+
+        IntentFilter f = new IntentFilter();
+        f.addAction(LocalBroadcasts.ACTION_UPDATE_REMOTES);
+        f.addAction(LocalBroadcasts.ACTION_DISPLAY_MESSAGE);
+        f.addAction(LocalBroadcasts.ACTION_DISPLAY_TOAST);
+        f.addAction(LocalBroadcasts.ACTION_CLOSE_ALL);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, f);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 
     void startMainService() {
@@ -122,11 +137,41 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void updateRemoteList() {
+    private void updateRemoteList() {
         runOnUiThread(() -> {
             adapter.notifyDataSetChanged();
             layoutNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
         });
+    }
+
+    private BroadcastReceiver newBroadcastReceiver()
+    {
+        Context ctx = this;
+        return new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context c, Intent intent) {
+                String action = intent.getAction();
+                if (action == null) return;
+                switch (action) {
+                    case LocalBroadcasts.ACTION_UPDATE_REMOTES:
+                        updateRemoteList();
+                        break;
+                    case LocalBroadcasts.ACTION_DISPLAY_MESSAGE:
+                        String title = intent.getStringExtra("title");
+                        String msg = intent.getStringExtra("msg");
+                        Utils.displayMessage(ctx, title, msg);
+                        break;
+                    case LocalBroadcasts.ACTION_DISPLAY_TOAST:
+                        msg = intent.getStringExtra("msg");
+                        int length = intent.getIntExtra("length", 0);
+                        Toast.makeText(ctx, msg, length).show();
+                        break;
+                    case LocalBroadcasts.ACTION_CLOSE_ALL:
+                        finishAffinity();
+                        break;
+                }
+            }
+        };
     }
 
     public static void askForDirectoryAccess(Activity a) {

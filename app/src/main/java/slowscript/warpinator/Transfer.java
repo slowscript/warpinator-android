@@ -96,8 +96,7 @@ public class Transfer {
     }
 
     void updateUI() {
-        if (svc.transfersView != null)
-            svc.transfersView.updateTransfer(remoteUUID, privId);
+        LocalBroadcasts.updateTransfer(svc, remoteUUID, privId);
         //Update notification
         svc.updateProgress();
     }
@@ -232,8 +231,8 @@ public class Transfer {
         boolean autoAccept = svc.prefs.getBoolean("autoAccept", false);
 
         //Show in UI
-        if (svc.transfersView != null && remoteUUID.equals(svc.transfersView.remote.uuid) && svc.transfersView.isTopmost)
-            svc.transfersView.updateTransfers(remoteUUID);
+        if (remoteUUID.equals(TransfersActivity.topmostRemote))
+            LocalBroadcasts.updateTransfers(svc, remoteUUID);
         else if (svc.server.notifyIncoming && !autoAccept) {  //Notification
             Intent intent = new Intent(svc, TransfersActivity.class);
             intent.putExtra("remote", remoteUUID);
@@ -380,7 +379,7 @@ public class Transfer {
         Uri root = Uri.parse(Server.current.downloadDirUri);
         DocumentFile f = Utils.getChildFromTree(svc, root, path);
         Log.d(TAG, "File exists: " + f.getUri());
-        if(svc.server.allowOverwrite) {
+        if(Server.current.allowOverwrite) {
             Log.v(TAG, "Overwriting");
             f.delete();
         } else {
