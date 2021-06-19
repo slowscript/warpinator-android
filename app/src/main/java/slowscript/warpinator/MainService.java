@@ -8,7 +8,14 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.LinkAddress;
+import android.net.LinkProperties;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkRequest;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.IBinder;
@@ -16,6 +23,7 @@ import android.preference.PreferenceManager;
 import android.text.format.Formatter;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -44,6 +52,7 @@ public class MainService extends Service {
     public SharedPreferences prefs;
     public int runningTransfers = 0;
     int notifId = 1300;
+    String lastIP = null;
 
     public static MainService svc;
     public static LinkedHashMap<String, Remote> remotes = new LinkedHashMap<>();
@@ -54,6 +63,9 @@ public class MainService extends Service {
     ExecutorService executor = Executors.newSingleThreadExecutor();
     Process logcatProcess;
     WifiManager.MulticastLock lock;
+    ConnectivityManager connMgr;
+    ConnectivityManager.NetworkCallback networkCallback;
+    BroadcastReceiver apStateChangeReceiver;
 
     @Nullable
     @Override
@@ -67,9 +79,16 @@ public class MainService extends Service {
         svc = this;
         notificationMgr = NotificationManagerCompat.from(this);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // Start logging
         if (prefs.getBoolean("debugLog", false))
             logcatProcess = launchLogcat();
 
+        // Acquire multicast lock for mDNS
+        acquireMulticastLock();
+
+        lastIP = Utils.getIPAddress();
+        server = new Server(this);
         Authenticator.getServerCertificate(); //Generate cert on start if doesn't exist
         if (Authenticator.certException != null) {
             LocalBroadcasts.displayMessage(this, "Failed to create certificate",
@@ -77,22 +96,10 @@ public class MainService extends Service {
                     "Please make sure you are connected to WiFi, then restart the app.\n" +
                     "\nAvailable interfaces:\n" + Utils.dumpInterfaces() +
                     "\nException: " + Authenticator.certException.toString());
-            return START_NOT_STICKY;
+            Log.w(TAG, "Server will not start due to error");
+        } else {
+            server.Start();
         }
-
-        android.net.wifi.WifiManager wifi =
-                (android.net.wifi.WifiManager)
-                        getApplicationContext().getSystemService(android.content.Context.WIFI_SERVICE);
-        if (wifi != null) {
-            lock = wifi.createMulticastLock("WarpMDNSLock");
-            lock.setReferenceCounted(true);
-            lock.acquire();
-            Log.d(TAG, "Multicast lock acquired");
-        }
-
-        Log.d(TAG, "Service starting...");
-        server = new Server(this);
-        server.Start();
 
         pingTimer = new Timer();
         pingTimer.schedule(new TimerTask() {
@@ -102,32 +109,13 @@ public class MainService extends Service {
             }
         }, 5L, pingTime);
 
-        // Notification related stuff
+        listenOnNetworkChanges();
         createNotificationChannels();
-        Intent openIntent = new Intent(this, MainActivity.class);
-        openIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, openIntent, 0);
 
-        Intent stopIntent = new Intent(this, StopSvcReceiver.class);
-        stopIntent.setAction(ACTION_STOP);
-        PendingIntent stopPendingIntent =
-                PendingIntent.getBroadcast(this, 0, stopIntent, 0);
-
-        if(!prefs.getBoolean("background", true))
-            return START_STICKY;
-
-        String notificationTitle = getString(R.string.warpinator_notification_title);
-        String notificationButton = getString(R.string.warpinator_notification_button);
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_SERVICE)
-                .setContentTitle(notificationTitle)
-                .setSmallIcon(R.drawable.ic_notification)
-                .setContentIntent(pendingIntent)
-                .addAction(0, notificationButton, stopPendingIntent)
-                .setPriority(NotificationCompat.PRIORITY_LOW)
-                .setShowWhen(false)
-                .setOngoing(true).build();
-
-        startForeground(SVC_NOTIFICATION_ID, notification);
+        if(prefs.getBoolean("background", true)) {
+            Notification notification = createForegroundNotification();
+            startForeground(SVC_NOTIFICATION_ID, notification);
+        }
 
         return START_STICKY;
     }
@@ -141,8 +129,15 @@ public class MainService extends Service {
     private void stopServer () {
         if (server == null) //I have no idea how this can happen
             return;
+        for (Remote r : remotes.values()) {
+            if (r.status == Remote.RemoteStatus.CONNECTED)
+                r.disconnect();
+        }
+        remotes.clear();
         server.Stop();
         notificationMgr.cancelAll();
+        connMgr.unregisterNetworkCallback(networkCallback);
+        unregisterReceiver(apStateChangeReceiver);
         executor.shutdown();
         pingTimer.cancel();
         if (lock != null)
@@ -158,7 +153,7 @@ public class MainService extends Service {
         }
     }
 
-    Process launchLogcat() {
+    private Process launchLogcat() {
         File output = new File(getExternalFilesDir(null), "latest.log");
         Process process;
         String cmd = "logcat -f " + output.getAbsolutePath() + "\n";
@@ -173,7 +168,63 @@ public class MainService extends Service {
         return process;
     }
 
-    void updateNotification() {
+    private void listenOnNetworkChanges() {
+        connMgr = (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
+        assert connMgr != null;
+        NetworkRequest nr = new NetworkRequest.Builder()
+                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                .addTransportType(NetworkCapabilities.TRANSPORT_ETHERNET)
+                .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED)
+                .build();
+        networkCallback = new ConnectivityManager.NetworkCallback() {
+            @Override
+            public void onAvailable(@NonNull Network network) {
+                Log.d(TAG, "New network");
+                onNetworkChanged();
+            }
+            @Override
+            public void onLost(@NonNull Network network) {
+                Log.d(TAG, "Network lost");
+                LocalBroadcasts.displayToast(MainService.this, "Network unavailable", 1);
+            }
+            @Override
+            public void onLinkPropertiesChanged(@NonNull Network network, @NonNull LinkProperties linkProperties) {
+                Log.d(TAG, "Link properties changed");
+                onNetworkChanged();
+            }
+        };
+        apStateChangeReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int apState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, 0);
+                if (apState % 10 == WifiManager.WIFI_STATE_ENABLED) {
+                    Log.d(TAG, "AP was enabled");
+                    onNetworkChanged();
+                } else if (apState % 10 == WifiManager.WIFI_STATE_DISABLED)
+                    Log.d(TAG, "AP was disabled");
+            }
+        };
+        registerReceiver(apStateChangeReceiver, new IntentFilter("android.net.wifi.WIFI_AP_STATE_CHANGED"));
+        connMgr.registerNetworkCallback(nr, networkCallback);
+    }
+
+    private void onNetworkChanged() {
+        String newIP = Utils.getIPAddress();
+        if (!newIP.equals(lastIP)) {
+            Log.d(TAG, ":: Restarting. New IP: " + newIP);
+            LocalBroadcasts.displayToast(this, "Network changed - restarting service...", 1);
+            lastIP = newIP;
+            // Regenerate cert
+            Authenticator.getServerCertificate();
+            // Restart server
+            server.Stop();
+            if (Authenticator.certException == null)
+                server.Start();
+            else Log.w(TAG, "No cert. Server not started.");
+        }
+    }
+
+    private void updateNotification() {
         if (notifBuilder == null) {
             notifBuilder = new NotificationCompat.Builder(this, CHANNEL_PROGRESS);
             notifBuilder.setSmallIcon(R.drawable.ic_notification)
@@ -210,7 +261,7 @@ public class MainService extends Service {
         else notificationMgr.cancel(PROGRESS_NOTIFICATION_ID);
     }
 
-    void pingRemotes() {
+    private void pingRemotes() {
         try {
         for (Remote r : remotes.values()) {
             if (r.status == Remote.RemoteStatus.CONNECTED) {
@@ -218,6 +269,28 @@ public class MainService extends Service {
             }
         }
         } catch (ConcurrentModificationException ignored) {}
+    }
+
+    private Notification createForegroundNotification() {
+        Intent openIntent = new Intent(this, MainActivity.class);
+        openIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, openIntent, 0);
+
+        Intent stopIntent = new Intent(this, StopSvcReceiver.class);
+        stopIntent.setAction(ACTION_STOP);
+        PendingIntent stopPendingIntent =
+                PendingIntent.getBroadcast(this, 0, stopIntent, 0);
+
+        String notificationTitle = getString(R.string.warpinator_notification_title);
+        String notificationButton = getString(R.string.warpinator_notification_button);
+        return new NotificationCompat.Builder(this, CHANNEL_SERVICE)
+                .setContentTitle(notificationTitle)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentIntent(pendingIntent)
+                .addAction(0, notificationButton, stopPendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setShowWhen(false)
+                .setOngoing(true).build();
     }
 
     private void createNotificationChannels() {
@@ -241,6 +314,17 @@ public class MainService extends Service {
             notificationManager.createNotificationChannel(channel);
             notificationManager.createNotificationChannel(channel2);
             notificationManager.createNotificationChannel(channel3);
+        }
+    }
+
+    private void acquireMulticastLock() {
+        WifiManager wifi = (WifiManager)getApplicationContext()
+                .getSystemService(android.content.Context.WIFI_SERVICE);
+        if (wifi != null) {
+            lock = wifi.createMulticastLock("WarpMDNSLock");
+            lock.setReferenceCounted(true);
+            lock.acquire();
+            Log.d(TAG, "Multicast lock acquired");
         }
     }
 

@@ -38,7 +38,7 @@ public class LocalBroadcasts {
     }
 
     public static void displayToast(Context ctx, String msg, int length) {
-        Intent intent = new Intent(ACTION_DISPLAY_MESSAGE);
+        Intent intent = new Intent(ACTION_DISPLAY_TOAST);
         intent.putExtra("msg", msg);
         intent.putExtra("length", length);
         LocalBroadcastManager.getInstance(ctx).sendBroadcast(intent);

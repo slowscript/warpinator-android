@@ -40,7 +40,7 @@ import io.netty.handler.ssl.SslContextBuilder;
 
 public class Server {
     private static final String TAG = "SRV";
-    private static final String SERVICE_TYPE = "_warpinator._tcp.local.";
+    public static final String SERVICE_TYPE = "_warpinator._tcp.local.";
 
     public static Server current;
     public String displayName;
@@ -51,7 +51,7 @@ public class Server {
     public boolean notifyIncoming;
     public String downloadDirUri;
 
-    private JmDNS jmdns;
+    JmDNS jmdns;
     private final ServiceListener serviceListener;
     private final SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
     private io.grpc.Server gServer;
@@ -68,27 +68,22 @@ public class Server {
         serviceListener = newServiceListener();
 
         preferenceChangeListener = (p, k) -> loadSettings();
-        svc.prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
     }
 
     public void Start() {
-        //Start servers
+        Log.i(TAG, "--- Starting server");
         startGrpcServer();
         CertServer.Start(port);
         new Thread(this::startMDNS).start();
+        svc.prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
     }
 
     public void Stop() {
-        for (Remote r : MainService.remotes.values()) {
-            if (r.status == Remote.RemoteStatus.CONNECTED)
-                r.disconnect();
-        }
-        MainService.remotes.clear();
         CertServer.Stop();
         stopMDNS();
         svc.prefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
         gServer.shutdownNow();
-        Log.i(TAG, "Server stopped");
+        Log.i(TAG, "--- Server stopped");
     }
 
     void startMDNS() {

@@ -103,6 +103,7 @@ public class Authenticator {
     static byte[] createCertificate(String hostname) {
         try {
             Log.d(TAG, "Creating new server certificate...");
+            certException = null;
 
             String ip = Utils.getIPAddress();
             Security.addProvider(new BouncyCastleProvider());
