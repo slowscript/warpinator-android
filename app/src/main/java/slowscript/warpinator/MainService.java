@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
-import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -48,6 +47,7 @@ public class MainService extends Service {
     static int PROGRESS_NOTIFICATION_ID = 2;
     static String ACTION_STOP = "StopSvc";
     static long pingTime = 10_000;
+    static long reconnectTime = 30_000;
 
     public SharedPreferences prefs;
     public int runningTransfers = 0;
@@ -59,7 +59,7 @@ public class MainService extends Service {
     public NotificationManagerCompat notificationMgr;
     NotificationCompat.Builder notifBuilder = null;
     Server server;
-    Timer pingTimer;
+    Timer timer;
     ExecutorService executor = Executors.newSingleThreadExecutor();
     Process logcatProcess;
     WifiManager.MulticastLock lock;
@@ -101,13 +101,19 @@ public class MainService extends Service {
             server.Start();
         }
 
-        pingTimer = new Timer();
-        pingTimer.schedule(new TimerTask() {
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 pingRemotes();
             }
         }, 5L, pingTime);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                autoReconnect();
+            }
+        }, 5L, reconnectTime);
 
         listenOnNetworkChanges();
         createNotificationChannels();
@@ -139,7 +145,7 @@ public class MainService extends Service {
         connMgr.unregisterNetworkCallback(networkCallback);
         unregisterReceiver(apStateChangeReceiver);
         executor.shutdown();
-        pingTimer.cancel();
+        timer.cancel();
         if (lock != null)
             lock.release();
     }
@@ -268,6 +274,19 @@ public class MainService extends Service {
                 r.ping();
             }
         }
+        } catch (ConcurrentModificationException ignored) {}
+    }
+
+    private void autoReconnect() {
+        try {
+            for (Remote r : remotes.values()) {
+                if ((r.status == Remote.RemoteStatus.DISCONNECTED || r.status == Remote.RemoteStatus.ERROR)
+                        && r.serviceAvailable) {
+                    // Try reconnecting
+                    Log.d(TAG, "Automatically reconnecting to " + r.hostname);
+                    r.connect();
+                }
+            }
         } catch (ConcurrentModificationException ignored) {}
     }
 
