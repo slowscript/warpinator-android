@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ public class ShareActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     LinearLayout layoutNotFound;
     RemotesAdapter adapter;
+    TextView txtError, txtNoNetwork;
     BroadcastReceiver receiver;
 
     @Override
@@ -68,6 +70,8 @@ public class ShareActivity extends AppCompatActivity {
         //Set up UI
         recyclerView = findViewById(R.id.recyclerView);
         layoutNotFound = findViewById(R.id.layoutNotFound);
+        txtError = findViewById(R.id.txtError);
+        txtNoNetwork = findViewById(R.id.txtNoNetwork);
         adapter = new RemotesAdapter(this) {
             boolean sent = false;
             @Override
@@ -107,10 +111,6 @@ public class ShareActivity extends AppCompatActivity {
     }
 
     void startMainService() {
-        if (!Utils.isConnectedToWiFiOrEthernet(this) && !Utils.isHotspotOn(this)) {
-            Utils.displayMessage(this, getString(R.string.connection_error), getString(R.string.not_connected_to_wifi));
-            return;
-        }
         startService(new Intent(this, MainService.class));
     }
 
@@ -164,6 +164,10 @@ public class ShareActivity extends AppCompatActivity {
         runOnUiThread(() -> {
             adapter.notifyDataSetChanged();
             layoutNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
+            if (MainService.svc != null)
+                txtNoNetwork.setVisibility(MainService.svc.gotNetwork() ? View.GONE : View.VISIBLE);
+            if (Server.current != null)
+                txtError.setVisibility(Server.current.running ? View.GONE : View.VISIBLE);
         });
     }
 }

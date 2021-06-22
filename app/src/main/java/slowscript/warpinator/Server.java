@@ -50,6 +50,7 @@ public class Server {
     public boolean allowOverwrite;
     public boolean notifyIncoming;
     public String downloadDirUri;
+    public boolean running = false;
 
     JmDNS jmdns;
     private final ServiceListener serviceListener;
@@ -72,17 +73,22 @@ public class Server {
 
     public void Start() {
         Log.i(TAG, "--- Starting server");
+        running = true;
         startGrpcServer();
         CertServer.Start(port);
         new Thread(this::startMDNS).start();
         svc.prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
+        LocalBroadcasts.updateRemotes(svc);
     }
 
     public void Stop() {
+        running = false;
         CertServer.Stop();
         stopMDNS();
         svc.prefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
-        gServer.shutdownNow();
+        if (gServer != null)
+            gServer.shutdownNow();
+        LocalBroadcasts.updateRemotes(svc);
         Log.i(TAG, "--- Server stopped");
     }
 
@@ -103,6 +109,7 @@ public class Server {
             jmdns.addServiceListener(SERVICE_TYPE, serviceListener);
         }
         catch (Exception e) {
+            running = false;
             Log.e(TAG, "Failed to init JmDNS", e);
             LocalBroadcasts.displayToast(svc, "Failed to start JmDNS", 0);
         }
@@ -140,7 +147,6 @@ public class Server {
             File cert = new File(Utils.getCertsDir(), ".self.pem");
             File key = new File(Utils.getCertsDir(), ".self.key-pem");
             SslContextBuilder ssl = GrpcSslContexts.forServer(cert, key).sslContextProvider(Conscrypt.newProvider());
-            //SslContextBuilder ssl = GrpcSslContexts.configure(SslContextBuilder.forServer(cert, key), Conscrypt.newProvider());
             gServer = NettyServerBuilder.forPort(port)
                     .sslContext(ssl.build())
                     .addService(new GrpcService())
@@ -148,6 +154,7 @@ public class Server {
             gServer.start();
             Log.d(TAG, "GRPC server started");
         } catch(Exception e) {
+            running = false;
             Log.e(TAG, "Failed to start GRPC server.", e);
             Toast.makeText(svc, "Failed to start GRPC server", Toast.LENGTH_LONG).show();
         }

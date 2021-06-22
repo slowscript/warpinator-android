@@ -51,6 +51,8 @@ public class MainService extends Service {
 
     public SharedPreferences prefs;
     public int runningTransfers = 0;
+    public boolean networkAvailable = true;
+    public boolean apOn = false;
     int notifId = 1300;
     String lastIP = null;
 
@@ -186,12 +188,15 @@ public class MainService extends Service {
             @Override
             public void onAvailable(@NonNull Network network) {
                 Log.d(TAG, "New network");
+                networkAvailable = true;
+                LocalBroadcasts.updateRemotes(MainService.this);
                 onNetworkChanged();
             }
             @Override
             public void onLost(@NonNull Network network) {
                 Log.d(TAG, "Network lost");
-                LocalBroadcasts.displayToast(MainService.this, "Network unavailable", 1);
+                networkAvailable = false;
+                LocalBroadcasts.updateRemotes(MainService.this);
             }
             @Override
             public void onLinkPropertiesChanged(@NonNull Network network, @NonNull LinkProperties linkProperties) {
@@ -205,13 +210,22 @@ public class MainService extends Service {
                 int apState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, 0);
                 if (apState % 10 == WifiManager.WIFI_STATE_ENABLED) {
                     Log.d(TAG, "AP was enabled");
+                    apOn = true;
+                    LocalBroadcasts.updateRemotes(MainService.this);
                     onNetworkChanged();
-                } else if (apState % 10 == WifiManager.WIFI_STATE_DISABLED)
+                } else if (apState % 10 == WifiManager.WIFI_STATE_DISABLED) {
                     Log.d(TAG, "AP was disabled");
+                    apOn = false;
+                    LocalBroadcasts.updateRemotes(MainService.this);
+                }
             }
         };
         registerReceiver(apStateChangeReceiver, new IntentFilter("android.net.wifi.WIFI_AP_STATE_CHANGED"));
         connMgr.registerNetworkCallback(nr, networkCallback);
+    }
+
+    public boolean gotNetwork() {
+        return networkAvailable || apOn;
     }
 
     private void onNetworkChanged() {

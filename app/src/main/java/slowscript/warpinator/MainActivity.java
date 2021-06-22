@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RemotesAdapter adapter;
     LinearLayout layoutNotFound;
+    TextView txtError, txtNoNetwork;
     BroadcastReceiver receiver;
 
     @Override
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         layoutNotFound = findViewById(R.id.layoutNotFound);
+        txtError = findViewById(R.id.txtError);
+        txtNoNetwork = findViewById(R.id.txtNoNetwork);
         Button btnHelp = findViewById(R.id.btnHelp);
         btnHelp.setOnClickListener((l) -> {
             Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
@@ -103,10 +107,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void startMainService() {
-        if (!Utils.isConnectedToWiFiOrEthernet(this) && !Utils.isHotspotOn(this)) {
-            Utils.displayMessage(this, getString(R.string.connection_error), getString(R.string.not_connected_to_wifi));
-            return;
-        }
         startService(new Intent(this, MainService.class));
     }
 
@@ -141,6 +141,10 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(() -> {
             adapter.notifyDataSetChanged();
             layoutNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
+            if (MainService.svc != null)
+                txtNoNetwork.setVisibility(MainService.svc.gotNetwork() ? View.GONE : View.VISIBLE);
+            if (Server.current != null)
+                txtError.setVisibility(Server.current.running ? View.GONE : View.VISIBLE);
         });
     }
 

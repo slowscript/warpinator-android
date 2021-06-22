@@ -90,4 +90,6 @@
         <item>Dokončeno</item>
         <item>Dokončeno s chybami (stisknutím zobrazíte)</item>
     </string-array>
+    <string name="error_network_unavailable">Síť není dostupná - zkuste hotspot?</string>
+    <string name="error_service_not_running">Služba neběží</string>
 </resources>
