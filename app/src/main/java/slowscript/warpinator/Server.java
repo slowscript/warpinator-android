@@ -40,18 +40,19 @@ import io.netty.handler.ssl.SslContextBuilder;
 
 public class Server {
     private static final String TAG = "SRV";
-    private static final String SERVICE_TYPE = "_warpinator._tcp.local.";
+    public static final String SERVICE_TYPE = "_warpinator._tcp.local.";
 
     public static Server current;
-    static String displayName;
+    public String displayName;
     public int port;
     public String uuid;
     public String profilePicture;
     public boolean allowOverwrite;
     public boolean notifyIncoming;
     public String downloadDirUri;
+    public boolean running = false;
 
-    private JmDNS jmdns;
+    JmDNS jmdns;
     private final ServiceListener serviceListener;
     private final SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
     private io.grpc.Server gServer;
@@ -68,18 +69,30 @@ public class Server {
         serviceListener = newServiceListener();
 
         preferenceChangeListener = (p, k) -> loadSettings();
-        svc.prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
     }
 
     public void Start() {
-        //Start servers
+        Log.i(TAG, "--- Starting server");
+        running = true;
         startGrpcServer();
         CertServer.Start(port);
         new Thread(this::startMDNS).start();
+        svc.prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
+        LocalBroadcasts.updateRemotes(svc);
     }
 
-    void startMDNS()
-    {
+    public void Stop() {
+        running = false;
+        CertServer.Stop();
+        stopMDNS();
+        svc.prefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
+        if (gServer != null)
+            gServer.shutdownNow();
+        LocalBroadcasts.updateRemotes(svc);
+        Log.i(TAG, "--- Server stopped");
+    }
+
+    void startMDNS() {
         try {
             InetAddress addr = InetAddress.getByName(Utils.getIPAddress());
             jmdns = JmDNS.create(addr);
@@ -96,7 +109,9 @@ public class Server {
             jmdns.addServiceListener(SERVICE_TYPE, serviceListener);
         }
         catch (Exception e) {
+            running = false;
             Log.e(TAG, "Failed to init JmDNS", e);
+            LocalBroadcasts.displayToast(svc, "Failed to start JmDNS", 0);
         }
     }
 
@@ -107,17 +122,9 @@ public class Server {
                 jmdns.removeServiceListener(SERVICE_TYPE, serviceListener);
                 jmdns.close();
             } catch (Exception e) {
-                Log.w(TAG, "Failed to close JmDNS");
+                Log.w(TAG, "Failed to close JmDNS", e);
             }
         }
-    }
-
-    public void Stop() {
-        CertServer.Stop();
-        stopMDNS();
-        svc.prefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
-        gServer.shutdownNow();
-        Log.i(TAG, "Server stopped");
     }
 
     void loadSettings() {
@@ -140,7 +147,6 @@ public class Server {
             File cert = new File(Utils.getCertsDir(), ".self.pem");
             File key = new File(Utils.getCertsDir(), ".self.key-pem");
             SslContextBuilder ssl = GrpcSslContexts.forServer(cert, key).sslContextProvider(Conscrypt.newProvider());
-            //SslContextBuilder ssl = GrpcSslContexts.configure(SslContextBuilder.forServer(cert, key), Conscrypt.newProvider());
             gServer = NettyServerBuilder.forPort(port)
                     .sslContext(ssl.build())
                     .addService(new GrpcService())
@@ -148,6 +154,7 @@ public class Server {
             gServer.start();
             Log.d(TAG, "GRPC server started");
         } catch(Exception e) {
+            running = false;
             Log.e(TAG, "Failed to start GRPC server.", e);
             Toast.makeText(svc, "Failed to start GRPC server", Toast.LENGTH_LONG).show();
         }
@@ -168,6 +175,13 @@ public class Server {
         } catch (IOException e) {
             Log.e(TAG, "Failed to register service.", e);
         }
+    }
+
+    void addRemote(Remote remote) {
+        //Add to remotes list
+        MainService.remotes.put(remote.uuid, remote);
+        //Connect to it
+        remote.connect();
     }
 
     ServiceListener newServiceListener() {
@@ -232,7 +246,7 @@ public class Server {
                 remote.uuid = svcName;
                 remote.serviceAvailable = true;
 
-                svc.addRemote(remote);
+                addRemote(remote);
             }
         };
     }

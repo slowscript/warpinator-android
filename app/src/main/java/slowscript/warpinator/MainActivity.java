@@ -1,7 +1,10 @@
 package slowscript.warpinator;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +23,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.documentfile.provider.DocumentFile;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,10 +36,11 @@ public class MainActivity extends AppCompatActivity {
     private final String TAG = "MAIN";
     private final String helpUrl = "https://github.com/slowscript/warpinator-android/blob/master/connection-issues.md";
 
-    static MainActivity current;
     RecyclerView recyclerView;
     RemotesAdapter adapter;
     LinearLayout layoutNotFound;
+    TextView txtError, txtNoNetwork;
+    BroadcastReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +49,14 @@ public class MainActivity extends AppCompatActivity {
 
         Security.insertProviderAt(Conscrypt.newProvider(), 1);
 
-        current = this;
-
+        receiver = newBroadcastReceiver();
         recyclerView = findViewById(R.id.recyclerView);
         adapter = new RemotesAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         layoutNotFound = findViewById(R.id.layoutNotFound);
+        txtError = findViewById(R.id.txtError);
+        txtNoNetwork = findViewById(R.id.txtNoNetwork);
         Button btnHelp = findViewById(R.id.btnHelp);
         btnHelp.setOnClickListener((l) -> {
             Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
@@ -85,13 +91,22 @@ public class MainActivity extends AppCompatActivity {
                 startMainService();
         });
         updateRemoteList();
+
+        IntentFilter f = new IntentFilter();
+        f.addAction(LocalBroadcasts.ACTION_UPDATE_REMOTES);
+        f.addAction(LocalBroadcasts.ACTION_DISPLAY_MESSAGE);
+        f.addAction(LocalBroadcasts.ACTION_DISPLAY_TOAST);
+        f.addAction(LocalBroadcasts.ACTION_CLOSE_ALL);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, f);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 
     void startMainService() {
-        if (!Utils.isConnectedToWiFiOrEthernet(this) && !Utils.isHotspotOn(this)) {
-            Utils.displayMessage(this, getString(R.string.connection_error), getString(R.string.not_connected_to_wifi));
-            return;
-        }
         startService(new Intent(this, MainService.class));
     }
 
@@ -122,11 +137,45 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void updateRemoteList() {
+    private void updateRemoteList() {
         runOnUiThread(() -> {
             adapter.notifyDataSetChanged();
             layoutNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
+            if (MainService.svc != null)
+                txtNoNetwork.setVisibility(MainService.svc.gotNetwork() ? View.GONE : View.VISIBLE);
+            if (Server.current != null)
+                txtError.setVisibility(Server.current.running ? View.GONE : View.VISIBLE);
         });
+    }
+
+    private BroadcastReceiver newBroadcastReceiver()
+    {
+        Context ctx = this;
+        return new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context c, Intent intent) {
+                String action = intent.getAction();
+                if (action == null) return;
+                switch (action) {
+                    case LocalBroadcasts.ACTION_UPDATE_REMOTES:
+                        updateRemoteList();
+                        break;
+                    case LocalBroadcasts.ACTION_DISPLAY_MESSAGE:
+                        String title = intent.getStringExtra("title");
+                        String msg = intent.getStringExtra("msg");
+                        Utils.displayMessage(ctx, title, msg);
+                        break;
+                    case LocalBroadcasts.ACTION_DISPLAY_TOAST:
+                        msg = intent.getStringExtra("msg");
+                        int length = intent.getIntExtra("length", 0);
+                        Toast.makeText(ctx, msg, length).show();
+                        break;
+                    case LocalBroadcasts.ACTION_CLOSE_ALL:
+                        finishAffinity();
+                        break;
+                }
+            }
+        };
     }
 
     public static void askForDirectoryAccess(Activity a) {

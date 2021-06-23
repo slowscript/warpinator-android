@@ -2,8 +2,11 @@ package slowscript.warpinator;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
@@ -29,12 +33,14 @@ public class TransfersActivity extends AppCompatActivity {
     static final String TAG = "TransferActivity";
     static final int SEND_FILE_REQ_CODE = 10;
 
-    public Remote remote;
-    public boolean isTopmost = false;
+    public static String topmostRemote;
+
+    Remote remote;
     boolean shareMode = false;
 
     RecyclerView recyclerView;
     TransfersAdapter adapter;
+    BroadcastReceiver receiver;
 
     TextView txtName;
     TextView txtRemote;
@@ -56,7 +62,7 @@ public class TransfersActivity extends AppCompatActivity {
             return;
         }
         remote = MainService.remotes.get(id);
-        MainService.svc.transfersView = this;
+        receiver = newBroadcastReceiver();
 
         recyclerView = findViewById(R.id.recyclerView2);
         adapter = new TransfersAdapter(this);
@@ -86,7 +92,6 @@ public class TransfersActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), s, Toast.LENGTH_LONG).show();
         });
 
-
         updateUI();
     }
 
@@ -94,22 +99,26 @@ public class TransfersActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        isTopmost = true;
+        topmostRemote = remote.uuid;
         updateTransfers(remote.uuid);
         updateUI();
+        if (MainService.svc.runningTransfers == 0)
+            MainService.svc.notificationMgr.cancel(MainService.PROGRESS_NOTIFICATION_ID);
+
+        IntentFilter f = new IntentFilter(LocalBroadcasts.ACTION_UPDATE_REMOTES);
+        f.addAction(LocalBroadcasts.ACTION_UPDATE_TRANSFERS);
+        f.addAction(LocalBroadcasts.ACTION_UPDATE_TRANSFER);
+        f.addAction(LocalBroadcasts.ACTION_DISPLAY_MESSAGE);
+        f.addAction(LocalBroadcasts.ACTION_DISPLAY_TOAST);
+        f.addAction(LocalBroadcasts.ACTION_CLOSE_ALL);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, f);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        isTopmost = false;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (MainService.svc != null) //Sometimes it crashes here when MainService finishes first
-            MainService.svc.transfersView = null;
+        topmostRemote = null;
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 
     @Override
@@ -123,6 +132,45 @@ public class TransfersActivity extends AppCompatActivity {
             TransfersActivity.this.overridePendingTransition(R.anim.anim_null, R.anim.anim_push_down);
         }
     }
+
+    private BroadcastReceiver newBroadcastReceiver() {
+        Context ctx = this;
+        return new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context c, Intent intent) {
+                String action = intent.getAction();
+                if (action == null) return;
+                switch (action) {
+                    case LocalBroadcasts.ACTION_UPDATE_REMOTES:
+                        updateUI();
+                        break;
+                    case LocalBroadcasts.ACTION_UPDATE_TRANSFERS:
+                        String r = intent.getStringExtra("remote");
+                        if (r != null) updateTransfers(r);
+                        break;
+                    case LocalBroadcasts.ACTION_UPDATE_TRANSFER:
+                        r = intent.getStringExtra("remote");
+                        int id = intent.getIntExtra("id", -1);
+                        if (r != null) updateTransfer(r, id);
+                        break;
+                    case LocalBroadcasts.ACTION_DISPLAY_MESSAGE:
+                        String title = intent.getStringExtra("title");
+                        String msg = intent.getStringExtra("msg");
+                        Utils.displayMessage(ctx, title, msg);
+                        break;
+                    case LocalBroadcasts.ACTION_DISPLAY_TOAST:
+                        msg = intent.getStringExtra("msg");
+                        int length = intent.getIntExtra("length", 0);
+                        Toast.makeText(ctx, msg, length).show();
+                        break;
+                    case LocalBroadcasts.ACTION_CLOSE_ALL:
+                        finishAffinity();
+                        break;
+                }
+            }
+        };
+    }
+
     private boolean transferInProgress() {
         for (Transfer t : remote.transfers) {
             if (t.direction == Transfer.Direction.SEND && (t.getStatus() == Transfer.Status.WAITING_PERMISSION || t.getStatus() == Transfer.Status.TRANSFERRING))
@@ -210,13 +258,13 @@ public class TransfersActivity extends AppCompatActivity {
         }
     }
 
-    public void updateTransfer(String r, int i) {
+    private void updateTransfer(String r, int i) {
         if (!r.equals(remote.uuid))
             return;
         runOnUiThread(() -> adapter.notifyItemChanged(i));
     }
 
-    public void updateTransfers(String r) {
+    private void updateTransfers(String r) {
         if (!r.equals(remote.uuid))
             return;
         runOnUiThread(() -> adapter.notifyDataSetChanged());

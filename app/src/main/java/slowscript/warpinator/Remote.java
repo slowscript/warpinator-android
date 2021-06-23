@@ -22,8 +22,6 @@ import io.grpc.ManagedChannel;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.okhttp.OkHttpChannelBuilder;
-import io.grpc.stub.ClientResponseObserver;
-import io.grpc.stub.StreamObserver;
 
 public class Remote {
     public enum RemoteStatus {
@@ -103,9 +101,16 @@ public class Remote {
             status = RemoteStatus.CONNECTED;
 
             //Get name
-            WarpProto.RemoteMachineInfo info = blockingStub.getRemoteMachineInfo(WarpProto.LookupName.getDefaultInstance());
-            displayName = info.getDisplayName();
-            userName = info.getUserName();
+            try {
+                WarpProto.RemoteMachineInfo info = blockingStub.getRemoteMachineInfo(WarpProto.LookupName.getDefaultInstance());
+                displayName = info.getDisplayName();
+                userName = info.getUserName();
+            } catch (StatusRuntimeException ex) {
+                status = RemoteStatus.ERROR;
+                Log.e(TAG, "connect: cannot get name: connection broken?", ex);
+                updateUI();
+                return;
+            }
             //Get avatar
             try {
                 Iterator<WarpProto.RemoteMachineAvatar> avatar = blockingStub.getRemoteMachineAvatar(WarpProto.LookupName.getDefaultInstance());
@@ -295,12 +300,6 @@ public class Remote {
     }
 
     public void updateUI() {
-        if (MainActivity.current != null)
-            MainActivity.current.updateRemoteList();
-        if (MainService.svc.transfersView != null) {
-            MainService.svc.transfersView.updateUI();
-        }
-        if (ShareActivity.current != null)
-            ShareActivity.current.updateRemotes();
+        LocalBroadcasts.updateRemotes(MainService.svc);
     }
 }
