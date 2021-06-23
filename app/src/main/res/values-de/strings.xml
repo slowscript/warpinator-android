@@ -77,7 +77,9 @@
     <!--  Other  -->
     <string name="please_select_download_dir">Dies ist das erste Mal, dass Sie die Anwendung starten.
         Bitten wählen Sie ein Verzeichnis, in dem Warpinator Dateien speichern soll.</string>
-	<string name="error_download_dir">Sie müssen in den Einstellungen ein Downloadverzeichnis auswählen</string>
+    <string name="error_download_dir">Sie müssen in den Einstellungen ein Downloadverzeichnis auswählen</string>
+    <string name="error_network_unavailable">Netzwerk nicht verfügbar - Hotspot versuchen?</string>
+    <string name="error_service_not_running">Dienst wird nicht ausgeführt</string>
     <string-array name="connected_states">
         <item>Verbunden</item>
         <item>Getrennt</item>
