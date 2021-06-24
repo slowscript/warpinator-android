@@ -95,7 +95,7 @@ public class MainService extends Service {
         if (Authenticator.certException != null) {
             LocalBroadcasts.displayMessage(this, "Failed to create certificate",
                     "A likely reason for this is that your IP address could not be obtained. " +
-                    "Please make sure you are connected to WiFi, then restart the app.\n" +
+                    "Please make sure you are connected to WiFi.\n" +
                     "\nAvailable interfaces:\n" + Utils.dumpInterfaces() +
                     "\nException: " + Authenticator.certException.toString());
             Log.w(TAG, "Server will not start due to error");
