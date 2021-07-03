@@ -80,6 +80,8 @@
     <string name="please_select_download_dir">Deve ser a primeira vez que você está abrindo este App.
         Por favor selecione uma pasta onde você quer que o Warpinator salve seus arquivos.</string>
     <string name="error_download_dir">Você tem que selecionar uma pasta de download nas configurações</string>
+<string name="error_network_unavailable">Rede indisponível - tente o Hotspot?</string>
+    <string name="error_service_not_running">Serviço não está executado</string>
     <string-array name="connected_states">
         <item>Conectado</item>
         <item>Desconectado</item>
