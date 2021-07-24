@@ -117,6 +117,7 @@ public class ShareActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        updateRemotes();
         IntentFilter f = new IntentFilter(LocalBroadcasts.ACTION_UPDATE_REMOTES);
         f.addAction(LocalBroadcasts.ACTION_DISPLAY_MESSAGE);
         f.addAction(LocalBroadcasts.ACTION_DISPLAY_TOAST);
