@@ -89,6 +89,8 @@ public class TransfersActivity extends AppCompatActivity {
             String s = getResources().getStringArray(R.array.connected_states)[remote.status.ordinal()];
             if (!remote.serviceAvailable)
                 s += getString(R.string.service_unavailable);
+            if (remote.status == Remote.RemoteStatus.ERROR)
+                s += " (" + remote.errorText + ")";
             Toast.makeText(getBaseContext(), s, Toast.LENGTH_LONG).show();
         });
 
