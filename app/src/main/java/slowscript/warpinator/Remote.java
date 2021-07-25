@@ -46,7 +46,8 @@ public class Remote {
     public boolean serviceAvailable;
 
     //Error flags
-    public boolean errorGroupCode = false;
+    public boolean errorGroupCode = false; //Shown once by RemotesAdapter or TransfersActivity
+    public boolean errorReceiveCert = false; //Shown every time remote is opened until resolved
 
     ArrayList<Transfer> transfers = new ArrayList<>();
 
@@ -265,6 +266,7 @@ public class Remote {
         }
         if (tryCount == 3) {
             Log.e(TAG, "Failed to receive certificate from " + hostname);
+            errorReceiveCert = true;
             return false;
         }
         byte[] decoded = Base64.decode(received, Base64.DEFAULT);
@@ -272,6 +274,7 @@ public class Remote {
             errorGroupCode = true;
             return false;
         }
+        errorReceiveCert = false;
         return true;
     }
 

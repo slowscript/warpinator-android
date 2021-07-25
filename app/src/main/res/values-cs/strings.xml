@@ -70,6 +70,7 @@
     <string name="notification_channel_description">Oznámení o bežící službě</string>
     <string name="no_share_devices">Žádná zařízení se kterými by bylo možné sdílet</string>
     <string name="unsupported_intent">Přijali jsme příkaz který není podporován</string>
+    <string name="cert_not_received">Nepovedlo se nám získat certifikát od %1$s. Ujistěte se že máte povolen protokol UDP (i TCP) na portu %2$d ve firewallu protějšku.</string>
     <string-array name="connected_states">
         <item>Připojeno</item>
         <item>Odpojeno</item>
