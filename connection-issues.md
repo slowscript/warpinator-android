@@ -14,7 +14,8 @@ Minimum required version for the original Linux variant is 1.0.9.
 - Do not use a VPN (unless you know what you are doing).
 
 - Make sure the firewalls on your computer/phone and router all allow traffic for both the discovery protocol (mDNS, UDP port 5353) and file transfer protocol (UDP and TCP, port is in the settings - default is 42000, you should not change it unless it causes issues).
-Temporarily disable the firewall if necessary. 
+Temporarily disable the firewall if necessary.  
+**Recently introduced bug:** *Linux Warpinator adds exception only for TCP and not UDP. You must add an exception for UDP on port 42000 manually otherwise you'll get a connection error.*
 
 - Your router might isolate the networks between WiFi and ethernet LAN or even between all clients.
 Make sure this is turned off.

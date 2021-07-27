@@ -89,6 +89,8 @@ public class TransfersActivity extends AppCompatActivity {
             String s = getResources().getStringArray(R.array.connected_states)[remote.status.ordinal()];
             if (!remote.serviceAvailable)
                 s += getString(R.string.service_unavailable);
+            if (remote.status == Remote.RemoteStatus.ERROR)
+                s += " (" + remote.errorText + ")";
             Toast.makeText(getBaseContext(), s, Toast.LENGTH_LONG).show();
         });
 
@@ -104,6 +106,8 @@ public class TransfersActivity extends AppCompatActivity {
         updateUI();
         if (MainService.svc.runningTransfers == 0)
             MainService.svc.notificationMgr.cancel(MainService.PROGRESS_NOTIFICATION_ID);
+        if (remote.errorReceiveCert)
+            Utils.displayMessage(this, getString(R.string.connection_error), getString(R.string.cert_not_received, remote.hostname, remote.port));
 
         IntentFilter f = new IntentFilter(LocalBroadcasts.ACTION_UPDATE_REMOTES);
         f.addAction(LocalBroadcasts.ACTION_UPDATE_TRANSFERS);
