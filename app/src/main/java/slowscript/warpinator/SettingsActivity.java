@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceGroup;
+import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreferenceCompat;
 
 import java.util.Objects;
@@ -139,6 +141,14 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(i);
                 return true;
             });
+
+            PreferenceScreen screen = getPreferenceScreen();
+            for (int i = 0; i < screen.getPreferenceCount(); i++) {
+                PreferenceGroup group = (PreferenceGroup) screen.getPreference(i);
+                group.setIconSpaceReserved(false);
+                for (int j = 0; j < group.getPreferenceCount(); j++)
+                    group.getPreference(j).setIconSpaceReserved(false);
+            }
         }
 
         public void pickDirectory() {
@@ -158,7 +168,7 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == CHOOSE_ROOT_REQ_CODE && resultCode == RESULT_OK) {
+            if (requestCode == CHOOSE_ROOT_REQ_CODE) {
                 if (data == null)
                     return;
                 Uri uri = data.getData();
