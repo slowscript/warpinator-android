@@ -70,7 +70,7 @@
     <string name="warpinator_notification_button">Hizmeti durdur</string>
     <string name="transfers_complete">Tüm aktarımlar tamamlandı</string>
     <string name="transfer_notification">%1$.1f%%, %2$d aktarımlar, %3$s/s</string>
-    <string name="incoming_transfer">%s'den gelen aktarım</string>
+    <string name="incoming_transfer">%s\'den gelen aktarım</string>
     <string name="num_files">%d dosyalar</string>
     <string name="service_running">Hizmet çalışıyor</string>
     <string name="notification_channel_description">Kalıcı hizmet bildirimi</string>
@@ -82,7 +82,7 @@
     <string name="error_download_dir">Ayarlarda bir indirme dizini seçmelisiniz</string>
     <string name="error_network_unavailable">Ağ kullanılamıyor - etkin noktayı denemek ister misiniz?</string>
     <string name="error_service_not_running">Hizmet çalışmıyor</string>
-    <string name="cert_not_received">%1$s'den sertifika alınamadı. Uzak\'ın güvenlik duvarında %2$d bağlantı noktasında UDP (ve ayrıca TCP) trafiğine izin verdiğinizden emin olun.</string>
+    <string name="cert_not_received">%1$s\'den sertifika alınamadı. Uzak\'ın güvenlik duvarında %2$d bağlantı noktasında UDP (ve ayrıca TCP) trafiğine izin verdiğinizden emin olun.</string>
     <string-array name="connected_states">
         <item>Bağlandı</item>
         <item>Bağlantı kesildi</item>
