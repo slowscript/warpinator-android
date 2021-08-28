@@ -57,11 +57,6 @@ public class MainActivity extends AppCompatActivity {
         layoutNotFound = findViewById(R.id.layoutNotFound);
         txtError = findViewById(R.id.txtError);
         txtNoNetwork = findViewById(R.id.txtNoNetwork);
-        Button btnHelp = findViewById(R.id.btnHelp);
-        btnHelp.setOnClickListener((l) -> {
-            Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
-            startActivity(helpIntent);
-        });
 
         //initializes theme based on preferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -123,6 +118,10 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.settings:
                 startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            case R.id.conn_issues:
+                Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
+                startActivity(helpIntent);
                 return true;
             case R.id.about:
                 startActivity(new Intent(this, AboutActivity.class));
