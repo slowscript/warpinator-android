@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,8 +32,8 @@ import java.security.Security;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String TAG = "MAIN";
-    private final String helpUrl = "https://github.com/slowscript/warpinator-android/blob/master/connection-issues.md";
+    private static final String TAG = "MAIN";
+    private static final String helpUrl = "https://github.com/slowscript/warpinator-android/blob/master/connection-issues.md";
 
     RecyclerView recyclerView;
     RemotesAdapter adapter;
