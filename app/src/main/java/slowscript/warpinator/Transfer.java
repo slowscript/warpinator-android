@@ -284,8 +284,9 @@ public class Transfer {
             Uri rootUri = Uri.parse(Server.current.downloadDirUri);
             DocumentFile root = DocumentFile.fromTreeUri(svc, rootUri);
 
+            String sanitizedName = currentRelativePath.replaceAll("[\\\\<>*|?:\"]", "_");
             if (chunk.getFileType() == FileType.DIRECTORY) {
-                createDirectories(root, rootUri, currentRelativePath, null);
+                createDirectories(root, rootUri, sanitizedName, null);
             }
             else if (chunk.getFileType() == FileType.SYMLINK) {
                 Log.e(TAG, "Symlinks not supported.");
@@ -293,7 +294,7 @@ public class Transfer {
             }
             else {
                 try {
-                    String fileName = currentRelativePath;
+                    String fileName = sanitizedName;
                     //Handle overwriting
                     if(Utils.pathExistsInTree(svc, rootUri, fileName)) {
                         fileName = handleFileExists(fileName);

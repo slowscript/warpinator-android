@@ -51,12 +51,14 @@ public class ShareActivity extends AppCompatActivity {
             uris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
         } else {
             Toast.makeText(this, R.string.unsupported_intent, Toast.LENGTH_LONG).show();
+            finish();
             return;
         }
 
         if (uris == null || uris.size() < 1) {
             Log.d(TAG, "Nothing to share");
             Toast.makeText(this, R.string.nothing_to_share, Toast.LENGTH_LONG).show();
+            finish();
             return;
         }
         Log.d(TAG, "Sharing " + uris.size() + " files");
@@ -117,6 +119,8 @@ public class ShareActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (adapter == null) // If onCreate did not finish (nothing to share)
+            return;
         updateRemotes();
         IntentFilter f = new IntentFilter(LocalBroadcasts.ACTION_UPDATE_REMOTES);
         f.addAction(LocalBroadcasts.ACTION_DISPLAY_MESSAGE);

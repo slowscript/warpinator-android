@@ -84,7 +84,7 @@ public class Server {
     public void Stop() {
         running = false;
         CertServer.Stop();
-        stopMDNS();
+        new Thread(this::stopMDNS).start(); //This takes a long time and we may be on the main thread
         svc.prefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
         if (gServer != null)
             gServer.shutdownNow();

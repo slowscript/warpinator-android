@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,8 +32,8 @@ import java.security.Security;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String TAG = "MAIN";
-    private final String helpUrl = "https://github.com/slowscript/warpinator-android/blob/master/connection-issues.md";
+    private static final String TAG = "MAIN";
+    private static final String helpUrl = "https://github.com/slowscript/warpinator-android/blob/master/connection-issues.md";
 
     RecyclerView recyclerView;
     RemotesAdapter adapter;
@@ -57,11 +56,6 @@ public class MainActivity extends AppCompatActivity {
         layoutNotFound = findViewById(R.id.layoutNotFound);
         txtError = findViewById(R.id.txtError);
         txtNoNetwork = findViewById(R.id.txtNoNetwork);
-        Button btnHelp = findViewById(R.id.btnHelp);
-        btnHelp.setOnClickListener((l) -> {
-            Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
-            startActivity(helpIntent);
-        });
 
         //initializes theme based on preferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -123,6 +117,10 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.settings:
                 startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            case R.id.conn_issues:
+                Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
+                startActivity(helpIntent);
                 return true;
             case R.id.about:
                 startActivity(new Intent(this, AboutActivity.class));
