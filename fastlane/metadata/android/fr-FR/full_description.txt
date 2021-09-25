@@ -2,14 +2,14 @@ Warpinator pour Android est un portage non officiel de l'outil du même nom pour
 
 Caractéristiques :
 - Découverte automatique des services compatibles sur le réseau local
-- Fonctionne avec le Wi-Fi ou les hotspots, connexion Internet non requise
+- Fonctionne avec le Wi-Fi ou les points d'accès Wi-Fi, connexion Internet non requise
 - Transférer tout type de fichier rapidement et facilement
 - Réception de répertoires entiers
 - Exécution de multiples transferts en parallèle
 - Partager des fichiers depuis d'autres applications
 - Limiter qui peut se connecter avec un code de groupe
 - Option pour se lancer au démarrage de l'appareil
-- Ne requière pas votre localisation ou d'autres permissions non nécessaires
+- Ne requiert pas votre localisation ou d'autres permissions non nécessaires
 
 Cette application est un logiciel libre publié sous la licence publique générale GNU v3.
 Vous pouvez obtenir le code source sur https://github.com/slowscript/warpinator-android
