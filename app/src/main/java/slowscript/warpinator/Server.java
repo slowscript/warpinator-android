@@ -262,7 +262,7 @@ public class Server {
             }
         }
         int i = Integer.parseInt(picture); //Could be also a content uri in the future
-        Drawable foreground = ResourcesCompat.getDrawable(ctx.getResources(), R.mipmap.ic_launcher_foreground, null);
+        Drawable foreground = ResourcesCompat.getDrawable(ctx.getResources(), R.drawable.ic_warpinator, null);
         Bitmap bmp = Bitmap.createBitmap(96, 96, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bmp);
         Paint paint = new Paint();
