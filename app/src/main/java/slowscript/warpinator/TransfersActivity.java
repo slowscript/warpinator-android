@@ -19,12 +19,15 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -91,7 +94,8 @@ public class TransfersActivity extends AppCompatActivity {
                 s += getString(R.string.service_unavailable);
             if (remote.status == Remote.RemoteStatus.ERROR)
                 s += " (" + remote.errorText + ")";
-            Toast.makeText(getBaseContext(), s, Toast.LENGTH_LONG).show();
+            CoordinatorLayout cdView = findViewById(R.id.activityTransfersRoot);
+            Snackbar.make(cdView, s, Snackbar.LENGTH_LONG).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show();
         });
 
         updateUI();
