@@ -78,6 +78,7 @@ public class Authenticator {
         //Try loading it first
         try {
             Log.d(TAG, "Loading server certificate...");
+            certException = null;
             File f = getCertificateFile(".self");
             X509Certificate cert = getX509fromFile(f);
             cert.checkValidity(); //Will throw if expired (and we generate a new one)

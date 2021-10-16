@@ -6,14 +6,20 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
+import android.net.LinkAddress;
+import android.net.LinkProperties;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.provider.DocumentsContract;
 import android.provider.OpenableColumns;
 import android.text.format.Formatter;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.documentfile.provider.DocumentFile;
 
@@ -21,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Method;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
@@ -29,9 +36,11 @@ import java.net.URLDecoder;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.Enumeration;
+import java.util.List;
 
 import io.grpc.stub.StreamObserver;
 
+import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.WIFI_SERVICE;
 
 public class Utils {
@@ -52,23 +61,51 @@ public class Utils {
 
     public static String getIPAddress() {
         try {
-            String ip = getWifiIP(); //Works for most cases
-            if (ip == null) //Get IP of WiFi interface, fallback to wlan0 - works for hotspot
-                ip = getIPForIfaceName(getWifiInterface()).getHostAddress();
-            if (ip == null) //Get IP of some random active iface (except loopback and data)
+            String ip = null;
+            //Works for most cases
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                ip = getNetworkIP();
+            if (ip == null)
+                ip = getWifiIP();
+            //Try figuring out what interface wifi has, fallback to wlan0 - in case of hotspot
+            if (ip == null) {
+                InetAddress ia = getIPForIfaceName(getWifiInterface());
+                if (ia != null)
+                    ip = ia.getHostAddress();
+            }
+            //Get IP of some random active interface (except loopback and data)
+            if (ip == null)
                 ip = getIPForIface(getActiveIface()).getHostAddress();
             return ip != null ? ip : "IP Unknown";
         } catch (Exception ex) {
-            Log.e(TAG, "Couldn't get IP address");
+            Log.e(TAG, "Couldn't get IP address", ex);
             return "Error getting IP";
         }
     }
 
     static String getWifiIP() {
         WifiManager wifiManager = (WifiManager) MainService.svc.getSystemService(WIFI_SERVICE);
+        if (wifiManager == null) return null;
         int ip = wifiManager.getConnectionInfo().getIpAddress();
         if (ip == 0) return null;
         return Formatter.formatIpAddress(ip);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    static String getNetworkIP() {
+        ConnectivityManager connMgr = (ConnectivityManager)MainService.svc.getSystemService(CONNECTIVITY_SERVICE);
+        assert connMgr != null;
+        Network activeNetwork = connMgr.getActiveNetwork();
+        NetworkCapabilities networkCaps = connMgr.getNetworkCapabilities(activeNetwork);
+        LinkProperties properties = connMgr.getLinkProperties(activeNetwork);
+        if (properties != null && networkCaps != null &&
+                (networkCaps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                networkCaps.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET))) {
+            for (LinkAddress addr : properties.getLinkAddresses())
+                if (addr.getAddress() instanceof Inet4Address)
+                    return addr.getAddress().getHostAddress();
+        }
+        return null;
     }
 
     static NetworkInterface getActiveIface() throws SocketException {
@@ -80,7 +117,7 @@ public class Utils {
                 String name = ni.getDisplayName();
                 if (name.contains("dummy") || name.contains("rmnet"))
                     continue;
-                Log.d(TAG, ni.getDisplayName());
+                Log.d(TAG, "Selected interface: " + ni.getDisplayName());
                 return ni;
             }
         }

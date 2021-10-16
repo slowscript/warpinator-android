@@ -77,8 +77,11 @@
     <!--  Other  -->
     <string name="please_select_download_dir">Dies ist das erste Mal, dass Sie die Anwendung starten.
         Bitten wählen Sie ein Verzeichnis, in dem Warpinator Dateien speichern soll.</string>
-	<string name="error_download_dir">Sie müssen in den Einstellungen ein Downloadverzeichnis auswählen</string>
-    <string-array name="connected_states">
+    <string name="error_download_dir">Sie müssen in den Einstellungen ein Downloadverzeichnis auswählen</string>
+    <string name="error_network_unavailable">Netzwerk nicht verfügbar - Hotspot versuchen?</string>
+    <string name="error_service_not_running">Dienst wird nicht ausgeführt</string>
+    <string name="cert_not_received">Abruf des Zertifikats von %1$s fehlgeschlagen. Stellen Sie sicher, dass UDP (genauso wie TCP) Datenverkehr auf Port %2$d in der Firewall der Gegenstelle erlaubt ist.</string>
+        <string-array name="connected_states">
         <item>Verbunden</item>
         <item>Getrennt</item>
         <item>Verbinde</item>

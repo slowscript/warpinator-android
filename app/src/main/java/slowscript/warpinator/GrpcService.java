@@ -2,7 +2,6 @@ package slowscript.warpinator;
 
 import android.util.Log;
 
-import io.grpc.Status;
 import io.grpc.stub.ServerCallStreamObserver;
 import io.grpc.stub.StreamObserver;
 
@@ -20,6 +19,10 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
                         || (r.status == Remote.RemoteStatus.AWAITING_DUPLEX);
             //The other side is trying to connect with use after a connection failed
             if (r.status == Remote.RemoteStatus.ERROR || r.status == Remote.RemoteStatus.DISCONNECTED) {
+                // Update IP address
+                r.address = Server.current.jmdns.getServiceInfo(Server.SERVICE_TYPE, r.uuid).getInetAddresses()[0];
+                r.port = Server.current.jmdns.getServiceInfo(Server.SERVICE_TYPE, r.uuid).getPort();
+                Log.v(TAG, "new ip for remote: " + r.address);
                 r.connect(); //Try reconnecting
             }
         }
@@ -31,7 +34,7 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
     @Override
     public void getRemoteMachineInfo(WarpProto.LookupName request, StreamObserver<WarpProto.RemoteMachineInfo> responseObserver) {
         responseObserver.onNext(WarpProto.RemoteMachineInfo.newBuilder()
-                .setDisplayName(Server.displayName).setUserName("android").build());
+                .setDisplayName(Server.current.displayName).setUserName("android").build());
         responseObserver.onCompleted();
     }
 

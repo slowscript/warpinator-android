@@ -2,6 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/settings"
         android:title="@string/settings" />
+    <item android:id="@+id/conn_issues"
+        android:title="Connection issues"/>
     <item android:id="@+id/about"
         android:title="@string/about" />
     <item android:id="@+id/menu_quit"

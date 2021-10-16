@@ -80,6 +80,9 @@
     <string name="please_select_download_dir">This is likely the first time you are launching this application.
         Please select a directory where you want Warpinator to save files into.</string>
     <string name="error_download_dir">You have to select a download directory in the settings</string>
+    <string name="error_network_unavailable">Network unavailable - try hotspot?</string>
+    <string name="error_service_not_running">Service not running</string>
+    <string name="cert_not_received">Failed to receive certificate from %1$s. Make sure to allow UDP (as well as TCP) traffic on port %2$d in remote\'s firewall.</string>
     <string-array name="connected_states">
         <item>Connected</item>
         <item>Disconnected</item>

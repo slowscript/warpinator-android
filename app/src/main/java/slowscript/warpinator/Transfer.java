@@ -96,8 +96,7 @@ public class Transfer {
     }
 
     void updateUI() {
-        if (svc.transfersView != null)
-            svc.transfersView.updateTransfer(remoteUUID, privId);
+        LocalBroadcasts.updateTransfer(svc, remoteUUID, privId);
         //Update notification
         svc.updateProgress();
     }
@@ -124,6 +123,7 @@ public class Transfer {
         setStatus(Status.TRANSFERRING);
         actualStartTime = System.currentTimeMillis();
         bytesTransferred = 0;
+        cancelled = false;
         updateUI();
         observer.setOnReadyHandler(new Runnable() {
             int i = 0;
@@ -173,11 +173,11 @@ public class Transfer {
                         updateUI();
                         return;
                     } catch (Exception e) {
-                        observer.onError(e);
+                        Log.e(TAG, "Error sending files", e);
                         setStatus(Status.FAILED);
                         errors.add(e.getLocalizedMessage());
-                        Log.e(TAG, "Error sending files", e);
                         updateUI();
+                        observer.onError(e);
                         return;
                     }
                 }
@@ -231,9 +231,9 @@ public class Transfer {
         boolean autoAccept = svc.prefs.getBoolean("autoAccept", false);
 
         //Show in UI
-        if (svc.transfersView != null && remoteUUID.equals(svc.transfersView.remote.uuid) && svc.transfersView.isTopmost)
-            svc.transfersView.updateTransfers(remoteUUID);
-        else if (svc.server.notifyIncoming) {  //Notification
+        if (remoteUUID.equals(TransfersActivity.topmostRemote))
+            LocalBroadcasts.updateTransfers(svc, remoteUUID);
+        else if (svc.server.notifyIncoming && !autoAccept) {  //Notification
             Intent intent = new Intent(svc, TransfersActivity.class);
             intent.putExtra("remote", remoteUUID);
             PendingIntent pendingIntent = PendingIntent.getActivity(svc, 0, intent, 0);
@@ -284,8 +284,9 @@ public class Transfer {
             Uri rootUri = Uri.parse(Server.current.downloadDirUri);
             DocumentFile root = DocumentFile.fromTreeUri(svc, rootUri);
 
+            String sanitizedName = currentRelativePath.replaceAll("[\\\\<>*|?:\"]", "_");
             if (chunk.getFileType() == FileType.DIRECTORY) {
-                createDirectories(root, rootUri, currentRelativePath, null);
+                createDirectories(root, rootUri, sanitizedName, null);
             }
             else if (chunk.getFileType() == FileType.SYMLINK) {
                 Log.e(TAG, "Symlinks not supported.");
@@ -293,7 +294,7 @@ public class Transfer {
             }
             else {
                 try {
-                    String fileName = currentRelativePath;
+                    String fileName = sanitizedName;
                     //Handle overwriting
                     if(Utils.pathExistsInTree(svc, rootUri, fileName)) {
                         fileName = handleFileExists(fileName);
@@ -379,7 +380,7 @@ public class Transfer {
         Uri root = Uri.parse(Server.current.downloadDirUri);
         DocumentFile f = Utils.getChildFromTree(svc, root, path);
         Log.d(TAG, "File exists: " + f.getUri());
-        if(svc.server.allowOverwrite) {
+        if(Server.current.allowOverwrite) {
             Log.v(TAG, "Overwriting");
             f.delete();
         } else {

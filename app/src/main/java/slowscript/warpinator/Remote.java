@@ -22,8 +22,6 @@ import io.grpc.ManagedChannel;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.okhttp.OkHttpChannelBuilder;
-import io.grpc.stub.ClientResponseObserver;
-import io.grpc.stub.StreamObserver;
 
 public class Remote {
     public enum RemoteStatus {
@@ -48,7 +46,9 @@ public class Remote {
     public boolean serviceAvailable;
 
     //Error flags
-    public boolean errorGroupCode = false;
+    public boolean errorGroupCode = false; //Shown once by RemotesAdapter or TransfersActivity
+    public boolean errorReceiveCert = false; //Shown every time remote is opened until resolved
+    public String errorText = "";
 
     ArrayList<Transfer> transfers = new ArrayList<>();
 
@@ -64,6 +64,7 @@ public class Remote {
             //Receive certificate
             if (!receiveCertificate()) {
                 status = RemoteStatus.ERROR;
+                errorText = "Couldn't receive certificate - check firewall";
                 updateUI();
                 return;
             }
@@ -79,11 +80,13 @@ public class Remote {
             } catch (SSLException e) {
                 Log.e(TAG, "Authentication with remote "+ hostname +" failed: " + e.getMessage(), e);
                 status = RemoteStatus.ERROR;
+                errorText = "SSLException: " + e.getLocalizedMessage();
                 updateUI();
                 return;
             } catch (Exception e) {
                 Log.e(TAG, "Failed to connect to remote " + hostname + ". " + e.getMessage(), e);
                 status = RemoteStatus.ERROR;
+                errorText = e.toString();
                 updateUI();
                 return;
             }
@@ -95,6 +98,7 @@ public class Remote {
             if (!waitForDuplex()) {
                 Log.e(TAG, "Couldn't establish duplex with " + hostname);
                 status = RemoteStatus.ERROR;
+                errorText = "Couldn't establish duplex";
                 updateUI();
                 return;
             }
@@ -103,9 +107,17 @@ public class Remote {
             status = RemoteStatus.CONNECTED;
 
             //Get name
-            WarpProto.RemoteMachineInfo info = blockingStub.getRemoteMachineInfo(WarpProto.LookupName.getDefaultInstance());
-            displayName = info.getDisplayName();
-            userName = info.getUserName();
+            try {
+                WarpProto.RemoteMachineInfo info = blockingStub.getRemoteMachineInfo(WarpProto.LookupName.getDefaultInstance());
+                displayName = info.getDisplayName();
+                userName = info.getUserName();
+            } catch (StatusRuntimeException ex) {
+                status = RemoteStatus.ERROR;
+                errorText = "Couldn't get username: " + ex.toString();
+                Log.e(TAG, "connect: cannot get name: connection broken?", ex);
+                updateUI();
+                return;
+            }
             //Get avatar
             try {
                 Iterator<WarpProto.RemoteMachineAvatar> avatar = blockingStub.getRemoteMachineAvatar(WarpProto.LookupName.getDefaultInstance());
@@ -260,6 +272,7 @@ public class Remote {
         }
         if (tryCount == 3) {
             Log.e(TAG, "Failed to receive certificate from " + hostname);
+            errorReceiveCert = true;
             return false;
         }
         byte[] decoded = Base64.decode(received, Base64.DEFAULT);
@@ -267,6 +280,7 @@ public class Remote {
             errorGroupCode = true;
             return false;
         }
+        errorReceiveCert = false;
         return true;
     }
 
@@ -295,12 +309,6 @@ public class Remote {
     }
 
     public void updateUI() {
-        if (MainActivity.current != null)
-            MainActivity.current.updateRemoteList();
-        if (MainService.svc.transfersView != null) {
-            MainService.svc.transfersView.updateUI();
-        }
-        if (ShareActivity.current != null)
-            ShareActivity.current.updateRemotes();
+        LocalBroadcasts.updateRemotes(MainService.svc);
     }
 }

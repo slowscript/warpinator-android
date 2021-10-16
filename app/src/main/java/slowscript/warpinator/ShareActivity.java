@@ -1,6 +1,9 @@
 package slowscript.warpinator;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,10 +11,12 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,18 +26,18 @@ public class ShareActivity extends AppCompatActivity {
 
     static final String TAG = "Share";
 
-    public static ShareActivity current;
-
     RecyclerView recyclerView;
     LinearLayout layoutNotFound;
     RemotesAdapter adapter;
+    TextView txtError, txtNoNetwork;
+    BroadcastReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        current = this;
         setContentView(R.layout.activity_share);
         setTitle(R.string.title_activity_share);
+        receiver = newBroadcastReceiver();
 
         //Get uris to send
         Intent intent = getIntent();
@@ -46,12 +51,14 @@ public class ShareActivity extends AppCompatActivity {
             uris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
         } else {
             Toast.makeText(this, R.string.unsupported_intent, Toast.LENGTH_LONG).show();
+            finish();
             return;
         }
 
         if (uris == null || uris.size() < 1) {
             Log.d(TAG, "Nothing to share");
             Toast.makeText(this, R.string.nothing_to_share, Toast.LENGTH_LONG).show();
+            finish();
             return;
         }
         Log.d(TAG, "Sharing " + uris.size() + " files");
@@ -65,6 +72,8 @@ public class ShareActivity extends AppCompatActivity {
         //Set up UI
         recyclerView = findViewById(R.id.recyclerView);
         layoutNotFound = findViewById(R.id.layoutNotFound);
+        txtError = findViewById(R.id.txtError);
+        txtNoNetwork = findViewById(R.id.txtNoNetwork);
         adapter = new RemotesAdapter(this) {
             boolean sent = false;
             @Override
@@ -104,23 +113,66 @@ public class ShareActivity extends AppCompatActivity {
     }
 
     void startMainService() {
-        if (!Utils.isConnectedToWiFiOrEthernet(this) && !Utils.isHotspotOn(this)) {
-            Utils.displayMessage(this, getString(R.string.connection_error), getString(R.string.not_connected_to_wifi));
-            return;
-        }
         startService(new Intent(this, MainService.class));
     }
 
     @Override
-    protected void onDestroy() {
-        current = null;
-        super.onDestroy();
+    protected void onResume() {
+        super.onResume();
+        if (adapter == null) // If onCreate did not finish (nothing to share)
+            return;
+        updateRemotes();
+        IntentFilter f = new IntentFilter(LocalBroadcasts.ACTION_UPDATE_REMOTES);
+        f.addAction(LocalBroadcasts.ACTION_DISPLAY_MESSAGE);
+        f.addAction(LocalBroadcasts.ACTION_DISPLAY_TOAST);
+        f.addAction(LocalBroadcasts.ACTION_CLOSE_ALL);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, f);
     }
 
-    public void updateRemotes() {
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+    }
+
+    private BroadcastReceiver newBroadcastReceiver() {
+        Context ctx = this;
+        return new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if (action == null)
+                    return;
+                switch (action) {
+                    case LocalBroadcasts.ACTION_UPDATE_REMOTES:
+                        updateRemotes();
+                        break;
+                    case LocalBroadcasts.ACTION_DISPLAY_MESSAGE:
+                        String title = intent.getStringExtra("title");
+                        String msg = intent.getStringExtra("msg");
+                        Utils.displayMessage(ctx, title, msg);
+                        break;
+                    case LocalBroadcasts.ACTION_DISPLAY_TOAST:
+                        msg = intent.getStringExtra("msg");
+                        int length = intent.getIntExtra("length", 0);
+                        Toast.makeText(ctx, msg, length).show();
+                        break;
+                    case LocalBroadcasts.ACTION_CLOSE_ALL:
+                        finishAffinity();
+                        break;
+                }
+            }
+        };
+    }
+
+    private void updateRemotes() {
         runOnUiThread(() -> {
             adapter.notifyDataSetChanged();
             layoutNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
+            if (MainService.svc != null)
+                txtNoNetwork.setVisibility(MainService.svc.gotNetwork() ? View.GONE : View.VISIBLE);
+            if (Server.current != null)
+                txtError.setVisibility(Server.current.running ? View.GONE : View.VISIBLE);
         });
     }
 }
