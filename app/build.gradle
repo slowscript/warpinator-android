@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.protobuf'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId 'slowscript.warpinator'
         minSdkVersion 21 //Required by NSD (attributes)
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1032
         versionName "1.3.2"
 

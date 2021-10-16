@@ -42,7 +42,8 @@
         <activity android:name=".AboutActivity"
             android:label="@string/about" />
 
-        <activity android:name=".ShareActivity">
+        <activity android:name=".ShareActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <action android:name="android.intent.action.SEND_MULTIPLE" />
@@ -59,7 +60,8 @@
         <activity android:name=".TransfersActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
