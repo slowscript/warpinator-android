@@ -2,6 +2,7 @@ package slowscript.warpinator;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +11,10 @@ import android.provider.DocumentsProvider;
 import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.GridLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -22,6 +27,8 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreferenceCompat;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.Objects;
 
@@ -134,11 +141,6 @@ public class SettingsActivity extends AppCompatActivity {
             );
             dlPref.setOnPreferenceClickListener((p)->{
                 pickDirectory();
-                return true;
-            });
-            profilePref.setOnPreferenceClickListener((p)->{
-                Intent i = new Intent(getContext(), ProfileChooser.class);
-                startActivity(i);
                 return true;
             });
 

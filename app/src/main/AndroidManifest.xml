@@ -36,9 +36,6 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ProfileChooser"
-            android:label="@string/picture_settings_title" />
-
         <activity android:name=".AboutActivity"
             android:label="@string/about" />
 

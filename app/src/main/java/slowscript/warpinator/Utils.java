@@ -24,8 +24,9 @@ import android.util.TypedValue;
 
 import androidx.annotation.AttrRes;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.documentfile.provider.DocumentFile;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -188,7 +189,7 @@ public class Utils {
     }
 
     public static void displayMessage(Context ctx, String title, String msg) {
-        new AlertDialog.Builder(ctx)
+        new MaterialAlertDialogBuilder(ctx)
                 .setTitle(title)
                 .setMessage(msg)
                 .setPositiveButton(android.R.string.ok, null)

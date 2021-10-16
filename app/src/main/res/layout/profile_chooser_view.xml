@@ -7,26 +7,6 @@
     android:minWidth="300dp"
     tools:context=".ProfileChooser">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="@android:string/cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCustom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/custom"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imgCurrent" />
-
     <GridLayout
         android:id="@+id/layout1"
         android:layout_width="wrap_content"
@@ -36,21 +16,34 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:columnCount="4"
-        app:layout_constraintBottom_toTopOf="@+id/btnCancel"
+        app:layout_constraintBottom_toTopOf="@+id/imgCurrent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_min="150dp"
 
+        app:layout_constraintHeight_min="150dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         app:layout_constraintWidth_min="150dp" />
 
     <ImageView
         android:id="@+id/imgCurrent"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btnCustom"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/selected_picture_cnt_des"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/label"
         app:srcCompat="@drawable/ic_user"
-        android:contentDescription="@string/selected_picture_cnt_des" />
+        tools:ignore="RedundantDescriptionCheck" />
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/selected_picture_cnt_des"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCurrent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgCurrent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
