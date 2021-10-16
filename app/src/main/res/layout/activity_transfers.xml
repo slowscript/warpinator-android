@@ -4,21 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="?android:colorBackground"
     tools:context=".TransfersActivity">
 
-    <ImageButton
+    <Button
         android:id="@+id/btnReconnect"
-        style="@style/Widget.AppCompat.ImageButton"
+        style="@style/Widget.Material3.Button.IconButton"
         android:layout_width="24dp"
         android:layout_height="27dp"
         android:layout_marginEnd="21dp"
         android:background="#00FFFFFF"
         android:scaleType="center"
-        android:tint="@color/iconsOrTextTint"
         app:layout_constraintBottom_toBottomOf="@+id/imgStatus"
         app:layout_constraintEnd_toStartOf="@+id/imgStatus"
-        app:srcCompat="@drawable/ic_reconnect" />
+        app:srcCompat="@drawable/ic_reconnect"
+        app:tint="?colorOnBackground" />
 
     <ImageView
         android:id="@+id/imgStatus"
@@ -78,7 +78,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="150dp"
-        android:background="@drawable/transfers_card_background"
         android:clipToPadding="false"
         android:paddingStart="9dp"
         android:paddingTop="12dp"
@@ -88,19 +87,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/transfer_view">
+        tools:listitem="@layout/transfer_view"
+        android:background="@drawable/transfers_background">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabSend"
+        style="?attr/floatingActionButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
         android:clickable="true"
-        android:tint="@color/whiteOnPurple"
-        app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_upload" />

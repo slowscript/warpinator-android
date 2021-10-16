@@ -48,17 +48,11 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
         holder.txtIP.setText(r.address.getHostAddress() + ":" + r.port);
         if(r.picture != null) {
             holder.imgProfile.setImageBitmap(r.picture);
-            holder.imgProfile.setImageTintList(null);
-        } else { //Keep default, apply tint
-            holder.imgProfile.setImageTintList(ColorStateList.valueOf(app.getResources().getColor(R.color.whiteOnPurple)));
         }
         holder.imgStatus.setImageResource(Utils.getIconForRemoteStatus(r.status));
         if (r.status == Remote.RemoteStatus.ERROR || r.status == Remote.RemoteStatus.DISCONNECTED) {
             if (!r.serviceAvailable)
                 holder.imgStatus.setImageResource(R.drawable.ic_unavailable);
-            else holder.imgStatus.setImageTintList(null);
-        } else {
-            holder.imgStatus.setImageTintList(ColorStateList.valueOf(app.getResources().getColor(R.color.whiteOnPurple)));
         }
 
         if (r.errorGroupCode) {

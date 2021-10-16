@@ -7,12 +7,11 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,7 +47,7 @@ public class TransfersActivity extends AppCompatActivity {
     ImageView imgProfile;
     ImageView imgStatus;
     FloatingActionButton fabSend;
-    ImageButton btnReconnect;
+    Button btnReconnect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,15 +192,9 @@ public class TransfersActivity extends AppCompatActivity {
             if (remote.status == Remote.RemoteStatus.ERROR || remote.status == Remote.RemoteStatus.DISCONNECTED) {
                 if (!remote.serviceAvailable)
                     imgStatus.setImageResource(R.drawable.ic_unavailable);
-                else imgStatus.setImageTintList(null);
-            } else {
-                imgStatus.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.iconsOrTextTint)));
             }
             if (remote.picture != null) {
                 imgProfile.setImageBitmap(remote.picture);
-                imgProfile.setImageTintList(null);
-            } else { //Keep default, apply tint
-                imgProfile.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.iconsOrTextTint)));
             }
             fabSend.setEnabled(remote.status == Remote.RemoteStatus.CONNECTED);
             btnReconnect.setVisibility((remote.status == Remote.RemoteStatus.ERROR)
