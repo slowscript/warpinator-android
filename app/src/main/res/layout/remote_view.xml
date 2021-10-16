@@ -22,7 +22,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imgProfile"
-            app:srcCompat="@drawable/ic_status_connected" />
+            app:srcCompat="@drawable/ic_status_connected"
+            android:contentDescription="@string/status_image_cnt_des" />
 
         <ImageView
             android:id="@+id/imgProfile"
@@ -32,7 +33,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_user" />
+            app:srcCompat="@drawable/ic_user"
+            android:contentDescription="@string/profile_image_cnt_des" />
 
         <TextView
             android:id="@+id/txtUsername"
@@ -63,7 +65,8 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/imgStatus"
             app:layout_constraintStart_toEndOf="@+id/imgProfile"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/txtIP"
@@ -73,6 +76,7 @@
             android:text="192.168.x.x"
             android:textColor="?android:attr/textColorSecondary"
             app:layout_constraintStart_toEndOf="@+id/imgProfile"
-            app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
+            app:layout_constraintTop_toBottomOf="@+id/txtUsername"
+            tools:ignore="HardcodedText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

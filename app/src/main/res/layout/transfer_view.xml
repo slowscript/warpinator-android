@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="64dp"
     android:layout_margin="3dp"
@@ -25,7 +26,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
             app:srcCompat="@drawable/ic_decline"
-            app:tint="?colorError" />
+            app:tint="?colorError"
+            android:contentDescription="@string/decline_button_cnt_des" />
 
         <ImageButton
             android:id="@+id/btnAccept"
@@ -37,7 +39,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
             app:srcCompat="@drawable/ic_accept"
-            app:tint="?colorPrimary" />
+            app:tint="?colorPrimary"
+            android:contentDescription="@string/accept_button_cnt_des" />
 
         <ImageButton
             android:id="@+id/btnStop"
@@ -50,7 +53,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            app:tint="?colorError" />
+            app:tint="?colorError"
+            android:contentDescription="@string/stop_button_cnt_des" />
 
         <ImageView
             android:id="@+id/imgFromTo"
@@ -62,7 +66,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
             app:srcCompat="@drawable/ic_download"
-            app:tint="?android:attr/textColorSecondary" />
+            app:tint="?android:attr/textColorSecondary"
+            tools:ignore="ContentDescription" />
 
         <!-- The card will clip the parts that overflow. Don't change constraints nor size -->
         <ProgressBar
@@ -93,7 +98,8 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/btnAccept"
             app:layout_constraintStart_toEndOf="@+id/imgFromTo"
-            app:layout_constraintTop_toTopOf="@+id/imgFromTo" />
+            app:layout_constraintTop_toTopOf="@+id/imgFromTo"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/txtStatus"
@@ -106,7 +112,8 @@
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/btnAccept"
             app:layout_constraintStart_toStartOf="@+id/txtTransfer"
-            app:layout_constraintTop_toBottomOf="@+id/txtTransfer" />
+            app:layout_constraintTop_toBottomOf="@+id/txtTransfer"
+            tools:ignore="HardcodedText" />
 
         <ImageButton
             android:id="@+id/btnRetry"
@@ -119,7 +126,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            app:tint="?android:attr/textColorSecondary" />
+            app:tint="?android:attr/textColorSecondary"
+            android:contentDescription="@string/retry_button_cnt_des" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

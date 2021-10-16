@@ -21,7 +21,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_warpinator"
-            app:tint="?colorOnBackground" />
+            app:tint="?colorOnBackground"
+            android:contentDescription="@string/application_icon_cnt_des" />
 
         <TextView
             android:id="@+id/appNameText"

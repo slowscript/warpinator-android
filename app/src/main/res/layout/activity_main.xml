@@ -54,7 +54,8 @@
             android:scaleX="1"
             android:scaleY="1"
             app:srcCompat="@drawable/ic_meh"
-            app:tint="?colorOnBackground" />
+            app:tint="?colorOnBackground"
+            android:contentDescription="@string/meh_face_cnt_des" />
 
         <TextView
             android:id="@+id/txtNotFound"

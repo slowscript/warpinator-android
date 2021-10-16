@@ -6,9 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?android:colorBackground"
@@ -21,9 +19,11 @@
             android:layout_height="30dp"
             android:layout_marginEnd="21dp"
             android:background="#00FFFFFF"
+            android:contentDescription="@string/reconnect_button_cnt_des"
             app:icon="@drawable/ic_reconnect"
             app:layout_constraintBottom_toBottomOf="@+id/imgStatus"
             app:layout_constraintEnd_toStartOf="@+id/imgStatus"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <ImageView
             android:id="@+id/imgStatus"
@@ -31,6 +31,7 @@
             android:layout_height="30dp"
             android:layout_marginEnd="35dp"
             android:layout_marginBottom="35dp"
+            android:contentDescription="@string/status_image_cnt_des"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -40,10 +41,12 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="16dp"
+            android:contentDescription="@string/profile_image_cnt_des"
             app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_user" />
+            app:srcCompat="@drawable/ic_user"
+            tools:ignore="ImageContrastCheck" />
 
         <TextView
             android:id="@+id/txtRemote"
@@ -55,6 +58,7 @@
             app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
             app:layout_constraintStart_toEndOf="@+id/imgProfile"
             app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/txtIP"
@@ -64,6 +68,7 @@
             android:text="192.168.1.1"
             app:layout_constraintStart_toStartOf="@+id/txtRemote"
             app:layout_constraintTop_toBottomOf="@+id/txtRemote"
+            tools:ignore="HardcodedText" />
 
         <ToggleButton
             android:id="@+id/tglStar"
@@ -121,6 +126,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:clickable="true"
+        android:contentDescription="@string/send_files"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_upload"

@@ -77,6 +77,17 @@
     <string name="notification_channel_description">Persistent service notification</string>
     <string name="incoming_transfer_channel">Incoming transfer</string>
     <string name="transfer_progress_channel">Transfer progress</string>
+    <!--  Content descriptions  -->
+    <string name="reconnect_button_cnt_des">Reconnect</string>
+    <string name="status_image_cnt_des">Connection status</string>
+    <string name="profile_image_cnt_des">Profile picture</string>
+    <string name="application_icon_cnt_des">Application icon</string>
+    <string name="meh_face_cnt_des">Disappointed face icon</string>
+    <string name="selected_picture_cnt_des">Selected picture</string>
+    <string name="decline_button_cnt_des">Decline the transfer</string>
+    <string name="accept_button_cnt_des">Accept the transfer</string>
+    <string name="stop_button_cnt_des">Stop the transfer</string>
+    <string name="retry_button_cnt_des">Retry the transfer</string>
     <!--  Other  -->
     <string name="please_select_download_dir">This is likely the first time you are launching this application.
         Please select a directory where you want Warpinator to save files into.</string>

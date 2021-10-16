@@ -51,5 +51,6 @@
         android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/btnCustom"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_user" />
+        app:srcCompat="@drawable/ic_user"
+        android:contentDescription="@string/selected_picture_cnt_des" />
 </androidx.constraintlayout.widget.ConstraintLayout>
