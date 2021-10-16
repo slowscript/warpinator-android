@@ -24,7 +24,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            app:srcCompat="@drawable/ic_decline" />
+            app:srcCompat="@drawable/ic_decline"
+            app:tint="?colorError" />
 
         <ImageButton
             android:id="@+id/btnAccept"
@@ -35,7 +36,8 @@
             app:layout_constraintEnd_toStartOf="@+id/btnDecline"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            app:srcCompat="@drawable/ic_accept" />
+            app:srcCompat="@drawable/ic_accept"
+            app:tint="?colorPrimary" />
 
         <ImageButton
             android:id="@+id/btnStop"
@@ -47,7 +49,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
+            app:layout_constraintVertical_bias="0.5"
+            app:tint="?colorError" />
 
         <ImageView
             android:id="@+id/imgFromTo"
@@ -58,7 +61,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            app:srcCompat="@drawable/ic_download" />
+            app:srcCompat="@drawable/ic_download"
+            app:tint="?android:attr/textColorSecondary" />
 
         <!-- The card will clip the parts that overflow. Don't change constraints nor size -->
         <ProgressBar
@@ -114,7 +118,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
+            app:layout_constraintVertical_bias="0.5"
+            app:tint="?android:attr/textColorSecondary" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

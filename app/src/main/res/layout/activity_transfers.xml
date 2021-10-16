@@ -9,16 +9,15 @@
 
     <Button
         android:id="@+id/btnReconnect"
-        style="@style/Widget.Material3.Button.IconButton"
-        android:layout_width="24dp"
-        android:layout_height="27dp"
+        style="@style/IconOnlyButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginEnd="21dp"
         android:background="#00FFFFFF"
-        android:scaleType="center"
+        app:icon="@drawable/ic_reconnect"
         app:layout_constraintBottom_toBottomOf="@+id/imgStatus"
         app:layout_constraintEnd_toStartOf="@+id/imgStatus"
-        app:srcCompat="@drawable/ic_reconnect"
-        app:tint="?colorOnBackground" />
+        tools:ignore="TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/imgStatus"
@@ -62,16 +61,18 @@
 
     <ToggleButton
         android:id="@+id/tglStar"
-        android:layout_width="27dp"
-        android:layout_height="27dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="35dp"
         android:background="#00000000"
         android:button="@drawable/ic_star_empty"
+        android:buttonTint="?colorPrimary"
         android:textOff=""
         android:textOn=""
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView2"
@@ -102,7 +103,8 @@
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_upload" />
+        app:srcCompat="@drawable/ic_upload"
+        tools:ignore="ImageContrastCheck" />
 
     <TextView
         android:id="@+id/txtDisplayName"

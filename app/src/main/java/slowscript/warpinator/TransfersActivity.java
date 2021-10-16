@@ -7,6 +7,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -189,13 +190,24 @@ public class TransfersActivity extends AppCompatActivity {
             txtRemote.setText(remote.userName + "@" + remote.hostname);
             txtIP.setText(remote.address.getHostAddress());
             imgStatus.setImageResource(Utils.getIconForRemoteStatus(remote.status));
+
+            int color = Utils.getAndroidAttributeColor(this, android.R.attr.textColorTertiary);
+
+            if (remote.picture != null) {
+                imgProfile.setImageTintList(null);
+                imgProfile.setImageBitmap(remote.picture);
+            } else {
+                imgProfile.setImageTintList(ColorStateList.valueOf(color));
+            }
+
             if (remote.status == Remote.RemoteStatus.ERROR || remote.status == Remote.RemoteStatus.DISCONNECTED) {
                 if (!remote.serviceAvailable)
                     imgStatus.setImageResource(R.drawable.ic_unavailable);
+                else
+                    color = Utils.getAttributeColor(getTheme(), R.attr.colorError);
             }
-            if (remote.picture != null) {
-                imgProfile.setImageBitmap(remote.picture);
-            }
+            imgStatus.setImageTintList(ColorStateList.valueOf(color));
+
             fabSend.setEnabled(remote.status == Remote.RemoteStatus.CONNECTED);
             btnReconnect.setVisibility((remote.status == Remote.RemoteStatus.ERROR)
                     || (remote.status == Remote.RemoteStatus.DISCONNECTED)

@@ -1,6 +1,7 @@
 package slowscript.warpinator;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
@@ -46,14 +47,25 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
         holder.txtName.setText(r.displayName);
         holder.txtUsername.setText(r.userName + "@" + r.hostname);
         holder.txtIP.setText(r.address.getHostAddress() + ":" + r.port);
+
+        Context context = holder.imgProfile.getContext();
+
+        int color = Utils.getAndroidAttributeColor(context, android.R.attr.textColorSecondary);
+        
         if(r.picture != null) {
+            holder.imgProfile.setImageTintList(null);
             holder.imgProfile.setImageBitmap(r.picture);
+        } else {
+            holder.imgProfile.setImageTintList(ColorStateList.valueOf(color));
         }
         holder.imgStatus.setImageResource(Utils.getIconForRemoteStatus(r.status));
         if (r.status == Remote.RemoteStatus.ERROR || r.status == Remote.RemoteStatus.DISCONNECTED) {
             if (!r.serviceAvailable)
                 holder.imgStatus.setImageResource(R.drawable.ic_unavailable);
+            else
+                color = Utils.getAttributeColor(context.getTheme(), R.attr.colorError);
         }
+        holder.imgStatus.setImageTintList(ColorStateList.valueOf(color));
 
         if (r.errorGroupCode) {
             r.errorGroupCode = false;
