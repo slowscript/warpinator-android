@@ -3,7 +3,7 @@
     <item android:id="@+id/settings"
         android:title="@string/settings" />
     <item android:id="@+id/conn_issues"
-        android:title="Connection issues"/>
+        android:title="@string/connection_issues"/>
     <item android:id="@+id/about"
         android:title="@string/about" />
     <item android:id="@+id/menu_quit"
