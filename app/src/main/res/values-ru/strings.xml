@@ -5,6 +5,7 @@
     <string name="title_activity_transfers">Передачи</string>
     <string name="send_files">Отправить файлы</string>
     <string name="quit">Выход</string>
+    <string name="connection_issues">При проблемах с подключением</string>
     <string name="about">О приложении</string>
     <string name="settings">Настройки</string>
     <string name="title_activity_share">Поделиться с</string>
@@ -80,6 +81,9 @@
     <string name="please_select_download_dir">Скорее всего, вы впервые запустили это приложение.
         Пожалуйста, выберите каталог, в который вы бы хотели, чтобы Warpinator сохранял файлы.</string>
     <string name="error_download_dir">Вы должны выбрать каталог для загрузок в настройках</string>
+    <string name="error_network_unavailable">Сеть недоступна - попробовать точку доступа?</string>
+    <string name="error_service_not_running">Служба не работает</string>
+    <string name="cert_not_received">Не удалось получить сертификат от %1$s. Обязательно разрешите трафик UDP (а также TCP) через порт %2$d в удаленном брандмауэре.</string>
     <string-array name="connected_states">
         <item>Подключено</item>
         <item>Отключено</item>
