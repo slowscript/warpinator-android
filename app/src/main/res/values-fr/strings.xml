@@ -12,7 +12,7 @@
     <string name="no_devices_found">Aucun autre appareil trouvé</string>
     <string name="wrong_group_code">Échec de la connexion : code de groupe erroné</string>
     <string name="connection_error">Erreur de connexion</string>
-    <string name="not_connected_to_wifi">Vous n\'êtes pas connecté au Wi-Fi ou à un LAN. Utilisez votre hotspot si aucun n\'est disponible.
+    <string name="not_connected_to_wifi">Vous n\'êtes pas connecté au Wi-Fi ou à un réseau local. Utilisez votre point d\'accès Wi-Fi si aucun n\'est disponible.
         Redémarrez l\'application lorsque vous serez connecté.</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">Attente de la permission…</string>
@@ -50,13 +50,13 @@
     <string name="accept_setting_summary_off">Chaque transfert devra être accepté par vous</string>
     <string name="background_settings_title">Fonctionner en arrière-plan</string>
     <string name="boot_settings_title">Démarrer automatiquement</string>
-    <string name="export_log_settings_tile">Écrire le journal de débogage dans le fichiers</string>
+    <string name="export_log_settings_tile">Écrire le journal de débogage dans le fichier</string>
     <string name="group_code_settings_title">Code de groupe</string>
     <string name="port_settings_title">Port</string>
     <string name="theme_settings_title">Thème</string>
     <string name="notification_settings_summary">Cela peut être affecté par les réglages de notification d\'Android</string>
     <string name="port_range_warning">Le numéro de port doit être compris entre 1024 et 65535</string>
-    <string name="requires_restart_warning">La modification de ce réglage requière un redémarrage de l\'application</string>
+    <string name="requires_restart_warning">La modification de ce réglage requiert un redémarrage de l\'application</string>
     <string name="overwrite_settings_summary_on">Les fichiers entrants avec un nom déjà existant écraseront les fichiers présents</string>
     <string name="overwrite_settings_summary_off">Les fichiers entrants avec un nom déjà existant seront renommés</string>
     <string name="custom">Personnalisé</string>
@@ -66,7 +66,7 @@
     <string name="lightTheme">Thème clair</string>
     <string name="darkTheme">Thème sombre</string>
     <!--  Notification  -->
-    <string name="warpinator_notification_title">Les service Warpinator est en cours d\'exécution</string>
+    <string name="warpinator_notification_title">Le service Warpinator est en cours d\'exécution</string>
     <string name="warpinator_notification_button">Arrêter le service</string>
     <string name="transfers_complete">Tous les transferts se sont terminés</string>
     <string name="transfer_notification">%1$.1f%%, %2$d transferts, %3$s/s</string>
@@ -80,7 +80,7 @@
     <string name="please_select_download_dir">C\'est probablement la première fois que vous lancez cette application.
         Veuillez sélectionner un répertoire dans lequel Warpinator enregistrera les fichiers.</string>
     <string name="error_download_dir">Vous devez choisir un répertoire de téléchargement dans les réglages</string>
-    <string name="error_network_unavailable">Réseau non disponible - essayer le hotspot ?</string>
+    <string name="error_network_unavailable">Réseau non disponible - essayer le point d\'accès Wi-Fi ?</string>
     <string name="error_service_not_running">Le service n\'est pas en cours d\'exécution</string>
     <string name="cert_not_received">Échec de la réception du certificat depuis %1$s. Assurez-vous d\'autoriser le trafic UDP (ainsi que TCP) sur le port %2$d sur le pare-feu de l\'appareil distant.</string>
     <string-array name="connected_states">
