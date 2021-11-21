@@ -4,6 +4,8 @@ import android.app.ActivityManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.LinkAddress;
@@ -18,10 +20,13 @@ import android.provider.DocumentsContract;
 import android.provider.OpenableColumns;
 import android.text.format.Formatter;
 import android.util.Log;
+import android.util.TypedValue;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.documentfile.provider.DocumentFile;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +41,6 @@ import java.net.URLDecoder;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.Enumeration;
-import java.util.List;
 
 import io.grpc.stub.StreamObserver;
 
@@ -185,7 +189,7 @@ public class Utils {
     }
 
     public static void displayMessage(Context ctx, String title, String msg) {
-        new AlertDialog.Builder(ctx)
+        new MaterialAlertDialogBuilder(ctx)
                 .setTitle(title)
                 .setMessage(msg)
                 .setPositiveButton(android.R.string.ok, null)
@@ -304,6 +308,21 @@ public class Utils {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e){}
+    }
+
+    public static int getAttributeColor(Resources.Theme theme, @AttrRes int resID){
+        TypedValue typedValue = new TypedValue();
+        theme.resolveAttribute(resID, typedValue, true);
+        return typedValue.data;
+    }
+
+    public static int getAndroidAttributeColor(Context context, @AttrRes int resID){
+        TypedValue typedValue = new TypedValue();
+        int[] args = {resID};
+        TypedArray a = context.obtainStyledAttributes(args);
+        int color = a.getColor(0, 0);
+        a.recycle();
+        return color;
     }
 
     //FOR DEBUG PURPOSES

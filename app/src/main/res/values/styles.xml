@@ -1,30 +1,24 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="actionBarPopupTheme">@style/PopupMenu</item>
-        <item name="android:textColor">@color/iconsOrTextTint</item>
+
+    <style name="AppTheme" parent="Theme.Material3.DayNight">
+        <item name="android:statusBarColor">#3E000000</item>
     </style>
 
-    <style name="PopupMenu" parent="Widget.AppCompat.ListPopupWindow">
-        <item name="android:colorBackground">@color/background</item>
-        <item name="android:textColorPrimary">@color/iconsOrTextTint</item>
-    </style>
-
+    <!--  Use the colors as here: https://github.com/material-components/material-components-android/blob/master/docs/theming/Color.md  -->
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.Dialog" parent="Theme.Material3.DayNight.Dialog" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="AppTheme.Dialog" parent="Theme.AppCompat.DayNight.Dialog" />
+    <style name="IconOnlyButton" parent="Widget.Material3.Button.IconButton">
+        <item name="iconPadding">0dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconSize">30dp</item>
+    </style>
 
 </resources>

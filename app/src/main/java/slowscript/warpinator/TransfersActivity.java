@@ -12,19 +12,22 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -48,7 +51,7 @@ public class TransfersActivity extends AppCompatActivity {
     ImageView imgProfile;
     ImageView imgStatus;
     FloatingActionButton fabSend;
-    ImageButton btnReconnect;
+    Button btnReconnect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +94,8 @@ public class TransfersActivity extends AppCompatActivity {
                 s += getString(R.string.service_unavailable);
             if (remote.status == Remote.RemoteStatus.ERROR)
                 s += " (" + remote.errorText + ")";
-            Toast.makeText(getBaseContext(), s, Toast.LENGTH_LONG).show();
+            CoordinatorLayout cdView = findViewById(R.id.activityTransfersRoot);
+            Snackbar.make(cdView, s, Snackbar.LENGTH_LONG).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show();
         });
 
         updateUI();
@@ -190,19 +194,24 @@ public class TransfersActivity extends AppCompatActivity {
             txtRemote.setText(remote.userName + "@" + remote.hostname);
             txtIP.setText(remote.address.getHostAddress());
             imgStatus.setImageResource(Utils.getIconForRemoteStatus(remote.status));
+
+            int color = Utils.getAndroidAttributeColor(this, android.R.attr.textColorTertiary);
+
+            if (remote.picture != null) {
+                imgProfile.setImageTintList(null);
+                imgProfile.setImageBitmap(remote.picture);
+            } else {
+                imgProfile.setImageTintList(ColorStateList.valueOf(color));
+            }
+
             if (remote.status == Remote.RemoteStatus.ERROR || remote.status == Remote.RemoteStatus.DISCONNECTED) {
                 if (!remote.serviceAvailable)
                     imgStatus.setImageResource(R.drawable.ic_unavailable);
-                else imgStatus.setImageTintList(null);
-            } else {
-                imgStatus.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.iconsOrTextTint)));
+                else
+                    color = Utils.getAttributeColor(getTheme(), R.attr.colorError);
             }
-            if (remote.picture != null) {
-                imgProfile.setImageBitmap(remote.picture);
-                imgProfile.setImageTintList(null);
-            } else { //Keep default, apply tint
-                imgProfile.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.iconsOrTextTint)));
-            }
+            imgStatus.setImageTintList(ColorStateList.valueOf(color));
+
             fabSend.setEnabled(remote.status == Remote.RemoteStatus.CONNECTED);
             btnReconnect.setVisibility((remote.status == Remote.RemoteStatus.ERROR)
                     || (remote.status == Remote.RemoteStatus.DISCONNECTED)

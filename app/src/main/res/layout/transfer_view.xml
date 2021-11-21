@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="64dp"
     android:layout_margin="3dp"
-    app:cardBackgroundColor="@color/colorPrimary"
-    app:cardCornerRadius="18dp"
-    app:cardElevation="5dp"
+    style="?attr/materialCardViewElevatedStyle"
+    android:clickable="true"
+    android:focusable="true"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="false">
 
@@ -21,24 +21,26 @@
             android:layout_height="48dp"
             android:layout_marginEnd="8dp"
             android:background="#00000000"
-            android:tint="#C14747"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            app:srcCompat="@drawable/ic_decline" />
+            app:srcCompat="@drawable/ic_decline"
+            app:tint="?colorError"
+            android:contentDescription="@string/decline_button_cnt_des" />
 
         <ImageButton
             android:id="@+id/btnAccept"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="#00000000"
-            android:tint="#54D53C"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnDecline"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            app:srcCompat="@drawable/ic_accept" />
+            app:srcCompat="@drawable/ic_accept"
+            app:tint="?colorPrimary"
+            android:contentDescription="@string/accept_button_cnt_des" />
 
         <ImageButton
             android:id="@+id/btnStop"
@@ -47,11 +49,12 @@
             android:layout_marginEnd="8dp"
             android:background="#00000000"
             android:src="@drawable/ic_stop"
-            android:tint="#9F1111"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
+            app:layout_constraintVertical_bias="0.5"
+            app:tint="?colorError"
+            android:contentDescription="@string/stop_button_cnt_des" />
 
         <ImageView
             android:id="@+id/imgFromTo"
@@ -63,7 +66,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
             app:srcCompat="@drawable/ic_download"
-            app:tint="@color/whiteOnPurple" />
+            app:tint="?android:attr/textColorSecondary"
+            tools:ignore="ContentDescription" />
 
         <!-- The card will clip the parts that overflow. Don't change constraints nor size -->
         <ProgressBar
@@ -71,11 +75,11 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
             android:layout_height="4dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
             android:max="100"
             android:progress="50"
-            android:progressTint="@color/whiteOnPurple"
+            android:progressTint="?android:attr/textColorSecondary"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -90,11 +94,12 @@
             android:ellipsize="marquee"
             android:singleLine="true"
             android:text="Files..."
-            android:textColor="@color/whiteOnPurple"
+            android:textColor="?android:attr/textColorSecondary"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/btnAccept"
             app:layout_constraintStart_toEndOf="@+id/imgFromTo"
-            app:layout_constraintTop_toTopOf="@+id/imgFromTo" />
+            app:layout_constraintTop_toTopOf="@+id/imgFromTo"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/txtStatus"
@@ -103,11 +108,12 @@
             android:ellipsize="marquee"
             android:singleLine="true"
             android:text="Waiting for permission..."
-            android:textColor="@color/whiteOnPurple"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/btnAccept"
             app:layout_constraintStart_toStartOf="@+id/txtTransfer"
-            app:layout_constraintTop_toBottomOf="@+id/txtTransfer" />
+            app:layout_constraintTop_toBottomOf="@+id/txtTransfer"
+            tools:ignore="HardcodedText" />
 
         <ImageButton
             android:id="@+id/btnRetry"
@@ -116,12 +122,13 @@
             android:layout_marginEnd="8dp"
             android:background="#00000000"
             android:src="@drawable/ic_reconnect"
-            android:tint="@color/whiteOnPurple"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
+            app:layout_constraintVertical_bias="0.5"
+            app:tint="?android:attr/textColorSecondary"
+            android:contentDescription="@string/retry_button_cnt_des" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

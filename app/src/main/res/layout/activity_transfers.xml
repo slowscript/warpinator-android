@@ -1,119 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activityTransfersRoot"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background"
-    tools:context=".TransfersActivity">
+    android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/btnReconnect"
-        style="@style/Widget.AppCompat.ImageButton"
-        android:layout_width="24dp"
-        android:layout_height="27dp"
-        android:layout_marginEnd="21dp"
-        android:background="#00FFFFFF"
-        android:scaleType="center"
-        android:tint="@color/iconsOrTextTint"
-        app:layout_constraintBottom_toBottomOf="@+id/imgStatus"
-        app:layout_constraintEnd_toStartOf="@+id/imgStatus"
-        app:srcCompat="@drawable/ic_reconnect" />
-
-    <ImageView
-        android:id="@+id/imgStatus"
-        android:layout_width="27dp"
-        android:layout_height="27dp"
-        android:layout_marginEnd="35dp"
-        android:layout_marginBottom="35dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <ImageView
-        android:id="@+id/imgProfile"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_user" />
-
-    <TextView
-        android:id="@+id/txtRemote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:text="android@PhoneName"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
-        app:layout_constraintStart_toEndOf="@+id/imgProfile"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txtIP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="192.168.1.1"
-        app:layout_constraintStart_toStartOf="@+id/txtRemote"
-        app:layout_constraintTop_toBottomOf="@+id/txtRemote" />
-
-    <ToggleButton
-        android:id="@+id/tglStar"
-        android:layout_width="27dp"
-        android:layout_height="27dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="35dp"
-        android:background="#00000000"
-        android:button="@drawable/ic_star_empty"
-        android:textOff=""
-        android:textOn=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView2"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="150dp"
-        android:background="@drawable/transfers_card_background"
-        android:clipToPadding="false"
-        android:paddingStart="9dp"
-        android:paddingTop="12dp"
-        android:paddingEnd="9dp"
-        android:paddingBottom="64dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/transfer_view">
+        android:layout_height="match_parent"
+        android:background="?android:colorBackground"
+        tools:context=".TransfersActivity">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <Button
+            android:id="@+id/btnReconnect"
+            style="@style/IconOnlyButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="21dp"
+            android:background="#00FFFFFF"
+            android:contentDescription="@string/reconnect_button_cnt_des"
+            app:icon="@drawable/ic_reconnect"
+            app:layout_constraintBottom_toBottomOf="@+id/imgStatus"
+            app:layout_constraintEnd_toStartOf="@+id/imgStatus"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/imgStatus"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="35dp"
+            android:contentDescription="@string/status_image_cnt_des"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/imgProfile"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/profile_image_cnt_des"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_user"
+            tools:ignore="ImageContrastCheck" />
+
+        <TextView
+            android:id="@+id/txtRemote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="android@PhoneName"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
+            app:layout_constraintStart_toEndOf="@+id/imgProfile"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/txtIP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="192.168.1.1"
+            app:layout_constraintStart_toStartOf="@+id/txtRemote"
+            app:layout_constraintTop_toBottomOf="@+id/txtRemote"
+            tools:ignore="HardcodedText" />
+
+        <ToggleButton
+            android:id="@+id/tglStar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="35dp"
+            android:background="#00000000"
+            android:button="@drawable/ic_star_empty"
+            android:buttonTint="?colorPrimary"
+            android:textOff=""
+            android:textOn=""
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="150dp"
+            android:background="@drawable/transfers_background"
+            android:clipToPadding="false"
+            android:paddingStart="9dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="9dp"
+            android:paddingBottom="64dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/transfer_view">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/txtDisplayName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Name"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/txtRemote"
+            app:layout_constraintStart_toStartOf="@+id/txtRemote"
+            tools:ignore="HardcodedText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabSend"
+        style="?attr/floatingActionButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
         android:clickable="true"
-        android:tint="@color/whiteOnPurple"
-        app:backgroundTint="@color/colorPrimary"
+        android:contentDescription="@string/send_files"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_upload" />
+        app:srcCompat="@drawable/ic_upload"
+        tools:ignore="ImageContrastCheck" />
 
-    <TextView
-        android:id="@+id/txtDisplayName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Name"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/txtRemote"
-        app:layout_constraintStart_toStartOf="@+id/txtRemote" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

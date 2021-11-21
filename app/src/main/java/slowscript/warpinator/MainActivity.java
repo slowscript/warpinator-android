@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.documentfile.provider.DocumentFile;
@@ -26,9 +25,12 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import org.conscrypt.Conscrypt;
 
 import java.security.Security;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         String dlDir = prefs.getString("downloadDir", "");
-        if (dlDir.equals("") || !DocumentFile.fromTreeUri(this, Uri.parse(dlDir)).exists()) {
+        if (dlDir.equals("") || !Objects.requireNonNull(DocumentFile.fromTreeUri(this, Uri.parse(dlDir))).exists()) {
             askForDirectoryAccess(this);
         }
     }
@@ -114,25 +116,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.settings:
-                startActivity(new Intent(this, SettingsActivity.class));
-                return true;
-            case R.id.conn_issues:
-                Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
-                startActivity(helpIntent);
-                return true;
-            case R.id.about:
-                startActivity(new Intent(this, AboutActivity.class));
-                return true;
-            case R.id.menu_quit:
-                Log.i(TAG, "Quitting");
-                stopService(new Intent(this, MainService.class));
-                finishAffinity();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemID = item.getItemId();
+        if (itemID == R.id.settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+        } else if (itemID == R.id.conn_issues) {
+            Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
+            startActivity(helpIntent);
+        } else if (itemID == R.id.about) {
+            startActivity(new Intent(this, AboutActivity.class));
+        } else if (itemID == R.id.menu_quit) {
+            Log.i(TAG, "Quitting");
+            stopService(new Intent(this, MainService.class));
+            finishAffinity();
+        } else {
+            return super.onOptionsItemSelected(item);
         }
+        return true;
     }
 
     private void updateRemoteList() {
@@ -177,14 +176,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void askForDirectoryAccess(Activity a) {
-        new AlertDialog.Builder(a)
-            .setTitle(R.string.download_dir_settings_title)
-            .setMessage(R.string.please_select_download_dir)
-            .setPositiveButton(android.R.string.ok, (b,c) -> {
-                Intent intent = new Intent(a, SettingsActivity.class);
-                intent.putExtra("pickDir", true);
-                a.startActivity(intent);
-            })
-            .show();
+        new MaterialAlertDialogBuilder(a)
+                .setTitle(R.string.download_dir_settings_title)
+                .setMessage(R.string.please_select_download_dir)
+                .setPositiveButton(android.R.string.ok, (b, c) -> {
+                    Intent intent = new Intent(a, SettingsActivity.class);
+                    intent.putExtra("pickDir", true);
+                    a.startActivity(intent);
+                })
+                .show();
     }
 }
