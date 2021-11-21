@@ -1,7 +1,7 @@
 package slowscript.warpinator;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
-import android.bluetooth.BluetoothAdapter;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
@@ -18,6 +18,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.DocumentsContract;
 import android.provider.OpenableColumns;
+import android.provider.Settings;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.util.TypedValue;
@@ -54,12 +55,15 @@ public class Utils {
     public static String getDeviceName() {
         String name = null;
         try {
-            name = BluetoothAdapter.getDefaultAdapter().getName();
-        }catch (Exception e){
-            Log.d(TAG, "This device may not support bluetooth - using default name");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
+                name = Settings.Global.getString(MainService.svc.getContentResolver(), Settings.Global.DEVICE_NAME);
+            if(name == null)
+                name = Settings.Secure.getString(MainService.svc.getContentResolver(), "bluetooth_name");
+        } catch (Exception ignored) {}
+        if (name == null) {
+            Log.v(TAG, "Could not get device name - using default");
+            name = "Android Phone";
         }
-        if (name == null)
-	        name = "Android Phone";
         return name;
     }
 
@@ -211,6 +215,7 @@ public class Utils {
         return String.format("%.1f %cB", value / 1024.0, ci.current());
     }
 
+    @SuppressLint("Range")
     public static String getNameFromUri(Context ctx, Uri uri) {
         String result = null;
         if ("content".equals(uri.getScheme())) {
