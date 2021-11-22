@@ -131,8 +131,6 @@ public class MainService extends Service {
     @Override
     public void onDestroy() {
         stopServer();
-        logcatProcess.destroy();
-        svc = null;
         super.onDestroy();
     }
 
