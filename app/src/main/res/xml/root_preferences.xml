@@ -3,12 +3,12 @@
 
     <PreferenceCategory android:title="@string/identity_settings_category">
 
-        <slowscript.warpinator.EditTextPreference
+        <slowscript.warpinator.preferences.EditTextPreference
             android:defaultValue="Android"
             android:key="displayName"
             android:title="@string/display_settings_title" />
 
-        <Preference
+        <slowscript.warpinator.preferences.ProfilePicturePreference
             android:key="profile"
             android:title="@string/picture_settings_title" />
 
@@ -67,12 +67,12 @@
     <PreferenceCategory
         android:title="@string/network_setting_category">
 
-        <slowscript.warpinator.EditTextPreference 
+        <slowscript.warpinator.preferences.EditTextPreference
             android:key="groupCode"
             android:title="@string/group_code_settings_title"
             android:defaultValue="Warpinator" />
 
-        <slowscript.warpinator.EditTextPreference
+        <slowscript.warpinator.preferences.EditTextPreference
             android:title="@string/port_settings_title"
             android:key="port"
             android:defaultValue="42000" />
@@ -80,7 +80,7 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/aspect_setting_category">
 
-        <ListPreference
+        <slowscript.warpinator.preferences.ListPreference
             android:defaultValue="sysDefault"
             android:entries="@array/theme_settings_array"
             android:entryValues="@array/theme_settings_entries_array"
