@@ -74,6 +74,17 @@
     <string name="notification_channel_description">Stände Benachrichtigung für Dienst</string>
     <string name="incoming_transfer_channel">Eingehender Transfer</string>
     <string name="transfer_progress_channel">Transferfortschritt</string>
+    <!--  Content descriptions  -->
+    <string name="reconnect_button_cnt_des">Neu-Verbinden</string>
+    <string name="status_image_cnt_des">Verbindungsstatus</string>
+    <string name="profile_image_cnt_des">Profilbild</string>
+    <string name="application_icon_cnt_des">Anwendungssymbol</string>
+    <string name="meh_face_cnt_des">Entäuschtes Gesicht-Symbol</string>
+    <string name="selected_picture_cnt_des">Ausgewähltes Bild</string>
+    <string name="decline_button_cnt_des">Transfer ablehnen</string>
+    <string name="accept_button_cnt_des">Transfer annehmen</string>
+    <string name="stop_button_cnt_des">Transfer anhalten</string>
+    <string name="retry_button_cnt_des">Transfer erneut versuchen</string>
     <!--  Other  -->
     <string name="please_select_download_dir">Dies ist das erste Mal, dass Sie die Anwendung starten.
         Bitten wählen Sie ein Verzeichnis, in dem Warpinator Dateien speichern soll.</string>
