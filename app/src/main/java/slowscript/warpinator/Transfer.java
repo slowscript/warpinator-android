@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.OpenableColumns;
 import android.util.Log;
 
@@ -236,7 +237,8 @@ public class Transfer {
         else if (svc.server.notifyIncoming && !autoAccept) {  //Notification
             Intent intent = new Intent(svc, TransfersActivity.class);
             intent.putExtra("remote", remoteUUID);
-            PendingIntent pendingIntent = PendingIntent.getActivity(svc, 0, intent, 0);
+            int immutable = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0;
+            PendingIntent pendingIntent = PendingIntent.getActivity(svc, 0, intent, immutable);
             Uri notifSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             Notification notification = new NotificationCompat.Builder(svc, MainService.CHANNEL_INCOMING)
                     .setContentTitle(svc.getString(R.string.incoming_transfer, MainService.remotes.get(remoteUUID).displayName))

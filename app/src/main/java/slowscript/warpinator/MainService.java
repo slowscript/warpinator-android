@@ -307,12 +307,13 @@ public class MainService extends Service {
     private Notification createForegroundNotification() {
         Intent openIntent = new Intent(this, MainActivity.class);
         openIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, openIntent, 0);
+        int immutable = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0;
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, openIntent, immutable);
 
         Intent stopIntent = new Intent(this, StopSvcReceiver.class);
         stopIntent.setAction(ACTION_STOP);
         PendingIntent stopPendingIntent =
-                PendingIntent.getBroadcast(this, 0, stopIntent, 0);
+                PendingIntent.getBroadcast(this, 0, stopIntent, immutable);
 
         String notificationTitle = getString(R.string.warpinator_notification_title);
         String notificationButton = getString(R.string.warpinator_notification_button);
