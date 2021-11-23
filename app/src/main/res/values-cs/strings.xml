@@ -93,4 +93,16 @@
     </string-array>
     <string name="error_network_unavailable">Síť není dostupná - zkuste hotspot?</string>
     <string name="error_service_not_running">Služba neběží</string>
+    <string name="connection_issues">Problémy s připojením</string>
+    <!--  Content descriptions  -->
+    <string name="reconnect_button_cnt_des">Znovu se pokusit o připojení</string>
+    <string name="status_image_cnt_des">Stav spojení</string>
+    <string name="profile_image_cnt_des">Profilový obrázek</string>
+    <string name="application_icon_cnt_des">Ikona aplikace</string>
+    <string name="meh_face_cnt_des">Ikona smutný obličej</string>
+    <string name="selected_picture_cnt_des">Vybraný obrázek</string>
+    <string name="decline_button_cnt_des">Odmítnout přenos</string>
+    <string name="accept_button_cnt_des">Přijmout přenos</string>
+    <string name="stop_button_cnt_des">Zastavit přenos</string>
+    <string name="retry_button_cnt_des">Znovu odeslat</string>
 </resources>
