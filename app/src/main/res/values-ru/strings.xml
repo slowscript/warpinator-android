@@ -77,6 +77,17 @@
     <string name="notification_channel_description">Постоянное уведомление о службе</string>
     <string name="incoming_transfer_channel">Входящая передача</string>
     <string name="transfer_progress_channel">Прогресс передачи</string>
+    <!--  Content descriptions  -->
+    <string name="reconnect_button_cnt_des">Переподключение</string>
+    <string name="status_image_cnt_des">Статус подключения</string>
+    <string name="profile_image_cnt_des">Изображение профиля</string>
+    <string name="application_icon_cnt_des">Значок приложения</string>
+    <string name="meh_face_cnt_des">Значок разочарованного лица</string>
+    <string name="selected_picture_cnt_des">Выбранное изображение</string>
+    <string name="decline_button_cnt_des">Отклонить передачу</string>
+    <string name="accept_button_cnt_des">Подтвердить передачу</string>
+    <string name="stop_button_cnt_des">Остановить передачу</string>
+    <string name="retry_button_cnt_des">Повторить передачу</string>
     <!--  Other  -->
     <string name="please_select_download_dir">Скорее всего, вы впервые запустили это приложение.
         Пожалуйста, выберите каталог, в который вы бы хотели, чтобы Warpinator сохранял файлы.</string>
