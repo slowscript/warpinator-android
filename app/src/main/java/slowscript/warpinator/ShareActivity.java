@@ -16,10 +16,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.documentfile.provider.DocumentFile;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class ShareActivity extends AppCompatActivity {
@@ -107,8 +109,10 @@ public class ShareActivity extends AppCompatActivity {
         layoutNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if (prefs.getString("downloadDir", "").equals("")) {
-            MainActivity.askForDirectoryAccess(this);
+        String dlDir = prefs.getString("downloadDir", "");
+        if (dlDir.equals("") || !(new File(dlDir).exists() || DocumentFile.fromTreeUri(this, Uri.parse(dlDir)).exists())) {
+            if (!MainActivity.trySetDefaultDirectory(this))
+                MainActivity.askForDirectoryAccess(this);
         }
     }
 

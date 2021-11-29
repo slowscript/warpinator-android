@@ -1,13 +1,17 @@
 package slowscript.warpinator;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -20,6 +24,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,8 +34,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.conscrypt.Conscrypt;
 
+import java.io.File;
 import java.security.Security;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -74,8 +79,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         String dlDir = prefs.getString("downloadDir", "");
-        if (dlDir.equals("") || !Objects.requireNonNull(DocumentFile.fromTreeUri(this, Uri.parse(dlDir))).exists()) {
-            askForDirectoryAccess(this);
+        if (dlDir.equals("") || !(new File(dlDir).exists() || DocumentFile.fromTreeUri(this, Uri.parse(dlDir)).exists())) {
+            if (!trySetDefaultDirectory(this))
+                askForDirectoryAccess(this);
         }
     }
 
@@ -185,5 +191,28 @@ public class MainActivity extends AppCompatActivity {
                     a.startActivity(intent);
                 })
                 .show();
+    }
+
+    public static boolean trySetDefaultDirectory(Activity a) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q && !checkWriteExternalPermission(a))
+            ActivityCompat.requestPermissions(a, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+
+        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Warpinator");
+        Log.d(TAG, "Trying to set default directory: " + dir.getAbsolutePath());
+        boolean res;
+        if (!dir.exists())
+            res = dir.mkdirs();
+        else res = true;
+        if (res)
+            PreferenceManager.getDefaultSharedPreferences(a).edit().putString("downloadDir", dir.getAbsolutePath()).apply();
+        Log.d(TAG, "Directory set " + (res ? "successfully" : "failed"));
+        return res;
+    }
+
+    private static boolean checkWriteExternalPermission(Activity a) {
+        String permission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+        int res = a.checkCallingOrSelfPermission(permission);
+        return (res == PackageManager.PERMISSION_GRANTED);
     }
 }

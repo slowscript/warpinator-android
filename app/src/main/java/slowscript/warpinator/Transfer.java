@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.FileUtils;
 import android.provider.OpenableColumns;
 import android.util.Log;
 
@@ -14,10 +15,12 @@ import androidx.core.app.NotificationCompat;
 import androidx.documentfile.provider.DocumentFile;
 
 import com.google.common.base.Strings;
+import com.google.common.io.Files;
 import com.google.protobuf.ByteString;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLConnection;
@@ -220,9 +223,8 @@ public class Transfer {
 
         //Check if will overwrite
         if (Server.current.allowOverwrite) {
-            Uri treeRoot = Uri.parse(Server.current.downloadDirUri);
             for (String file : topDirBasenames) {
-                if (Utils.pathExistsInTree(svc, treeRoot, file)) {
+                if (checkWillOverwrite(file)) {
                     overwriteWarning = true;
                     break;
                 }
@@ -283,12 +285,11 @@ public class Transfer {
                 failReceive();
                 return false;
             }
-            Uri rootUri = Uri.parse(Server.current.downloadDirUri);
-            DocumentFile root = DocumentFile.fromTreeUri(svc, rootUri);
+            String root = Server.current.downloadDirUri;
 
             String sanitizedName = currentRelativePath.replaceAll("[\\\\<>*|?:\"]", "_");
             if (chunk.getFileType() == FileType.DIRECTORY) {
-                createDirectories(root, rootUri, sanitizedName, null);
+                createDirectory(sanitizedName);
             }
             else if (chunk.getFileType() == FileType.SYMLINK) {
                 Log.e(TAG, "Symlinks not supported.");
@@ -296,24 +297,7 @@ public class Transfer {
             }
             else {
                 try {
-                    String fileName = sanitizedName;
-                    //Handle overwriting
-                    if(Utils.pathExistsInTree(svc, rootUri, fileName)) {
-                        fileName = handleFileExists(fileName);
-                    }
-                    //Get parent
-                    DocumentFile parent = root;
-                    if (fileName.contains("/")) {
-                        String parentRelPath = fileName.substring(0, fileName.lastIndexOf("/"));
-                        fileName = fileName.substring(fileName.lastIndexOf("/")+1);
-                        Uri dirUri = Utils.getChildUri(rootUri, parentRelPath);
-                        parent = DocumentFile.fromTreeUri(svc, dirUri);
-                    }
-                    //Create file
-                    String mime = guessMimeType(fileName);
-                    DocumentFile file = parent.createFile(mime, fileName);
-                    currentUri = file.getUri();
-                    currentStream = svc.getContentResolver().openOutputStream(currentUri);
+                    currentStream = openFileStream(sanitizedName);
                     currentStream.write(chunk.getChunk().toByteArray());
                     chunkSize = chunk.getChunk().size();
                 } catch (Exception e) {
@@ -354,10 +338,15 @@ public class Transfer {
         Log.v(TAG, "Stopping receiving");
         closeStream();
         //Delete incomplete file
-        try {
-            DocumentFile f = DocumentFile.fromSingleUri(svc, currentUri);
+        if (Server.current.downloadDirUri.startsWith("content:")) {
+            try {
+                DocumentFile f = DocumentFile.fromSingleUri(svc, currentUri);
+                f.delete();
+            } catch (Exception ignored) {}
+        } else {
+            File f = new File(Server.current.downloadDirUri, currentRelativePath);
             f.delete();
-        } catch (Exception ignored) {}
+        }
     }
 
     private void failReceive() {
@@ -378,7 +367,32 @@ public class Transfer {
         }
     }
 
-    private String handleFileExists(String path) {
+    private boolean checkWillOverwrite(String relPath) {
+        if (Server.current.downloadDirUri.startsWith("content:")) {
+            Uri treeRoot = Uri.parse(Server.current.downloadDirUri);
+            return Utils.pathExistsInTree(svc, treeRoot, relPath);
+        } else {
+            return new File(Server.current.downloadDirUri, relPath).exists();
+        }
+    }
+
+    private File handleFileExists(File f) {
+        Log.d(TAG, "File exists: " + f.getAbsolutePath());
+        if(Server.current.allowOverwrite) {
+            Log.v(TAG, "Overwriting");
+            f.delete();
+        } else {
+            String name = f.getParent() + "/" + Files.getNameWithoutExtension(f.getAbsolutePath());
+            String ext = Files.getFileExtension(f.getAbsolutePath());
+            int i = 1;
+            while (f.exists())
+                f = new File(String.format("%s(%d).%s", name, i++, ext));
+            Log.d(TAG, "Renamed to " + f.getAbsolutePath());
+        }
+        return f;
+    }
+
+    private String handleUriExists(String path) {
         Uri root = Uri.parse(Server.current.downloadDirUri);
         DocumentFile f = Utils.getChildFromTree(svc, root, path);
         Log.d(TAG, "File exists: " + f.getUri());
@@ -405,7 +419,20 @@ public class Transfer {
         return path;
     }
 
-    private void createDirectories(DocumentFile parent, Uri rootUri, String path, @Nullable String done) {
+    private void createDirectory(String path) {
+        if (Server.current.downloadDirUri.startsWith("content:")) {
+            Uri rootUri = Uri.parse(Server.current.downloadDirUri);
+            DocumentFile root = DocumentFile.fromTreeUri(svc, rootUri);
+            createDirectories(root, path, null);
+        } else {
+            if (!new File(path).mkdirs()) {
+                errors.add("Failed to create directory " + path);
+                Log.e(TAG, "Failed to create directory " + path);
+            }
+        }
+    }
+
+    private void createDirectories(DocumentFile parent, String path, @Nullable String done) {
         String dir = path;
         String rest  = null;
         if (path.contains("/")) {
@@ -413,7 +440,7 @@ public class Transfer {
             rest = path.substring(path.indexOf("/")+1);
         }
         String absDir = done == null ? dir : done +"/"+ dir; //Path from rootUri - just to check existence
-        DocumentFile newDir = DocumentFile.fromTreeUri(svc, Utils.getChildUri(rootUri, absDir));
+        DocumentFile newDir = DocumentFile.fromTreeUri(svc, Utils.getChildUri(Uri.parse(Server.current.downloadDirUri), absDir));
         if (!newDir.exists()) {
             newDir = parent.createDirectory(dir);
             if (newDir == null) {
@@ -423,7 +450,36 @@ public class Transfer {
             }
         }
         if (rest != null)
-            createDirectories(newDir, rootUri, rest, absDir);
+            createDirectories(newDir, rest, absDir);
+    }
+
+    private OutputStream openFileStream(String fileName) throws FileNotFoundException {
+        if (Server.current.downloadDirUri.startsWith("content:")) {
+            Uri rootUri = Uri.parse(Server.current.downloadDirUri);
+            DocumentFile root = DocumentFile.fromTreeUri(svc, rootUri);
+            if(Utils.pathExistsInTree(svc, rootUri, fileName)) {
+                fileName = handleUriExists(fileName);
+            }
+            //Get parent
+            DocumentFile parent = root;
+            if (fileName.contains("/")) {
+                String parentRelPath = fileName.substring(0, fileName.lastIndexOf("/"));
+                fileName = fileName.substring(fileName.lastIndexOf("/")+1);
+                Uri dirUri = Utils.getChildUri(rootUri, parentRelPath);
+                parent = DocumentFile.fromTreeUri(svc, dirUri);
+            }
+            //Create file
+            String mime = guessMimeType(fileName);
+            DocumentFile file = parent.createFile(mime, fileName);
+            currentUri = file.getUri();
+            return svc.getContentResolver().openOutputStream(currentUri);
+        } else {
+            File path = new File(Server.current.downloadDirUri, fileName);
+            if(path.exists()) {
+                path = handleFileExists(path);
+            }
+            return new FileOutputStream(path, false);
+        }
     }
 
     private String guessMimeType(String name) {
