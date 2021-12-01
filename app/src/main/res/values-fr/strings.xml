@@ -5,6 +5,7 @@
     <string name="title_activity_transfers">Transferts</string>
     <string name="send_files">Envoyer des fichiers</string>
     <string name="quit">Quitter</string>
+    <string name="connection_issues">Problèmes de connexion</string>
     <string name="about">À propos</string>
     <string name="settings">Réglages</string>
     <string name="title_activity_share">Partager avec</string>
@@ -76,6 +77,17 @@
     <string name="notification_channel_description">Notification de service persistante</string>
     <string name="incoming_transfer_channel">Transfert entrant</string>
     <string name="transfer_progress_channel">Progression du transfert</string>
+    <!--  Content descriptions  -->
+    <string name="reconnect_button_cnt_des">Reconnexion</string>
+    <string name="status_image_cnt_des">État de la connexion</string>
+    <string name="profile_image_cnt_des">Image de profil</string>
+    <string name="application_icon_cnt_des">Icône d\'application</string>
+    <string name="meh_face_cnt_des">Icône de visage déçu</string>
+    <string name="selected_picture_cnt_des">Image sélectionnée</string>
+    <string name="decline_button_cnt_des">Décliner le transfert</string>
+    <string name="accept_button_cnt_des">Accepter le transfert</string>
+    <string name="stop_button_cnt_des">Arrêter le transfert</string>
+    <string name="retry_button_cnt_des">Réessayer le transfert</string>
     <!--  Other  -->
     <string name="please_select_download_dir">C\'est probablement la première fois que vous lancez cette application.
         Veuillez sélectionner un répertoire dans lequel Warpinator enregistrera les fichiers.</string>
