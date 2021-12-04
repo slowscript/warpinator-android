@@ -5,6 +5,7 @@
     <string name="title_activity_transfers">Aktarımlar</string>
     <string name="send_files">Dosyaları gönder</string>
     <string name="quit">Çık</string>
+    <string name="connection_issues">Bağlantı sorunları</string>
     <string name="about">Hakkında</string>
     <string name="settings">Ayarlar</string>
     <string name="title_activity_share">İle paylaş</string>
@@ -12,7 +13,7 @@
     <string name="no_devices_found">Diğer aygıt bulunamadı</string>
     <string name="wrong_group_code">Bağlantı başarısız oldu: Yanlış grup kodu</string>
     <string name="connection_error">Bağlantı hatası</string>
-    <string name="not_connected_to_wifi">WiFi veya LAN'a bağlı değilsiniz. Hiçbiri mevcut değilse, etkin noktanızı kullanın.
+    <string name="not_connected_to_wifi">WiFi veya LAN\'a bağlı değilsiniz. Hiçbiri mevcut değilse, etkin noktanızı kullanın.
         Bağlandığınızda uygulamayı yeniden başlatın.</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">İzin bekleniyor…</string>
@@ -24,7 +25,7 @@
     <string name="dont_close_when_sharing">Paylaşım sırasında bu etkinliği kapatmak, aktarımın başarısız olmasına neden olabilir</string>
     <!--  About activity  -->
     <string name="version">Sürüm: %1$s</string>
-    <string name="about_description">Bu, Warpinator'ün resmi olmayan bir uygulamasıdır. \nYerel ağ üzerinden dosya gönderin ve alın.</string>
+    <string name="about_description">Bu, Warpinator\'ün resmi olmayan bir uygulamasıdır. \nYerel ağ üzerinden dosya gönderin ve alın.</string>
     <string name="warranty_html">
         Bu program, &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU Genel Kamu Lisansı&lt;/a> altında lisanslanmış açık kaynaklı bir yazılımdır.&lt;br>
         Kaynak kodunu &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a> adresinden edinebilirsiniz.&lt;br>
@@ -70,19 +71,30 @@
     <string name="warpinator_notification_button">Hizmeti durdur</string>
     <string name="transfers_complete">Tüm aktarımlar tamamlandı</string>
     <string name="transfer_notification">%1$.1f%%, %2$d aktarımlar, %3$s/s</string>
-    <string name="incoming_transfer">%s'den gelen aktarım</string>
+    <string name="incoming_transfer">%s\'den gelen aktarım</string>
     <string name="num_files">%d dosyalar</string>
     <string name="service_running">Hizmet çalışıyor</string>
     <string name="notification_channel_description">Kalıcı hizmet bildirimi</string>
     <string name="incoming_transfer_channel">Gelen aktarım</string>
     <string name="transfer_progress_channel">Aktarım ilerlemesi</string>
+    <!--  Content descriptions  -->
+    <string name="reconnect_button_cnt_des">Yeniden Bağlan</string>
+    <string name="status_image_cnt_des">Bağlantı durumu</string>
+    <string name="profile_image_cnt_des">Profil fotoğrafı</string>
+    <string name="application_icon_cnt_des">Uygulama simgesi</string>
+    <string name="meh_face_cnt_des">Hayal kırıklığına uğramış yüz simgesi</string>
+    <string name="selected_picture_cnt_des">Seçilen resim</string>
+    <string name="decline_button_cnt_des">Aktarımı reddet</string>
+    <string name="accept_button_cnt_des">Aktarımı kabul et</string>
+    <string name="stop_button_cnt_des">Aktarımı durdur</string>
+    <string name="retry_button_cnt_des">Aktarımı yeniden deneyin</string>
     <!--  Other  -->
     <string name="please_select_download_dir">Muhtemelen bu uygulamayı ilk kez başlatıyorsunuz.
-        Lütfen Warpinator'ün dosyaları kaydetmesini istediğiniz bir dizini seçin.</string>
+        Lütfen Warpinator\'ün dosyaları kaydetmesini istediğiniz bir dizini seçin.</string>
     <string name="error_download_dir">Ayarlarda bir indirme dizini seçmelisiniz</string>
     <string name="error_network_unavailable">Ağ kullanılamıyor - etkin noktayı denemek ister misiniz?</string>
     <string name="error_service_not_running">Hizmet çalışmıyor</string>
-    <string name="cert_not_received">%1$s'den sertifika alınamadı. Uzak\'ın güvenlik duvarında %2$d bağlantı noktasında UDP (ve ayrıca TCP) trafiğine izin verdiğinizden emin olun.</string>
+    <string name="cert_not_received">%1$s\'den sertifika alınamadı. Uzak\'ın güvenlik duvarında %2$d bağlantı noktasında UDP (ve ayrıca TCP) trafiğine izin verdiğinizden emin olun.</string>
     <string-array name="connected_states">
         <item>Bağlandı</item>
         <item>Bağlantı kesildi</item>
