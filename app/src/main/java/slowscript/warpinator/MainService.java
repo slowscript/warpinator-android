@@ -232,7 +232,7 @@ public class MainService extends Service {
         String newIP = Utils.getIPAddress();
         if (!newIP.equals(lastIP)) {
             Log.d(TAG, ":: Restarting. New IP: " + newIP);
-            LocalBroadcasts.displayToast(this, "Network changed - restarting service...", 1);
+            LocalBroadcasts.displayToast(this, getString(R.string.changed_network), 1);
             lastIP = newIP;
             // Regenerate cert
             Authenticator.getServerCertificate();
