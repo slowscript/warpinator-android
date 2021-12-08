@@ -14,6 +14,7 @@
     <string name="connection_error">Ошибка подключения</string>
     <string name="not_connected_to_wifi">Вы не подключены к Wi-Fi или LAN. Используйте свою точку доступа, если ничего из вышеперечисленного не доступно.
         После подключения перезапустите приложение.</string>
+    <string name="changed_network">Сеть изменена - перезапуск службы ...</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">Ожидание подтверждения…</string>
     <string name="files_overwritten_warning">(Файлы могут быть перезаписаны!)</string>
