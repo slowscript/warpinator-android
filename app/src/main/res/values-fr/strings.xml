@@ -14,6 +14,7 @@
     <string name="connection_error">Erreur de connexion</string>
     <string name="not_connected_to_wifi">Vous n\'êtes pas connecté au Wi-Fi ou à un réseau local. Utilisez votre point d\'accès Wi-Fi si aucun n\'est disponible.
         Redémarrez l\'application lorsque vous serez connecté.</string>
+    <string name="changed_network">Réseau changé - redémarrage du service…</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">Attente de la permission…</string>
     <string name="files_overwritten_warning">(Les fichiers peuvent être écrasés !)</string>
