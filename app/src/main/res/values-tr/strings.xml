@@ -5,6 +5,7 @@
     <string name="title_activity_transfers">Aktarımlar</string>
     <string name="send_files">Dosyaları gönder</string>
     <string name="quit">Çık</string>
+    <string name="connection_issues">Bağlantı sorunları</string>
     <string name="about">Hakkında</string>
     <string name="settings">Ayarlar</string>
     <string name="title_activity_share">İle paylaş</string>
@@ -76,6 +77,17 @@
     <string name="notification_channel_description">Kalıcı hizmet bildirimi</string>
     <string name="incoming_transfer_channel">Gelen aktarım</string>
     <string name="transfer_progress_channel">Aktarım ilerlemesi</string>
+    <!--  Content descriptions  -->
+    <string name="reconnect_button_cnt_des">Yeniden Bağlan</string>
+    <string name="status_image_cnt_des">Bağlantı durumu</string>
+    <string name="profile_image_cnt_des">Profil fotoğrafı</string>
+    <string name="application_icon_cnt_des">Uygulama simgesi</string>
+    <string name="meh_face_cnt_des">Hayal kırıklığına uğramış yüz simgesi</string>
+    <string name="selected_picture_cnt_des">Seçilen resim</string>
+    <string name="decline_button_cnt_des">Aktarımı reddet</string>
+    <string name="accept_button_cnt_des">Aktarımı kabul et</string>
+    <string name="stop_button_cnt_des">Aktarımı durdur</string>
+    <string name="retry_button_cnt_des">Aktarımı yeniden deneyin</string>
     <!--  Other  -->
     <string name="please_select_download_dir">Muhtemelen bu uygulamayı ilk kez başlatıyorsunuz.
         Lütfen Warpinator\'ün dosyaları kaydetmesini istediğiniz bir dizini seçin.</string>

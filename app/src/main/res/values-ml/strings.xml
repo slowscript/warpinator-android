@@ -1,6 +1,5 @@
 <resources>
     <!--  App Name  -->
-    <string name="app_name" translatable="false">Warpinator</string>
     <!--  Main Activity  -->
     <string name="title_activity_transfers">കൈമാറ്റങ്ങൾ</string>
     <string name="send_files">ഫയലുകൾ അയയ്‌ക്കുക</string>
@@ -23,7 +22,7 @@
     <string name="errors_during_transfer">കൈമാറ്റം ചെയ്യുമ്പോൾ പിശകുകൾ:</string>
     <string name="dont_close_when_sharing">പങ്കിടുമ്പോൾ ഈ പ്രവർത്തനം നിർത്തുന്നത് കൈമാറ്റം പരാജയപ്പെടാൻ കാരണമായേക്കാം</string>
     <!--  About activity  -->
-    <string name="version">പതിപ്പ്:% 1 $ s</string>
+    <string name="version">പതിപ്പ്: %1$s</string>
     <string name="about_description">ഇത് വാർ‌പിനേറ്ററിന്റെ അനൗദ്യോഗിക ബഹുരൂപമാണ്. \nപ്രാദേശിക ശൃംഖലയിൽ ഫയലുകൾ അയക്കാം, സ്വീകരിക്കാം.</string>
     <string name="warranty_html">
         ഈ പ്രോഗ്രാം ഓപ്പൺ സോഴ്‌സ് സോഫ്റ്റ്‌വെയറാണ് under &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">ഗ്നു ജനറൽ പബ്ലിക് ലൈസൻസ് &lt;/a>.&lt;br>

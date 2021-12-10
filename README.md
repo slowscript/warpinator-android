@@ -20,4 +20,11 @@ export ANDROID_SDK_ROOT=$HOME/Android/Sdk
 
 ## Translations
 
-Warpinator for Android can be translated just like any other Android application. Just copy `strings.xml` from `/app/src/main/res/values` to `/app/src/main/res/values-xx` where `xx` is the code of the language you are translating to. Then translate everything in the new xml file and submit a [PR](https://github.com/slowscript/warpinator-android/pulls).
+Warpinator for Android can be translated just like any other Android application. Just follow these simple steps:
+
+1. Copy `strings.xml` from `/app/src/main/res/values` to `/app/src/main/res/values-xx` where `xx` is the code of the language you are translating to.
+2. Remove ```<string name="app_name" translatable="false">Warpinator</string>```
+3. Translate everything in the new xml file
+4. Submit a [PR](https://github.com/slowscript/warpinator-android/pulls).
+
+Alternatively you can use Android Studio's built-in translations editor.
