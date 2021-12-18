@@ -64,6 +64,7 @@ public class Transfer {
     public boolean overwriteWarning = false;
 
     private String currentRelativePath;
+    private long currentLastMod = -1;
     private Uri currentUri;
     private OutputStream currentStream;
     public final ArrayList<String> errors = new ArrayList<>();
@@ -133,6 +134,7 @@ public class Transfer {
             int i = 0;
             InputStream is;
             byte[] chunk = new byte[CHUNK_SIZE];
+            boolean first_chunk = true;
 
             @Override
             public void run() {
@@ -145,6 +147,7 @@ public class Transfer {
                         }
                         if (is == null) {
                             is = svc.getContentResolver().openInputStream(uris.get(i));
+                            first_chunk = true;
                         }
                         if (is.available() < 1) {
                             is.close();
@@ -158,11 +161,20 @@ public class Transfer {
                             continue;
                         }
                         int read = is.read(chunk);
+                        WarpProto.FileTime ft = WarpProto.FileTime.getDefaultInstance();
+                        if (first_chunk) {
+                            first_chunk = false;
+                            try {
+                                long lastmod = DocumentFile.fromSingleUri(svc, uris.get(i)).lastModified();
+                                ft = WarpProto.FileTime.newBuilder().setMtime(lastmod / 1000).setMtimeUsec((int)(lastmod % 1000) * 1000).build();
+                            } catch (Exception e) {Log.w(TAG, "Could not get lastMod", e);}
+                        }
                         WarpProto.FileChunk fc = WarpProto.FileChunk.newBuilder()
                                 .setRelativePath(Utils.getNameFromUri(svc, uris.get(i)))
                                 .setFileType(FileType.FILE)
                                 .setChunk(ByteString.copyFrom(chunk, 0, read))
                                 .setFileMode(0644)
+                                .setTime(ft)
                                 .build();
                         observer.onNext(fc);
                         bytesTransferred += read;
@@ -278,6 +290,10 @@ public class Transfer {
         if (!chunk.getRelativePath().equals(currentRelativePath)) {
             //End old file
             closeStream();
+            if (currentLastMod != -1) {
+                setLastModified();
+                currentLastMod = -1;
+            }
             //Begin new file
             currentRelativePath = chunk.getRelativePath();
             if ("".equals(Server.current.downloadDirUri)) {
@@ -285,7 +301,6 @@ public class Transfer {
                 failReceive();
                 return false;
             }
-            String root = Server.current.downloadDirUri;
 
             String sanitizedName = currentRelativePath.replaceAll("[\\\\<>*|?:\"]", "_");
             if (chunk.getFileType() == FileType.DIRECTORY) {
@@ -296,6 +311,10 @@ public class Transfer {
                 errors.add("Symlinks not supported."); //This one can be ignored
             }
             else {
+                if (chunk.hasTime()) {
+                    WarpProto.FileTime ft = chunk.getTime();
+                    currentLastMod = ft.getMtime()*1000 + ft.getMtimeUsec()/1000;
+                }
                 try {
                     currentStream = openFileStream(sanitizedName);
                     currentStream.write(chunk.getChunk().toByteArray());
@@ -322,7 +341,6 @@ public class Transfer {
         lastMillis = now;
         updateUI();
         return getStatus() == Status.TRANSFERRING; //True if not interrupted
-        //TODO: Transfer lastMod
     }
 
     public void finishReceive() {
@@ -331,6 +349,8 @@ public class Transfer {
             setStatus(Status.FINISHED_WITH_ERRORS);
         else setStatus(Status.FINISHED);
         closeStream();
+        if (currentLastMod != -1)
+            setLastModified();
         updateUI();
     }
 
@@ -364,6 +384,15 @@ public class Transfer {
                 currentStream.close();
                 currentStream = null;
             } catch (Exception ignored) {}
+        }
+    }
+
+    private void setLastModified() {
+        //This is apparently not possible with SAF
+        if (!Server.current.downloadDirUri.startsWith("content:")) {
+            File f = new File(Server.current.downloadDirUri, currentRelativePath);
+            Log.d(TAG, "Setting lastMod: " + currentLastMod);
+            f.setLastModified(currentLastMod);
         }
     }
 
