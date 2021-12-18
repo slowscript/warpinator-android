@@ -109,7 +109,6 @@ public class Transfer {
     // -- SEND --
     public void prepareSend() {
         //Only uris and remoteUUID are set from before
-        setStatus(Status.WAITING_PERMISSION);
         direction = Direction.SEND;
         startTime = System.currentTimeMillis();
         totalSize = getTotalSendSize();
@@ -122,6 +121,8 @@ public class Transfer {
             singleName = Strings.nullToEmpty(topDirBasenames.get(0));
             singleMime = Strings.nullToEmpty(svc.getContentResolver().getType(uris.get(0)));
         }
+        setStatus(Status.WAITING_PERMISSION);
+        updateUI();
     }
 
     public void startSending(CallStreamObserver<WarpProto.FileChunk> observer) {
