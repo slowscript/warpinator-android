@@ -65,7 +65,8 @@ public class Transfer {
 
     private String currentRelativePath;
     private long currentLastMod = -1;
-    private Uri currentUri;
+    Uri currentUri;
+    File currentFile;
     private OutputStream currentStream;
     public final ArrayList<String> errors = new ArrayList<>();
     private boolean cancelled = false;
@@ -365,8 +366,7 @@ public class Transfer {
                 f.delete();
             } catch (Exception ignored) {}
         } else {
-            File f = new File(Server.current.downloadDirUri, currentRelativePath);
-            f.delete();
+            currentFile.delete();
         }
     }
 
@@ -504,11 +504,11 @@ public class Transfer {
             currentUri = file.getUri();
             return svc.getContentResolver().openOutputStream(currentUri);
         } else {
-            File path = new File(Server.current.downloadDirUri, fileName);
-            if(path.exists()) {
-                path = handleFileExists(path);
+            currentFile = new File(Server.current.downloadDirUri, fileName);
+            if(currentFile.exists()) {
+                currentFile = handleFileExists(currentFile);
             }
-            return new FileOutputStream(path, false);
+            return new FileOutputStream(currentFile, false);
         }
     }
 

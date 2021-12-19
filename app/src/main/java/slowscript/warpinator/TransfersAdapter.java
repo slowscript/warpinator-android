@@ -2,7 +2,11 @@ package slowscript.warpinator;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.DocumentsContract;
 import android.text.format.Formatter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +24,7 @@ import com.google.common.base.Joiner;
 public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.ViewHolder> {
 
     TransfersActivity activity;
+    private static final String TAG = "TransferAdapter";
 
     public TransfersAdapter(TransfersActivity _app) {
         activity = _app;
@@ -94,6 +99,28 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
             } else if (t.getStatus() == Transfer.Status.TRANSFERRING) {
                 String remaining = getRemainingTime(t) + " " + activity.getString(R.string.remaining);
                 Toast.makeText(activity, remaining, Toast.LENGTH_SHORT).show();
+            } else if (t.getStatus() == Transfer.Status.WAITING_PERMISSION && t.fileCount > 1) {
+                Utils.displayMessage(activity, activity.getString(R.string.files_being_sent), Joiner.on("\n").join(t.topDirBasenames));
+            } else if (t.getStatus() == Transfer.Status.FINISHED && t.direction == Transfer.Direction.RECEIVE) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                if (t.fileCount == 1) {
+                    Uri uri = t.currentFile != null ? Uri.parse(t.currentFile.getPath()) : t.currentUri;
+                    intent.setDataAndType(uri, t.singleMime);
+                } else {
+                    Uri u = Uri.parse(Server.current.downloadDirUri);
+                    if (Server.current.downloadDirUri.startsWith("content:/")) {
+                        String id = DocumentsContract.getTreeDocumentId(u);
+                        u = DocumentsContract.buildDocumentUriUsingTree(u, id);
+                    }
+                    intent.setDataAndType(u, DocumentsContract.Document.MIME_TYPE_DIR);
+                }
+                try {
+                    Intent chooser = Intent.createChooser(intent, null);
+                    activity.startActivity(chooser);
+                } catch (Exception e) {
+                    Log.e(TAG, "Failed to open received file", e);
+                    Toast.makeText(activity, "Failed to open received file", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
