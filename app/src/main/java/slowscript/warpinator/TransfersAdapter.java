@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.common.base.Joiner;
@@ -104,7 +105,11 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
             } else if (t.getStatus() == Transfer.Status.FINISHED && t.direction == Transfer.Direction.RECEIVE) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 if (t.fileCount == 1) {
-                    Uri uri = t.currentFile != null ? Uri.parse(t.currentFile.getPath()) : t.currentUri;
+                    Uri uri;
+                    if (t.currentFile != null) {
+                        uri = FileProvider.getUriForFile(activity, activity.getApplicationContext().getPackageName() + ".provider", t.currentFile);
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    } else uri = t.currentUri;
                     intent.setDataAndType(uri, t.singleMime);
                 } else {
                     Uri u = Uri.parse(Server.current.downloadDirUri);

@@ -455,7 +455,7 @@ public class Transfer {
             DocumentFile root = DocumentFile.fromTreeUri(svc, rootUri);
             createDirectories(root, path, null);
         } else {
-            if (!new File(path).mkdirs()) {
+            if (!new File(Server.current.downloadDirUri, path).mkdirs()) {
                 errors.add("Failed to create directory " + path);
                 Log.e(TAG, "Failed to create directory " + path);
             }
