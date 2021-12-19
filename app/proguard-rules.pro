@@ -21,3 +21,11 @@
 #-renamesourcefileattribute SourceFile
 
 -dontobfuscate
+
+# Netty
+-keep public class io.netty.util.ReferenceCountUtil {
+    *;
+}
+-keep public interface io.netty.channel.ChannelOutboundInvoker {
+    *;
+}
