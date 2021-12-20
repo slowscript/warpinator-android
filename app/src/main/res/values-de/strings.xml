@@ -19,7 +19,7 @@
     <string name="a_few_seconds">ein paar Sekunden</string>
     <string name="service_unavailable">, Service nicht verfügbar</string>
     <string name="errors_during_transfer">Fehler während Transfer:</string>
-    <string name="dont_close_when_sharing">Das Schließen dieser Aktivität während der Übertragung könnte zum fehlschlagen des Transfers führen</string>
+    <string name="dont_close_when_sharing">Das Schließen dieser Aktivität während der Übertragung könnte zum Fehlschlagen des Transfers führen</string>
     <!--  About activity  -->
     <string name="version">Version: %1$s</string>
     <string name="about_description">Dies ist eine inoffizieller Portierung von Warpinator. \nSenden und Empfangen von Dateien im lokalen Netzwerk.</string>
@@ -44,29 +44,29 @@
     <string name="notification_settings_title">Benachrichtigung über eingehende Dateien anzeigen</string>
     <string name="overwrite_settings_title">Überschreiben erlauben</string>
     <string name="accept_settings_title">Transfer automatisch akzeptieren</string>
-    <string name="accept_setting_summary_on">Der Transfer wird automatisch akzeptiert</string>
-    <string name="accept_setting_summary_off">Jeder Transfer muss von Dir akzeptiert werden</string>
-    <string name="background_settings_title">Im Hintergrund ausführend</string>
+    <string name="accept_setting_summary_on">Der Transfer wird automatisch angenommen</string>
+    <string name="accept_setting_summary_off">Jeder Transfer muss von Dir bestätigt werden</string>
+    <string name="background_settings_title">Im Hintergrund ausführen</string>
     <string name="boot_settings_title">Automatisch starten</string>
     <string name="export_log_settings_tile">Debug-Protokoll in Datei schreiben</string>
     <string name="group_code_settings_title">Gruppenschlüssel</string>
     <string name="port_settings_title">Port</string>
     <string name="theme_settings_title">Thema</string>
-    <string name="notification_settings_summary">Dies wird möglicherweise durch Android\'s Benachrichtigungseinstellungen beeinflusst</string>
+    <string name="notification_settings_summary">Dies wird möglicherweise durch Androids Benachrichtigungseinstellungen beeinflusst</string>
     <string name="port_range_warning">Port muss zwischen 1024 und 65535 liegen</string>
     <string name="requires_restart_warning">Die Änderung dieser Einstellung erfordert einen Neustart der Anwendung</string>
-    <string name="overwrite_settings_summary_on">Eingehende Dateien mit einem Namen der bereits existiert, überschreiben die existierenden</string>
-    <string name="overwrite_settings_summary_off">Eingehende Dateien mit einem Namen der bereits existiert, werden umbenannt</string>
+    <string name="overwrite_settings_summary_on">Eingehende Dateien mit einem Namen, der bereits existiert, überschreiben die bestehenden</string>
+    <string name="overwrite_settings_summary_off">Eingehende Dateien mit einem Namen, der bereits existiert, werden umbenannt</string>
     <string name="custom">Benutzerdefiniert</string>
     <string name="unsupported_provider">Sie haben einen nicht unterstützten Pfad/Datenträger ausgewählt. Bitte wählen Sie ein Verzeichnis aus dem internen Speicher.</string>
     <!--  Theme settings -->
     <string name="sysDefault">Systemstandard verwenden</string>
     <string name="lightTheme">Helles Thema</string>
-    <string name="darkTheme">Dunkels Thema</string>
+    <string name="darkTheme">Dunkles Thema</string>
     <!--  Notification  -->
     <string name="warpinator_notification_title">Warpinator-Dienst wird ausgeführt</string>
     <string name="warpinator_notification_button">Dienst anhalten</string>
-    <string name="transfers_complete">Alle Transfer fertiggestellt</string>
+    <string name="transfers_complete">Alle Transfers fertiggestellt</string>
     <string name="transfer_notification">%1$.1f%%, %2$d Transfers, %3$s/s</string>
     <string name="incoming_transfer">Eingehender Transfer von %s</string>
     <string name="num_files">%d Dateien</string>
@@ -75,7 +75,7 @@
     <string name="incoming_transfer_channel">Eingehender Transfer</string>
     <string name="transfer_progress_channel">Transferfortschritt</string>
     <!--  Content descriptions  -->
-    <string name="reconnect_button_cnt_des">Neu-Verbinden</string>
+    <string name="reconnect_button_cnt_des">Neu verbinden</string>
     <string name="status_image_cnt_des">Verbindungsstatus</string>
     <string name="profile_image_cnt_des">Profilbild</string>
     <string name="application_icon_cnt_des">Anwendungssymbol</string>
@@ -84,11 +84,11 @@
     <string name="decline_button_cnt_des">Transfer ablehnen</string>
     <string name="accept_button_cnt_des">Transfer annehmen</string>
     <string name="stop_button_cnt_des">Transfer anhalten</string>
-    <string name="retry_button_cnt_des">Transfer erneut versuchen</string>
+    <string name="retry_button_cnt_des">Transfer erneut starten</string>
     <!--  Other  -->
     <string name="please_select_download_dir">Dies ist das erste Mal, dass Sie die Anwendung starten.
         Bitten wählen Sie ein Verzeichnis, in dem Warpinator Dateien speichern soll.</string>
-    <string name="error_download_dir">Sie müssen in den Einstellungen ein Downloadverzeichnis auswählen</string>
+    <string name="error_download_dir">Sie müssen in den Einstellungen ein Downloadverzeichnis auswählen.</string>
     <string name="error_network_unavailable">Netzwerk nicht verfügbar - Hotspot versuchen?</string>
     <string name="error_service_not_running">Dienst wird nicht ausgeführt</string>
     <string name="cert_not_received">Abruf des Zertifikats von %1$s fehlgeschlagen. Stellen Sie sicher, dass UDP (genauso wie TCP) Datenverkehr auf Port %2$d in der Firewall der Gegenstelle erlaubt ist.</string>
