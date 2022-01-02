@@ -5,6 +5,8 @@
     <string name="send_files">Отправить файлы</string>
     <string name="quit">Выход</string>
     <string name="connection_issues">При проблемах с подключением</string>
+    <string name="reannounce">Повторная регистрация устройства</string>
+    <string name="rescan">Повторный поиск устройств</string>
     <string name="about">О приложении</string>
     <string name="settings">Настройки</string>
     <string name="title_activity_share">Поделиться с</string>
@@ -19,10 +21,12 @@
     <string name="waiting_for_permission">Ожидание подтверждения…</string>
     <string name="files_overwritten_warning">(Файлы могут быть перезаписаны!)</string>
     <string name="remaining">осталось</string>
+    <string name="open_failed">Не удалось открыть полученный файл</string>   
     <string name="a_few_seconds">ещё несколько секунд</string>
     <string name="service_unavailable">, служба недоступна</string>
     <string name="errors_during_transfer">Ошибки при передаче:</string>
     <string name="dont_close_when_sharing">Закрытие этой операции при совместном использовании может привести к сбою передачи</string>
+    <string name="files_being_sent">Список передаваемых файлов:</string>
     <!--  About activity  -->
     <string name="version">Версия: %1$s</string>
     <string name="about_description">Это неофициальный порт Warpinator. \nОтправляйте и получайте файлы по локальной сети.</string>
@@ -58,6 +62,7 @@
     <string name="notification_settings_summary">Параметр может зависеть от настроек уведомлений Android</string>
     <string name="port_range_warning">Номер порта должен быть от 1024 до 65535</string>
     <string name="requires_restart_warning">Для изменения этого параметра требуется перезапуск приложения</string>
+    <string name="required_dialog_not_found">Производитель вашего телефона не реализовал требуемый диалог. Это будет исправлено в следующем выпуске.</string>   
     <string name="overwrite_settings_summary_on">Входящие файлы с уже имеющимся именем перезапишут существующие</string>
     <string name="overwrite_settings_summary_off">Входящие файлы с уже имеющимся именем будут переименованы</string>
     <string name="custom">Другое</string>
@@ -70,7 +75,7 @@
     <string name="warpinator_notification_title">Служба Warpinator запущена</string>
     <string name="warpinator_notification_button">Остановить</string>
     <string name="transfers_complete">Все передачи завершены</string>
-    <string name="transfer_notification">%1$.1f%%, кол-во передач: %2$d, %3$s/s</string>
+    <string name="transfer_notification">%1$.1f%%, кол-во передач: %2$d, %3$s/сек</string>
     <string name="incoming_transfer">Входящая передача от %s</string>
     <string name="num_files">кол-во файлов: %d</string>
     <string name="service_running">Служба запущена</string>

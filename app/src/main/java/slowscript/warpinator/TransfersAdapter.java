@@ -124,7 +124,7 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
                     activity.startActivity(chooser);
                 } catch (Exception e) {
                     Log.e(TAG, "Failed to open received file", e);
-                    Toast.makeText(activity, "Failed to open received file", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, R.string.open_failed, Toast.LENGTH_SHORT).show();
                 }
             }
         });
