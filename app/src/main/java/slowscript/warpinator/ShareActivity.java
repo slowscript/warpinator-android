@@ -112,7 +112,11 @@ public class ShareActivity extends AppCompatActivity {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String dlDir = prefs.getString("downloadDir", "");
-        if (dlDir.equals("") || !(new File(dlDir).exists() || DocumentFile.fromTreeUri(this, Uri.parse(dlDir)).exists())) {
+        boolean docFileExists = false;
+        try {
+            docFileExists = DocumentFile.fromTreeUri(this, Uri.parse(dlDir)).exists();
+        } catch (Exception ignored) {}
+        if (dlDir.equals("") || !(new File(dlDir).exists() || docFileExists)) {
             if (!MainActivity.trySetDefaultDirectory(this))
                 MainActivity.askForDirectoryAccess(this);
         }

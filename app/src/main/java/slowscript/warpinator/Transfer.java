@@ -151,7 +151,8 @@ public class Transfer {
                             is = svc.getContentResolver().openInputStream(uris.get(i));
                             first_chunk = true;
                         }
-                        if (is.available() < 1) {
+                        int read = is.read(chunk);
+                        if (read < 1) {
                             is.close();
                             is = null;
                             i++;
@@ -162,7 +163,6 @@ public class Transfer {
                             }
                             continue;
                         }
-                        int read = is.read(chunk);
                         WarpProto.FileTime ft = WarpProto.FileTime.getDefaultInstance();
                         if (first_chunk) {
                             first_chunk = false;
@@ -309,7 +309,7 @@ public class Transfer {
                 createDirectory(sanitizedName);
             }
             else if (chunk.getFileType() == FileType.SYMLINK) {
-                Log.e(TAG, "Symlinks not supported.");
+                Log.w(TAG, "Symlinks not supported.");
                 errors.add("Symlinks not supported."); //This one can be ignored
             }
             else {

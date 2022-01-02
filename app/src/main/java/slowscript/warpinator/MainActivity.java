@@ -79,7 +79,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         String dlDir = prefs.getString("downloadDir", "");
-        if (dlDir.equals("") || !(new File(dlDir).exists() || DocumentFile.fromTreeUri(this, Uri.parse(dlDir)).exists())) {
+        boolean docFileExists = false;
+        try {
+            docFileExists = DocumentFile.fromTreeUri(this, Uri.parse(dlDir)).exists();
+        } catch (Exception ignored) {}
+        if (dlDir.equals("") || !(new File(dlDir).exists() || docFileExists)) {
             if (!trySetDefaultDirectory(this))
                 askForDirectoryAccess(this);
         }
