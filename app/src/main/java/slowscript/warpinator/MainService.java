@@ -62,7 +62,7 @@ public class MainService extends Service {
     NotificationCompat.Builder notifBuilder = null;
     Server server;
     Timer timer;
-    ExecutorService executor = Executors.newSingleThreadExecutor();
+    ExecutorService executor = Executors.newCachedThreadPool();
     Process logcatProcess;
     WifiManager.MulticastLock lock;
     ConnectivityManager connMgr;

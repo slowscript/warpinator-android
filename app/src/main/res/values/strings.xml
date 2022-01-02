@@ -6,6 +6,8 @@
     <string name="send_files">Send files</string>
     <string name="quit">Quit</string>
     <string name="connection_issues">Connection issues</string>
+    <string name="reannounce">Reannounce</string>
+    <string name="rescan">Rescan for devices</string>
     <string name="about">About</string>
     <string name="settings">Settings</string>
     <string name="title_activity_share">Share with</string>

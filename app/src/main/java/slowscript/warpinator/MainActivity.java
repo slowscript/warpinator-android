@@ -132,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
         } else if (itemID == R.id.conn_issues) {
             Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
             startActivity(helpIntent);
+        } else if (itemID == R.id.reannounce) {
+            Server.current.reannounce();
+        } else if (itemID == R.id.rescan) {
+            Server.current.rescan();
         } else if (itemID == R.id.about) {
             startActivity(new Intent(this, AboutActivity.class));
         } else if (itemID == R.id.menu_quit) {
