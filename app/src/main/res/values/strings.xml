@@ -20,6 +20,7 @@
     <string name="waiting_for_permission">Waiting for permission…</string>
     <string name="files_overwritten_warning">(Files may be overwritten!)</string>
     <string name="remaining">remaining</string>
+    <string name="open_failed">Failed to open received file</string>
     <string name="a_few_seconds">a few seconds</string>
     <string name="service_unavailable">, service unavailable</string>
     <string name="errors_during_transfer">Errors during transfer:</string>
@@ -60,6 +61,7 @@
     <string name="notification_settings_summary">This may be affected by Android\'s notification settings</string>
     <string name="port_range_warning">Port number must be between 1024 and 65535</string>
     <string name="requires_restart_warning">Changing this setting requires the application to be restarted</string>
+    <string name="required_dialog_not_found">Your phone\'s vendor did not implement a required dialog. This will be worked around in a future release.</string>
     <string name="overwrite_settings_summary_on">Incoming files with a name that already exists will overwrite the existing ones</string>
     <string name="overwrite_settings_summary_off">Incoming files with a name that already exists will be renamed</string>
     <string name="custom">Custom</string>
