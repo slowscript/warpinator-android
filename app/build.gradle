@@ -8,8 +8,8 @@ android {
         applicationId 'slowscript.warpinator'
         minSdkVersion 21 //Required by NSD (attributes)
         targetSdkVersion 31
-        versionCode 1043
-        versionName "1.4.3"
+        versionCode 1044
+        versionName "1.4.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

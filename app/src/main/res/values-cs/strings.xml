@@ -18,6 +18,7 @@
     <string name="files_overwritten_warning">(Soubory mohou být přepsány!)</string>
     <string name="remaining">zbývá</string>
     <string name="a_few_seconds">několik vteřin</string>
+    <string name="open_failed">Soubor se nepodařilo otevřít</string>
     <string name="service_unavailable">, služba není dostupná</string>
     <string name="errors_during_transfer">Chyby během přenosu:</string>
     <string name="dont_close_when_sharing">Zavření této aktivity během sdílení může způsobit že odesílání selže</string>
@@ -51,6 +52,7 @@
     <string name="notification_settings_summary">Toto může být ovlivněno systémovým nastavením oznámení</string>
     <string name="port_range_warning">Port musí být mezi 1024 a 65535</string>
     <string name="requires_restart_warning">Změna tohoto nastavení vyžaduje restart aplikace</string>
+    <string name="required_dialog_not_found">Výrobce vašeho zařízení neimplementoval vyždovaný dialog.</string>
     <string name="overwrite_settings_summary_on">Příchozí soubory se jménem které již existuje budou přepsány</string>
     <string name="overwrite_settings_summary_off">Příchozí soubory se jménem které již existuje budou přejmenovány</string>
     <string name="custom">Vlastní</string>
