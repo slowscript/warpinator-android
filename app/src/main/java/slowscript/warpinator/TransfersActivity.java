@@ -252,22 +252,24 @@ public class TransfersActivity extends AppCompatActivity {
                     Log.w(TAG, "No uri to send");
                     return;
                 }
-                Log.d(TAG, u.toString());
+                Log.v(TAG, u.toString());
                 t.uris.add(u);
             } else {
                 for (int i = 0; i < cd.getItemCount(); i++) {
                     t.uris.add(cd.getItemAt(i).getUri());
-                    Log.d(TAG, cd.getItemAt(i).getUri().toString());
+                    Log.v(TAG, cd.getItemAt(i).getUri().toString());
                 }
             }
             t.remoteUUID = remote.uuid;
-            t.prepareSend();
 
             remote.transfers.add(t);
             t.privId = remote.transfers.size()-1;
+            t.setStatus(Transfer.Status.INITIALIZING);
             updateTransfers(remote.uuid);
-
-            remote.startSendTransfer(t);
+            new Thread(() -> {
+                t.prepareSend();
+                remote.startSendTransfer(t);
+            }).start();
         }
     }
 

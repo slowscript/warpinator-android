@@ -4,6 +4,8 @@
     <string name="send_files">Poslat soubory</string>
     <string name="quit">Ukončit</string>
     <string name="about">O aplikaci</string>
+    <string name="reannounce">Znovu se ohlásit</string>
+    <string name="rescan">Znovu vyhledat zařízení</string>
     <string name="settings">Nastavení</string>
     <string name="title_activity_share">Sdílet</string>
     <string name="available_devices">Dostupná zařízení</string>
@@ -94,6 +96,7 @@
     <string name="error_network_unavailable">Síť není dostupná - zkuste hotspot?</string>
     <string name="error_service_not_running">Služba neběží</string>
     <string name="connection_issues">Problémy s připojením</string>
+    <string name="files_being_sent">Posílané soubory:</string>
     <!--  Content descriptions  -->
     <string name="reconnect_button_cnt_des">Znovu se pokusit o připojení</string>
     <string name="status_image_cnt_des">Stav spojení</string>
@@ -105,4 +108,5 @@
     <string name="accept_button_cnt_des">Přijmout přenos</string>
     <string name="stop_button_cnt_des">Zastavit přenos</string>
     <string name="retry_button_cnt_des">Znovu odeslat</string>
+    <string name="changed_network">Změna sítě - restartuji službu…</string>
 </resources>

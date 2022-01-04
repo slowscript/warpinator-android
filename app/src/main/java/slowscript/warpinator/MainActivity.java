@@ -79,7 +79,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         String dlDir = prefs.getString("downloadDir", "");
-        if (dlDir.equals("") || !(new File(dlDir).exists() || DocumentFile.fromTreeUri(this, Uri.parse(dlDir)).exists())) {
+        boolean docFileExists = false;
+        try {
+            docFileExists = DocumentFile.fromTreeUri(this, Uri.parse(dlDir)).exists();
+        } catch (Exception ignored) {}
+        if (dlDir.equals("") || !(new File(dlDir).exists() || docFileExists)) {
             if (!trySetDefaultDirectory(this))
                 askForDirectoryAccess(this);
         }
@@ -128,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
         } else if (itemID == R.id.conn_issues) {
             Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
             startActivity(helpIntent);
+        } else if (itemID == R.id.reannounce) {
+            Server.current.reannounce();
+        } else if (itemID == R.id.rescan) {
+            Server.current.rescan();
         } else if (itemID == R.id.about) {
             startActivity(new Intent(this, AboutActivity.class));
         } else if (itemID == R.id.menu_quit) {

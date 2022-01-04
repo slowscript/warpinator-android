@@ -33,6 +33,16 @@ import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
+import javax.jmdns.impl.DNSOutgoing;
+import javax.jmdns.impl.DNSQuestion;
+import javax.jmdns.impl.DNSRecord;
+import javax.jmdns.impl.JmDNSImpl;
+import javax.jmdns.impl.ServiceInfoImpl;
+import javax.jmdns.impl.constants.DNSConstants;
+import javax.jmdns.impl.constants.DNSRecordClass;
+import javax.jmdns.impl.constants.DNSRecordType;
+import javax.jmdns.impl.tasks.resolver.ServiceResolver;
+import javax.jmdns.impl.tasks.state.Renewer;
 
 import io.grpc.netty.GrpcSslContexts;
 import io.grpc.netty.NettyServerBuilder;
@@ -53,6 +63,8 @@ public class Server {
     public boolean running = false;
 
     JmDNS jmdns;
+    private Renewer renewer;
+    private ServiceInfo serviceInfo;
     private final ServiceListener serviceListener;
     private final SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
     private io.grpc.Server gServer;
@@ -161,7 +173,7 @@ public class Server {
     }
 
     void registerService(boolean flush) {
-        ServiceInfo serviceInfo = ServiceInfo.create(SERVICE_TYPE, uuid, port, "");
+        serviceInfo = ServiceInfo.create(SERVICE_TYPE, uuid, port, "");
         Log.d(TAG, "Registering as " + uuid);
 
         Map<String, String> props = new HashMap<>();
@@ -172,9 +184,47 @@ public class Server {
 
         try {
             jmdns.registerService(serviceInfo);
+            renewer = new Renewer((JmDNSImpl)jmdns);
         } catch (IOException e) {
             Log.e(TAG, "Failed to register service.", e);
         }
+    }
+
+    void reannounce() {
+        svc.executor.submit(()->{
+            Log.d(TAG, "Reannouncing");
+            try {
+                DNSOutgoing out = new DNSOutgoing(DNSConstants.FLAGS_QR_RESPONSE | DNSConstants.FLAGS_AA);
+                for (DNSRecord answer : ((JmDNSImpl)jmdns).getLocalHost().answers(DNSRecordClass.CLASS_ANY, DNSRecordClass.UNIQUE, DNSConstants.DNS_TTL)) {
+                    out = renewer.addAnswer(out, null, answer);
+                }
+                for (DNSRecord answer : ((ServiceInfoImpl) serviceInfo).answers(DNSRecordClass.CLASS_ANY,
+                        DNSRecordClass.UNIQUE, DNSConstants.DNS_TTL, ((JmDNSImpl)jmdns).getLocalHost())) {
+                    out = renewer.addAnswer(out, null, answer);
+                }
+                ((JmDNSImpl)jmdns).send(out);
+            } catch (Exception e) {
+                Log.e(TAG, "Reannounce failed", e);
+                LocalBroadcasts.displayToast(svc, "Reannounce failed: " + e.getMessage(), Toast.LENGTH_LONG);
+            }
+        });
+    }
+
+    void rescan() {
+        svc.executor.submit(()->{
+            Log.d(TAG, "Rescanning");
+            //Need a new one every time since it can only run three times
+            ServiceResolver resolver = new ServiceResolver((JmDNSImpl)jmdns, SERVICE_TYPE);
+            DNSOutgoing out = new DNSOutgoing(DNSConstants.FLAGS_QR_QUERY);
+            try {
+                out = resolver.addQuestion(out, DNSQuestion.newQuestion(SERVICE_TYPE, DNSRecordType.TYPE_PTR, DNSRecordClass.CLASS_IN, DNSRecordClass.NOT_UNIQUE));
+                //out = resolver.addQuestion(out, DNSQuestion.newQuestion(SERVICE_TYPE, DNSRecordType.TYPE_TXT, DNSRecordClass.CLASS_IN, DNSRecordClass.NOT_UNIQUE));
+                ((JmDNSImpl) jmdns).send(out);
+            } catch (Exception e) {
+                Log.e(TAG, "Rescan failed", e);
+                LocalBroadcasts.displayToast(svc, "Rescan failed: " + e.getMessage(), Toast.LENGTH_LONG);
+            }
+        });
     }
 
     void addRemote(Remote remote) {

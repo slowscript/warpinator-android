@@ -64,7 +64,9 @@ public class Transfer {
     public boolean overwriteWarning = false;
 
     private String currentRelativePath;
-    private Uri currentUri;
+    private long currentLastMod = -1;
+    Uri currentUri;
+    File currentFile;
     private OutputStream currentStream;
     public final ArrayList<String> errors = new ArrayList<>();
     private boolean cancelled = false;
@@ -108,7 +110,6 @@ public class Transfer {
     // -- SEND --
     public void prepareSend() {
         //Only uris and remoteUUID are set from before
-        setStatus(Status.WAITING_PERMISSION);
         direction = Direction.SEND;
         startTime = System.currentTimeMillis();
         totalSize = getTotalSendSize();
@@ -121,6 +122,8 @@ public class Transfer {
             singleName = Strings.nullToEmpty(topDirBasenames.get(0));
             singleMime = Strings.nullToEmpty(svc.getContentResolver().getType(uris.get(0)));
         }
+        setStatus(Status.WAITING_PERMISSION);
+        updateUI();
     }
 
     public void startSending(CallStreamObserver<WarpProto.FileChunk> observer) {
@@ -133,6 +136,7 @@ public class Transfer {
             int i = 0;
             InputStream is;
             byte[] chunk = new byte[CHUNK_SIZE];
+            boolean first_chunk = true;
 
             @Override
             public void run() {
@@ -145,8 +149,10 @@ public class Transfer {
                         }
                         if (is == null) {
                             is = svc.getContentResolver().openInputStream(uris.get(i));
+                            first_chunk = true;
                         }
-                        if (is.available() < 1) {
+                        int read = is.read(chunk);
+                        if (read < 1) {
                             is.close();
                             is = null;
                             i++;
@@ -157,12 +163,20 @@ public class Transfer {
                             }
                             continue;
                         }
-                        int read = is.read(chunk);
+                        WarpProto.FileTime ft = WarpProto.FileTime.getDefaultInstance();
+                        if (first_chunk) {
+                            first_chunk = false;
+                            try {
+                                long lastmod = DocumentFile.fromSingleUri(svc, uris.get(i)).lastModified();
+                                ft = WarpProto.FileTime.newBuilder().setMtime(lastmod / 1000).setMtimeUsec((int)(lastmod % 1000) * 1000).build();
+                            } catch (Exception e) {Log.w(TAG, "Could not get lastMod", e);}
+                        }
                         WarpProto.FileChunk fc = WarpProto.FileChunk.newBuilder()
                                 .setRelativePath(Utils.getNameFromUri(svc, uris.get(i)))
                                 .setFileType(FileType.FILE)
                                 .setChunk(ByteString.copyFrom(chunk, 0, read))
                                 .setFileMode(0644)
+                                .setTime(ft)
                                 .build();
                         observer.onNext(fc);
                         bytesTransferred += read;
@@ -278,6 +292,10 @@ public class Transfer {
         if (!chunk.getRelativePath().equals(currentRelativePath)) {
             //End old file
             closeStream();
+            if (currentLastMod != -1) {
+                setLastModified();
+                currentLastMod = -1;
+            }
             //Begin new file
             currentRelativePath = chunk.getRelativePath();
             if ("".equals(Server.current.downloadDirUri)) {
@@ -285,17 +303,20 @@ public class Transfer {
                 failReceive();
                 return false;
             }
-            String root = Server.current.downloadDirUri;
 
             String sanitizedName = currentRelativePath.replaceAll("[\\\\<>*|?:\"]", "_");
             if (chunk.getFileType() == FileType.DIRECTORY) {
                 createDirectory(sanitizedName);
             }
             else if (chunk.getFileType() == FileType.SYMLINK) {
-                Log.e(TAG, "Symlinks not supported.");
+                Log.w(TAG, "Symlinks not supported.");
                 errors.add("Symlinks not supported."); //This one can be ignored
             }
             else {
+                if (chunk.hasTime()) {
+                    WarpProto.FileTime ft = chunk.getTime();
+                    currentLastMod = ft.getMtime()*1000 + ft.getMtimeUsec()/1000;
+                }
                 try {
                     currentStream = openFileStream(sanitizedName);
                     currentStream.write(chunk.getChunk().toByteArray());
@@ -322,7 +343,6 @@ public class Transfer {
         lastMillis = now;
         updateUI();
         return getStatus() == Status.TRANSFERRING; //True if not interrupted
-        //TODO: Transfer lastMod
     }
 
     public void finishReceive() {
@@ -331,6 +351,8 @@ public class Transfer {
             setStatus(Status.FINISHED_WITH_ERRORS);
         else setStatus(Status.FINISHED);
         closeStream();
+        if (currentLastMod != -1)
+            setLastModified();
         updateUI();
     }
 
@@ -344,8 +366,7 @@ public class Transfer {
                 f.delete();
             } catch (Exception ignored) {}
         } else {
-            File f = new File(Server.current.downloadDirUri, currentRelativePath);
-            f.delete();
+            currentFile.delete();
         }
     }
 
@@ -364,6 +385,15 @@ public class Transfer {
                 currentStream.close();
                 currentStream = null;
             } catch (Exception ignored) {}
+        }
+    }
+
+    private void setLastModified() {
+        //This is apparently not possible with SAF
+        if (!Server.current.downloadDirUri.startsWith("content:")) {
+            File f = new File(Server.current.downloadDirUri, currentRelativePath);
+            Log.d(TAG, "Setting lastMod: " + currentLastMod);
+            f.setLastModified(currentLastMod);
         }
     }
 
@@ -425,7 +455,7 @@ public class Transfer {
             DocumentFile root = DocumentFile.fromTreeUri(svc, rootUri);
             createDirectories(root, path, null);
         } else {
-            if (!new File(path).mkdirs()) {
+            if (!new File(Server.current.downloadDirUri, path).mkdirs()) {
                 errors.add("Failed to create directory " + path);
                 Log.e(TAG, "Failed to create directory " + path);
             }
@@ -474,11 +504,11 @@ public class Transfer {
             currentUri = file.getUri();
             return svc.getContentResolver().openOutputStream(currentUri);
         } else {
-            File path = new File(Server.current.downloadDirUri, fileName);
-            if(path.exists()) {
-                path = handleFileExists(path);
+            currentFile = new File(Server.current.downloadDirUri, fileName);
+            if(currentFile.exists()) {
+                currentFile = handleFileExists(currentFile);
             }
-            return new FileOutputStream(path, false);
+            return new FileOutputStream(currentFile, false);
         }
     }
 

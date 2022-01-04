@@ -1,5 +1,4 @@
 <resources>
-    <!--  App Name  -->
     <!--  Main Activity  -->
     <string name="title_activity_transfers">Transferts</string>
     <string name="send_files">Envoyer des fichiers</string>
@@ -14,6 +13,7 @@
     <string name="connection_error">Erreur de connexion</string>
     <string name="not_connected_to_wifi">Vous n\'êtes pas connecté au Wi-Fi ou à un réseau local. Utilisez votre point d\'accès Wi-Fi si aucun n\'est disponible.
         Redémarrez l\'application lorsque vous serez connecté.</string>
+    <string name="changed_network">Réseau changé - redémarrage du service…</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">Attente de la permission…</string>
     <string name="files_overwritten_warning">(Les fichiers peuvent être écrasés !)</string>
@@ -22,6 +22,7 @@
     <string name="service_unavailable">, service indisponible</string>
     <string name="errors_during_transfer">Erreurs lors du transfert :</string>
     <string name="dont_close_when_sharing">L\'arrêt de cette activité pendant le partage peut provoquer l\'échec du transfert</string>
+    <string name="files_being_sent">Fichiers en cours d\'envoi :</string>
     <!--  About activity  -->
     <string name="version">Version : %1$s</string>
     <string name="about_description">Ceci est un portage non officiel de Warpinator. \nEnvoyer et recevoir des fichiers à travers le réseau local.</string>

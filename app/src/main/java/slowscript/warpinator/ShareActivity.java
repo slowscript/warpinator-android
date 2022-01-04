@@ -90,12 +90,14 @@ public class ShareActivity extends AppCompatActivity {
                     Transfer t = new Transfer();
                     t.uris = uris;
                     t.remoteUUID = remote.uuid;
-                    t.prepareSend();
 
                     remote.transfers.add(t);
                     t.privId = remote.transfers.size()-1;
-                    remote.startSendTransfer(t);
-
+                    t.setStatus(Transfer.Status.INITIALIZING);
+                    new Thread(()->{
+                        t.prepareSend();
+                        remote.startSendTransfer(t);
+                    }).start();
                     Intent i = new Intent(app, TransfersActivity.class);
                     i.putExtra("remote", remote.uuid);
                     i.putExtra("shareMode", true);
@@ -110,7 +112,11 @@ public class ShareActivity extends AppCompatActivity {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String dlDir = prefs.getString("downloadDir", "");
-        if (dlDir.equals("") || !(new File(dlDir).exists() || DocumentFile.fromTreeUri(this, Uri.parse(dlDir)).exists())) {
+        boolean docFileExists = false;
+        try {
+            docFileExists = DocumentFile.fromTreeUri(this, Uri.parse(dlDir)).exists();
+        } catch (Exception ignored) {}
+        if (dlDir.equals("") || !(new File(dlDir).exists() || docFileExists)) {
             if (!MainActivity.trySetDefaultDirectory(this))
                 MainActivity.askForDirectoryAccess(this);
         }
