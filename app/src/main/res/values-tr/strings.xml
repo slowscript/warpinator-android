@@ -6,6 +6,8 @@
     <string name="send_files">Dosyaları gönder</string>
     <string name="quit">Çık</string>
     <string name="connection_issues">Bağlantı sorunları</string>
+    <string name="reannounce">Yeniden duyurun</string>
+    <string name="rescan">Cihazlar için yeniden tara</string>
     <string name="about">Hakkında</string>
     <string name="settings">Ayarlar</string>
     <string name="title_activity_share">İle paylaş</string>
@@ -15,14 +17,17 @@
     <string name="connection_error">Bağlantı hatası</string>
     <string name="not_connected_to_wifi">WiFi veya LAN\'a bağlı değilsiniz. Hiçbiri mevcut değilse, etkin noktanızı kullanın.
         Bağlandığınızda uygulamayı yeniden başlatın.</string>
+    <string name="changed_network">Ağ değişti - hizmet yeniden başlatılıyor...</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">İzin bekleniyor…</string>
     <string name="files_overwritten_warning">(Dosyaların üzerine yazılabilir!)</string>
     <string name="remaining">geriye kalan</string>
+    <string name="open_failed">Alınan dosya açılamadı</string>
     <string name="a_few_seconds">birkaç saniye</string>
     <string name="service_unavailable">, hizmet kullanılamıyor</string>
     <string name="errors_during_transfer">Aktarım sırasındaki hatalar:</string>
     <string name="dont_close_when_sharing">Paylaşım sırasında bu etkinliği kapatmak, aktarımın başarısız olmasına neden olabilir</string>
+    <string name="files_being_sent">Gönderilen dosyalar:</string>
     <!--  About activity  -->
     <string name="version">Sürüm: %1$s</string>
     <string name="about_description">Bu, Warpinator\'ün resmi olmayan bir uygulamasıdır. \nYerel ağ üzerinden dosya gönderin ve alın.</string>
@@ -58,6 +63,7 @@
     <string name="notification_settings_summary">Bu, Android\'in bildirim ayarlarından etkilenebilir</string>
     <string name="port_range_warning">Bağlantı noktası numarası 1024 ile 65535 arasında olmalıdır</string>
     <string name="requires_restart_warning">Bu ayarın değiştirilmesi uygulamanın yeniden başlatılmasını gerektirir</string>
+    <string name="required_dialog_not_found">Telefonunuzun satıcısı gerekli bir iletişim kutusunu uygulamadı. Bu, gelecekteki bir sürümde çözülecektir.</string>
     <string name="overwrite_settings_summary_on">Halihazırda var olan bir ada sahip gelen dosyalar, mevcut olanların üzerine yazacaktır.</string>
     <string name="overwrite_settings_summary_off">Zaten var olan bir ada sahip gelen dosyalar yeniden adlandırılacak</string>
     <string name="custom">Özel</string>
