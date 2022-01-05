@@ -4,6 +4,9 @@
     <string name="title_activity_transfers">Przesyłanie plików</string>
     <string name="send_files">Wysłane pliki</string>
     <string name="quit">Wyjdź</string>
+    <string name="connection_issues">Problemy z połączeniem</string>
+    <string name="reannounce">Rozgłoś ponownie</string>
+    <string name="rescan">Ponownie wyszukaj urządzenia</string>
     <string name="about">O programie</string>
     <string name="settings">Ustawienia</string>
     <string name="title_activity_share">Wyślij do</string>
@@ -13,13 +16,18 @@
     <string name="connection_error">Błąd połączenia</string>
     <string name="not_connected_to_wifi">Urządzenie nie jest połączone z siecią Wi-Fi lub LAN. Użyj hotspotu Wi-Fi, jeżeli inne połączenia nie są dostępne.
 Uruchom ponownie aplikację po połączeniu.</string>
+    <string name="changed_network">Połączenie zostało zmienione — restartowanie usługi…</string>
+    <!--  Transfers activity  -->
     <string name="waiting_for_permission">Oczekiwanie na zgodę…</string>
     <string name="files_overwritten_warning">(Pliki mogą zostać nadpisane!)</string>
     <string name="remaining">pozostało</string>
+    <string name="open_failed">Nie udało się otworzyć odebranego pliku</string>
     <string name="a_few_seconds">kilka sekund</string>
     <string name="service_unavailable">, usługa niedostępna</string>
     <string name="errors_during_transfer">Błędy podczas przesyłania:</string>
     <string name="dont_close_when_sharing">Zamknięcie tej usługi podczas przesyłania plików może spowodować, że przesyłanie się nie powiedzie</string>
+    <string name="files_being_sent">Przesyłane pliki:</string>
+    <!--  About activity  -->
     <string name="version">Wersja: %1$s</string>
     <string name="about_description">Ta aplikacja jest nieoficjalną wersją programu Warpinator dla systemu Android.\nWysyłaj i odbieraj pliki w sieci lokalnej.</string>
     <string name="warranty_html">
@@ -27,6 +35,7 @@ Uruchom ponownie aplikację po połączeniu.</string>
         Możesz pobrać kod źródłowy z serwisu &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
         &lt;br>
         Ta aplikacja jest dostarczona bez jakichkolwiek gwarancji.&lt;br>Sprawdź zasady licencji w celu uzyskania szczegółowych informacji.</string>
+    <!--  Share activity  -->
     <string name="devices_to_share_with">Dostępne urządzenia</string>
     <string name="no_share_devices">Brak dostępnych urządzeń</string>
     <string name="unsupported_intent">Otrzymano nieobsługiwane żądanie</string>
@@ -53,13 +62,16 @@ Uruchom ponownie aplikację po połączeniu.</string>
     <string name="notification_settings_summary">Może zależeć od ustawień powiadomień Androida</string>
     <string name="port_range_warning">Numer portu musi być pomiędzy 1024 a 65535</string>
     <string name="requires_restart_warning">Zmaina tego ustawienia wymaga ponownego uruchomienia aplikacji</string>
+    <string name="required_dialog_not_found">Producent telefonu nie zaimplementował wymaganego okna dialogowego. Zostanie to poprawione w przyszłej wersji.</string>
     <string name="overwrite_settings_summary_on">Przychodzące pliki nadpiszą istniejące pliki o takiej samej nazwie</string>
     <string name="overwrite_settings_summary_off">Jeżeli istnieją już pliki o identycznej nazwie, nazwy przychodzących plików zostaną zmienione</string>
     <string name="custom">Własny</string>
     <string name="unsupported_provider">Wybrałeś pliki z nieobsługiwanego źródła. Wybierz katalog w pamięci urządzenia.</string>
+    <!--  Theme settings -->
     <string name="sysDefault">Użyj motywu systemu</string>
     <string name="lightTheme">Jasny motyw</string>
     <string name="darkTheme">Ciemny motyw</string>
+    <!--  Notification  -->
     <string name="warpinator_notification_title">Warpinator działa w tle</string>
     <string name="warpinator_notification_button">Zatrzymaj</string>
     <string name="transfers_complete">Przesyłanie zakończone</string>
@@ -70,10 +82,24 @@ Uruchom ponownie aplikację po połączeniu.</string>
     <string name="notification_channel_description">Stałe powiadomienie o działaniu w tle</string>
     <string name="incoming_transfer_channel">Przychodzące pliki</string>
     <string name="transfer_progress_channel">Postęp przesyłania plików</string>
+    <!--  Content descriptions  -->
+    <string name="reconnect_button_cnt_des">Połącz ponownie</string>
+    <string name="status_image_cnt_des">Status połączenia</string>
+    <string name="profile_image_cnt_des">Obrazek profilowy</string>
+    <string name="application_icon_cnt_des">Ikona aplikacji</string>
+    <string name="meh_face_cnt_des">Ikona rozczarowanej twarzy</string>
+    <string name="selected_picture_cnt_des">Wybrany obrazek</string>
+    <string name="decline_button_cnt_des">Odmów zgody na przesłanie plików</string>
+    <string name="accept_button_cnt_des">Wyraź zgodę na przesłanie plików</string>
+    <string name="stop_button_cnt_des">Zatrzymaj przesyłanie plików</string>
+    <string name="retry_button_cnt_des">Wznów przesyłanie plików</string>
     <!--  Other  -->
     <string name="please_select_download_dir">Uruchamiasz aplikację po raz pierwszy.
         Wybierz folder, w którym Warpinator będzie zapisywał otrzymane pliki.</string>
     <string name="error_download_dir">Musisz wybrać folder dla pobieranych plików w ustawieniach aplikacji</string>
+    <string name="error_network_unavailable">Sieć niedostępna — połączyć z hotspotem?</string>
+    <string name="error_service_not_running">Usługa nie jest uruchomiona</string>
+    <string name="cert_not_received">Nie udało się odebrać certyfikatu od urządzenia %1$s. Upewnij się, że zezwolono na połączenia poprzez protokół UDP (oraz TCP) na porcie %2$d w ustawieniach zapory sieciowej drugiego urządzenia.</string>
     <string-array name="connected_states">
         <item>Połączony</item>
         <item>Rozłączony</item>
