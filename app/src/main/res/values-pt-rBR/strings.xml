@@ -4,15 +4,17 @@
     <string name="title_activity_transfers">Transferências</string>
     <string name="send_files">Enviar arquivos</string>
     <string name="quit">Sair</string>
+    <string name="connection_issues">Problemas de conexão</string>
     <string name="about">Sobre</string>
     <string name="settings">Configurações</string>
     <string name="title_activity_share">Compartilhe com</string>
     <string name="available_devices">Dispositivos disponíveis</string>
     <string name="no_devices_found">Nenhum dispositivo encontrado</string>
-    <string name="wrong_group_code">Conexão falhou: Código do grupo incorreto</string>
+    <string name="wrong_group_code">Conexão falhou: O código do grupo incorreto</string>
     <string name="connection_error">Falha de conexão</string>
     <string name="not_connected_to_wifi">Você não está conectado ao WiFi ou LAN. Se nenhum dos dois estiver disponível use um Hotspot.
-        Reinicie o App quando estiver conectado.</string>
+        Reinicie o app quando estiver conectado.</string>
+    <string name="changed_network">Network changed - restarting service...</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">Você quer receber arquivo(s)…</string>
     <string name="files_overwritten_warning">(Arquivos podem ser substituídos!)</string>
@@ -21,14 +23,15 @@
     <string name="service_unavailable">, serviço indisponível</string>
     <string name="errors_during_transfer">Os erros durante a transferência:</string>
     <string name="dont_close_when_sharing">Ao terminar este processo enquanto você compartilha alguns arquivos pode resultar numa falha da transferência</string>
+    <string name="files_being_sent">Os arquivos sendo enviados:</string>
     <!--  About activity  -->
     <string name="version">Versão: %1$s</string>
-    <string name="about_description">Este é um Fork não-oficial do Warpinator. \nCompartilhe arquivos via rede local.</string>
+    <string name="about_description">Esta é uma modificação não-oficial do Warpinator. \nCompartilhe arquivos via rede local.</string>
     <string name="warranty_html">
-        O App é de software livre, licenciado sob &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">Licença Pública Geral GNU&lt;/a>.&lt;br>
-        Pode obter o código fonte em &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
+        O app é de software livre, licenciado sob &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">Licença Pública Geral GNU&lt;/a>.&lt;br>
+        Pode obter o código fonte no &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
         &lt;br>
-        O App vem sem absolutamente nenhuma garantia.&lt;br>Veja os termos da licença para mais detalhes.</string>
+        O app vem sem absolutamente nenhuma garantia.&lt;br>Veja os termos da licença para mais detalhes.</string>
     <!--  Share activity  -->
     <string name="devices_to_share_with">Dispositivos disponível para compartilhar</string>
     <string name="no_share_devices">Nenhum dispositivo disponível para compartilhar</string>
@@ -49,15 +52,15 @@
     <string name="accept_setting_summary_off">Cada transferência precisa ser aceita por você</string>
     <string name="background_settings_title">Executar em segundo plano</string>
     <string name="boot_settings_title">Iniciar automaticamente</string>
-    <string name="export_log_settings_tile">Salvar o registro de depuração no arquivo</string>
+    <string name="export_log_settings_tile">Salvar registro de erros no arquivo</string>
     <string name="group_code_settings_title">Código do grupo</string>
     <string name="port_settings_title">Porta</string>
     <string name="theme_settings_title">Tema</string>
     <string name="notification_settings_summary">Isto pode ser afetado pelas configurações de notificações do Android</string>
     <string name="port_range_warning">Defina número da Porta entre 1024 e 65535</string>
-    <string name="requires_restart_warning">Alteração desta configuração exige reinício do App</string>
-    <string name="overwrite_settings_summary_on">Os arquivos recebidos que tem o mesmo nome substituirão os já existentes</string>
-    <string name="overwrite_settings_summary_off">Os arquivos recebidos que tem o mesmo nome serão renomeados</string>
+    <string name="requires_restart_warning">Alteração desta configuração exige reinício do app</string>
+    <string name="overwrite_settings_summary_on">Os arquivos recebidos que tem os mesmos nomes substituirão os existentes</string>
+    <string name="overwrite_settings_summary_off">Os arquivos recebidos que tem os mesmos nomes serão renomeados</string>
     <string name="custom">Personalizar</string>
     <string name="unsupported_provider">Você selecionou um conteúdo não suportado. Por favor selecione uma pasta no armazenamento.</string>
     <!--  Theme settings -->
@@ -75,8 +78,19 @@
     <string name="notification_channel_description">Notificação de serviço persistente</string>
     <string name="incoming_transfer_channel">Transferência recebida</string>
     <string name="transfer_progress_channel">Progresso da transferência</string>
+    <!--  Content descriptions  -->
+    <string name="reconnect_button_cnt_des">Restabelecer</string>
+    <string name="status_image_cnt_des">Situação da conexão</string>
+    <string name="profile_image_cnt_des">Foto do perfil</string>
+    <string name="application_icon_cnt_des">Ícone do apo</string>
+    <string name="meh_face_cnt_des">Ícone do rosto desanimado</string>
+    <string name="selected_picture_cnt_des">Foto selecionada</string>
+    <string name="decline_button_cnt_des">Recusar a transferência</string>
+    <string name="accept_button_cnt_des">Aceitar a transferência</string>
+    <string name="stop_button_cnt_des">Parar a transferência</string>
+    <string name="retry_button_cnt_des">Retomar a transferência</string>
     <!--  Other  -->
-    <string name="please_select_download_dir">Deve ser a primeira vez que você usa este App.
+    <string name="please_select_download_dir">Deve ser a primeira vez que você usa este app.
         Por favor selecione uma pasta onde você quer que o Warpinator salve seus arquivos.</string>
     <string name="error_download_dir">Você tem que selecionar uma pasta de Download em Configurações</string>
     <string name="error_network_unavailable">Rede indisponível - configure um Hotspot?</string>
