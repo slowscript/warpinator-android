@@ -4,6 +4,8 @@
     <string name="send_files">Envoyer des fichiers</string>
     <string name="quit">Quitter</string>
     <string name="connection_issues">Problèmes de connexion</string>
+    <string name="reannounce">Annoncer à nouveau</string>
+    <string name="rescan">Rechercher à nouveau des appareils</string>
     <string name="about">À propos</string>
     <string name="settings">Réglages</string>
     <string name="title_activity_share">Partager avec</string>
@@ -18,6 +20,7 @@
     <string name="waiting_for_permission">Attente de la permission…</string>
     <string name="files_overwritten_warning">(Les fichiers peuvent être écrasés !)</string>
     <string name="remaining">restants</string>
+    <string name="open_failed">Échec de l\'ouverture du fichier reçu</string>
     <string name="a_few_seconds">quelques secondes</string>
     <string name="service_unavailable">, service indisponible</string>
     <string name="errors_during_transfer">Erreurs lors du transfert :</string>
@@ -58,12 +61,13 @@
     <string name="notification_settings_summary">Cela peut être affecté par les réglages de notification d\'Android</string>
     <string name="port_range_warning">Le numéro de port doit être compris entre 1024 et 65535</string>
     <string name="requires_restart_warning">La modification de ce réglage requiert un redémarrage de l\'application</string>
+    <string name="required_dialog_not_found">Le fournisseur de votre téléphone n\'a pas implémenté le dialogue nécessaire. Cela sera contourné dans une prochaine version.</string>
     <string name="overwrite_settings_summary_on">Les fichiers entrants avec un nom déjà existant écraseront les fichiers présents</string>
     <string name="overwrite_settings_summary_off">Les fichiers entrants avec un nom déjà existant seront renommés</string>
     <string name="custom">Personnalisé</string>
     <string name="unsupported_provider">Vous avez sélectionné un fournisseur de contenu non pris en charge. Veuillez sélectionner un répertoire dans votre stockage interne.</string>
     <!--  Theme settings -->
-    <string name="sysDefault">Utilisez les valeurs par défaut du système</string>
+    <string name="sysDefault">Utiliser les valeurs par défaut du système</string>
     <string name="lightTheme">Thème clair</string>
     <string name="darkTheme">Thème sombre</string>
     <!--  Notification  -->
