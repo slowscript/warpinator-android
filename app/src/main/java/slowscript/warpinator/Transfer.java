@@ -360,13 +360,15 @@ public class Transfer {
         Log.v(TAG, "Stopping receiving");
         closeStream();
         //Delete incomplete file
-        if (Server.current.downloadDirUri.startsWith("content:")) {
-            try {
+        try {
+            if (Server.current.downloadDirUri.startsWith("content:")) {
                 DocumentFile f = DocumentFile.fromSingleUri(svc, currentUri);
                 f.delete();
-            } catch (Exception ignored) {}
-        } else {
-            currentFile.delete();
+            } else {
+                currentFile.delete();
+            }
+        } catch (Exception e) {
+        	Log.w(TAG, "Could not delete incomplete file", e);
         }
     }
 

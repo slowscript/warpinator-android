@@ -38,7 +38,7 @@ public class CertServer implements Runnable{
     public void run() {
         try {
              serverSocket = new DatagramSocket(PORT);
-        } catch (SocketException e){
+        } catch (Exception e){
             Log.e(TAG, "Failed to start certificate server", e);
             return;
         }
