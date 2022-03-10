@@ -14,7 +14,7 @@
     <string name="no_devices_found">没有发现其他设备</string>
     <string name="wrong_group_code">连接失败: 错误的分组代码</string>
     <string name="connection_error">连接错误</string>
-    <string name="not_connected_to_wifi">您没有连接到 WiFi 或 LAN。 如果两者都不可用，请使用您的热点。
+    <string name="not_connected_to_wifi">您没有连接到 WiFi 或 LAN。如果两者都不可用，请使用您的热点。
          连接后重新启动应用。</string>
     <string name="changed_network">网络已更改 - 正在重新启动服务……</string>
     <!--  Transfers activity  -->
@@ -29,7 +29,7 @@
     <string name="files_being_sent">发送的文件：</string>
     <!--  About activity  -->
     <string name="version">版本: %1$s</string>
-    <string name="about_description">这是 Warpinator 的非官方版本。 \n通过本地网络发送和接收文件。</string>
+    <string name="about_description">这是 Warpinator 的非官方版本。\n通过本地网络发送和接收文件。</string>
     <string name="warranty_html">
         此程序是在 &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a> 许可下的开源软件。&lt;br>
         您可以从 &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a> 获取源代码。&lt;br>
