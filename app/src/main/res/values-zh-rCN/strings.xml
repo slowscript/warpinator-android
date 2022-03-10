@@ -20,26 +20,26 @@
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">正在等待批准……</string>
     <string name="files_overwritten_warning">（文件可能会被覆盖！）</string>
-    <string name="remaining">remaining</string>
+    <string name="remaining">剩余时间</string>
     <string name="open_failed">无法打开收到的文件</string>
     <string name="a_few_seconds">几秒钟</string>
-    <string name="service_unavailable">， 服务不可用</string>
+    <string name="service_unavailable">，服务不可用</string>
     <string name="errors_during_transfer">传输过程中的错误：</string>
-    <string name="dont_close_when_sharing">Closing this activity while sharing might cause the transfer to fail</string>
+    <string name="dont_close_when_sharing">分享时关闭此 Activity 可能会导致转移失败</string>
     <string name="files_being_sent">发送的文件：</string>
     <!--  About activity  -->
     <string name="version">版本: %1$s</string>
-    <string name="about_description">This is an unofficial port of Warpinator. \nSend and receive files across local network.</string>
+    <string name="about_description">这是 Warpinator 的非官方版本。 \n通过本地网络发送和接收文件。</string>
     <string name="warranty_html">
-        This program is open source software licensed under &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>.&lt;br>
-        You can obtain the source code from &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
+        此程序是在 &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a> 许可下的开源软件。&lt;br>
+        您可以从 &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a> 获取源代码。&lt;br>
         &lt;br>
-        This program comes with absolutely no warranty.&lt;br>See the terms of the license for more details.</string>
+        此程序绝对不提供任何担保。&lt;br>有关更多详细信息，请参阅许可条款。</string>
     <!--  Share activity  -->
     <string name="devices_to_share_with">与之分享的设备</string>
     <string name="no_share_devices">没有可以与之分享的设备</string>
-    <string name="unsupported_intent">We received an unsupported intent action</string>
-    <string name="nothing_to_share">Nothing to share</string>
+    <string name="unsupported_intent">我们收到了不受支持的 Intent 操作</string>
+    <string name="nothing_to_share">没有什么可分享的</string>
     <!--  Setting  -->
     <string name="identity_settings_category">身份识别</string>
     <string name="transfer_setting_category">传输设置</string>
@@ -59,14 +59,14 @@
     <string name="group_code_settings_title">分组代码</string>
     <string name="port_settings_title">端口</string>
     <string name="theme_settings_title">主题</string>
-    <string name="notification_settings_summary">This may be affected by Android\'s notification settings</string>
-    <string name="port_range_warning">Port number must be between 1024 and 65535</string>
-    <string name="requires_restart_warning">Changing this setting requires the application to be restarted</string>
-    <string name="required_dialog_not_found">Your phone\'s vendor did not implement a required dialog. This will be worked around in a future release.</string>
-    <string name="overwrite_settings_summary_on">Incoming files with a name that already exists will overwrite the existing ones</string>
-    <string name="overwrite_settings_summary_off">Incoming files with a name that already exists will be renamed</string>
-    <string name="custom">Custom</string>
-    <string name="unsupported_provider">You have selected an unsupported content provider. Please select a directory on your internal storage.</string>
+    <string name="notification_settings_summary">这可能会受到 Android 的通知设置的影响</string>
+    <string name="port_range_warning">端口号必须介于 1024 和 65535 之间</string>
+    <string name="requires_restart_warning">更改此设置需要重新启动应用</string>
+    <string name="required_dialog_not_found">您手机的系统没有实现所需的对话框。 这将在未来的版本中解决。</string>
+    <string name="overwrite_settings_summary_on">传入文件同名时，传入文件将覆盖现有文件</string>
+    <string name="overwrite_settings_summary_off">传入文件同名时，传入文件会被重命名</string>
+    <string name="custom">自定义</string>
+    <string name="unsupported_provider">您选择了不受支持的内容提供者。 请在您的内部存储空间上选择一个目录。</string>
     <!--  Theme settings -->
     <string name="sysDefault">跟随系统</string>
     <string name="lightTheme">浅色模式</string>
@@ -80,7 +80,7 @@
     <string name="num_files">%d 文件</string>
     <string name="service_running">服务正在运行</string>
     <string name="notification_channel_description">持续服务通知</string>
-    <string name="incoming_transfer_channel">Incoming transfer</string>
+    <string name="incoming_transfer_channel">传入的传输</string>
     <string name="transfer_progress_channel">传输进度</string>
     <!--  Content descriptions  -->
     <string name="reconnect_button_cnt_des">重新连接</string>
@@ -94,12 +94,12 @@
     <string name="stop_button_cnt_des">停止传输</string>
     <string name="retry_button_cnt_des">重试传输</string>
     <!--  Other  -->
-    <string name="please_select_download_dir">This is likely the first time you are launching this application.
-        Please select a directory where you want Warpinator to save files into.</string>
+    <string name="please_select_download_dir">这可能是您第一次启动此应用。
+         请选择您希望 Warpinator 保存文件的目录。</string>
     <string name="error_download_dir">您必须在设置中选择下载目录</string>
     <string name="error_network_unavailable">网络不可用 - 尝试热点？</string>
     <string name="error_service_not_running">服务未运行</string>
-    <string name="cert_not_received">Failed to receive certificate from %1$s. Make sure to allow UDP (as well as TCP) traffic on port %2$d in remote\'s firewall.</string>
+    <string name="cert_not_received">未能从 %1$s 接收证书。请确保远程防火墙允许 %2$d 端口上的 UDP（以及 TCP）流量。</string>
     <string-array name="connected_states">
         <item>已连接</item>
         <item>已断开连接</item>
