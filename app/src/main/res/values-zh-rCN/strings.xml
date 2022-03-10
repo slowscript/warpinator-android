@@ -1,25 +1,24 @@
 <resources>
     <!--  App Name  -->
-    <string name="app_name" translatable="false">Warpinator</string>
     <!--  Main Activity  -->
     <string name="title_activity_transfers">Transfers</string>
-    <string name="send_files">Send files</string>
-    <string name="quit">Quit</string>
-    <string name="connection_issues">Connection issues</string>
-    <string name="reannounce">Reannounce</string>
-    <string name="rescan">Rescan for devices</string>
-    <string name="about">About</string>
-    <string name="settings">Settings</string>
-    <string name="title_activity_share">Share with</string>
-    <string name="available_devices">Available devices</string>
-    <string name="no_devices_found">No other devices found</string>
-    <string name="wrong_group_code">Connection failed: Wrong group code</string>
-    <string name="connection_error">Connection error</string>
+    <string name="send_files">发送文件</string>
+    <string name="quit">退出</string>
+    <string name="connection_issues">连接问题</string>
+    <string name="reannounce">重新发布</string>
+    <string name="rescan">重新扫描设备</string>
+    <string name="about">关于</string>
+    <string name="settings">设置</string>
+    <string name="title_activity_share">分享给</string>
+    <string name="available_devices">可用设备</string>
+    <string name="no_devices_found">没有发现其他设备</string>
+    <string name="wrong_group_code">连接失败: 错误的分组代码</string>
+    <string name="connection_error">连接错误</string>
     <string name="not_connected_to_wifi">You are not connected to WiFi or LAN. Use your hotspot if neither is available.
         Restart the application when you are connected.</string>
-    <string name="changed_network">Network changed - restarting service...</string>
+    <string name="changed_network">网络已更改 - 正在重新启动服务……</string>
     <!--  Transfers activity  -->
-    <string name="waiting_for_permission">Waiting for permission…</string>
+    <string name="waiting_for_permission">正在等待批准……</string>
     <string name="files_overwritten_warning">(Files may be overwritten!)</string>
     <string name="remaining">remaining</string>
     <string name="open_failed">Failed to open received file</string>
@@ -29,7 +28,7 @@
     <string name="dont_close_when_sharing">Closing this activity while sharing might cause the transfer to fail</string>
     <string name="files_being_sent">Files being sent:</string>
     <!--  About activity  -->
-    <string name="version">Version: %1$s</string>
+    <string name="version">版本: %1$s</string>
     <string name="about_description">This is an unofficial port of Warpinator. \nSend and receive files across local network.</string>
     <string name="warranty_html">
         This program is open source software licensed under &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>.&lt;br>
@@ -44,22 +43,22 @@
     <!--  Setting  -->
     <string name="identity_settings_category">Identity</string>
     <string name="transfer_setting_category">Transfer settings</string>
-    <string name="network_setting_category">Network</string>
-    <string name="aspect_setting_category">Aspect</string>
-    <string name="display_settings_title">Display name</string>
-    <string name="picture_settings_title">Profile picture</string>
-    <string name="download_dir_settings_title">Downloads directory</string>
+    <string name="network_setting_category">网络</string>
+    <string name="aspect_setting_category">外观</string>
+    <string name="display_settings_title">显示名称</string>
+    <string name="picture_settings_title">简介图片</string>
+    <string name="download_dir_settings_title">下载目录</string>
     <string name="notification_settings_title">Show notification about incoming files</string>
     <string name="overwrite_settings_title">Allow overwriting</string>
     <string name="accept_settings_title">Automatically accept transfers</string>
     <string name="accept_setting_summary_on">Transfers will be accepted automatically</string>
     <string name="accept_setting_summary_off">Every transfer needs to be accepted by you</string>
-    <string name="background_settings_title">Run in background</string>
-    <string name="boot_settings_title">Start automatically</string>
+    <string name="background_settings_title">后台运行</string>
+    <string name="boot_settings_title">自动启动</string>
     <string name="export_log_settings_tile">Write debug log to file</string>
-    <string name="group_code_settings_title">Group code</string>
-    <string name="port_settings_title">Port</string>
-    <string name="theme_settings_title">Theme</string>
+    <string name="group_code_settings_title">分组代码</string>
+    <string name="port_settings_title">端口</string>
+    <string name="theme_settings_title">主题</string>
     <string name="notification_settings_summary">This may be affected by Android\'s notification settings</string>
     <string name="port_range_warning">Port number must be between 1024 and 65535</string>
     <string name="requires_restart_warning">Changing this setting requires the application to be restarted</string>
@@ -69,12 +68,12 @@
     <string name="custom">Custom</string>
     <string name="unsupported_provider">You have selected an unsupported content provider. Please select a directory on your internal storage.</string>
     <!--  Theme settings -->
-    <string name="sysDefault">Use system default</string>
-    <string name="lightTheme">Light Theme</string>
-    <string name="darkTheme">Dark Theme</string>
+    <string name="sysDefault">跟随系统</string>
+    <string name="lightTheme">浅色模式</string>
+    <string name="darkTheme">深色模式</string>
     <!--  Notification  -->
     <string name="warpinator_notification_title">Warpinator service is running</string>
-    <string name="warpinator_notification_button">Stop service</string>
+    <string name="warpinator_notification_button">停止服务</string>
     <string name="transfers_complete">All transfers are complete</string>
     <string name="transfer_notification">%1$.1f%%, %2$d transfers, %3$s/s</string>
     <string name="incoming_transfer">Incoming transfer from %s</string>
@@ -98,27 +97,27 @@
     <string name="please_select_download_dir">This is likely the first time you are launching this application.
         Please select a directory where you want Warpinator to save files into.</string>
     <string name="error_download_dir">You have to select a download directory in the settings</string>
-    <string name="error_network_unavailable">Network unavailable - try hotspot?</string>
-    <string name="error_service_not_running">Service not running</string>
+    <string name="error_network_unavailable">网络不可用 - 尝试热点？</string>
+    <string name="error_service_not_running">服务未运行</string>
     <string name="cert_not_received">Failed to receive certificate from %1$s. Make sure to allow UDP (as well as TCP) traffic on port %2$d in remote\'s firewall.</string>
     <string-array name="connected_states">
-        <item>Connected</item>
-        <item>Disconnected</item>
-        <item>Connecting</item>
-        <item>Connection failed</item>
-        <item>Awaiting duplex</item>
+        <item>已连接</item>
+        <item>已断开连接</item>
+        <item>正在连接</item>
+        <item>连接失败</item>
+        <item>等待双工</item>
     </string-array>
     <string-array name="transfer_states">
-        <item>Initializing</item>
-        <item>Waiting for permission…</item>
-        <item>Declined</item>
-        <item>Transferring</item>
-        <item>Paused</item>
-        <item>Stopped</item>
-        <item>Failed (tap to view errors)</item>
-        <item>Unrecoverable failure</item>
-        <item>File not found</item>
-        <item>Finished</item>
-        <item>Finished with errors (tap to view)</item>
+        <item>正在初始化</item>
+        <item>正在等待批准……</item>
+        <item>已拒绝</item>
+        <item>正在传输</item>
+        <item>已暂停</item>
+        <item>已停止</item>
+        <item>已失败（点击查看）</item>
+        <item>不可恢复的故障</item>
+        <item>未找到文件</item>
+        <item>已完成</item>
+        <item>已完成但有错误（点击查看）</item>
     </string-array>
 </resources>
