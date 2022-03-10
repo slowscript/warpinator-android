@@ -5,7 +5,7 @@
     <string name="send_files">发送文件</string>
     <string name="quit">退出</string>
     <string name="connection_issues">连接问题</string>
-    <string name="reannounce">重新发布</string>
+    <string name="reannounce">重新宣告</string>
     <string name="rescan">重新扫描设备</string>
     <string name="about">关于</string>
     <string name="settings">设置</string>
@@ -22,7 +22,7 @@
     <string name="files_overwritten_warning">（文件可能会被覆盖！）</string>
     <string name="remaining">剩余时间</string>
     <string name="open_failed">无法打开收到的文件</string>
-    <string name="a_few_seconds">几秒钟</string>
+    <string name="a_few_seconds">马上就好</string>
     <string name="service_unavailable">，服务不可用</string>
     <string name="errors_during_transfer">传输过程中的错误：</string>
     <string name="dont_close_when_sharing">分享时关闭此 Activity 可能会导致转移失败</string>
@@ -51,7 +51,7 @@
     <string name="notification_settings_title">有文件传入时显示通知</string>
     <string name="overwrite_settings_title">允许覆盖</string>
     <string name="accept_settings_title">自动接受传输</string>
-    <string name="accept_setting_summary_on">传输会自动接受</string>
+    <string name="accept_setting_summary_on">会自动接受传输</string>
     <string name="accept_setting_summary_off">每次传输都需要您确认</string>
     <string name="background_settings_title">后台运行</string>
     <string name="boot_settings_title">自动启动</string>
@@ -62,11 +62,11 @@
     <string name="notification_settings_summary">这可能会受到 Android 的通知设置的影响</string>
     <string name="port_range_warning">端口号必须介于 1024 和 65535 之间</string>
     <string name="requires_restart_warning">更改此设置需要重新启动应用</string>
-    <string name="required_dialog_not_found">您手机的系统没有实现所需的对话框。 这将在未来的版本中解决。</string>
-    <string name="overwrite_settings_summary_on">传入文件同名时，传入文件将覆盖现有文件</string>
-    <string name="overwrite_settings_summary_off">传入文件同名时，传入文件会被重命名</string>
+    <string name="required_dialog_not_found">您手机的系统没有实现所需的对话框。这将在未来的版本中解决。</string>
+    <string name="overwrite_settings_summary_on">传入文件重名时，传入文件会覆盖现有文件</string>
+    <string name="overwrite_settings_summary_off">传入文件重名时，传入文件会被重命名</string>
     <string name="custom">自定义</string>
-    <string name="unsupported_provider">您选择了不受支持的内容提供者。 请在您的内部存储空间上选择一个目录。</string>
+    <string name="unsupported_provider">您选择了不受支持的内容提供者。请在您的内部存储空间上选择一个目录。</string>
     <!--  Theme settings -->
     <string name="sysDefault">跟随系统</string>
     <string name="lightTheme">浅色模式</string>
@@ -76,7 +76,7 @@
     <string name="warpinator_notification_button">停止服务</string>
     <string name="transfers_complete">已完成所有的传输</string>
     <string name="transfer_notification">%1$.1f%%, %2$d 传输, %3$s/s</string>
-    <string name="incoming_transfer">来自%s的传输</string>
+    <string name="incoming_transfer">来自 %s 的传输</string>
     <string name="num_files">%d 文件</string>
     <string name="service_running">服务正在运行</string>
     <string name="notification_channel_description">持续服务通知</string>
@@ -89,8 +89,8 @@
     <string name="application_icon_cnt_des">应用图标</string>
     <string name="meh_face_cnt_des">失望样子的图标</string>
     <string name="selected_picture_cnt_des">选中的图片</string>
-    <string name="decline_button_cnt_des">拒绝文件</string>
-    <string name="accept_button_cnt_des">接受文件</string>
+    <string name="decline_button_cnt_des">拒绝传输</string>
+    <string name="accept_button_cnt_des">接受传输</string>
     <string name="stop_button_cnt_des">停止传输</string>
     <string name="retry_button_cnt_des">重试传输</string>
     <!--  Other  -->
