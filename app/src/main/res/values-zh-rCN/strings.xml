@@ -1,7 +1,7 @@
 <resources>
     <!--  App Name  -->
     <!--  Main Activity  -->
-    <string name="title_activity_transfers">Transfers</string>
+    <string name="title_activity_transfers">传输</string>
     <string name="send_files">发送文件</string>
     <string name="quit">退出</string>
     <string name="connection_issues">连接问题</string>
@@ -14,19 +14,19 @@
     <string name="no_devices_found">没有发现其他设备</string>
     <string name="wrong_group_code">连接失败: 错误的分组代码</string>
     <string name="connection_error">连接错误</string>
-    <string name="not_connected_to_wifi">You are not connected to WiFi or LAN. Use your hotspot if neither is available.
-        Restart the application when you are connected.</string>
+    <string name="not_connected_to_wifi">您没有连接到 WiFi 或 LAN。 如果两者都不可用，请使用您的热点。
+         连接后重新启动应用。</string>
     <string name="changed_network">网络已更改 - 正在重新启动服务……</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">正在等待批准……</string>
-    <string name="files_overwritten_warning">(Files may be overwritten!)</string>
+    <string name="files_overwritten_warning">（文件可能会被覆盖！）</string>
     <string name="remaining">remaining</string>
-    <string name="open_failed">Failed to open received file</string>
-    <string name="a_few_seconds">a few seconds</string>
-    <string name="service_unavailable">, service unavailable</string>
-    <string name="errors_during_transfer">Errors during transfer:</string>
+    <string name="open_failed">无法打开收到的文件</string>
+    <string name="a_few_seconds">几秒钟</string>
+    <string name="service_unavailable">， 服务不可用</string>
+    <string name="errors_during_transfer">传输过程中的错误：</string>
     <string name="dont_close_when_sharing">Closing this activity while sharing might cause the transfer to fail</string>
-    <string name="files_being_sent">Files being sent:</string>
+    <string name="files_being_sent">发送的文件：</string>
     <!--  About activity  -->
     <string name="version">版本: %1$s</string>
     <string name="about_description">This is an unofficial port of Warpinator. \nSend and receive files across local network.</string>
@@ -36,26 +36,26 @@
         &lt;br>
         This program comes with absolutely no warranty.&lt;br>See the terms of the license for more details.</string>
     <!--  Share activity  -->
-    <string name="devices_to_share_with">Devices to share with</string>
-    <string name="no_share_devices">No available devices to share with</string>
+    <string name="devices_to_share_with">与之分享的设备</string>
+    <string name="no_share_devices">没有可以与之分享的设备</string>
     <string name="unsupported_intent">We received an unsupported intent action</string>
     <string name="nothing_to_share">Nothing to share</string>
     <!--  Setting  -->
-    <string name="identity_settings_category">Identity</string>
-    <string name="transfer_setting_category">Transfer settings</string>
+    <string name="identity_settings_category">身份识别</string>
+    <string name="transfer_setting_category">传输设置</string>
     <string name="network_setting_category">网络</string>
     <string name="aspect_setting_category">外观</string>
     <string name="display_settings_title">显示名称</string>
     <string name="picture_settings_title">简介图片</string>
     <string name="download_dir_settings_title">下载目录</string>
-    <string name="notification_settings_title">Show notification about incoming files</string>
-    <string name="overwrite_settings_title">Allow overwriting</string>
-    <string name="accept_settings_title">Automatically accept transfers</string>
-    <string name="accept_setting_summary_on">Transfers will be accepted automatically</string>
-    <string name="accept_setting_summary_off">Every transfer needs to be accepted by you</string>
+    <string name="notification_settings_title">有文件传入时显示通知</string>
+    <string name="overwrite_settings_title">允许覆盖</string>
+    <string name="accept_settings_title">自动接受传输</string>
+    <string name="accept_setting_summary_on">传输会自动接受</string>
+    <string name="accept_setting_summary_off">每次传输都需要您确认</string>
     <string name="background_settings_title">后台运行</string>
     <string name="boot_settings_title">自动启动</string>
-    <string name="export_log_settings_tile">Write debug log to file</string>
+    <string name="export_log_settings_tile">将调试日志写入文件</string>
     <string name="group_code_settings_title">分组代码</string>
     <string name="port_settings_title">端口</string>
     <string name="theme_settings_title">主题</string>
@@ -72,31 +72,31 @@
     <string name="lightTheme">浅色模式</string>
     <string name="darkTheme">深色模式</string>
     <!--  Notification  -->
-    <string name="warpinator_notification_title">Warpinator service is running</string>
+    <string name="warpinator_notification_title">Warpinator 服务正在运行</string>
     <string name="warpinator_notification_button">停止服务</string>
-    <string name="transfers_complete">All transfers are complete</string>
-    <string name="transfer_notification">%1$.1f%%, %2$d transfers, %3$s/s</string>
-    <string name="incoming_transfer">Incoming transfer from %s</string>
-    <string name="num_files">%d files</string>
-    <string name="service_running">Service running</string>
-    <string name="notification_channel_description">Persistent service notification</string>
+    <string name="transfers_complete">已完成所有的传输</string>
+    <string name="transfer_notification">%1$.1f%%, %2$d 传输, %3$s/s</string>
+    <string name="incoming_transfer">来自%s的传输</string>
+    <string name="num_files">%d 文件</string>
+    <string name="service_running">服务正在运行</string>
+    <string name="notification_channel_description">持续服务通知</string>
     <string name="incoming_transfer_channel">Incoming transfer</string>
-    <string name="transfer_progress_channel">Transfer progress</string>
+    <string name="transfer_progress_channel">传输进度</string>
     <!--  Content descriptions  -->
-    <string name="reconnect_button_cnt_des">Reconnect</string>
-    <string name="status_image_cnt_des">Connection status</string>
-    <string name="profile_image_cnt_des">Profile picture</string>
-    <string name="application_icon_cnt_des">Application icon</string>
-    <string name="meh_face_cnt_des">Disappointed face icon</string>
-    <string name="selected_picture_cnt_des">Selected picture</string>
-    <string name="decline_button_cnt_des">Decline the transfer</string>
-    <string name="accept_button_cnt_des">Accept the transfer</string>
-    <string name="stop_button_cnt_des">Stop the transfer</string>
-    <string name="retry_button_cnt_des">Retry the transfer</string>
+    <string name="reconnect_button_cnt_des">重新连接</string>
+    <string name="status_image_cnt_des">连接状态</string>
+    <string name="profile_image_cnt_des">简介图片</string>
+    <string name="application_icon_cnt_des">应用图标</string>
+    <string name="meh_face_cnt_des">失望样子的图标</string>
+    <string name="selected_picture_cnt_des">选中的图片</string>
+    <string name="decline_button_cnt_des">拒绝文件</string>
+    <string name="accept_button_cnt_des">接受文件</string>
+    <string name="stop_button_cnt_des">停止传输</string>
+    <string name="retry_button_cnt_des">重试传输</string>
     <!--  Other  -->
     <string name="please_select_download_dir">This is likely the first time you are launching this application.
         Please select a directory where you want Warpinator to save files into.</string>
-    <string name="error_download_dir">You have to select a download directory in the settings</string>
+    <string name="error_download_dir">您必须在设置中选择下载目录</string>
     <string name="error_network_unavailable">网络不可用 - 尝试热点？</string>
     <string name="error_service_not_running">服务未运行</string>
     <string name="cert_not_received">Failed to receive certificate from %1$s. Make sure to allow UDP (as well as TCP) traffic on port %2$d in remote\'s firewall.</string>
