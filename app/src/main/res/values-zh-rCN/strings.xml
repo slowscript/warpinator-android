@@ -1,0 +1,123 @@
+<resources>
+    <!--  App Name  -->
+    <!--  Main Activity  -->
+    <string name="title_activity_transfers">传输</string>
+    <string name="send_files">发送文件</string>
+    <string name="quit">退出</string>
+    <string name="connection_issues">连接问题</string>
+    <string name="reannounce">重新宣告</string>
+    <string name="rescan">重新扫描设备</string>
+    <string name="about">关于</string>
+    <string name="settings">设置</string>
+    <string name="title_activity_share">分享给</string>
+    <string name="available_devices">可用设备</string>
+    <string name="no_devices_found">没有发现其他设备</string>
+    <string name="wrong_group_code">连接失败: 错误的分组代码</string>
+    <string name="connection_error">连接错误</string>
+    <string name="not_connected_to_wifi">您没有连接到 WiFi 或 LAN。如果两者都不可用，请使用您的热点。
+         连接后重新启动应用。</string>
+    <string name="changed_network">网络已更改 - 正在重新启动服务……</string>
+    <!--  Transfers activity  -->
+    <string name="waiting_for_permission">正在等待批准……</string>
+    <string name="files_overwritten_warning">（文件可能会被覆盖！）</string>
+    <string name="remaining">剩余时间</string>
+    <string name="open_failed">无法打开收到的文件</string>
+    <string name="a_few_seconds">马上就好</string>
+    <string name="service_unavailable">，服务不可用</string>
+    <string name="errors_during_transfer">传输过程中的错误：</string>
+    <string name="dont_close_when_sharing">分享时关闭此 Activity 可能会导致转移失败</string>
+    <string name="files_being_sent">发送的文件：</string>
+    <!--  About activity  -->
+    <string name="version">版本: %1$s</string>
+    <string name="about_description">这是 Warpinator 的非官方版本。\n通过本地网络发送和接收文件。</string>
+    <string name="warranty_html">
+        此程序是在 &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a> 许可下的开源软件。&lt;br>
+        您可以从 &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a> 获取源代码。&lt;br>
+        &lt;br>
+        此程序绝对不提供任何担保。&lt;br>有关更多详细信息，请参阅许可条款。</string>
+    <!--  Share activity  -->
+    <string name="devices_to_share_with">与之分享的设备</string>
+    <string name="no_share_devices">没有可以与之分享的设备</string>
+    <string name="unsupported_intent">我们收到了不受支持的 Intent 操作</string>
+    <string name="nothing_to_share">没有什么可分享的</string>
+    <!--  Setting  -->
+    <string name="identity_settings_category">身份识别</string>
+    <string name="transfer_setting_category">传输设置</string>
+    <string name="network_setting_category">网络</string>
+    <string name="aspect_setting_category">外观</string>
+    <string name="display_settings_title">显示名称</string>
+    <string name="picture_settings_title">简介图片</string>
+    <string name="download_dir_settings_title">下载目录</string>
+    <string name="notification_settings_title">有文件传入时显示通知</string>
+    <string name="overwrite_settings_title">允许覆盖</string>
+    <string name="accept_settings_title">自动接受传输</string>
+    <string name="accept_setting_summary_on">会自动接受传输</string>
+    <string name="accept_setting_summary_off">每次传输都需要您确认</string>
+    <string name="background_settings_title">后台运行</string>
+    <string name="boot_settings_title">自动启动</string>
+    <string name="export_log_settings_tile">将调试日志写入文件</string>
+    <string name="group_code_settings_title">分组代码</string>
+    <string name="port_settings_title">端口</string>
+    <string name="theme_settings_title">主题</string>
+    <string name="notification_settings_summary">这可能会受到 Android 的通知设置的影响</string>
+    <string name="port_range_warning">端口号必须介于 1024 和 65535 之间</string>
+    <string name="requires_restart_warning">更改此设置需要重新启动应用</string>
+    <string name="required_dialog_not_found">您手机的系统没有实现所需的对话框。这将在未来的版本中解决。</string>
+    <string name="overwrite_settings_summary_on">传入文件重名时，传入文件会覆盖现有文件</string>
+    <string name="overwrite_settings_summary_off">传入文件重名时，传入文件会被重命名</string>
+    <string name="custom">自定义</string>
+    <string name="unsupported_provider">您选择了不受支持的内容提供者。请在您的内部存储空间上选择一个目录。</string>
+    <!--  Theme settings -->
+    <string name="sysDefault">跟随系统</string>
+    <string name="lightTheme">浅色模式</string>
+    <string name="darkTheme">深色模式</string>
+    <!--  Notification  -->
+    <string name="warpinator_notification_title">Warpinator 服务正在运行</string>
+    <string name="warpinator_notification_button">停止服务</string>
+    <string name="transfers_complete">已完成所有的传输</string>
+    <string name="transfer_notification">%1$.1f%%, %2$d 传输, %3$s/s</string>
+    <string name="incoming_transfer">来自 %s 的传输</string>
+    <string name="num_files">%d 文件</string>
+    <string name="service_running">服务正在运行</string>
+    <string name="notification_channel_description">持续服务通知</string>
+    <string name="incoming_transfer_channel">传入的传输</string>
+    <string name="transfer_progress_channel">传输进度</string>
+    <!--  Content descriptions  -->
+    <string name="reconnect_button_cnt_des">重新连接</string>
+    <string name="status_image_cnt_des">连接状态</string>
+    <string name="profile_image_cnt_des">简介图片</string>
+    <string name="application_icon_cnt_des">应用图标</string>
+    <string name="meh_face_cnt_des">失望样子的图标</string>
+    <string name="selected_picture_cnt_des">选中的图片</string>
+    <string name="decline_button_cnt_des">拒绝传输</string>
+    <string name="accept_button_cnt_des">接受传输</string>
+    <string name="stop_button_cnt_des">停止传输</string>
+    <string name="retry_button_cnt_des">重试传输</string>
+    <!--  Other  -->
+    <string name="please_select_download_dir">这可能是您第一次启动此应用。
+         请选择您希望 Warpinator 保存文件的目录。</string>
+    <string name="error_download_dir">您必须在设置中选择下载目录</string>
+    <string name="error_network_unavailable">网络不可用 - 尝试热点？</string>
+    <string name="error_service_not_running">服务未运行</string>
+    <string name="cert_not_received">未能从 %1$s 接收证书。请确保远程防火墙允许 %2$d 端口上的 UDP（以及 TCP）流量。</string>
+    <string-array name="connected_states">
+        <item>已连接</item>
+        <item>已断开连接</item>
+        <item>正在连接</item>
+        <item>连接失败</item>
+        <item>等待双工</item>
+    </string-array>
+    <string-array name="transfer_states">
+        <item>正在初始化</item>
+        <item>正在等待批准……</item>
+        <item>已拒绝</item>
+        <item>正在传输</item>
+        <item>已暂停</item>
+        <item>已停止</item>
+        <item>已失败（点击查看）</item>
+        <item>不可恢复的故障</item>
+        <item>未找到文件</item>
+        <item>已完成</item>
+        <item>已完成但有错误（点击查看）</item>
+    </string-array>
+</resources>
