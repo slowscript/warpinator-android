@@ -152,6 +152,14 @@ public class Server {
         if(!svc.prefs.contains("profile"))
             svc.prefs.edit().putString("profile",  String.valueOf(new Random().nextInt(12))).apply();
         profilePicture = svc.prefs.getString("profile", "0");
+
+        boolean bootStart = svc.prefs.getBoolean("bootStart", false);
+        boolean background = svc.prefs.getBoolean("background", true);
+        boolean autoStop = svc.prefs.getBoolean("autoStop", true);
+        if (bootStart && autoStop)
+            svc.prefs.edit().putBoolean("autoStop", false).apply();
+        if (bootStart && !background)
+            svc.prefs.edit().putBoolean("bootStart", false).apply();
     }
 
     void startGrpcServer() {

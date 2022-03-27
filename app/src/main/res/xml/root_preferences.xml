@@ -57,6 +57,12 @@
             app:dependency="background"
             app:disableDependentsState="true" />
         <SwitchPreferenceCompat
+            android:title="@string/stop_svc_when_leaving"
+            android:key="autoStop"
+            android:defaultValue="true"
+            android:dependency="bootStart"
+            app:disableDependentsState="true" />
+        <SwitchPreferenceCompat
             android:title="@string/export_log_settings_tile"
             android:summary="Android/data/slowscript.warpinator/files/"
             android:key="debugLog"

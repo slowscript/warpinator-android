@@ -48,6 +48,7 @@ public class MainService extends Service {
     static String ACTION_STOP = "StopSvc";
     static long pingTime = 10_000;
     static long reconnectTime = 30_000;
+    static long autoStopTime = 60_000;
 
     public SharedPreferences prefs;
     public int runningTransfers = 0;
@@ -68,6 +69,7 @@ public class MainService extends Service {
     ConnectivityManager connMgr;
     ConnectivityManager.NetworkCallback networkCallback;
     BroadcastReceiver apStateChangeReceiver;
+    TimerTask autoStopTask;
 
     @Nullable
     @Override
@@ -134,6 +136,14 @@ public class MainService extends Service {
         super.onDestroy();
     }
 
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        Log.d(TAG, "Task removed");
+        if (runningTransfers == 0) // && autostop enabled
+            autoStop();
+        super.onTaskRemoved(rootIntent);
+    }
+
     private void stopServer () {
         if (server == null) //I have no idea how this can happen
             return;
@@ -150,6 +160,36 @@ public class MainService extends Service {
         timer.cancel();
         if (lock != null)
             lock.release();
+    }
+
+    static void scheduleAutoStop() {
+        if (svc != null && svc.runningTransfers == 0 && svc.autoStopTask == null && svc.isAutoStopEnabled()) {
+            Log.d(TAG, "AutoStop scheduled for " + autoStopTime/1000 + " seconds");
+            svc.autoStopTask = new TimerTask() {
+                @Override
+                public void run() {
+                    svc.autoStop();
+                }
+            };
+            svc.timer.schedule(svc.autoStopTask, autoStopTime);
+        }
+    }
+
+    static void cancelAutoStop() {
+        if (svc != null && svc.autoStopTask != null) {
+            Log.d(TAG, "Cancelling AutoStop");
+            svc.autoStopTask.cancel();
+            svc.autoStopTask = null;
+        }
+    }
+
+    private void autoStop() {
+        if (!isAutoStopEnabled())
+            return;
+        Log.i(TAG, "Autostopping");
+        stopSelf();
+        LocalBroadcasts.closeAll(this);
+        autoStopTask = null;
     }
 
     public void updateProgress() {
@@ -275,6 +315,7 @@ public class MainService extends Service {
             notifBuilder.setProgress(0, 0, false);
             notifBuilder.setContentTitle(getString(R.string.transfers_complete));
             notifBuilder.setOngoing(false);
+            scheduleAutoStop();
         }
         if (runningTransfers > 0 || TransfersActivity.topmostRemote != null)
             notificationMgr.notify(PROGRESS_NOTIFICATION_ID, notifBuilder.build());
@@ -360,6 +401,10 @@ public class MainService extends Service {
             lock.acquire();
             Log.d(TAG, "Multicast lock acquired");
         }
+    }
+
+    private boolean isAutoStopEnabled() {
+        return prefs.getBoolean("autoStop", true) && !prefs.getBoolean("bootStart", false);
     }
 
     public static class StopSvcReceiver extends BroadcastReceiver {
