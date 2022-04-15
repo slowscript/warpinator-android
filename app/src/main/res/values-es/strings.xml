@@ -1,86 +1,122 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--  Main Activity  -->
+    <string name="title_activity_transfers">Transferencias</string>
+    <string name="send_files">Enviar archivos</string>
+    <string name="quit">Salir</string>
+    <string name="connection_issues">Problemas de conexión</string>
+    <string name="reannounce">Reanunciar</string>
+    <string name="rescan">Buscar dispositivos</string>
     <string name="about">Acerca de</string>
     <string name="settings">Ajustes</string>
     <string name="title_activity_share">Compartir con</string>
-    <string name="connection_error">Error de conexión</string>
-    <string name="version">Versión: %1$s</string>
-    <string name="send_files">Enviar archivos</string>
-    <string name="title_activity_transfers">Transferencias</string>
-    <string name="darkTheme">Tema Oscuro</string>
-    <string name="lightTheme">Tema Claro</string>
-    <string name="theme_settings_title">Tema</string>
-    <string name="quit">Quitar</string>
-    <string name="warpinator_notification_button">Detener servicio</string>
-    <string name="port_settings_title">Puerto</string>
-    <string name="boot_settings_title">Iniciar automaticamente</string>
-    <string name="aspect_setting_category">Aspecto</string>
     <string name="available_devices">Dispositivos disponibles</string>
-    <string name="no_devices_found">No se encontraron otros dispositivos</string>
+    <string name="no_devices_found">No se encontraron dispositivos</string>
     <string name="wrong_group_code">Error de conexión: código de grupo incorrecto</string>
-    <string name="not_connected_to_wifi">No está conectado a WiFi o LAN. Utilice su punto de acceso si ninguno de los dos está disponible.         Reinicie la aplicación cuando esté conectado.</string>
-    <string name="waiting_for_permission">Esperando permiso…</string>
+    <string name="connection_error">Error de conexión</string>
+    <string name="not_connected_to_wifi">No está conectado a WiFi o LAN. Use su punto de acceso si ninguno está disponible.
+        Reiniciar aplicación cuando esté conectado.</string>
+    <string name="changed_network">Red cambiada - reiniciando servicio...</string>
+    <!--  Transfers activity  -->
+    <string name="waiting_for_permission">Esperando permisoâŚ</string>
+    <string name="files_overwritten_warning">(ĄLos archivos se pueden sobrescribir!)</string>
     <string name="remaining">restante</string>
-    <string name="a_few_seconds">unos pocos segundos</string>
+    <string name="open_failed">No se ha podido abrir el archivo recibido</string>
+    <string name="a_few_seconds">unos segundos</string>
     <string name="service_unavailable">, servicio no disponible</string>
-    <string name="transfers_complete">Todas las transferencias están completas</string>
-    <string name="transfer_notification">%1$.1f%%, %2$d transferencias, %3$s/s</string>
-    <string name="num_files">%d archivos</string>
-    <string name="incoming_transfer">Transferencia entrante de %s</string>
-    <string name="sysDefault">Usar predeterminado por sistema</string>
-    <string name="identity_settings_category">Identidad</string>
-    <string name="transfer_setting_category">Configuración de transferencia</string>
     <string name="errors_during_transfer">Errores durante la transferencia:</string>
-    <string name="about_description">Este es un port no oficial de Warpinator. \nEnvie y reciba archivos a través de la red local.</string>
-    <string name="error_download_dir">Tienes que seleccionar un directorio de descarga en la configuración</string>
-    <string name="incoming_transfer_channel">Transferencia entrante</string>
-    <string name="accept_setting_summary_on">Las transferencias se aceptarán automáticamente</string>
-    <string name="accept_setting_summary_off">Cada transferencia debe ser aceptada por usted</string>
-    <string name="requires_restart_warning">Cambiar esta configuración requiere que se reinicie la aplicación</string>
-    <string name="background_settings_title">Ejecutar en segundo plano</string>
-    <string name="network_setting_category">Red</string>
-    <string name="devices_to_share_with">Dispositivos para compartir</string>
+    <string name="dont_close_when_sharing">Cerrar esta actividad mientras se comparte puede hacer que la transferencia falle</string>
+    <string name="files_being_sent">Archivos que se envían:</string>
+    <!--  About activity  -->
+    <string name="version">Versión: %1$s</string>
+    <string name="about_description">Este es un puerto no oficial de Warpinator. \nEnviar y recibir archivos a través de la red local.</string>
+    <string name="warranty_html">
+        Este programa es un software de código abierto con licencia &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>.&lt;br>
+        Puede obtener el código fuente en &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
+        &lt;br>
+        Este programa no tiene ninguna garantía.&lt;br>Consulte los términos de la licencia para obtener más detalles..</string>
+    <!--  Share activity  -->
+    <string name="devices_to_share_with">Dispositivos con los que compartir</string>
     <string name="no_share_devices">No hay dispositivos disponibles para compartir</string>
-    <string name="unsupported_intent">Recibimos una acción de intención no soportada</string>
-    <string name="nothing_to_share">Nada para compartir</string>
-    <string name="display_settings_title">Nombre para mostrar</string>
+    <string name="unsupported_intent">Recibimos una acción de intención no admitida</string>
+    <string name="nothing_to_share">Nada que compartir</string>
+    <!--  Setting  -->
+    <string name="identity_settings_category">Identidad</string>
+    <string name="transfer_setting_category">Ajustes de transferencia</string>
+    <string name="network_setting_category">Red</string>
+    <string name="aspect_setting_category">Aspecto</string>
+    <string name="display_settings_title">Nombre a mostrar</string>
     <string name="picture_settings_title">Imagen de perfil</string>
     <string name="download_dir_settings_title">Directorio de descargas</string>
-    <string name="notification_settings_title">Mostrar notificación sobre archivos entrantes</string>
+    <string name="notification_settings_title">Notificar archivos entrantes</string>
     <string name="overwrite_settings_title">Permitir sobrescribir</string>
-    <string name="accept_settings_title">Aceptar transferencias automáticamente</string>
-    <string name="group_code_settings_title">Codigo del grupo</string>
+    <string name="accept_settings_title">Aceptar automáticamente</string>
+    <string name="accept_setting_summary_on">Las transferencias se aceptarán automáticamente</string>
+    <string name="accept_setting_summary_off">Cada transferencia debe ser aceptada por usted</string>
+    <string name="background_settings_title">Ejecutar en segundo plano</string>
+    <string name="boot_settings_title">Iniciar automáticamente</string>
+    <string name="export_log_settings_tile">Registrar depuración en archivo</string>
+    <string name="group_code_settings_title">Código de grupo</string>
+    <string name="port_settings_title">Puerto</string>
+    <string name="theme_settings_title">Tema</string>
     <string name="notification_settings_summary">Esto puede verse afectado por la configuración de notificaciones de Android</string>
     <string name="port_range_warning">El número de puerto debe estar entre 1024 y 65535</string>
-    <string name="overwrite_settings_summary_on">Los archivos entrantes con un nombre que ya existe sobrescribirán los ya existentes</string>
-    <string name="overwrite_settings_summary_off">Los archivos entrantes con un nombre que ya existe van a ser renombrados</string>
+    <string name="requires_restart_warning">Para cambiar esta configuración es necesario reiniciar la aplicación</string>
+    <string name="required_dialog_not_found">El proveedor de su teléfono no implementó un diálogo requerido. Esto se solucionará en una versión futura.</string>
+    <string name="overwrite_settings_summary_on">Los archivos entrantes con un nombre que ya existe sobrescribirán los existentes</string>
+    <string name="overwrite_settings_summary_off">Los archivos entrantes con un nombre que ya existe serán renombrados</string>
     <string name="custom">Personalizado</string>
-    <string name="unsupported_provider">Ha seleccionado un proveedor de contenido no admitido. Seleccione un directorio en su almacenamiento interno.</string>
-    <string name="warpinator_notification_title">El servicio Warpinator se está ejecutando</string>
-    <string name="service_running">Servicio en ejecucion</string>
+    <string name="unsupported_provider">Ha seleccionado un proveedor de contenido no compatible. Seleccione un directorio en su almacenamiento interno.</string>
+    <!--  Theme settings -->
+    <string name="sysDefault">Tema de sistema</string>
+    <string name="lightTheme">Tema claro</string>
+    <string name="darkTheme">Tema oscuro</string>
+    <!--  Notification  -->
+    <string name="warpinator_notification_title">Servicio de Warpinator en ejecución</string>
+    <string name="warpinator_notification_button">Detener servicio</string>
+    <string name="transfers_complete">Transferencias completadas</string>
+    <string name="transfer_notification">%1$.1f%%, %2$d transferencias, %3$s/s</string>
+    <string name="incoming_transfer">Transferencia entrante de %s</string>
+    <string name="num_files">%d archivos</string>
+    <string name="service_running">Ejecutando servicio</string>
     <string name="notification_channel_description">Notificación de servicio persistente</string>
-    <string name="transfer_progress_channel">Progreso de la transferencia</string>
-    <string name="please_select_download_dir">Es probable que esta sea la primera vez que inicie esta aplicación.         Seleccione un directorio en el que desee que Warpinator guarde los archivos.</string>
-    <string name="dont_close_when_sharing">Cerrar esta actividad o ventana mientras se comparte puede hacer que la transferencia falle</string>
-    <string name="files_overwritten_warning">(¡Los archivos pueden sobrescribirse!)</string>
+    <string name="incoming_transfer_channel">Transferencia entrante</string>
+    <string name="transfer_progress_channel">Progreso de transferencia</string>
+    <!--  Content descriptions  -->
+    <string name="reconnect_button_cnt_des">Reconectar</string>
+    <string name="status_image_cnt_des">Estado de conexión</string>
+    <string name="profile_image_cnt_des">Imagen de perfil</string>
+    <string name="application_icon_cnt_des">Icono de aplicación</string>
+    <string name="meh_face_cnt_des">Icono de cara decepcionada</string>
+    <string name="selected_picture_cnt_des">Imagen seleccionada</string>
+    <string name="decline_button_cnt_des">Rechazar transferencia</string>
+    <string name="accept_button_cnt_des">Aceptar transferencia</string>
+    <string name="stop_button_cnt_des">Detener transferencia</string>
+    <string name="retry_button_cnt_des">Reintentar transferencia</string>
+    <!--  Other  -->
+    <string name="please_select_download_dir">Es probable que sea la primera vez que inicie esta aplicación.
+        Seleccione un directorio en el que desea que Warpinator guarde los archivos.</string>
+    <string name="error_download_dir">Debe seleccionar un directorio de descarga en los ajustes</string>
+    <string name="error_network_unavailable">Red no disponible - żProbar punto de acceso?</string>
+    <string name="error_service_not_running">El servicio no se está ejecutando</string>
+    <string name="cert_not_received">Error al recibir el certificado de %1$s. Asegúrese de permitir el tráfico UDP (así como TCP) en el puerto %2$d en el firewall remoto.</string>
     <string-array name="connected_states">
         <item>Conectado</item>
         <item>Desconectado</item>
         <item>Conectando</item>
-        <item>Error de conexión</item>
+        <item>Conexión fallida</item>
         <item>Esperando dúplex</item>
     </string-array>
     <string-array name="transfer_states">
         <item>Inicializando</item>
-        <item>Esperando permiso…</item>
+        <item>Esperando permisoâŚ</item>
         <item>Rechazado</item>
         <item>Transfiriendo</item>
         <item>En pausa</item>
         <item>Detenido</item>
-        <item>Falló (toque para ver los errores)</item>
+        <item>Fallido (pulse para ver los errores)</item>
         <item>Fallo irrecuperable</item>
         <item>Archivo no encontrado</item>
         <item>Terminado</item>
-        <item>Terminó con errores (toque para ver)</item>
+        <item>Terminado con errores (pulse para ver)</item>
     </string-array>
 </resources>
