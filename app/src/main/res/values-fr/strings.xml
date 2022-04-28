@@ -54,6 +54,7 @@
     <string name="accept_setting_summary_off">Chaque transfert devra être accepté par vous</string>
     <string name="background_settings_title">Fonctionner en arrière-plan</string>
     <string name="boot_settings_title">Démarrer automatiquement</string>
+    <string name="stop_svc_when_leaving">Arrêter le service après avoir quitté l\'application</string>
     <string name="export_log_settings_tile">Écrire le journal de débogage dans le fichier</string>
     <string name="group_code_settings_title">Code de groupe</string>
     <string name="port_settings_title">Port</string>
