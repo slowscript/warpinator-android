@@ -57,6 +57,8 @@
     <string name="background_settings_title">Run in background</string>
     <string name="boot_settings_title">Start automatically</string>
     <string name="stop_svc_when_leaving">Stop service after leaving app</string>
+    <string name="stop_svc_when_leaving_summary_on">The service will be stopped automatically when the application is cleared from recents, and also after a timeout if the application is running in the background but no transfers are taking place</string>
+    <string name="stop_svc_when_leaving_summary_off">Once started, the service will continue to run until manually stopped</string>
     <string name="export_log_settings_tile">Write debug log to file</string>
     <string name="group_code_settings_title">Group code</string>
     <string name="port_settings_title">Port</string>

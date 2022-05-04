@@ -55,6 +55,9 @@
     <string name="accept_setting_summary_off">Каждая передача должна быть подтверждена вами</string>
     <string name="background_settings_title">Работа в фоновом режиме</string>
     <string name="boot_settings_title">Запускать автоматически</string>
+    <string name="stop_svc_when_leaving">Автозавершение службы</string>
+    <string name="stop_svc_when_leaving_summary_on">Служба будет остановлена автоматически при очистке приложения из  недавних, а также по истечении тайм-аута, если приложение работает в фоне, но передачи не выполняются</string>
+    <string name="stop_svc_when_leaving_summary_off">После запуска служба будет продолжать работать до момента остановки вручную</string>
     <string name="export_log_settings_tile">Записывать лог в файл</string>
     <string name="group_code_settings_title">Групповой код</string>
     <string name="port_settings_title">Порт</string>
