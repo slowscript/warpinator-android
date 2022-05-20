@@ -141,7 +141,7 @@ public class Server {
 
     void loadSettings() {
         if(!svc.prefs.contains("uuid"))
-            svc.prefs.edit().putString("uuid", UUID.randomUUID().toString()).apply();
+            svc.prefs.edit().putString("uuid", Utils.generateServiceName()).apply();
         uuid = svc.prefs.getString("uuid", "default");
         displayName = svc.prefs.getString("displayName", "Android");
         port = Integer.parseInt(svc.prefs.getString("port", "42000"));

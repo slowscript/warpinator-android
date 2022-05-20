@@ -42,6 +42,8 @@ import java.net.URLDecoder;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.Enumeration;
+import java.util.Locale;
+import java.util.Random;
 
 import io.grpc.stub.StreamObserver;
 
@@ -328,6 +330,19 @@ public class Utils {
         int color = a.getColor(0, 0);
         a.recycle();
         return color;
+    }
+
+    public static String generateServiceName() {
+        return getDeviceName().toUpperCase(Locale.ROOT).replace(" ", "") + "-" + getRandomHexString(6);
+    }
+
+    static String getRandomHexString(int len)
+    {
+        char[] buf = new char[len];
+        Random random = new Random();
+        for (int idx = 0; idx < buf.length; ++idx)
+            buf[idx] = HEX_ARRAY[random.nextInt(HEX_ARRAY.length)];
+        return new String(buf);
     }
 
     //FOR DEBUG PURPOSES
