@@ -262,8 +262,7 @@ public class TransfersActivity extends AppCompatActivity {
             }
             t.remoteUUID = remote.uuid;
 
-            remote.transfers.add(t);
-            t.privId = remote.transfers.size()-1;
+            remote.addTransfer(t);
             t.setStatus(Transfer.Status.INITIALIZING);
             updateTransfers(remote.uuid);
             new Thread(() -> {

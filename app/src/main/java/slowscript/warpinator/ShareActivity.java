@@ -91,8 +91,7 @@ public class ShareActivity extends AppCompatActivity {
                     t.uris = uris;
                     t.remoteUUID = remote.uuid;
 
-                    remote.transfers.add(t);
-                    t.privId = remote.transfers.size()-1;
+                    remote.addTransfer(t);
                     t.setStatus(Transfer.Status.INITIALIZING);
                     new Thread(()->{
                         t.prepareSend();

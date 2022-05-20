@@ -166,6 +166,13 @@ public class Remote {
         return null;
     }
 
+    public void addTransfer(Transfer t) {
+        transfers.add(0, t);
+        // Update index
+        for (int i = 0; i < transfers.size(); i++)
+            transfers.get(i).privId = i;
+    }
+
     public void startSendTransfer(Transfer t) {
         WarpProto.OpInfo info = WarpProto.OpInfo.newBuilder()
                 .setIdent(Server.current.uuid)
