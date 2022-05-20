@@ -67,8 +67,7 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
         t.singleName = request.getNameIfSingle();
         t.topDirBasenames = request.getTopDirBasenamesList();
 
-        r.transfers.add(t);
-        t.privId = r.transfers.size()-1;
+        r.addTransfer(t);
         t.prepareReceive();
 
         returnVoid(responseObserver);
