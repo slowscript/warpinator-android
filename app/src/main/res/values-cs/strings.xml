@@ -112,4 +112,6 @@
     <string name="stop_button_cnt_des">Zastavit přenos</string>
     <string name="retry_button_cnt_des">Znovu odeslat</string>
     <string name="changed_network">Změna sítě - restartuji službu…</string>
+    <string name="stop_svc_when_leaving_summary_on">Služba bude automaticky zastavena po odstranění z nedávných nebo době bez aktivity</string>
+    <string name="stop_svc_when_leaving_summary_off">Služba poběží dokud nebude ručně zastavena</string>
 </resources>
