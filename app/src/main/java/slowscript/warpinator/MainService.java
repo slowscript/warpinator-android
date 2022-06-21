@@ -164,14 +164,16 @@ public class MainService extends Service {
 
     static void scheduleAutoStop() {
         if (svc != null && svc.runningTransfers == 0 && svc.autoStopTask == null && svc.isAutoStopEnabled()) {
-            Log.d(TAG, "AutoStop scheduled for " + autoStopTime/1000 + " seconds");
             svc.autoStopTask = new TimerTask() {
                 @Override
                 public void run() {
                     svc.autoStop();
                 }
             };
-            svc.timer.schedule(svc.autoStopTask, autoStopTime);
+            try {
+                svc.timer.schedule(svc.autoStopTask, autoStopTime);
+                Log.d(TAG, "AutoStop scheduled for " + autoStopTime/1000 + " seconds");
+            } catch (IllegalStateException ignored) {} //when quitting app
         }
     }
 
