@@ -3,7 +3,7 @@
     <!--  Main Activity  -->
     <string name="title_activity_transfers">Prijenosi</string>
     <string name="send_files">Pošalji datoteke</string>
-    <string name="quit">Quit</string>
+    <string name="quit">Zatvori</string>
     <string name="connection_issues">Problem povezivanja</string>
     <string name="reannounce">Ponovno najavi</string>
     <string name="rescan">Pretraži uređaje</string>
