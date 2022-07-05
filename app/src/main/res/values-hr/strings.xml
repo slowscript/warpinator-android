@@ -25,7 +25,7 @@
     <string name="a_few_seconds">nekoliko sekundi</string>
     <string name="service_unavailable">, usluga je nedostupna</string>
     <string name="errors_during_transfer">Greške pri prijenosu:</string>
-    <string name="dont_close_when_sharing">Zatvaranje ove aktvnosti jer bi dijeljenje moglo prouzročiti neuspjeli prijenos</string>
+    <string name="dont_close_when_sharing">Zatvaranje ove aktvnosti dok se dijeli može prouzrokovati neuspješan prijenos</string>
     <string name="files_being_sent">Poslane datoteke:</string>
     <!--  About activity  -->
     <string name="version">Inačica: %1$s</string>
@@ -92,7 +92,7 @@
     <string name="application_icon_cnt_des">Ikona aplikacije</string>
     <string name="meh_face_cnt_des">Ikona razočaranog lica</string>
     <string name="selected_picture_cnt_des">Odabrana slika</string>
-    <string name="decline_button_cnt_des">Odbij prijenos</string>
+    <string name="decline_button_cnt_des">Uskrati prijenos</string>
     <string name="accept_button_cnt_des">Prihvati prijenos</string>
     <string name="stop_button_cnt_des">Zaustavi prijenos</string>
     <string name="retry_button_cnt_des">Ponovno pokreni prijenos</string>
