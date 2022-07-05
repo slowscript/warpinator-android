@@ -56,6 +56,8 @@
     <string name="background_settings_title">Pokreni u pozadini</string>
     <string name="boot_settings_title">Pokreni automatski</string>
     <string name="stop_svc_when_leaving">Zaustavi uslugu nakon zatvaranja aplikacije</string>
+    <string name="stop_svc_when_leaving_summary_on">Usluga će se automatski zaustaviti kada je uklonjena iz nedavnih ili nakon određenog razdoblja neaktivnosti</string>
+    <string name="stop_svc_when_leaving_summary_off">Jednom kada se pokrene, usluga će biti pokrenuta dok se ručno ne zaustavi</string>
     <string name="export_log_settings_tile">Zapiši otklanjanje greške u datoteku zapisa</string>
     <string name="group_code_settings_title">Kôd grupe</string>
     <string name="port_settings_title">Ulaz</string>
