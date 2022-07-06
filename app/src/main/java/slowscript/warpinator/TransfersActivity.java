@@ -234,14 +234,18 @@ public class TransfersActivity extends AppCompatActivity {
         i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
 
+        Log.d(TAG, "Starting file browser activty (prevent autostop)");
+        WarpinatorApp.activitiesRunning++; //Prevent autostop
         startActivityForResult(i, SEND_FILE_REQ_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SEND_FILE_REQ_CODE && resultCode == Activity.RESULT_OK) {
-            if (data == null)
+        if (requestCode == SEND_FILE_REQ_CODE) {
+            Log.d(TAG, "File browser activity finished"); //We return to this activity
+            WarpinatorApp.activitiesRunning--;
+            if ((resultCode != Activity.RESULT_OK) || (data == null))
                 return;
             Transfer t = new Transfer();
             t.uris = new ArrayList<>();

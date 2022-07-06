@@ -11,13 +11,14 @@ import androidx.annotation.Nullable;
 import com.google.android.material.color.DynamicColors;
 
 public class WarpinatorApp extends Application implements Application.ActivityLifecycleCallbacks {
-    private int activitiesRunning = 0;
+    static int activitiesRunning = 0;
 
     @Override
     public void onCreate() {
         super.onCreate();
         DynamicColors.applyToActivitiesIfAvailable(this);
         registerActivityLifecycleCallbacks(this);
+        activitiesRunning = 0;
     }
 
     @Override
@@ -29,8 +30,8 @@ public class WarpinatorApp extends Application implements Application.ActivityLi
 
     @Override
     public void onActivityStopped(@NonNull Activity activity) {
-        Log.d("APP", "Stop");
         activitiesRunning--;
+        Log.d("APP", "Stop -> " + activitiesRunning);
         if (activitiesRunning < 1)
             MainService.scheduleAutoStop();
     }

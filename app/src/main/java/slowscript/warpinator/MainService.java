@@ -163,7 +163,8 @@ public class MainService extends Service {
     }
 
     static void scheduleAutoStop() {
-        if (svc != null && svc.runningTransfers == 0 && svc.autoStopTask == null && svc.isAutoStopEnabled()) {
+        if (svc != null && svc.runningTransfers == 0 && svc.autoStopTask == null &&
+                svc.isAutoStopEnabled() && WarpinatorApp.activitiesRunning < 1) {
             svc.autoStopTask = new TimerTask() {
                 @Override
                 public void run() {
