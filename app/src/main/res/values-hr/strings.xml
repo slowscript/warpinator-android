@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--  App Name  -->
     <!--  Main Activity  -->
     <string name="title_activity_transfers">Prijenosi</string>
     <string name="send_files">Pošalji datoteke</string>
-    <string name="quit">Quit</string>
+    <string name="quit">Zatvori</string>
     <string name="connection_issues">Problem povezivanja</string>
     <string name="reannounce">Ponovno najavi</string>
     <string name="rescan">Pretraži uređaje</string>
@@ -25,16 +26,12 @@
     <string name="a_few_seconds">nekoliko sekundi</string>
     <string name="service_unavailable">, usluga je nedostupna</string>
     <string name="errors_during_transfer">Greške pri prijenosu:</string>
-    <string name="dont_close_when_sharing">Zatvaranje ove aktvnosti jer bi dijeljenje moglo prouzročiti neuspjeli prijenos</string>
+    <string name="dont_close_when_sharing">Zatvaranje ove aktvnosti dok se dijeli može prouzrokovati neuspješan prijenos</string>
     <string name="files_being_sent">Poslane datoteke:</string>
     <!--  About activity  -->
     <string name="version">Inačica: %1$s</string>
     <string name="about_description">Ovo je neslužbeni port Warpinatora. \nŠaljite i primajte datoteke putem lokalne mreže.</string>
-    <string name="warranty_html">
-        Ovaj program je softver otvorenog kôda licenciran pod uvjetima &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU Opće Javne Licence&lt;/a>.&lt;br>
-        Izvorni kôd možete preuzeti s &lt;a href="https://github.com/slowscript/warpinator-android/">GitHuba&lt;/a>.&lt;br>
-        &lt;br>
-        Ovaj program dolazi bez bilo kakvog jamstva.&lt;br>Pogledajte uvjete licence za više pojedinosti.</string>
+    <string name="warranty_html">Ovaj program je softver otvorenog kôda licenciran pod uvjetima &lt;a href=\"https://www.gnu.org/licenses/gpl-3.0.html\"&gt;GNU Opće Javne Licence&lt;/a&gt;.&lt;br&gt; Izvorni kôd možete preuzeti s &lt;a href=\"https://github.com/slowscript/warpinator-android/\"&gt;GitHuba&lt;/a&gt;.&lt;br&gt; &lt;br&gt; Ovaj program dolazi bez bilo kakvog jamstva.&lt;br&gt;Pogledajte uvjete licence za više pojedinosti.</string>
     <!--  Share activity  -->
     <string name="devices_to_share_with">Uređaji za dijeljenje</string>
     <string name="no_share_devices">Nema dostupnih uređaja za dijeljenje</string>
@@ -90,7 +87,7 @@
     <string name="application_icon_cnt_des">Ikona aplikacije</string>
     <string name="meh_face_cnt_des">Ikona razočaranog lica</string>
     <string name="selected_picture_cnt_des">Odabrana slika</string>
-    <string name="decline_button_cnt_des">Odbij prijenos</string>
+    <string name="decline_button_cnt_des">Uskrati prijenos</string>
     <string name="accept_button_cnt_des">Prihvati prijenos</string>
     <string name="stop_button_cnt_des">Zaustavi prijenos</string>
     <string name="retry_button_cnt_des">Ponovno pokreni prijenos</string>
@@ -121,4 +118,6 @@
         <item>Završeno</item>
         <item>Završeno s greškama (dodirnite za prikaz)</item>
     </string-array>
+    <string name="stop_svc_when_leaving_summary_off">Nakon pokretanja, usluga će biti pokrenuta sve dok se ručno ne zaustavi</string>
+    <string name="stop_svc_when_leaving_summary_on">Usluga će se automatski zaustaviti kada je uklonjena iz nedavnih ili nakon određenog razdoblja neaktivnosti</string>
 </resources>

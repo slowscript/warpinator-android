@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--  App Name  -->
     <!--  Main Activity  -->
@@ -31,10 +32,10 @@
     <string name="version">版本: %1$s</string>
     <string name="about_description">这是 Warpinator 的非官方版本。\n通过本地网络发送和接收文件。</string>
     <string name="warranty_html">
-        此程序是在 &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a> 许可下的开源软件。&lt;br>
-        您可以从 &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a> 获取源代码。&lt;br>
-        &lt;br>
-        此程序绝对不提供任何担保。&lt;br>有关更多详细信息，请参阅许可条款。</string>
+        此程序是在 &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;GNU General Public License&lt;/a&gt; 许可下的开源软件。&lt;br&gt;
+        您可以从 &lt;a href="https://github.com/slowscript/warpinator-android/"&gt;GitHub&lt;/a&gt; 获取源代码。&lt;br&gt;
+        &lt;br&gt;
+        此程序绝对不提供任何担保。&lt;br&gt;有关更多详细信息，请参阅许可条款。</string>
     <!--  Share activity  -->
     <string name="devices_to_share_with">与之分享的设备</string>
     <string name="no_share_devices">没有可以与之分享的设备</string>
@@ -120,4 +121,7 @@
         <item>已完成</item>
         <item>已完成但有错误（点击查看）</item>
     </string-array>
+    <string name="stop_svc_when_leaving_summary_off">一启动就一直运行，停止需手动操作</string>
+    <string name="stop_svc_when_leaving">退出应用后停止服务</string>
+    <string name="stop_svc_when_leaving_summary_on">清空后台或者一段时间无活动后，自动停止服务</string>
 </resources>
