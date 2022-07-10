@@ -407,6 +407,8 @@ public class MainService extends Service {
     }
 
     private boolean isAutoStopEnabled() {
+        if (prefs == null)
+            return false;
         return prefs.getBoolean("autoStop", true) && !prefs.getBoolean("bootStart", false);
     }
 

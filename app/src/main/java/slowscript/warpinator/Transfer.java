@@ -78,7 +78,9 @@ public class Transfer {
     // -- COMMON --
     public void stop(boolean error) {
         Log.i(TAG, "Transfer stopped");
-        MainService.remotes.get(remoteUUID).stopTransfer(this, error);
+        try {
+            MainService.remotes.get(remoteUUID).stopTransfer(this, error);
+        } catch (NullPointerException ignored) {} //Service stopped and remotes cleared -> there must be a better solution
         onStopped(error);
     }
 
