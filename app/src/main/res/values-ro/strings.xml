@@ -1,40 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="title_activity_transfers">Transferuri</string>
     <string name="send_files">Trimite fișiere</string>
-    <string name="quit">Părăsește aplicația</string>
+    <string name="quit">Închide</string>
     <string name="about">Despre</string>
-    <string name="settings">Setări</string>
-    <string name="title_activity_share">Partajează</string>
-    <string name="available_devices">Dispozitive</string>
-    <string name="no_devices_found">Niciun alt dispozitiv găsit</string>
-    <string name="waiting_for_permission">Așteaptând permisiunea…</string>
-    <string name="files_overwritten_warning">(S-ar putea ca fișierele să fie suprapuse!)</string>
+    <string name="settings">Reglări</string>
+    <string name="title_activity_share">Trimite către</string>
+    <string name="available_devices">Aparate disponibile</string>
+    <string name="no_devices_found">Nu s-a găsit alt aparat</string>
+    <string name="waiting_for_permission">Se așteaptă permisiunea…</string>
+    <string name="files_overwritten_warning">(Fișierele ar putea fi înlocuite!)</string>
     <string name="version">Versiune: %1$s</string>
-    <string name="about_description">Un port neofficial pentru Warpinator. \nTrimite și primește fișiere prin internet.</string>
-    <string name="warranty_html">Acest program nu are nicio garanție.&lt;br>Vedeți &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>, de la versiunea a 3-a încoace pentru mai multe detalii.</string>
+    <string name="about_description">O versiune neoficială a Warpinator.
+\nTrimite și primește fișiere prin rețeaua locală.</string>
+    <string name="warranty_html">Acest program are codul sursă public cu licența &lt;a href=\"https://www.gnu.org/licenses/gpl-3.0.html\"&gt;GNU General Public License&lt;/a&gt;.&lt;br&gt; Codul sursă se află aici &lt;a href=\"https://github.com/slowscript/warpinator-android/\"&gt;GitHub&lt;/a&gt;.&lt;br&gt; &lt;br&gt; Acest program nu oferă nicio garanție.&lt;br&gt;Citește licența pentru mai multe detalii.</string>
     <string name="identity_settings_category">Indentitate</string>
-    <string name="transfer_setting_category">Setări de transfer</string>
+    <string name="transfer_setting_category">Reglări de transfer</string>
     <string name="network_setting_category">Rețea</string>
     <string name="aspect_setting_category">Aspect</string>
     <string name="display_settings_title">Numele afișat</string>
-    <string name="picture_settings_title">Poză de profil</string>
-    <string name="download_dir_settings_title">Folder de descărcări</string>
-    <string name="notification_settings_title">Primește notificări despre primiri</string>
-    <string name="background_settings_title">Rulează în fundal</string>
+    <string name="picture_settings_title">Poza de profil</string>
+    <string name="download_dir_settings_title">Dosarul pentru descărcări</string>
+    <string name="notification_settings_title">Arată notificări la primirea fișierelor</string>
+    <string name="background_settings_title">Menține activ</string>
     <string name="group_code_settings_title">Cod de grup</string>
     <string name="port_settings_title">Port</string>
-    <string name="theme_settings_title">Temă</string>
-    <string name="notification_settings_summary">Poate fi afectat de setările de notificări ale sistemului</string>
+    <string name="theme_settings_title">Aspect</string>
+    <string name="notification_settings_summary">Acest lucru poate fi afectat de notificările sistemului Android</string>
     <string name="port_range_warning">Portul trebuie să fie între 1024 și 65535</string>
-    <string name="requires_restart_warning">Schimbarea acestei setări necesită repornirea aplicației</string>    <string name="sysDefault">Use system default</string>
-    <string name="lightTheme">Temă deschisă</string>
-    <string name="darkTheme">Temă întunecată</string>
-    <string name="warpinator_notification_title">Serviciul Warpinator rulează</string>
+    <string name="requires_restart_warning">Schimbarea acestei reglări necesită repornirea aplicației</string>
+    <string name="sysDefault">Aspectul sistemului</string>
+    <string name="lightTheme">Aspect luminos</string>
+    <string name="darkTheme">Aspect întunecos</string>
+    <string name="warpinator_notification_title">Serviciul Warpinator funcționează</string>
     <string name="warpinator_notification_button">Oprește</string>
     <string name="transfers_complete">Toate transferurile sunt complete</string>
     <string name="transfer_notification">%1$.1f%%, %2$d transferuri, %3$s/s</string>
-    <string name="please_select_download_dir">Este probabil prima dată când folosiți această aplicație.
-         Vă rugăm să selectați un folder în care doriți ca Warpinator să salveze fișierele.</string>
+    <string name="please_select_download_dir">Probabil că este prima dată când folosești această aplicație. Alege un dosar în care Warpinator să salveze fișierele.</string>
     <string-array name="connected_states">
         <item>Conectat</item>
         <item>Deconectat</item>
@@ -55,48 +57,56 @@
         <item>Terminat</item>
         <item>Terminat cu erori (atinge pentru detalii)</item>
     </string-array>
-    <string name="overwrite_settings_title">Permite suprascrierea</string>
-    <string name="overwrite_settings_summary_on">Fișierele primite vor suprascrie fișierele cu același nume</string>
-    <string name="overwrite_settings_summary_off">Fișierele primite nu vor suprascrie fișierele cu același nume, ci vor fi redenumite</string>
-    <string name="boot_settings_title">Pornește împreună cu telefonul</string>
-    <string name="custom">Personalizat</string>
-    <string name="wrong_group_code">Conexiune eșuata: cod de grup greșit</string>
-    <string name="devices_to_share_with">Dispozitive cu care să partajați</string>
-    <string name="no_share_devices">Nu s-au găsit dispozitive cu care să partajați</string>
+    <string name="overwrite_settings_title">Permite înlocuirea</string>
+    <string name="overwrite_settings_summary_on">Fișierele primite vor înlocui fișierele existente cu același nume</string>
+    <string name="overwrite_settings_summary_off">Fișierele primite care au un nume care există deja vor fi redenumite</string>
+    <string name="boot_settings_title">Pornește automat</string>
+    <string name="custom">Personalizate</string>
+    <string name="wrong_group_code">Conectare nereușită: Codul grupului este greșit</string>
+    <string name="devices_to_share_with">Aparate cu care să împărtășești</string>
+    <string name="no_share_devices">Nu s-au găsit aparate cu care să împărtășești</string>
     <string name="remaining">rămase</string>
     <string name="a_few_seconds">câteva secunde</string>
     <string name="service_unavailable">, serviciu indisponibil</string>
     <string name="errors_during_transfer">Erori în timpul transferului:</string>
     <string name="unsupported_intent">Am primit o comandă neacceptată</string>
     <string name="nothing_to_share">Nimic de împărtășit</string>
-    <string name="unsupported_provider">Ați selectat conținut de la un furnizor neacceptat. Vă rugăm să selectați un folder din spațiul de stocare intern.</string>
+    <string name="unsupported_provider">Ai ales conținut de la un furnizor neacceptat. Alege un dosar din spațiul de stocare intern.</string>
     <string name="incoming_transfer">%s trimite fișiere</string>
     <string name="num_files">%d fișiere</string>
-    <string name="service_running">Serviciu rulează</string>
+    <string name="service_running">Serviciul funcționează</string>
     <string name="notification_channel_description">Notificare persistentă pentru serviciu</string>
     <string name="incoming_transfer_channel">Transferuri primite</string>
     <string name="transfer_progress_channel">Progresul transferului</string>
-    <string name="connection_error">Eroare de conexiune</string>
-    <string name="not_connected_to_wifi">Nu sunteți conectat la WiFi sau LAN. Folosește hotspot-ul dacă niciuna nu este disponibilă.
-        Repornește aplicația când ești conectat.</string>
-    <string name="error_download_dir">Trebuie să selectezi un folder de descărcări în setări</string>
-    <string name="accept_settings_title">Accepta automat transferurile</string>
+    <string name="connection_error">Eroare de conectare</string>
+    <string name="not_connected_to_wifi">Nu ești conectat la WiFi sau LAN. Folosește un hotspot dacă niciuna nu este disponibilă. Repornește aplicația când ești conectat.</string>
+    <string name="error_download_dir">Trebuie să alegi un dosar de descărcări în reglări</string>
+    <string name="accept_settings_title">Acceptă automat transferurile</string>
     <string name="accept_setting_summary_on">Transferurile vor fi acceptate automat</string>
     <string name="accept_setting_summary_off">Transferurile trebuie acceptate manual</string>
     <string name="connection_issues">Probleme de conexiune</string>
-    <string name="dont_close_when_sharing">Închiderea acestei pagini ar putea cauza eșuarea transferului</string>
+    <string name="dont_close_when_sharing">Închiderea acestei pagini ar putea cauza eșecul transferului</string>
     <string name="export_log_settings_tile">Scrie jurnalul de depanare într-un fișier</string>
     <string name="reconnect_button_cnt_des">Reconectează</string>
-    <string name="status_image_cnt_des">Status conexiune</string>
-    <string name="profile_image_cnt_des">Imagine de profil</string>
-    <string name="application_icon_cnt_des">Pictograma aplicației</string>
+    <string name="status_image_cnt_des">Starea conexiunii</string>
+    <string name="profile_image_cnt_des">Poza de profil</string>
+    <string name="application_icon_cnt_des">Simbolul aplicației</string>
     <string name="meh_face_cnt_des">Emoji față dezamăgită</string>
-    <string name="selected_picture_cnt_des">Imagine selectată</string>
+    <string name="selected_picture_cnt_des">Imaginea aleasă</string>
     <string name="decline_button_cnt_des">Refuză transferul</string>
     <string name="accept_button_cnt_des">Acceptă transferul</string>
     <string name="stop_button_cnt_des">Oprește transferul</string>
     <string name="retry_button_cnt_des">Reîncearcă transferul</string>
-    <string name="error_network_unavailable">Rețea indisponibilă - încearcă hotspot?</string>
-    <string name="error_service_not_running">Serviciul nu rulează</string>
-    <string name="cert_not_received">Certificatul de la %1$s nu a fost primit. Asigurați-vă că permiteți trafic UDP și TCP prin portul %2$d în firewall-ul dispozitivului.</string>
+    <string name="error_network_unavailable">Rețea indisponibilă - încerci hotspot\?</string>
+    <string name="error_service_not_running">Serviciul nu funcționează</string>
+    <string name="cert_not_received">Certificatul de la %1$s nu a fost primit. Asigură-te că permiți trafic UDP și TCP prin portul %2$d în firewall-ul aparatului.</string>
+    <string name="reannounce">Expune din nou</string>
+    <string name="rescan">Caută aparate</string>
+    <string name="changed_network">Rețea schimbată - se repornește serviciul...</string>
+    <string name="open_failed">Nu s-a putut deschide fișierul primit</string>
+    <string name="files_being_sent">Fișiere de trimis:</string>
+    <string name="stop_svc_when_leaving">Oprește serviciul la părăsirea aplicației</string>
+    <string name="stop_svc_when_leaving_summary_on">Serviciul va fi oprit automat dacă este eliminat din recente sau după o perioadă de inactivitate</string>
+    <string name="stop_svc_when_leaving_summary_off">Odată pornit, serviciul va continua să funcționeze până când va fi oprit manual</string>
+    <string name="required_dialog_not_found">Furnizorul telefonului nu a implementat un dialog necesar. Acest lucru va fi rezolvat într-o versiune viitoare.</string>
 </resources>

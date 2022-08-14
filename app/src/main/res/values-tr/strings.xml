@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--  App Name  -->
     <string name="app_name" translatable="false">Warpinator</string>
@@ -7,7 +8,7 @@
     <string name="quit">Çık</string>
     <string name="connection_issues">Bağlantı sorunları</string>
     <string name="reannounce">Yeniden duyurun</string>
-    <string name="rescan">Cihazlar için yeniden tara</string>
+    <string name="rescan">Aygıtlar için yeniden tara</string>
     <string name="about">Hakkında</string>
     <string name="settings">Ayarlar</string>
     <string name="title_activity_share">İle paylaş</string>
@@ -15,8 +16,7 @@
     <string name="no_devices_found">Diğer aygıt bulunamadı</string>
     <string name="wrong_group_code">Bağlantı başarısız oldu: Yanlış grup kodu</string>
     <string name="connection_error">Bağlantı hatası</string>
-    <string name="not_connected_to_wifi">WiFi veya LAN\'a bağlı değilsiniz. Hiçbiri mevcut değilse, etkin noktanızı kullanın.
-        Bağlandığınızda uygulamayı yeniden başlatın.</string>
+    <string name="not_connected_to_wifi">WiFi veya LAN\'a bağlı değilsiniz. Hiçbiri kullanılabilir değilse, etkin noktanızı kullanın. Bağlandığınızda uygulamayı yeniden başlatın.</string>
     <string name="changed_network">Ağ değişti - hizmet yeniden başlatılıyor...</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">İzin bekleniyor…</string>
@@ -31,11 +31,7 @@
     <!--  About activity  -->
     <string name="version">Sürüm: %1$s</string>
     <string name="about_description">Bu, Warpinator\'ün resmi olmayan bir uygulamasıdır. \nYerel ağ üzerinden dosya gönderin ve alın.</string>
-    <string name="warranty_html">
-        Bu program, &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU Genel Kamu Lisansı&lt;/a> altında lisanslanmış açık kaynaklı bir yazılımdır.&lt;br>
-        Kaynak kodunu &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a> adresinden edinebilirsiniz.&lt;br>
-        &lt;br>
-        Bu program kesinlikle garanti içermez.&lt;br>Daha fazla ayrıntı için lisans koşullarına bakın.</string>
+    <string name="warranty_html">Bu program, &lt;a href=\"https://www.gnu.org/licenses/gpl-3.0.html\"&gt;GNU Genel Kamu Lisansı&lt;/a&gt; altında lisanslanan açık kaynaklı bir yazılımdır.&lt;br&gt; Kaynak kodunu &lt;a href=\"https://github.com/slowscript/warpinator-android/\"&gt;GitHub&lt;/a&gt; sayfasından edinebilirsiniz.&lt;br&gt; &lt;br&gt; Bu program kesinlikle garanti içermez.&lt;br&gt;Daha fazla ayrıntı için lisans koşullarına bakın.</string>
     <!--  Share activity  -->
     <string name="devices_to_share_with">Paylaşılacak aygıtlar</string>
     <string name="no_share_devices">Paylaşılacak uygun aygıt yok</string>
@@ -47,12 +43,12 @@
     <string name="network_setting_category">Ağ</string>
     <string name="aspect_setting_category">Görünüm</string>
     <string name="display_settings_title">Ekran adı</string>
-    <string name="picture_settings_title">Profil fotoğrafı</string>
+    <string name="picture_settings_title">Profil resmi</string>
     <string name="download_dir_settings_title">İndirilenler dizini</string>
     <string name="notification_settings_title">Gelen dosyalar hakkında bildirim göster</string>
     <string name="overwrite_settings_title">Üzerine yazmaya izin ver</string>
     <string name="accept_settings_title">Aktarımları otomatik olarak kabul et</string>
-    <string name="accept_setting_summary_on">Aktarımlar otomatik olarak kabul edilecektir.</string>
+    <string name="accept_setting_summary_on">Aktarımlar otomatik olarak kabul edilecektir</string>
     <string name="accept_setting_summary_off">Her aktarımın sizin tarafınızdan kabul edilmesi gerekiyor</string>
     <string name="background_settings_title">Arka planda çalıştır</string>
     <string name="boot_settings_title">Otomatik başlat</string>
@@ -64,16 +60,16 @@
     <string name="port_range_warning">Bağlantı noktası numarası 1024 ile 65535 arasında olmalıdır</string>
     <string name="requires_restart_warning">Bu ayarın değiştirilmesi uygulamanın yeniden başlatılmasını gerektirir</string>
     <string name="required_dialog_not_found">Telefonunuzun satıcısı gerekli bir iletişim kutusunu uygulamadı. Bu, gelecekteki bir sürümde çözülecektir.</string>
-    <string name="overwrite_settings_summary_on">Halihazırda var olan bir ada sahip gelen dosyalar, mevcut olanların üzerine yazacaktır.</string>
+    <string name="overwrite_settings_summary_on">Zaten var olan bir ada sahip gelen dosyalar, mevcut olanların üzerine yazacak</string>
     <string name="overwrite_settings_summary_off">Zaten var olan bir ada sahip gelen dosyalar yeniden adlandırılacak</string>
     <string name="custom">Özel</string>
     <string name="unsupported_provider">Desteklenmeyen bir içerik sağlayıcı seçtiniz. Lütfen dahili depolama alanınızda bir dizin seçin.</string>
     <!--  Theme settings -->
     <string name="sysDefault">Sistem varsayılanını kullan</string>
-    <string name="lightTheme">Aydınlık Tema</string>
-    <string name="darkTheme">Karanlık Tema</string>
+    <string name="lightTheme">Açık Tema</string>
+    <string name="darkTheme">Koyu Tema</string>
     <!--  Notification  -->
-    <string name="warpinator_notification_title">Warpinator servisi çalışıyor</string>
+    <string name="warpinator_notification_title">Warpinator hizmeti çalışıyor</string>
     <string name="warpinator_notification_button">Hizmeti durdur</string>
     <string name="transfers_complete">Tüm aktarımlar tamamlandı</string>
     <string name="transfer_notification">%1$.1f%%, %2$d aktarımlar, %3$s/s</string>
@@ -86,14 +82,14 @@
     <!--  Content descriptions  -->
     <string name="reconnect_button_cnt_des">Yeniden Bağlan</string>
     <string name="status_image_cnt_des">Bağlantı durumu</string>
-    <string name="profile_image_cnt_des">Profil fotoğrafı</string>
+    <string name="profile_image_cnt_des">Profil resmi</string>
     <string name="application_icon_cnt_des">Uygulama simgesi</string>
     <string name="meh_face_cnt_des">Hayal kırıklığına uğramış yüz simgesi</string>
     <string name="selected_picture_cnt_des">Seçilen resim</string>
     <string name="decline_button_cnt_des">Aktarımı reddet</string>
     <string name="accept_button_cnt_des">Aktarımı kabul et</string>
     <string name="stop_button_cnt_des">Aktarımı durdur</string>
-    <string name="retry_button_cnt_des">Aktarımı yeniden deneyin</string>
+    <string name="retry_button_cnt_des">Aktarımı yeniden dene</string>
     <!--  Other  -->
     <string name="please_select_download_dir">Muhtemelen bu uygulamayı ilk kez başlatıyorsunuz.
         Lütfen Warpinator\'ün dosyaları kaydetmesini istediğiniz bir dizini seçin.</string>
@@ -121,4 +117,7 @@
         <item>Tamamlandı</item>
         <item>Hatalarla tamamlandı (görüntülemek için dokunun)</item>
     </string-array>
+    <string name="stop_svc_when_leaving">Uygulamadan çıktıktan sonra hizmeti durdur</string>
+    <string name="stop_svc_when_leaving_summary_on">Son kullanılanlardan silindiğinde veya bir süre kullanılmadığında hizmet otomatik olarak durdurulacaktır</string>
+    <string name="stop_svc_when_leaving_summary_off">Hizmet başlatıldıktan sonra elle durdurulana kadar çalışmaya devam edecektir</string>
 </resources>

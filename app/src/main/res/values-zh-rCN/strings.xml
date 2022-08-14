@@ -47,7 +47,7 @@
     <string name="network_setting_category">网络</string>
     <string name="aspect_setting_category">外观</string>
     <string name="display_settings_title">显示名称</string>
-    <string name="picture_settings_title">简介图片</string>
+    <string name="picture_settings_title">设备头像</string>
     <string name="download_dir_settings_title">下载目录</string>
     <string name="notification_settings_title">有文件传入时显示通知</string>
     <string name="overwrite_settings_title">允许覆盖</string>
@@ -67,7 +67,7 @@
     <string name="overwrite_settings_summary_on">传入文件重名时，传入文件会覆盖现有文件</string>
     <string name="overwrite_settings_summary_off">传入文件重名时，传入文件会被重命名</string>
     <string name="custom">自定义</string>
-    <string name="unsupported_provider">您选择了不受支持的内容提供者。请在您的内部存储空间上选择一个目录。</string>
+    <string name="unsupported_provider">你选择了不受支持的内容提供商。 请在内部存储上选择一个目录。</string>
     <!--  Theme settings -->
     <string name="sysDefault">跟随系统</string>
     <string name="lightTheme">浅色模式</string>
@@ -80,13 +80,13 @@
     <string name="incoming_transfer">来自 %s 的传输</string>
     <string name="num_files">%d 文件</string>
     <string name="service_running">服务正在运行</string>
-    <string name="notification_channel_description">持续服务通知</string>
+    <string name="notification_channel_description">服务通知常驻</string>
     <string name="incoming_transfer_channel">传入的传输</string>
     <string name="transfer_progress_channel">传输进度</string>
     <!--  Content descriptions  -->
     <string name="reconnect_button_cnt_des">重新连接</string>
     <string name="status_image_cnt_des">连接状态</string>
-    <string name="profile_image_cnt_des">简介图片</string>
+    <string name="profile_image_cnt_des">设备头像</string>
     <string name="application_icon_cnt_des">应用图标</string>
     <string name="meh_face_cnt_des">失望样子的图标</string>
     <string name="selected_picture_cnt_des">选中的图片</string>
@@ -98,7 +98,7 @@
     <string name="please_select_download_dir">这可能是您第一次启动此应用。
          请选择您希望 Warpinator 保存文件的目录。</string>
     <string name="error_download_dir">您必须在设置中选择下载目录</string>
-    <string name="error_network_unavailable">网络不可用 - 尝试热点？</string>
+    <string name="error_network_unavailable">网络不可用 - 开热点试试？</string>
     <string name="error_service_not_running">服务未运行</string>
     <string name="cert_not_received">未能从 %1$s 接收证书。请确保远程防火墙允许 %2$d 端口上的 UDP（以及 TCP）流量。</string>
     <string-array name="connected_states">
@@ -123,5 +123,5 @@
     </string-array>
     <string name="stop_svc_when_leaving_summary_off">一启动就一直运行，停止需手动操作</string>
     <string name="stop_svc_when_leaving">退出应用后停止服务</string>
-    <string name="stop_svc_when_leaving_summary_on">清空后台或者一段时间无活动后，自动停止服务</string>
+    <string name="stop_svc_when_leaving_summary_on">从最近使用的应用被清除或一段时间不活动后，该服务将自动停止</string>
 </resources>

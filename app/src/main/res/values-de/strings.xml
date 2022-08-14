@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--  Main Activity  -->
     <string name="title_activity_transfers">Transfers</string>
@@ -9,7 +10,7 @@
     <string name="available_devices">Verfügbare Geräte</string>
     <string name="no_devices_found">Keine Geräte gefunden</string>
     <string name="wrong_group_code">Verbindung fehlgeschlagen: Falscher Gruppenschlüssel</string>
-	<string name="connection_error">Verbindungsfehler</string>
+    <string name="connection_error">Verbindungsfehler</string>
     <string name="not_connected_to_wifi">Sie sind mit keinem WiFi oder LAN verbunden. Nutzen Sie den Hotspot, wenn nichts anderes verfügbar ist.
         Starten Sie die Anwendung neu, wenn Sie verbunden sind.</string>
     <!--  Transfers activity  -->
@@ -24,10 +25,10 @@
     <string name="version">Version: %1$s</string>
     <string name="about_description">Dies ist eine inoffizieller Portierung von Warpinator. \nSenden und Empfangen von Dateien im lokalen Netzwerk.</string>
     <string name="warranty_html">
-        Dieses Programm ist quelloffene Software lizenziert unter &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>.&lt;br>
-        Sie können den Quellcode über &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a> beziehen.&lt;br>
-        &lt;br>
-        Dieses Programm kommt mit keinerlei Garantien.&lt;br>Für mehr Details, sehen Sie sich die Bedinungen der Lizenz an.</string>
+        Dieses Programm ist quelloffene Software lizenziert unter &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;GNU General Public License&lt;/a&gt;.&lt;br&gt;
+        Sie können den Quellcode über &lt;a href="https://github.com/slowscript/warpinator-android/"&gt;GitHub&lt;/a&gt; beziehen.&lt;br&gt;
+        &lt;br&gt;
+        Dieses Programm kommt mit keinerlei Garantien.&lt;br&gt;Für mehr Details, sehen Sie sich die Bedinungen der Lizenz an.</string>
     <!--  Share activity  -->
     <string name="devices_to_share_with">Geräte für Teilen mit</string>
     <string name="no_share_devices">Keine Geräte für Teilen mit verfügbar</string>
@@ -92,7 +93,7 @@
     <string name="error_network_unavailable">Netzwerk nicht verfügbar - Hotspot versuchen?</string>
     <string name="error_service_not_running">Dienst wird nicht ausgeführt</string>
     <string name="cert_not_received">Abruf des Zertifikats von %1$s fehlgeschlagen. Stellen Sie sicher, dass UDP (genauso wie TCP) Datenverkehr auf Port %2$d in der Firewall der Gegenstelle erlaubt ist.</string>
-        <string-array name="connected_states">
+    <string-array name="connected_states">
         <item>Verbunden</item>
         <item>Getrennt</item>
         <item>Verbinde</item>
@@ -112,4 +113,6 @@
         <item>Fertiggestellt</item>
         <item>Fertiggestellt mit Fehlern (Drücken zum Anzeigen)</item>
     </string-array>
+    <string name="connection_issues">Verbindungsproblem</string>
+    <string name="reannounce">Neu verbinden</string>
 </resources>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--  App Name  -->
     <!--  Main Activity  -->
@@ -31,10 +32,10 @@
     <string name="version">Versione: %1$s</string>
     <string name="about_description">Questo è un progetto non ufficiale di Warpinator. \nInvia e ricevi file attraverso la rete locale.</string>
     <string name="warranty_html">
-        Questo programma è un software open source con licenza &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>.&lt;br>
-        È possibile ottenere il codice sorgente da &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
-        &lt;br>
-        Questo programma non ha alcuna garanzia.&lt;br>Per maggiori dettagli, consultare i termini della licenza.</string>
+        Questo programma è un software open source con licenza &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;GNU General Public License&lt;/a&gt;.&lt;br&gt;
+        È possibile ottenere il codice sorgente da &lt;a href="https://github.com/slowscript/warpinator-android/"&gt;GitHub&lt;/a&gt;.&lt;br&gt;
+        &lt;br&gt;
+        Questo programma non ha alcuna garanzia.&lt;br&gt;Per maggiori dettagli, consultare i termini della licenza.</string>
     <!--  Share activity  -->
     <string name="devices_to_share_with">Dispositivi con cui condividere</string>
     <string name="no_share_devices">Nessun dispositivo disponibile con cui condividere</string>
@@ -45,10 +46,10 @@
     <string name="transfer_setting_category">Impostazioni di trasferimento</string>
     <string name="network_setting_category">Rete</string>
     <string name="aspect_setting_category">Aspetto</string>
-    <string name="display_settings_title">Visualizza nome</string>
+    <string name="display_settings_title">Nome visualizzato</string>
     <string name="picture_settings_title">Foto profilo</string>
     <string name="download_dir_settings_title">Cartella dei download</string>
-    <string name="notification_settings_title">Mostra una notifica sui file in arrivo</string>
+    <string name="notification_settings_title">Mostra notifiche sui file in arrivo</string>
     <string name="overwrite_settings_title">Consenti sovrascrittura</string>
     <string name="accept_settings_title">Accetta automaticamente i trasferimenti</string>
     <string name="accept_setting_summary_on">I trasferimenti verranno accettati automaticamente</string>
