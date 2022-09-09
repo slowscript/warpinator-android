@@ -94,7 +94,7 @@ public class ShareActivity extends AppCompatActivity {
                     remote.addTransfer(t);
                     t.setStatus(Transfer.Status.INITIALIZING);
                     new Thread(()->{
-                        t.prepareSend();
+                        t.prepareSend(false);
                         remote.startSendTransfer(t);
                     }).start();
                     Intent i = new Intent(app, TransfersActivity.class);

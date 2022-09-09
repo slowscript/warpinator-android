@@ -2,6 +2,7 @@ package slowscript.warpinator;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.Context;
@@ -35,6 +36,7 @@ public class TransfersActivity extends AppCompatActivity {
 
     static final String TAG = "TransferActivity";
     static final int SEND_FILE_REQ_CODE = 10;
+    static final int SEND_FOLDER_REQ_CODE = 11;
 
     public static String topmostRemote;
 
@@ -84,6 +86,7 @@ public class TransfersActivity extends AppCompatActivity {
         imgProfile = findViewById(R.id.imgProfile);
         fabSend = findViewById(R.id.fabSend);
         fabSend.setOnClickListener((v) -> openFiles());
+        fabSend.setOnLongClickListener((v) -> openFolder());
         btnReconnect = findViewById(R.id.btnReconnect);
         btnReconnect.setOnClickListener((v) -> reconnect());
 
@@ -239,10 +242,24 @@ public class TransfersActivity extends AppCompatActivity {
         startActivityForResult(i, SEND_FILE_REQ_CODE);
     }
 
+    boolean openFolder() {
+        Toast.makeText(this, R.string.send_folder_toast, Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        try {
+            Log.d(TAG, "Starting folder browser activity (prevent auto-stop)");
+            startActivityForResult(i, SEND_FOLDER_REQ_CODE);
+            WarpinatorApp.activitiesRunning++; //Prevent auto-stop only if actually opened
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, R.string.required_dialog_not_found, Toast.LENGTH_LONG).show();
+        }
+        return true;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SEND_FILE_REQ_CODE) {
+        if (requestCode == SEND_FILE_REQ_CODE || requestCode == SEND_FOLDER_REQ_CODE) {
             Log.d(TAG, "File browser activity finished"); //We return to this activity
             WarpinatorApp.activitiesRunning--;
             if ((resultCode != Activity.RESULT_OK) || (data == null))
@@ -250,7 +267,7 @@ public class TransfersActivity extends AppCompatActivity {
             Transfer t = new Transfer();
             t.uris = new ArrayList<>();
             ClipData cd = data.getClipData();
-            if (cd == null) {
+            if (requestCode == SEND_FOLDER_REQ_CODE || cd == null) {
                 Uri u = data.getData();
                 if (u == null) {
                     Log.w(TAG, "No uri to send");
@@ -270,7 +287,7 @@ public class TransfersActivity extends AppCompatActivity {
             t.setStatus(Transfer.Status.INITIALIZING);
             updateTransfers(remote.uuid);
             new Thread(() -> {
-                t.prepareSend();
+                t.prepareSend(requestCode == SEND_FOLDER_REQ_CODE);
                 remote.startSendTransfer(t);
             }).start();
         }

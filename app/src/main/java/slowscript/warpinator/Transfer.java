@@ -8,6 +8,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.FileUtils;
+import android.provider.DocumentsContract;
 import android.provider.OpenableColumns;
 import android.util.Log;
 
@@ -60,6 +61,8 @@ public class Transfer {
     int privId;
     //SEND only
     public ArrayList<Uri> uris;
+    public ArrayList<MFile> files;
+    public ArrayList<MFile> dirs;
 
     public boolean overwriteWarning = false;
 
@@ -110,22 +113,72 @@ public class Transfer {
     }
 
     // -- SEND --
-    public void prepareSend() {
+    public void prepareSend(boolean isdir) {
         //Only uris and remoteUUID are set from before
         direction = Direction.SEND;
         startTime = System.currentTimeMillis();
-        totalSize = getTotalSendSize();
         fileCount = uris.size();
         topDirBasenames = new ArrayList<>();
+        files = new ArrayList<>();
+        dirs = new ArrayList<>();
         for (Uri u : uris) {
-            topDirBasenames.add(Utils.getNameFromUri(svc, u));
+            String name = Utils.getNameFromUri(svc, u);
+            topDirBasenames.add(name);
+            if (isdir) {
+                String docId = DocumentsContract.getTreeDocumentId(u);
+                MFile topdir = new MFile();
+                topdir.relPath = topdir.name = name;
+                topdir.isDirectory = true;
+                dirs.add(topdir);
+                resolveTreeUri(u, docId, name); //Get info about all child files
+            } else files.addAll(resolveUri(u)); //Get info about single file
         }
+        fileCount = files.size() + dirs.size();
         if (fileCount == 1) {
             singleName = Strings.nullToEmpty(topDirBasenames.get(0));
             singleMime = Strings.nullToEmpty(svc.getContentResolver().getType(uris.get(0)));
         }
+        totalSize = getTotalSendSize();
         setStatus(Status.WAITING_PERMISSION);
         updateUI();
+    }
+
+    // Gets all children of a document and adds them to files and dirs
+    void resolveTreeUri(Uri rootUri, String docId, String parent) {
+        Uri childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(rootUri, docId);
+        ArrayList<MFile> items = resolveUri(childrenUri);
+        for (MFile f : items) {
+            f.uri = DocumentsContract.buildDocumentUriUsingTree(rootUri, f.documentID);
+            f.relPath = parent + "/" + f.name;
+            if (f.isDirectory) {
+                dirs.add(f);
+                resolveTreeUri(rootUri, f.documentID, f.relPath);
+            }
+            else files.add(f);
+        }
+    }
+
+    // Get info about all documents represented by uri - could be just a single document
+    // or all children in case of special uri
+    ArrayList<MFile> resolveUri(Uri u) {
+        ArrayList<MFile> mfs = new ArrayList<>();
+        try (Cursor c = svc.getContentResolver().query(u, new String[]{DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_DISPLAY_NAME,
+                        DocumentsContract.Document.COLUMN_MIME_TYPE, DocumentsContract.Document.COLUMN_LAST_MODIFIED, DocumentsContract.Document.COLUMN_SIZE},
+                null, null, null)) {
+            while (c.moveToNext()) {
+                MFile f = new MFile();
+                f.documentID = c.getString(0);
+                f.name = c.getString(1);
+                f.mime = c.getString(2);
+                f.lastMod = c.getLong(3);
+                f.length = c.getLong(4);
+                f.isDirectory = f.mime.endsWith("directory");
+                f.uri = u;
+                f.relPath = f.name;
+                mfs.add(f);
+            }
+        }
+        return mfs;
     }
 
     public void startSending(CallStreamObserver<WarpProto.FileChunk> observer) {
@@ -135,7 +188,7 @@ public class Transfer {
         cancelled = false;
         updateUI();
         observer.setOnReadyHandler(new Runnable() {
-            int i = 0;
+            int i, iDir = 0;
             InputStream is;
             byte[] chunk = new byte[CHUNK_SIZE];
             boolean first_chunk = true;
@@ -149,8 +202,18 @@ public class Transfer {
                             is.close();
                             return;
                         }
+                        if (iDir < dirs.size()) {
+                            WarpProto.FileChunk fc = WarpProto.FileChunk.newBuilder()
+                                    .setRelativePath(dirs.get(iDir).relPath)
+                                    .setFileType(FileType.DIRECTORY)
+                                    .setFileMode(0755)
+                                    .build();
+                            observer.onNext(fc);
+                            iDir++;
+                            continue;
+                        }
                         if (is == null) {
-                            is = svc.getContentResolver().openInputStream(uris.get(i));
+                            is = svc.getContentResolver().openInputStream(files.get(i).uri);
                             first_chunk = true;
                         }
                         int read = is.read(chunk);
@@ -158,7 +221,7 @@ public class Transfer {
                             is.close();
                             is = null;
                             i++;
-                            if (i >= uris.size()) {
+                            if (i >= files.size()) {
                                 observer.onCompleted();
                                 setStatus(Status.FINISHED);
                                 updateUI();
@@ -169,12 +232,12 @@ public class Transfer {
                         if (first_chunk) {
                             first_chunk = false;
                             try {
-                                long lastmod = DocumentFile.fromSingleUri(svc, uris.get(i)).lastModified();
+                                long lastmod = files.get(i).lastMod;
                                 ft = WarpProto.FileTime.newBuilder().setMtime(lastmod / 1000).setMtimeUsec((int)(lastmod % 1000) * 1000).build();
                             } catch (Exception e) {Log.w(TAG, "Could not get lastMod", e);}
                         }
                         WarpProto.FileChunk fc = WarpProto.FileChunk.newBuilder()
-                                .setRelativePath(Utils.getNameFromUri(svc, uris.get(i)))
+                                .setRelativePath(files.get(i).relPath)
                                 .setFileType(FileType.FILE)
                                 .setChunk(ByteString.copyFrom(chunk, 0, read))
                                 .setFileMode(0644)
@@ -211,21 +274,8 @@ public class Transfer {
 
     long getTotalSendSize() {
         long size = 0;
-        for (Uri u : uris) {
-            try {
-                if (u.toString().startsWith("content:")) {
-                    Cursor cursor = svc.getContentResolver().query(u, null, null, null, null);
-                    int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
-                    cursor.moveToFirst();
-                    size += cursor.getLong(sizeIndex);
-                    cursor.close();
-                } else {
-                    String p = u.getPath();
-                    size += new File(p).length();
-                }
-            } catch (Exception e) {
-                Log.w(TAG, "Bad URI: " + u);
-            }
+        for (MFile f : files) {
+            size += f.length;
         }
         return size;
     }
@@ -531,5 +581,16 @@ public class Transfer {
 
     public Status getStatus() {
         return status.get();
+    }
+
+    static class MFile {
+        String documentID;
+        String name;
+        String mime;
+        String relPath;
+        Uri uri;
+        long length;
+        long lastMod;
+        boolean isDirectory;
     }
 }
