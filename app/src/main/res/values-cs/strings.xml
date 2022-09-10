@@ -115,4 +115,6 @@
     <string name="stop_svc_when_leaving_summary_on">Služba bude automaticky zastavena po odstranění z nedávných nebo době bez aktivity</string>
     <string name="stop_svc_when_leaving_summary_off">Služba poběží dokud nebude ručně zastavena</string>
     <string name="send_folder_toast">Vyberte složku k odeslání</string>
+    <string name="warning_lastmod">Jiné než výchozí umístění nepodporují zachování časové známky poslední změny. Výchozí vrátíte tlačítkem reset.</string>
+    <string name="reset_cnt_des">Vrátit výchozí hodnotu</string>
 </resources>

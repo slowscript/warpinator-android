@@ -2,19 +2,13 @@ package slowscript.warpinator;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
-import android.provider.DocumentsProvider;
 import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.GridLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -28,9 +22,9 @@ import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreferenceCompat;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
 import java.util.Objects;
+
+import slowscript.warpinator.preferences.ResetablePreference;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -93,7 +87,7 @@ public class SettingsActivity extends AppCompatActivity {
             EditTextPreference gcPref = findPreference(GROUPCODE_PREF);
             SwitchPreferenceCompat bgPref = findPreference(BACKGROUND_PREF);
             SwitchPreferenceCompat debugPref = findPreference(DEBUGLOG_PREF);
-            Preference dlPref = findPreference(DOWNLOAD_DIR_PREF);
+            ResetablePreference dlPref = findPreference(DOWNLOAD_DIR_PREF);
             Preference themePref = findPreference(THEME_PREF);
             Preference profilePref = findPreference(PROFILE_PREF);
             EditTextPreference portPref = findPreference(PORT_PREF);
@@ -132,17 +126,19 @@ public class SettingsActivity extends AppCompatActivity {
                 return true;
             });
 
-
-            dlPref.setSummary(Uri
-                    .parse(getPreferenceManager()
-                            .getSharedPreferences()
-                            .getString(DOWNLOAD_DIR_PREF, ""))
-                    .getPath()
-            );
+            String dlDest = getPreferenceManager().getSharedPreferences().getString(DOWNLOAD_DIR_PREF, "");
+            dlPref.setSummary(Uri.parse(dlDest).getPath());
             dlPref.setOnPreferenceClickListener((p)->{
                 pickDirectory();
                 return true;
             });
+            dlPref.setOnResetListener((v)->{
+                if (MainActivity.trySetDefaultDirectory(getActivity())) {
+                    dlPref.setSummary(getPreferenceManager().getSharedPreferences().getString(DOWNLOAD_DIR_PREF, ""));
+                    dlPref.setResetEnabled(false);
+                }
+            });
+            dlPref.setResetEnabled(dlDest.startsWith("content"));
 
             PreferenceScreen screen = getPreferenceScreen();
             for (int i = 0; i < screen.getPreferenceCount(); i++) {
@@ -180,7 +176,9 @@ public class SettingsActivity extends AppCompatActivity {
                     Toast.makeText(getContext(), R.string.unsupported_provider, Toast.LENGTH_LONG).show();
                     return;
                 }
-                findPreference(DOWNLOAD_DIR_PREF).setSummary(uri.getPath());
+                ResetablePreference dlPref = findPreference(DOWNLOAD_DIR_PREF);
+                dlPref.setSummary(uri.getPath());
+                dlPref.setResetEnabled(true);
                 getContext().getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 getPreferenceManager().getSharedPreferences().edit()
                         .putString(DOWNLOAD_DIR_PREF, uri.toString())
@@ -191,6 +189,7 @@ public class SettingsActivity extends AppCompatActivity {
                     pickDirOnStart = false;
                     getActivity().finish();
                 }
+                else Toast.makeText(getContext(), R.string.warning_lastmod, Toast.LENGTH_LONG).show();
             }
         }
     }

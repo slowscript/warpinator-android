@@ -17,7 +17,7 @@
     <PreferenceCategory
         android:title="@string/transfer_setting_category">
 
-        <Preference
+        <slowscript.warpinator.preferences.ResetablePreference
             android:key="downloadDir"
             android:title="@string/download_dir_settings_title"
             app:summary="/downloads/direcory" />

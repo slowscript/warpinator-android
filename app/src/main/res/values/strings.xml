@@ -72,6 +72,7 @@
     <string name="overwrite_settings_summary_off">Incoming files with a name that already exists will be renamed</string>
     <string name="custom">Custom</string>
     <string name="unsupported_provider">You have selected an unsupported content provider. Please select a directory on your internal storage.</string>
+    <string name="warning_lastmod">Non-default destinations don\'t support preserving "last modified" timestamps. You can revert to default with the reset button.</string>
     <!--  Theme settings -->
     <string name="sysDefault">Use system default</string>
     <string name="lightTheme">Light Theme</string>
@@ -98,6 +99,7 @@
     <string name="accept_button_cnt_des">Accept the transfer</string>
     <string name="stop_button_cnt_des">Stop the transfer</string>
     <string name="retry_button_cnt_des">Retry the transfer</string>
+    <string name="reset_cnt_des">Reset to default value</string>
     <!--  Other  -->
     <string name="please_select_download_dir">This is likely the first time you are launching this application.
         Please select a directory where you want Warpinator to save files into.</string>
