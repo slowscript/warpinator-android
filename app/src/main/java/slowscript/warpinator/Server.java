@@ -25,9 +25,9 @@ import java.security.Security;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
@@ -61,6 +61,7 @@ public class Server {
     public boolean notifyIncoming;
     public String downloadDirUri;
     public boolean running = false;
+    public HashSet<String> favorites = new HashSet<>();
 
     JmDNS jmdns;
     private Renewer renewer;
@@ -152,6 +153,8 @@ public class Server {
         if(!svc.prefs.contains("profile"))
             svc.prefs.edit().putString("profile",  String.valueOf(new Random().nextInt(12))).apply();
         profilePicture = svc.prefs.getString("profile", "0");
+        favorites.clear();
+        favorites.addAll(svc.prefs.getStringSet("favorites", Collections.emptySet()));
 
         boolean bootStart = svc.prefs.getBoolean("bootStart", false);
         boolean background = svc.prefs.getBoolean("background", true);
@@ -160,6 +163,10 @@ public class Server {
             svc.prefs.edit().putBoolean("autoStop", false).apply();
         if (bootStart && !background)
             svc.prefs.edit().putBoolean("bootStart", false).apply();
+    }
+
+    void saveFavorites() {
+        svc.prefs.edit().putStringSet("favorites", favorites).apply();
     }
 
     void startGrpcServer() {
@@ -238,6 +245,10 @@ public class Server {
     void addRemote(Remote remote) {
         //Add to remotes list
         MainService.remotes.put(remote.uuid, remote);
+        if (favorites.contains(remote.uuid)) //Add favorites at the beginning
+            MainService.remotesOrder.add(0, remote.uuid);
+        else
+            MainService.remotesOrder.add(remote.uuid);
         //Connect to it
         remote.connect();
     }

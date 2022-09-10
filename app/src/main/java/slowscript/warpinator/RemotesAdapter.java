@@ -33,7 +33,7 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Remote r = (Remote) MainService.remotes.values().toArray()[position];
+        Remote r = MainService.remotes.get(MainService.remotesOrder.get(position));
         setupViewHolder(holder, r);
 
         holder.cardView.setOnClickListener((view) -> {
@@ -66,6 +66,7 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
                 color = Utils.getAttributeColor(context.getTheme(), R.attr.colorError);
         }
         holder.imgStatus.setImageTintList(ColorStateList.valueOf(color));
+        holder.imgFav.setVisibility(r.isFavorite() ?  View.VISIBLE : View.INVISIBLE);
 
         if (r.errorGroupCode) {
             r.errorGroupCode = false;
@@ -86,6 +87,7 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
         TextView txtIP;
         ImageView imgProfile;
         ImageView imgStatus;
+        ImageView imgFav;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -95,6 +97,7 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
             txtIP = itemView.findViewById(R.id.txtIP);
             imgProfile = itemView.findViewById(R.id.imgProfile);
             imgStatus = itemView.findViewById(R.id.imgStatus);
+            imgFav = itemView.findViewById(R.id.imgFav);
         }
     }
 }

@@ -92,7 +92,7 @@ public class ShareActivity extends AppCompatActivity {
             boolean sent = false;
             @Override
             public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-                Remote remote = (Remote) MainService.remotes.values().toArray()[position];
+                Remote remote = MainService.remotes.get(MainService.remotesOrder.get(position));
                 setupViewHolder(holder, remote);
 
                 //Send to selected remote

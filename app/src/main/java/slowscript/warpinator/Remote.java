@@ -158,6 +158,10 @@ public class Remote {
         }
     }
 
+    public boolean isFavorite() {
+        return Server.current.favorites.contains(uuid);
+    }
+
     public Transfer findTransfer(long timestamp) {
         for (Transfer t : transfers) {
             if(t.startTime == timestamp)

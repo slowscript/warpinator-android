@@ -28,8 +28,9 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -58,7 +59,8 @@ public class MainService extends Service {
     String lastIP = null;
 
     public static MainService svc;
-    public static LinkedHashMap<String, Remote> remotes = new LinkedHashMap<>();
+    public static HashMap<String, Remote> remotes = new HashMap<>();
+    public static ArrayList<String> remotesOrder = new ArrayList<>();
     public NotificationManagerCompat notificationMgr;
     NotificationCompat.Builder notifBuilder = null;
     Server server;
@@ -152,6 +154,7 @@ public class MainService extends Service {
                 r.disconnect();
         }
         remotes.clear();
+        remotesOrder.clear();
         server.Stop();
         notificationMgr.cancelAll();
         connMgr.unregisterNetworkCallback(networkCallback);

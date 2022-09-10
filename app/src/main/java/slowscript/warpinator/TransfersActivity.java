@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,6 +55,7 @@ public class TransfersActivity extends AppCompatActivity {
     ImageView imgStatus;
     FloatingActionButton fabSend;
     Button btnReconnect;
+    ToggleButton tglStar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,19 @@ public class TransfersActivity extends AppCompatActivity {
         fabSend.setOnLongClickListener((v) -> openFolder());
         btnReconnect = findViewById(R.id.btnReconnect);
         btnReconnect.setOnClickListener((v) -> reconnect());
+        tglStar = findViewById(R.id.tglStar);
+        tglStar.setChecked(remote.isFavorite());
+        tglStar.setOnCheckedChangeListener((v, checked) -> {
+            MainService.remotesOrder.remove(remote.uuid);
+            if (checked) {
+                Server.current.favorites.add(remote.uuid);
+                MainService.remotesOrder.add(0, remote.uuid);
+            } else {
+                Server.current.favorites.remove(remote.uuid);
+                MainService.remotesOrder.add(remote.uuid);
+            }
+            Server.current.saveFavorites();
+        });
 
         //Connection status toast
         imgStatus.setOnClickListener(view -> {
