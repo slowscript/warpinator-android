@@ -117,4 +117,5 @@
     <string name="send_folder_toast">Vyberte složku k odeslání</string>
     <string name="warning_lastmod">Jiné než výchozí umístění nepodporují zachování časové známky poslední změny. Výchozí vrátíte tlačítkem reset.</string>
     <string name="reset_cnt_des">Vrátit výchozí hodnotu</string>
+    <string name="clear_transfers">Odstranit ukončené přenosy</string>
 </resources>

@@ -54,6 +54,7 @@ public class TransfersActivity extends AppCompatActivity {
     ImageView imgProfile;
     ImageView imgStatus;
     FloatingActionButton fabSend;
+    FloatingActionButton fabClear;
     Button btnReconnect;
     ToggleButton tglStar;
 
@@ -89,21 +90,13 @@ public class TransfersActivity extends AppCompatActivity {
         fabSend = findViewById(R.id.fabSend);
         fabSend.setOnClickListener((v) -> openFiles());
         fabSend.setOnLongClickListener((v) -> openFolder());
+        fabClear = findViewById(R.id.fabClear);
+        fabClear.setOnClickListener((v) -> remote.clearTransfers());
         btnReconnect = findViewById(R.id.btnReconnect);
         btnReconnect.setOnClickListener((v) -> reconnect());
         tglStar = findViewById(R.id.tglStar);
         tglStar.setChecked(remote.isFavorite());
-        tglStar.setOnCheckedChangeListener((v, checked) -> {
-            MainService.remotesOrder.remove(remote.uuid);
-            if (checked) {
-                Server.current.favorites.add(remote.uuid);
-                MainService.remotesOrder.add(0, remote.uuid);
-            } else {
-                Server.current.favorites.remove(remote.uuid);
-                MainService.remotesOrder.add(remote.uuid);
-            }
-            Server.current.saveFavorites();
-        });
+        tglStar.setOnCheckedChangeListener((v, checked) -> onFavoritesCheckChanged(checked));
 
         //Connection status toast
         imgStatus.setOnClickListener(view -> {
@@ -245,7 +238,19 @@ public class TransfersActivity extends AppCompatActivity {
         remote.connect();
     }
 
-    void openFiles() {
+    private void onFavoritesCheckChanged(boolean checked) {
+        MainService.remotesOrder.remove(remote.uuid);
+        if (checked) {
+            Server.current.favorites.add(remote.uuid);
+            MainService.remotesOrder.add(0, remote.uuid);
+        } else {
+            Server.current.favorites.remove(remote.uuid);
+            MainService.remotesOrder.add(remote.uuid);
+        }
+        Server.current.saveFavorites();
+    }
+
+    private void openFiles() {
         Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         i.addCategory(Intent.CATEGORY_OPENABLE);
         i.setType("*/*");
@@ -257,7 +262,7 @@ public class TransfersActivity extends AppCompatActivity {
         startActivityForResult(i, SEND_FILE_REQ_CODE);
     }
 
-    boolean openFolder() {
+    private boolean openFolder() {
         Toast.makeText(this, R.string.send_folder_toast, Toast.LENGTH_SHORT).show();
         Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
         i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -317,6 +322,9 @@ public class TransfersActivity extends AppCompatActivity {
     private void updateTransfers(String r) {
         if (!r.equals(remote.uuid))
             return;
-        runOnUiThread(() -> adapter.notifyDataSetChanged());
+        runOnUiThread(() -> {
+            adapter.notifyDataSetChanged();
+            fabClear.setVisibility(remote.transfers.size() > 0 ? View.VISIBLE : View.INVISIBLE);
+        });
     }
 }

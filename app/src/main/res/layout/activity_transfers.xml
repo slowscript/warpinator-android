@@ -133,4 +133,16 @@
         app:srcCompat="@drawable/ic_upload"
         tools:ignore="ImageContrastCheck" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabClear"
+        style="?attr/floatingActionButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:contentDescription="@string/clear_transfers"
+        android:focusable="true"
+        app:srcCompat="@drawable/ic_remove_items" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

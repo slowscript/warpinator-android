@@ -172,7 +172,23 @@ public class Remote {
 
     public void addTransfer(Transfer t) {
         transfers.add(0, t);
-        // Update index
+        updateTransferIdxs();
+    }
+
+    public void clearTransfers() {
+        Iterator<Transfer> txs = transfers.iterator();
+        while (txs.hasNext()) {
+            Transfer t = txs.next();
+            if (t.getStatus() == Transfer.Status.FINISHED || t.getStatus() == Transfer.Status.DECLINED ||
+                    t.getStatus() == Transfer.Status.FINISHED_WITH_ERRORS || t.getStatus() == Transfer.Status.FAILED ||
+                    t.getStatus() == Transfer.Status.STOPPED)
+                txs.remove();
+        }
+        updateTransferIdxs();
+        LocalBroadcasts.updateTransfers(MainService.svc, uuid);
+    }
+
+    private void updateTransferIdxs() {
         for (int i = 0; i < transfers.size(); i++)
             transfers.get(i).privId = i;
     }
