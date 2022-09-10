@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--  App Name  -->
     <!--  Main Activity  -->
@@ -25,10 +26,10 @@
     <string name="version">Versi: %1$s</string>
     <string name="about_description">Ini adalah port tidak resmi dari Warpinator. \nKirim dan terima berkas melintasi jaringan lokal .</string>
     <string name="warranty_html">
-        Program ini merupakan perangkat lunak open source dilisensikan di bawah &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>.&lt;br>
-        Anda dapat mendapatkan kode sumbernya dari &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
-        &lt;br>
-        Program ini dihadirkan tanpa garansi sama sekali.&lt;br>Lihat ketentuan lisensinya untuk keterangan lebih rinci.</string>
+        Program ini merupakan perangkat lunak open source dilisensikan di bawah &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;GNU General Public License&lt;/a&gt;.&lt;br&gt;
+        Anda dapat mendapatkan kode sumbernya dari &lt;a href="https://github.com/slowscript/warpinator-android/"&gt;GitHub&lt;/a&gt;.&lt;br&gt;
+        &lt;br&gt;
+        Program ini dihadirkan tanpa garansi sama sekali.&lt;br&gt;Lihat ketentuan lisensinya untuk keterangan lebih rinci.</string>
     <!--  Share activity  -->
     <string name="devices_to_share_with">Perangkat untuk berbagi</string>
     <string name="no_share_devices">Tidak ada perangkat yang dapat digunakan untuk berbagi</string>
@@ -99,4 +100,27 @@
         <item>Selesai</item>
         <item>Selesai dengan error (ketuk untuk melihat)</item>
     </string-array>
+    <string name="connection_issues">Masalah Koneksi</string>
+    <string name="rescan">Scan Ulang Perangkat</string>
+    <string name="reannounce">Melepaskan</string>
+    <string name="open_failed">Gagal membuka berkas yang diterima</string>
+    <string name="files_being_sent">Berkas yang sedang dikirim:</string>
+    <string name="stop_svc_when_leaving_summary_off">Sekali mulai, layanan akan berjalan terus sampai dihentikan secara manual</string>
+    <string name="stop_svc_when_leaving">Hentikan layanan setelah meninggalkan aplikasi</string>
+    <string name="stop_svc_when_leaving_summary_on">Layanan ini akan berhenti otomatis saat dibersihkan dari recents dan setelah periode tidak aktif</string>
+    <string name="required_dialog_not_found">Dialog belum didukung pada perangkat anda. Akan bekerja di rilis yang akan datang</string>
+    <string name="reconnect_button_cnt_des">Koneksi ulang</string>
+    <string name="status_image_cnt_des">Status koneksi</string>
+    <string name="profile_image_cnt_des">Gambar profil</string>
+    <string name="selected_picture_cnt_des">Gambar yang dipilih</string>
+    <string name="decline_button_cnt_des">Menolak transfer</string>
+    <string name="accept_button_cnt_des">Menerima transfer</string>
+    <string name="stop_button_cnt_des">Hentikan transfer</string>
+    <string name="retry_button_cnt_des">Mencoba transfer ulang</string>
+    <string name="error_network_unavailable">Jaringan tidak tersedia - coba hotspot\?</string>
+    <string name="error_service_not_running">Layanan tidak berjalan</string>
+    <string name="cert_not_received">Gagal mendapatkan sertifikat dari %1$s. Pastikan port trafik UDP dan TCP %2$d di remote firewall.</string>
+    <string name="changed_network">Jaringan berubah - layanan distart ulang..</string>
+    <string name="application_icon_cnt_des">Ikon Applikasi</string>
+    <string name="meh_face_cnt_des">Ikon wajah kecewa</string>
 </resources>

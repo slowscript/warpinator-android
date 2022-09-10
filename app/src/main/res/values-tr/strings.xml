@@ -120,4 +120,5 @@
     <string name="stop_svc_when_leaving">Uygulamadan çıktıktan sonra hizmeti durdur</string>
     <string name="stop_svc_when_leaving_summary_on">Son kullanılanlardan silindiğinde veya bir süre kullanılmadığında hizmet otomatik olarak durdurulacaktır</string>
     <string name="stop_svc_when_leaving_summary_off">Hizmet başlatıldıktan sonra elle durdurulana kadar çalışmaya devam edecektir</string>
+    <string name="send_folder_toast">Göndermek için bir klasör seçin</string>
 </resources>

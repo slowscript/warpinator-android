@@ -124,4 +124,5 @@
     <string name="stop_svc_when_leaving_summary_off">一启动就一直运行，停止需手动操作</string>
     <string name="stop_svc_when_leaving">退出应用后停止服务</string>
     <string name="stop_svc_when_leaving_summary_on">从最近使用的应用被清除或一段时间不活动后，该服务将自动停止</string>
+    <string name="send_folder_toast">选择要发送的文件夹</string>
 </resources>
