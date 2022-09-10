@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -31,7 +32,7 @@ public class ShareActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     LinearLayout layoutNotFound;
     RemotesAdapter adapter;
-    TextView txtError, txtNoNetwork;
+    TextView txtError, txtNoNetwork, txtSharing;
     BroadcastReceiver receiver;
 
     @Override
@@ -76,6 +77,17 @@ public class ShareActivity extends AppCompatActivity {
         layoutNotFound = findViewById(R.id.layoutNotFound);
         txtError = findViewById(R.id.txtError);
         txtNoNetwork = findViewById(R.id.txtNoNetwork);
+        txtSharing = findViewById(R.id.txtSharing);
+        txtSharing.setMovementMethod(new ScrollingMovementMethod());
+        String sharedFilesList = getString(R.string.files_being_sent);
+        for (int i = 0; i < uris.size(); i++) {
+            sharedFilesList += "\n " + Utils.getNameFromUri(this, uris.get(i));
+            if (i >= 29) {
+                sharedFilesList += "\n + " + (uris.size() - 30);
+                break;
+            }
+        }
+        txtSharing.setText(sharedFilesList);
         adapter = new RemotesAdapter(this) {
             boolean sent = false;
             @Override
