@@ -187,7 +187,7 @@ public class ShareActivity extends AppCompatActivity {
     }
 
     private void updateRemotes() {
-        runOnUiThread(() -> {
+        recyclerView.post(() -> {
             adapter.notifyDataSetChanged();
             layoutNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
             if (MainService.svc != null)

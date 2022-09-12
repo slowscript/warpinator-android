@@ -113,7 +113,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void startMainService() {
-        startService(new Intent(this, MainService.class));
+        try {
+	        startService(new Intent(this, MainService.class));
+        } catch (Exception e) {
+        	Log.e(TAG, "Could not start service", e);
+        	Toast.makeText(this, "Could not start service: " + e.toString(), Toast.LENGTH_LONG).show(); 
+        }
     }
 
     @Override
@@ -133,9 +138,13 @@ public class MainActivity extends AppCompatActivity {
             Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
             startActivity(helpIntent);
         } else if (itemID == R.id.reannounce) {
-            Server.current.reannounce();
+            if (Server.current != null && Server.current.running)
+                Server.current.reannounce();
+            else Toast.makeText(this, R.string.error_service_not_running, Toast.LENGTH_SHORT);
         } else if (itemID == R.id.rescan) {
-            Server.current.rescan();
+            if (Server.current != null)
+                Server.current.rescan();
+            else Toast.makeText(this, R.string.error_service_not_running, Toast.LENGTH_SHORT);
         } else if (itemID == R.id.about) {
             startActivity(new Intent(this, AboutActivity.class));
         } else if (itemID == R.id.menu_quit) {
@@ -149,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateRemoteList() {
-        runOnUiThread(() -> {
+        recyclerView.post(() -> {
             adapter.notifyDataSetChanged();
             layoutNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
             if (MainService.svc != null)

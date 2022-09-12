@@ -144,7 +144,7 @@ public class Transfer {
     }
 
     // Gets all children of a document and adds them to files and dirs
-    void resolveTreeUri(Uri rootUri, String docId, String parent) {
+    private void resolveTreeUri(Uri rootUri, String docId, String parent) {
         Uri childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(rootUri, docId);
         ArrayList<MFile> items = resolveUri(childrenUri);
         for (MFile f : items) {
@@ -160,7 +160,7 @@ public class Transfer {
 
     // Get info about all documents represented by uri - could be just a single document
     // or all children in case of special uri
-    ArrayList<MFile> resolveUri(Uri u) {
+    private ArrayList<MFile> resolveUri(Uri u) {
         ArrayList<MFile> mfs = new ArrayList<>();
         try (Cursor c = svc.getContentResolver().query(u, new String[]{DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_DISPLAY_NAME,
                         DocumentsContract.Document.COLUMN_MIME_TYPE, DocumentsContract.Document.COLUMN_LAST_MODIFIED, DocumentsContract.Document.COLUMN_SIZE},
@@ -169,8 +169,18 @@ public class Transfer {
                 MFile f = new MFile();
                 f.documentID = c.getString(0);
                 f.name = c.getString(1);
-                f.mime = c.getString(2);
-                f.lastMod = c.getLong(3);
+                try {
+                    f.mime = c.getString(2);
+                } catch (Exception e) {
+                    Log.w(TAG, "Could not get MIME type", e);
+                    f.mime = "application/octet-stream";
+                }
+                try {
+                    f.lastMod = c.getLong(3);
+                } catch (Exception e) {
+                    Log.w(TAG, "Could not get lastmod", e);
+                    f.lastMod = -1;
+                }
                 f.length = c.getLong(4);
                 f.isDirectory = f.mime.endsWith("directory");
                 f.uri = u;
@@ -231,10 +241,10 @@ public class Transfer {
                         WarpProto.FileTime ft = WarpProto.FileTime.getDefaultInstance();
                         if (first_chunk) {
                             first_chunk = false;
-                            try {
-                                long lastmod = files.get(i).lastMod;
+                            long lastmod = files.get(i).lastMod;
+                            if (lastmod >= 0)
                                 ft = WarpProto.FileTime.newBuilder().setMtime(lastmod / 1000).setMtimeUsec((int)(lastmod % 1000) * 1000).build();
-                            } catch (Exception e) {Log.w(TAG, "Could not get lastMod", e);}
+                            else Log.w(TAG, "File doesn't have lastmod");
                         }
                         WarpProto.FileChunk fc = WarpProto.FileChunk.newBuilder()
                                 .setRelativePath(files.get(i).relPath)

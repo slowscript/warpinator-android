@@ -116,6 +116,10 @@ public class TransfersActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (!Utils.isMyServiceRunning(this, MainService.class)) {
+            finish();
+            return;
+        }
         topmostRemote = remote.uuid;
         updateTransfers(remote.uuid);
         updateUI();
