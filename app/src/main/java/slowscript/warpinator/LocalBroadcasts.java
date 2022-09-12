@@ -9,12 +9,17 @@ public class LocalBroadcasts {
     public static final String ACTION_UPDATE_REMOTES = "update_remotes";
     public static final String ACTION_UPDATE_TRANSFERS = "update_transfers";
     public static final String ACTION_UPDATE_TRANSFER = "update_transfer";
+    public static final String ACTION_UPDATE_NETWORK = "update_network";
     public static final String ACTION_DISPLAY_MESSAGE = "display_message";
     public static final String ACTION_DISPLAY_TOAST = "display_toast";
     public static final String ACTION_CLOSE_ALL = "close_all";
 
     public static void updateRemotes(Context ctx) {
         LocalBroadcastManager.getInstance(ctx).sendBroadcast(new Intent(ACTION_UPDATE_REMOTES));
+    }
+
+    public static void updateNetworkState(Context ctx) {
+        LocalBroadcastManager.getInstance(ctx).sendBroadcast(new Intent(ACTION_UPDATE_NETWORK));
     }
 
     public static void updateTransfers(Context ctx, String remote) {

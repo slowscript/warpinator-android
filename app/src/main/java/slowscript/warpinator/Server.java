@@ -91,7 +91,7 @@ public class Server {
         CertServer.Start(port);
         new Thread(this::startMDNS).start();
         svc.prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
-        LocalBroadcasts.updateRemotes(svc);
+        LocalBroadcasts.updateNetworkState(svc);
     }
 
     public void Stop() {
@@ -101,7 +101,7 @@ public class Server {
         svc.prefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
         if (gServer != null)
             gServer.shutdownNow();
-        LocalBroadcasts.updateRemotes(svc);
+        LocalBroadcasts.updateNetworkState(svc);
         Log.i(TAG, "--- Server stopped");
     }
 

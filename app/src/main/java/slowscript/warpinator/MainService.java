@@ -51,9 +51,8 @@ public class MainService extends Service {
     static long reconnectTime = 30_000;
     static long autoStopTime = 60_000;
 
-    public SharedPreferences prefs;
     public int runningTransfers = 0;
-    public boolean networkAvailable = true;
+    public boolean networkAvailable = false;
     public boolean apOn = false;
     int notifId = 1300;
     String lastIP = null;
@@ -61,17 +60,19 @@ public class MainService extends Service {
     public static MainService svc;
     public static HashMap<String, Remote> remotes = new HashMap<>();
     public static ArrayList<String> remotesOrder = new ArrayList<>();
-    public NotificationManagerCompat notificationMgr;
-    NotificationCompat.Builder notifBuilder = null;
-    Server server;
-    Timer timer;
+    SharedPreferences prefs;
     ExecutorService executor = Executors.newCachedThreadPool();
-    Process logcatProcess;
-    WifiManager.MulticastLock lock;
-    ConnectivityManager connMgr;
-    ConnectivityManager.NetworkCallback networkCallback;
-    BroadcastReceiver apStateChangeReceiver;
-    TimerTask autoStopTask;
+    public NotificationManagerCompat notificationMgr;
+
+    private NotificationCompat.Builder notifBuilder = null;
+    private Server server;
+    private Timer timer;
+    private Process logcatProcess;
+    private WifiManager.MulticastLock lock;
+    private ConnectivityManager connMgr;
+    private ConnectivityManager.NetworkCallback networkCallback;
+    private BroadcastReceiver apStateChangeReceiver;
+    private TimerTask autoStopTask;
 
     @Nullable
     @Override
@@ -235,14 +236,14 @@ public class MainService extends Service {
             public void onAvailable(@NonNull Network network) {
                 Log.d(TAG, "New network");
                 networkAvailable = true;
-                LocalBroadcasts.updateRemotes(MainService.this);
+                LocalBroadcasts.updateNetworkState(MainService.this);
                 onNetworkChanged();
             }
             @Override
             public void onLost(@NonNull Network network) {
                 Log.d(TAG, "Network lost");
                 networkAvailable = false;
-                LocalBroadcasts.updateRemotes(MainService.this);
+                LocalBroadcasts.updateNetworkState(MainService.this);
             }
             @Override
             public void onLinkPropertiesChanged(@NonNull Network network, @NonNull LinkProperties linkProperties) {
@@ -257,12 +258,12 @@ public class MainService extends Service {
                 if (apState % 10 == WifiManager.WIFI_STATE_ENABLED) {
                     Log.d(TAG, "AP was enabled");
                     apOn = true;
-                    LocalBroadcasts.updateRemotes(MainService.this);
+                    LocalBroadcasts.updateNetworkState(MainService.this);
                     onNetworkChanged();
                 } else if (apState % 10 == WifiManager.WIFI_STATE_DISABLED) {
                     Log.d(TAG, "AP was disabled");
                     apOn = false;
-                    LocalBroadcasts.updateRemotes(MainService.this);
+                    LocalBroadcasts.updateNetworkState(MainService.this);
                 }
             }
         };

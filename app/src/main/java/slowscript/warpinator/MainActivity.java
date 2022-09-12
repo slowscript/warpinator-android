@@ -97,9 +97,11 @@ public class MainActivity extends AppCompatActivity {
                 startMainService();
         });
         updateRemoteList();
+        updateNetworkStateUI();
 
         IntentFilter f = new IntentFilter();
         f.addAction(LocalBroadcasts.ACTION_UPDATE_REMOTES);
+        f.addAction(LocalBroadcasts.ACTION_UPDATE_NETWORK);
         f.addAction(LocalBroadcasts.ACTION_DISPLAY_MESSAGE);
         f.addAction(LocalBroadcasts.ACTION_DISPLAY_TOAST);
         f.addAction(LocalBroadcasts.ACTION_CLOSE_ALL);
@@ -161,6 +163,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.post(() -> {
             adapter.notifyDataSetChanged();
             layoutNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
+        });
+    }
+
+    private void updateNetworkStateUI() {
+        runOnUiThread(() -> {
             if (MainService.svc != null)
                 txtNoNetwork.setVisibility(MainService.svc.gotNetwork() ? View.GONE : View.VISIBLE);
             if (Server.current != null)
@@ -179,6 +186,9 @@ public class MainActivity extends AppCompatActivity {
                 switch (action) {
                     case LocalBroadcasts.ACTION_UPDATE_REMOTES:
                         updateRemoteList();
+                        break;
+                    case LocalBroadcasts.ACTION_UPDATE_NETWORK:
+                        updateNetworkStateUI();
                         break;
                     case LocalBroadcasts.ACTION_DISPLAY_MESSAGE:
                         String title = intent.getStringExtra("title");

@@ -143,7 +143,9 @@ public class ShareActivity extends AppCompatActivity {
         if (adapter == null) // If onCreate did not finish (nothing to share)
             return;
         updateRemotes();
+        updateNetworkStateUI();
         IntentFilter f = new IntentFilter(LocalBroadcasts.ACTION_UPDATE_REMOTES);
+        f.addAction(LocalBroadcasts.ACTION_UPDATE_NETWORK);
         f.addAction(LocalBroadcasts.ACTION_DISPLAY_MESSAGE);
         f.addAction(LocalBroadcasts.ACTION_DISPLAY_TOAST);
         f.addAction(LocalBroadcasts.ACTION_CLOSE_ALL);
@@ -168,6 +170,9 @@ public class ShareActivity extends AppCompatActivity {
                     case LocalBroadcasts.ACTION_UPDATE_REMOTES:
                         updateRemotes();
                         break;
+                    case LocalBroadcasts.ACTION_UPDATE_NETWORK:
+                        updateNetworkStateUI();
+                        break;
                     case LocalBroadcasts.ACTION_DISPLAY_MESSAGE:
                         String title = intent.getStringExtra("title");
                         String msg = intent.getStringExtra("msg");
@@ -190,6 +195,11 @@ public class ShareActivity extends AppCompatActivity {
         recyclerView.post(() -> {
             adapter.notifyDataSetChanged();
             layoutNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
+        });
+    }
+
+    private void updateNetworkStateUI() {
+        runOnUiThread(() -> {
             if (MainService.svc != null)
                 txtNoNetwork.setVisibility(MainService.svc.gotNetwork() ? View.GONE : View.VISIBLE);
             if (Server.current != null)

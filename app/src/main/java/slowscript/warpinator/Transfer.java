@@ -312,7 +312,7 @@ public class Transfer {
         //Show in UI
         if (remoteUUID.equals(TransfersActivity.topmostRemote))
             LocalBroadcasts.updateTransfers(svc, remoteUUID);
-        else if (svc.server.notifyIncoming && !autoAccept) {  //Notification
+        else if (Server.current.notifyIncoming && !autoAccept) {  //Notification
             Intent intent = new Intent(svc, TransfersActivity.class);
             intent.putExtra("remote", remoteUUID);
             int immutable = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0;
