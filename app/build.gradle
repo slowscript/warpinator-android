@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.protobuf'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
 
     defaultConfig {
         applicationId 'slowscript.warpinator'
         minSdkVersion 21 //Required by NSD (attributes)
-        targetSdkVersion 31
+        targetSdkVersion 32
         versionCode 1050
         versionName "1.5.0"
 
@@ -25,8 +25,9 @@ android {
         targetCompatibility = 1.8
     }
     packagingOptions {
-        exclude 'META-INF/INDEX.LIST'
-        exclude 'META-INF/io.netty.versions.properties'
+        resources {
+            excludes += ['META-INF/INDEX.LIST', 'META-INF/io.netty.versions.properties']
+        }
     }
 }
 
