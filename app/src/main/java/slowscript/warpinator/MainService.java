@@ -48,7 +48,7 @@ public class MainService extends Service {
     static int PROGRESS_NOTIFICATION_ID = 2;
     static String ACTION_STOP = "StopSvc";
     static long pingTime = 10_000;
-    static long reconnectTime = 30_000;
+    static long reconnectTime = 40_000;
     static long autoStopTime = 60_000;
 
     public int runningTransfers = 0;
