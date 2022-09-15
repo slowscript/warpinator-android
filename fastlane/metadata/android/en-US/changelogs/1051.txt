@@ -1,0 +1,2 @@
+- Bugfixes (hopefully will no longer crash when opening some files)
+- Under the hood improvements

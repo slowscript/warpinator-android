@@ -1,0 +1,6 @@
+- Send entire folders by long pressing send button
+- Option to reset download folder
+- Show names of files that are being shared
+- Implement favorite (star) feature - starred remotes show at the top
+- Button to clear finished transfers
+- Translation updates
