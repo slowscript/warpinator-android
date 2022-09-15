@@ -120,4 +120,8 @@
     </string-array>
     <string name="stop_svc_when_leaving_summary_off">Nakon pokretanja, usluga će biti pokrenuta sve dok se ručno ne zaustavi</string>
     <string name="stop_svc_when_leaving_summary_on">Usluga će se automatski zaustaviti kada je uklonjena iz nedavnih ili nakon određenog razdoblja neaktivnosti</string>
+    <string name="clear_transfers">Izbriši gotove prijenose</string>
+    <string name="send_folder_toast">Odaberi mapu za slanje</string>
+    <string name="reset_cnt_des">Resetiraj na standardnu vrijednost</string>
+    <string name="warning_lastmod">Nestandarne lokacije ne podržavaju čuvanje zadnjih promijenjenih vremenskih oznaka. Pomoću gumba za resetiranje mogu se vratiti na standardne lokacije.</string>
 </resources>

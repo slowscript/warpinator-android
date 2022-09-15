@@ -121,4 +121,7 @@
     <string name="stop_svc_when_leaving_summary_on">Son kullanılanlardan silindiğinde veya bir süre kullanılmadığında hizmet otomatik olarak durdurulacaktır</string>
     <string name="stop_svc_when_leaving_summary_off">Hizmet başlatıldıktan sonra elle durdurulana kadar çalışmaya devam edecektir</string>
     <string name="send_folder_toast">Göndermek için bir klasör seçin</string>
+    <string name="reset_cnt_des">Öntanımlı değere sıfırla</string>
+    <string name="clear_transfers">Biten aktarımları temizle</string>
+    <string name="warning_lastmod">Öntanımlı olmayan konumlar, son değiştirilen zaman damgalarının korunmasını desteklemez. Sıfırla düğmesi ile öntanımlıya geri dönebilirsiniz.</string>
 </resources>

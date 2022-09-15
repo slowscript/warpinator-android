@@ -125,4 +125,7 @@
     <string name="stop_svc_when_leaving">退出应用后停止服务</string>
     <string name="stop_svc_when_leaving_summary_on">从最近使用的应用被清除或一段时间不活动后，该服务将自动停止</string>
     <string name="send_folder_toast">选择要发送的文件夹</string>
+    <string name="warning_lastmod">非默认位置不支持保留上次修改的时间戳。 你可以使用重置按钮恢复默认。</string>
+    <string name="reset_cnt_des">重置为默认值</string>
+    <string name="clear_transfers">清除已完成的传输</string>
 </resources>
