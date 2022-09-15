@@ -162,26 +162,28 @@ public class Transfer {
     // or all children in case of special uri
     private ArrayList<MFile> resolveUri(Uri u) {
         ArrayList<MFile> mfs = new ArrayList<>();
-        try (Cursor c = svc.getContentResolver().query(u, new String[]{DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_DISPLAY_NAME,
-                        DocumentsContract.Document.COLUMN_MIME_TYPE, DocumentsContract.Document.COLUMN_LAST_MODIFIED, DocumentsContract.Document.COLUMN_SIZE},
-                null, null, null)) {
+        try (Cursor c = svc.getContentResolver().query(u, null, null, null, null)) {
+            int idCol = c.getColumnIndex(DocumentsContract.Document.COLUMN_DOCUMENT_ID);
+            int nameCol = c.getColumnIndex(DocumentsContract.Document.COLUMN_DISPLAY_NAME);
+            int mimeCol = c.getColumnIndex(DocumentsContract.Document.COLUMN_MIME_TYPE);
+            int mTimeCol = c.getColumnIndex(DocumentsContract.Document.COLUMN_LAST_MODIFIED);
+            int sizeCol = c.getColumnIndex(DocumentsContract.Document.COLUMN_SIZE);
+
             while (c.moveToNext()) {
                 MFile f = new MFile();
-                f.documentID = c.getString(0);
-                f.name = c.getString(1);
-                try {
-                    f.mime = c.getString(2);
-                } catch (Exception e) {
-                    Log.w(TAG, "Could not get MIME type", e);
+                f.documentID = c.getString(idCol);
+                f.name = c.getString(nameCol);
+                if (mimeCol != -1)
+                    f.mime = c.getString(mimeCol);
+                else {
+                    Log.w(TAG, "Could not get MIME type");
                     f.mime = "application/octet-stream";
                 }
-                try {
-                    f.lastMod = c.getLong(3);
-                } catch (Exception e) {
-                    Log.w(TAG, "Could not get lastmod", e);
+                if (mTimeCol != -1)
+                    f.lastMod = c.getLong(mTimeCol);
+                else
                     f.lastMod = -1;
-                }
-                f.length = c.getLong(4);
+                f.length = c.getLong(sizeCol);
                 f.isDirectory = f.mime.endsWith("directory");
                 f.uri = u;
                 f.relPath = f.name;
