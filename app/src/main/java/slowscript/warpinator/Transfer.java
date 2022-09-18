@@ -148,6 +148,8 @@ public class Transfer {
         Uri childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(rootUri, docId);
         ArrayList<MFile> items = resolveUri(childrenUri);
         for (MFile f : items) {
+            if (f.documentID == null)
+                break; //Provider is broken, what can we do...
             f.uri = DocumentsContract.buildDocumentUriUsingTree(rootUri, f.documentID);
             f.relPath = parent + "/" + f.name;
             if (f.isDirectory) {
@@ -171,8 +173,10 @@ public class Transfer {
 
             while (c.moveToNext()) {
                 MFile f = new MFile();
-                f.documentID = c.getString(idCol);
-                f.name = c.getString(nameCol);
+                if (idCol != -1)
+                    f.documentID = c.getString(idCol);
+                else Log.w(TAG, "Could not get document ID");
+                f.name = c.getString(nameCol); //Name is mandatory
                 if (mimeCol != -1)
                     f.mime = c.getString(mimeCol);
                 else {
@@ -183,7 +187,7 @@ public class Transfer {
                     f.lastMod = c.getLong(mTimeCol);
                 else
                     f.lastMod = -1;
-                f.length = c.getLong(sizeCol);
+                f.length = c.getLong(sizeCol); //Size is mandatory
                 f.isDirectory = f.mime.endsWith("directory");
                 f.uri = u;
                 f.relPath = f.name;
