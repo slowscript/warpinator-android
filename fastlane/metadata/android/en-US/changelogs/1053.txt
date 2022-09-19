@@ -1,0 +1,1 @@
+- Fixed (again) a crash when sending files from some providers
