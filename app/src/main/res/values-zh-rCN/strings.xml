@@ -17,7 +17,7 @@
     <string name="connection_error">连接错误</string>
     <string name="not_connected_to_wifi">您没有连接到 WiFi 或 LAN。如果两者都不可用，请使用您的热点。
          连接后重新启动应用。</string>
-    <string name="changed_network">网络已更改 - 正在重新启动服务……</string>
+    <string name="changed_network">网络已更改 - 正在重新启动服务…</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">正在等待批准……</string>
     <string name="files_overwritten_warning">（文件可能会被覆盖！）</string>

@@ -120,7 +120,7 @@
     <string name="error_network_unavailable">Jaringan tidak tersedia - coba hotspot\?</string>
     <string name="error_service_not_running">Layanan tidak berjalan</string>
     <string name="cert_not_received">Gagal mendapatkan sertifikat dari %1$s. Pastikan port trafik UDP dan TCP %2$d di remote firewall.</string>
-    <string name="changed_network">Jaringan berubah - layanan distart ulang..</string>
+    <string name="changed_network">Jaringan berubah - layanan distart ulang…</string>
     <string name="application_icon_cnt_des">Ikon Applikasi</string>
     <string name="meh_face_cnt_des">Ikon wajah kecewa</string>
 </resources>

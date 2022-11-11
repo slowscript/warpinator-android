@@ -17,7 +17,7 @@
     <string name="connection_error">Greška povezivanja</string>
     <string name="not_connected_to_wifi">Niste povezani s bežičnom ili loklanom mrežom. Koristite svoju pristupnu točku ako druge mreže nisu dostupne.
         Ponovno pokrenite aplikaciju kada se povežete.</string>
-    <string name="changed_network">Mreža je promijenjena - ponovno pokretanje usluge...</string>
+    <string name="changed_network">Mreža je promijenjena - ponovno pokretanje usluge…</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">Čekanje odobrenja…</string>
     <string name="files_overwritten_warning">(Datoteke mogu biti prebrisane!)</string>

@@ -17,7 +17,7 @@
     <string name="wrong_group_code">Bağlantı başarısız oldu: Yanlış grup kodu</string>
     <string name="connection_error">Bağlantı hatası</string>
     <string name="not_connected_to_wifi">WiFi veya LAN\'a bağlı değilsiniz. Hiçbiri kullanılabilir değilse, etkin noktanızı kullanın. Bağlandığınızda uygulamayı yeniden başlatın.</string>
-    <string name="changed_network">Ağ değişti - hizmet yeniden başlatılıyor...</string>
+    <string name="changed_network">Ağ değişti - hizmet yeniden başlatılıyor…</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">İzin bekleniyor…</string>
     <string name="files_overwritten_warning">(Dosyaların üzerine yazılabilir!)</string>

@@ -14,7 +14,7 @@
     <string name="wrong_group_code">Conexão falhou: Código do grupo incorreto</string>
     <string name="connection_error">Falha da conexão</string>
     <string name="not_connected_to_wifi">Você não está conectado ao WiFi ou LAN. Neste caso você pode criar um hotspot. Reinicie o app quando estiver conectado.</string>
-    <string name="changed_network">Rede mudou - reiniciando serviço...</string>
+    <string name="changed_network">Rede mudou - reiniciando serviço…</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">Quer receber os arquivo(s)…</string>
     <string name="files_overwritten_warning">(Arquivos podem ser substituídos!)</string>

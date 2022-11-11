@@ -6,7 +6,7 @@
     <string name="send_files">Invia file</string>
     <string name="quit">Chiudi</string>
     <string name="connection_issues">Problemi di connessione</string>
-    <string name="reannounce">Registra nuovamente</string>
+    <string name="reannounce">Esporre di nuovo</string>
     <string name="rescan">Ricerca dispositivi</string>
     <string name="about">Informazioni su</string>
     <string name="settings">Impostazioni</string>
@@ -17,7 +17,7 @@
     <string name="connection_error">Errore di connessione</string>
     <string name="not_connected_to_wifi">Non si è connessi alla rete WiFi o LAN. Utilizzare l\'hotspot se nulla è disponibile.
         Riavviare l\'applicazione quando si è connessi.</string>
-    <string name="changed_network">Rete cambiata - riavvio del servizio...</string>
+    <string name="changed_network">Rete cambiata - riavvio del servizio…</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">In attesa di autorizzazione…</string>
     <string name="files_overwritten_warning">(I file potrebbero essere sovrascritti!)</string>
@@ -31,11 +31,7 @@
     <!--  About activity  -->
     <string name="version">Versione: %1$s</string>
     <string name="about_description">Questo è un progetto non ufficiale di Warpinator. \nInvia e ricevi file attraverso la rete locale.</string>
-    <string name="warranty_html">
-        Questo programma è un software open source con licenza &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;GNU General Public License&lt;/a&gt;.&lt;br&gt;
-        È possibile ottenere il codice sorgente da &lt;a href="https://github.com/slowscript/warpinator-android/"&gt;GitHub&lt;/a&gt;.&lt;br&gt;
-        &lt;br&gt;
-        Questo programma non ha alcuna garanzia.&lt;br&gt;Per maggiori dettagli, consultare i termini della licenza.</string>
+    <string name="warranty_html">Questo programma è un software open source con licenza &lt;a href=\"https://www.gnu.org/licenses/gpl-3.0.html\"&gt;GNU General Public License&lt;/a&gt;.&lt;br&gt; È possibile ottenere il codice sorgente da &lt;a href=\"https://github.com/slowscript/warpinator-android/\"&gt;GitHub&lt;/a&gt;.&lt;br&gt; &lt;br&gt; Questo programma non ha alcuna garanzia.&lt;br&gt;Per maggiori dettagli, consultare i termini della licenza.</string>
     <!--  Share activity  -->
     <string name="devices_to_share_with">Dispositivi con cui condividere</string>
     <string name="no_share_devices">Nessun dispositivo disponibile con cui condividere</string>
@@ -57,7 +53,7 @@
     <string name="background_settings_title">Esegui in background</string>
     <string name="boot_settings_title">Avvia automaticamente</string>
     <string name="stop_svc_when_leaving">Interrompi il servizio dopo aver lasciato l\'app</string>
-    <string name="stop_svc_when_leaving_summary_on">Il servizio viene interrotto automaticamente quando viene eliminato dai Recenti o dopo un periodo di inattività.</string>
+    <string name="stop_svc_when_leaving_summary_on">Il servizio viene interrotto automaticamente quando viene eliminato dai Recenti o dopo un periodo di inattività</string>
     <string name="stop_svc_when_leaving_summary_off">Una volta avviato, il servizio continuerà a funzionare fino all\'arresto manuale</string>
     <string name="export_log_settings_tile">Scrivere il registro di debug su file</string>
     <string name="group_code_settings_title">Codice gruppo</string>
@@ -67,8 +63,8 @@
     <string name="port_range_warning">Il numero della porta deve essere compreso tra 1024 e 65535</string>
     <string name="requires_restart_warning">La modifica di questa impostazione richiede il riavvio dell\'applicazione</string>
     <string name="required_dialog_not_found">Il fornitore del telefono non ha implementato la finestra di dialogo richiesta. Questo problema sarà risolto in una versione futura.</string>
-    <string name="overwrite_settings_summary_on">I file in arrivo con lo stesso nome di quelli già esistenti sostituiscono quelli già esistenti.</string>
-    <string name="overwrite_settings_summary_off">I file in arrivo con lo stesso nome di quelli già esistenti saranno rinominati.</string>
+    <string name="overwrite_settings_summary_on">I file in arrivo con lo stesso nome di quelli già esistenti sostituiscono quelli già esistenti</string>
+    <string name="overwrite_settings_summary_off">I file in arrivo con lo stesso nome di quelli già esistenti saranno rinominati</string>
     <string name="custom">Personalizzate</string>
     <string name="unsupported_provider">È stato selezionato un fornitore di contenuti non compatibile. Selezionare una cartella nella memoria interna.</string>
     <!--  Theme settings -->
@@ -124,4 +120,8 @@
         <item>Completato</item>
         <item>Completato con errori (tocca per visualizzare)</item>
     </string-array>
+    <string name="warning_lastmod">Le posizioni non predefinite non permettono di conservare la data dell\'ultima modifica. È possibile tornare alle impostazioni predefinite con il pulsante di ripristino.</string>
+    <string name="send_folder_toast">Seleziona una cartella da inviare</string>
+    <string name="reset_cnt_des">Ripristina il valore predefinito</string>
+    <string name="clear_transfers">Cancella i trasferimenti completati</string>
 </resources>

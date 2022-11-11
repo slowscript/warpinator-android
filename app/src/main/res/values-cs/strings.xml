@@ -25,10 +25,10 @@
     <string name="version">Verze: %1$s</string>
     <string name="about_description">Toto je neoficiální port Warpinatoru. \nPosílejte a přijímejte soubory v místní síti.</string>
     <string name="warranty_html">
-        Tento program je svobodný software licencovaný pod &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>.&lt;br>
-        Zdrojový kód můžete nalézt na &lt;a href="https://github.com/slowscript/warpinator-android/">GitHubu&lt;/a>.&lt;br>
-        &lt;br>
-        Tento program je šířen bez jakékoliv záruky.&lt;br>Více informací naleznete v podmínkách licence.</string>
+        Tento program je svobodný software licencovaný pod &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;GNU General Public License&lt;/a&gt;.&lt;br&gt;
+        Zdrojový kód můžete nalézt na &lt;a href="https://github.com/slowscript/warpinator-android/"&gt;GitHubu&lt;/a&gt;.&lt;br&gt;
+        &lt;br&gt;
+        Tento program je šířen bez jakékoliv záruky.&lt;br&gt;Více informací naleznete v podmínkách licence.</string>
     <string name="devices_to_share_with">Dostupná zařízení</string>
     <string name="nothing_to_share">Neobdrželi jsme nic ke sdílení</string>
     <string name="identity_settings_category">Identita</string>

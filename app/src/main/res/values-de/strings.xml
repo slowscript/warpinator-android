@@ -115,4 +115,13 @@
     </string-array>
     <string name="connection_issues">Verbindungsproblem</string>
     <string name="reannounce">Neu verbinden</string>
+    <string name="rescan">Erneut nach Geräten suchen</string>
+    <string name="changed_network">Netzwerk geändert - Dienst wird neu gestartet …</string>
+    <string name="files_being_sent">Dateien werden gesendet:</string>
+    <string name="stop_svc_when_leaving">Dienst nach Verlassen der App stoppen</string>
+    <string name="stop_svc_when_leaving_summary_off">Einmal gestartet, läuft der Dienst weiter, bis er manuell gestoppt wird</string>
+    <string name="open_failed">Empfangene Datei konnte nicht geöffnet werden</string>
+    <string name="send_folder_toast">Ordner zum Senden auswählen</string>
+    <string name="reset_cnt_des">Auf Standardwert zurücksetzen</string>
+    <string name="clear_transfers">Erledigte Übertragungen löschen</string>
 </resources>

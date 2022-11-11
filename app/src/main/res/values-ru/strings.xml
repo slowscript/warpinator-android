@@ -1,10 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--  App Name  -->
     <!--  Main Activity  -->
     <string name="title_activity_transfers">Передачи</string>
     <string name="send_files">Отправить файлы</string>
     <string name="quit">Выход</string>
-    <string name="connection_issues">При проблемах с подключением</string>
+    <string name="connection_issues">Проблемы с подключением</string>
     <string name="reannounce">Повторная регистрация устройства</string>
     <string name="rescan">Повторный поиск устройств</string>
     <string name="about">О приложении</string>
@@ -16,12 +17,12 @@
     <string name="connection_error">Ошибка подключения</string>
     <string name="not_connected_to_wifi">Вы не подключены к Wi-Fi или LAN. Используйте свою точку доступа, если ничего из вышеперечисленного не доступно.
         После подключения перезапустите приложение.</string>
-    <string name="changed_network">Сеть изменена - перезапуск службы ...</string>
+    <string name="changed_network">Сеть изменена - перезапуск службы…</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">Ожидание подтверждения…</string>
     <string name="files_overwritten_warning">(Файлы могут быть перезаписаны!)</string>
     <string name="remaining">осталось</string>
-    <string name="open_failed">Не удалось открыть полученный файл</string>   
+    <string name="open_failed">Не удалось открыть полученный файл</string>
     <string name="a_few_seconds">ещё несколько секунд</string>
     <string name="service_unavailable">, служба недоступна</string>
     <string name="errors_during_transfer">Ошибки при передаче:</string>
@@ -30,18 +31,14 @@
     <!--  About activity  -->
     <string name="version">Версия: %1$s</string>
     <string name="about_description">Это неофициальный порт Warpinator. \nОтправляйте и получайте файлы по локальной сети.</string>
-    <string name="warranty_html">
-        Эта программа представляет собой программное обеспечение с открытым исходным кодом под лицензией &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>.&lt;br>
-        Вы можете получить исходный код здесь - &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
-        &lt;br>
-        Программа поставляется без каких-либо гарантий.&lt;br>Подробнее см. условия лицензии.</string>
+    <string name="warranty_html">Эта программа представляет собой программное обеспечение с открытым исходным кодом, лицензированным под &lt;a href=\"https://www.gnu.org/licenses/gpl-3.0.html\"&gt;GNU General Public License&lt;/a&gt;.&lt;br&gt; Вы можете получить исходный код на &lt;a href=\"https://github.com/slowscript/warpinator-android/\"&gt;GitHub&lt;/a&gt;.&lt;br&gt; &lt;br&gt; Программа поставляется без каких-либо гарантий.&lt;br&gt;Подробнее см. условия лицензии.</string>
     <!--  Share activity  -->
     <string name="devices_to_share_with">Устройства, с которыми можно поделиться</string>
     <string name="no_share_devices">Нет доступных устройств, с которыми можно поделиться</string>
-    <string name="unsupported_intent">Получено неподдерживаемое intent action</string>
+    <string name="unsupported_intent">Получено неподдерживаемое действие</string>
     <string name="nothing_to_share">Нечем поделиться</string>
     <!--  Setting  -->
-    <string name="identity_settings_category">Идентификация</string>
+    <string name="identity_settings_category">Идентичность</string>
     <string name="transfer_setting_category">Настройки передачи</string>
     <string name="network_setting_category">Сеть</string>
     <string name="aspect_setting_category">Внешний вид</string>
@@ -65,11 +62,11 @@
     <string name="notification_settings_summary">Параметр может зависеть от настроек уведомлений Android</string>
     <string name="port_range_warning">Номер порта должен быть от 1024 до 65535</string>
     <string name="requires_restart_warning">Для изменения этого параметра требуется перезапуск приложения</string>
-    <string name="required_dialog_not_found">Производитель вашего телефона не реализовал требуемый диалог. Это будет исправлено в следующем выпуске.</string>   
+    <string name="required_dialog_not_found">Производитель вашего телефона не реализовал требуемый диалог. Это будет исправлено в следующем выпуске.</string>
     <string name="overwrite_settings_summary_on">Входящие файлы с уже имеющимся именем перезапишут существующие</string>
     <string name="overwrite_settings_summary_off">Входящие файлы с уже имеющимся именем будут переименованы</string>
     <string name="custom">Другое</string>
-    <string name="unsupported_provider">Вы выбрали неподдерживаемое хранилище данных. Вы выбрали неподдерживаемого поставщика контента. Пожалуйста, выберите каталог во внутренней памяти.</string>
+    <string name="unsupported_provider">Вы выбрали неподдерживаемого поставщика контента. Пожалуйста, выберите каталог во внутренней памяти.</string>
     <!--  Theme settings -->
     <string name="sysDefault">Системная по умолчанию</string>
     <string name="lightTheme">Светлая тема</string>
@@ -80,7 +77,7 @@
     <string name="transfers_complete">Все передачи завершены</string>
     <string name="transfer_notification">%1$.1f%%, кол-во передач: %2$d, %3$s/сек</string>
     <string name="incoming_transfer">Входящая передача от %s</string>
-    <string name="num_files">кол-во файлов: %d</string>
+    <string name="num_files">Кол-во файлов: %d</string>
     <string name="service_running">Служба запущена</string>
     <string name="notification_channel_description">Постоянное уведомление о службе</string>
     <string name="incoming_transfer_channel">Входящая передача</string>
@@ -123,4 +120,8 @@
         <item>Завершено</item>
         <item>Завершено с ошибками (нажмите, чтобы посмотреть)</item>
     </string-array>
+    <string name="warning_lastmod">Расположение не по умолчанию не поддерживает сохранение временных меток последних изменений. Вы можете вернуться к настройкам по умолчанию с помощью кнопки сброса.</string>
+    <string name="send_folder_toast">Выберите папку для отправки</string>
+    <string name="reset_cnt_des">Сбросить к значению по умолчанию</string>
+    <string name="clear_transfers">Очистить завершенные передачи</string>
 </resources>

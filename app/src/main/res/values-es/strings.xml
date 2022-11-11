@@ -1,10 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--  Main Activity  -->
     <string name="title_activity_transfers">Transferencias</string>
     <string name="send_files">Enviar archivos</string>
     <string name="quit">Salir</string>
     <string name="connection_issues">Problemas de conexión</string>
-    <string name="reannounce">Reanunciar</string>
+    <string name="reannounce">Volver a anunciar</string>
     <string name="rescan">Buscar dispositivos</string>
     <string name="about">Acerca de</string>
     <string name="settings">Ajustes</string>
@@ -13,12 +14,11 @@
     <string name="no_devices_found">No se encontraron dispositivos</string>
     <string name="wrong_group_code">Error de conexión: código de grupo incorrecto</string>
     <string name="connection_error">Error de conexión</string>
-    <string name="not_connected_to_wifi">No está conectado a WiFi o LAN. Use su punto de acceso si ninguno está disponible.
-        Reiniciar aplicación cuando esté conectado.</string>
-    <string name="changed_network">Red cambiada - reiniciando servicio...</string>
+    <string name="not_connected_to_wifi">No está conectado a la WiFi o LAN. Use su punto de acceso si ninguno está disponible. Reiniciar aplicación cuando esté conectado.</string>
+    <string name="changed_network">Red cambiada. Reiniciando servicio…</string>
     <!--  Transfers activity  -->
-    <string name="waiting_for_permission">Esperando permisoâŚ</string>
-    <string name="files_overwritten_warning">(ĄLos archivos se pueden sobrescribir!)</string>
+    <string name="waiting_for_permission">A la espera del permiso…</string>
+    <string name="files_overwritten_warning">(¡Los archivos pueden ser sobrescritos!)</string>
     <string name="remaining">restante</string>
     <string name="open_failed">No se ha podido abrir el archivo recibido</string>
     <string name="a_few_seconds">unos segundos</string>
@@ -29,15 +29,11 @@
     <!--  About activity  -->
     <string name="version">Versión: %1$s</string>
     <string name="about_description">Este es un puerto no oficial de Warpinator. \nEnviar y recibir archivos a través de la red local.</string>
-    <string name="warranty_html">
-        Este programa es un software de código abierto con licencia &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License&lt;/a>.&lt;br>
-        Puede obtener el código fuente en &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
-        &lt;br>
-        Este programa no tiene ninguna garantía.&lt;br>Consulte los términos de la licencia para obtener más detalles..</string>
+    <string name="warranty_html">Este programa es un software de código abierto licenciado bajo la &lt;a href=\"https://www.gnu.org/licenses/gpl-3.0.html\"&gt;GNU General Public License&lt;/a&gt;.&lt;br&gt; Puede obtener el código fuente en &lt;a href=\"https://github.com/slowscript/warpinator-android/\"&gt;GitHub&lt;/a&gt;.&lt;br&gt; &lt;br&gt; Este programa no trae ninguna garantía.&lt;br&gt;Consulte los términos de la licencia para obtener más detalles.</string>
     <!--  Share activity  -->
     <string name="devices_to_share_with">Dispositivos con los que compartir</string>
     <string name="no_share_devices">No hay dispositivos disponibles para compartir</string>
-    <string name="unsupported_intent">Recibimos una acción de intención no admitida</string>
+    <string name="unsupported_intent">Hemos recibido una acción de intención no admitida</string>
     <string name="nothing_to_share">Nada que compartir</string>
     <!--  Setting  -->
     <string name="identity_settings_category">Identidad</string>
@@ -49,7 +45,7 @@
     <string name="download_dir_settings_title">Directorio de descargas</string>
     <string name="notification_settings_title">Notificar archivos entrantes</string>
     <string name="overwrite_settings_title">Permitir sobrescribir</string>
-    <string name="accept_settings_title">Aceptar automáticamente</string>
+    <string name="accept_settings_title">Aceptar las transferencias automáticamente</string>
     <string name="accept_setting_summary_on">Las transferencias se aceptarán automáticamente</string>
     <string name="accept_setting_summary_off">Cada transferencia debe ser aceptada por usted</string>
     <string name="background_settings_title">Ejecutar en segundo plano</string>
@@ -82,7 +78,7 @@
     <string name="incoming_transfer_channel">Transferencia entrante</string>
     <string name="transfer_progress_channel">Progreso de transferencia</string>
     <!--  Content descriptions  -->
-    <string name="reconnect_button_cnt_des">Reconectar</string>
+    <string name="reconnect_button_cnt_des">Conectar de nuevo</string>
     <string name="status_image_cnt_des">Estado de conexión</string>
     <string name="profile_image_cnt_des">Imagen de perfil</string>
     <string name="application_icon_cnt_des">Icono de aplicación</string>
@@ -96,7 +92,7 @@
     <string name="please_select_download_dir">Es probable que sea la primera vez que inicie esta aplicación.
         Seleccione un directorio en el que desea que Warpinator guarde los archivos.</string>
     <string name="error_download_dir">Debe seleccionar un directorio de descarga en los ajustes</string>
-    <string name="error_network_unavailable">Red no disponible - żProbar punto de acceso?</string>
+    <string name="error_network_unavailable">La red no está disponible. ¿Desea probar con un punto de acceso\?</string>
     <string name="error_service_not_running">El servicio no se está ejecutando</string>
     <string name="cert_not_received">Error al recibir el certificado de %1$s. Asegúrese de permitir el tráfico UDP (así como TCP) en el puerto %2$d en el firewall remoto.</string>
     <string-array name="connected_states">
@@ -119,4 +115,11 @@
         <item>Terminado</item>
         <item>Terminado con errores (pulse para ver)</item>
     </string-array>
+    <string name="stop_svc_when_leaving">Detener el servicio después de salir de la aplicación</string>
+    <string name="stop_svc_when_leaving_summary_on">El servicio se detendrá automáticamente cuando se borre de los registros o tras un periodo de inactividad</string>
+    <string name="send_folder_toast">Selecciona una carpeta para enviar</string>
+    <string name="clear_transfers">Limpiar transferencias terminadas</string>
+    <string name="stop_svc_when_leaving_summary_off">Una vez iniciado, el servicio seguirá funcionando hasta que se detenga manualmente</string>
+    <string name="warning_lastmod">Ubicaciones no predeterminadas no permiten conservar marcas de tiempo modificadas recientemente. Puedes volver a los valores por defecto con el botón de reinicio.</string>
+    <string name="reset_cnt_des">Restablecer el valor predeterminado</string>
 </resources>

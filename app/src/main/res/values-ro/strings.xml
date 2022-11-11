@@ -80,7 +80,7 @@
     <string name="transfer_progress_channel">Progresul transferului</string>
     <string name="connection_error">Eroare de conectare</string>
     <string name="not_connected_to_wifi">Nu ești conectat la WiFi sau LAN. Folosește un hotspot dacă niciuna nu este disponibilă. Repornește aplicația când ești conectat.</string>
-    <string name="error_download_dir">Trebuie să alegi un dosar de descărcări în reglări</string>
+    <string name="error_download_dir">Trebuie să alegi un dosar pentru descărcări în reglări</string>
     <string name="accept_settings_title">Acceptă automat transferurile</string>
     <string name="accept_setting_summary_on">Transferurile vor fi acceptate automat</string>
     <string name="accept_setting_summary_off">Transferurile trebuie acceptate manual</string>
@@ -102,11 +102,15 @@
     <string name="cert_not_received">Certificatul de la %1$s nu a fost primit. Asigură-te că permiți trafic UDP și TCP prin portul %2$d în firewall-ul aparatului.</string>
     <string name="reannounce">Expune din nou</string>
     <string name="rescan">Caută aparate</string>
-    <string name="changed_network">Rețea schimbată - se repornește serviciul...</string>
+    <string name="changed_network">Rețea schimbată - se repornește serviciul…</string>
     <string name="open_failed">Nu s-a putut deschide fișierul primit</string>
     <string name="files_being_sent">Fișiere de trimis:</string>
     <string name="stop_svc_when_leaving">Oprește serviciul la părăsirea aplicației</string>
     <string name="stop_svc_when_leaving_summary_on">Serviciul va fi oprit automat dacă este eliminat din recente sau după o perioadă de inactivitate</string>
     <string name="stop_svc_when_leaving_summary_off">Odată pornit, serviciul va continua să funcționeze până când va fi oprit manual</string>
     <string name="required_dialog_not_found">Furnizorul telefonului nu a implementat un dialog necesar. Acest lucru va fi rezolvat într-o versiune viitoare.</string>
+    <string name="warning_lastmod">Pozițiile care nu sunt prestabilite nu acceptă păstrarea datei ultimei modificări. Se poate reveni la valoarea prestabilită cu ajutorul butonului de restabilire.</string>
+    <string name="send_folder_toast">Alege un dosar de trimis</string>
+    <string name="reset_cnt_des">Restabilește la valoarea inițială</string>
+    <string name="clear_transfers">Șterge transferurile terminate</string>
 </resources>

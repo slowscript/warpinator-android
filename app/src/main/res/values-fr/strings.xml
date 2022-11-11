@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--  Main Activity  -->
     <string name="title_activity_transfers">Transferts</string>
@@ -30,10 +31,10 @@
     <string name="version">Version : %1$s</string>
     <string name="about_description">Ceci est un portage non officiel de Warpinator. \nEnvoyer et recevoir des fichiers à travers le réseau local.</string>
     <string name="warranty_html">
-        Ce programme est un logiciel libre publié sous la &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">licence Publique générale GNU&lt;/a>.&lt;br>
-        Vous pouvez obtenir le code source depuis &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
-        &lt;br>
-        Ce programme est distribué sans aucune garantie.&lt;br>Voyez les termes de la licence pour davantage de détails.</string>
+        Ce programme est un logiciel libre publié sous la &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;licence Publique générale GNU&lt;/a&gt;.&lt;br&gt;
+        Vous pouvez obtenir le code source depuis &lt;a href="https://github.com/slowscript/warpinator-android/"&gt;GitHub&lt;/a&gt;.&lt;br&gt;
+        &lt;br&gt;
+        Ce programme est distribué sans aucune garantie.&lt;br&gt;Voyez les termes de la licence pour davantage de détails.</string>
     <!--  Share activity  -->
     <string name="devices_to_share_with">Appareils avec lesquels partager</string>
     <string name="no_share_devices">Aucun appareil disponible pour le partage</string>
@@ -122,4 +123,8 @@
         <item>Terminé</item>
         <item>Terminé avec des erreurs (toucher pour voir)</item>
     </string-array>
+    <string name="send_folder_toast">Choisissez un répertoire à envoyer</string>
+    <string name="warning_lastmod">Les emplacements non par défaut ne prennent pas en charge la préservation de l\'horodatage de dernière modification. Vous pouvez revenir à la valeur par défaut avec le bouton de réinitialisation.</string>
+    <string name="reset_cnt_des">Réinitialiser à la valeur par défaut</string>
+    <string name="clear_transfers">Nettoyer les transferts terminés</string>
 </resources>
