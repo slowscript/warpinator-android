@@ -474,9 +474,8 @@ public class Transfer {
     private void setLastModified() {
         //This is apparently not possible with SAF
         if (!Server.current.downloadDirUri.startsWith("content:")) {
-            File f = new File(Server.current.downloadDirUri, currentRelativePath);
             Log.d(TAG, "Setting lastMod: " + currentLastMod);
-            f.setLastModified(currentLastMod);
+            currentFile.setLastModified(currentLastMod);
         }
     }
 

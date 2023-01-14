@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -37,7 +38,7 @@ import org.conscrypt.Conscrypt;
 import java.io.File;
 import java.security.Security;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final String TAG = "MAIN";
     private static final String helpUrl = "https://github.com/slowscript/warpinator-android/blob/master/connection-issues.md";
@@ -175,6 +176,19 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults.length > 0 && requestCode == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Log.d(TAG, "Got storage permission");
+            if (!trySetDefaultDirectory(this))
+                askForDirectoryAccess(this);
+        } else {
+            Log.d(TAG, "Storage permission denied");
+            askForDirectoryAccess(this);
+        }
+    }
+
     private BroadcastReceiver newBroadcastReceiver()
     {
         Context ctx = this;
@@ -221,9 +235,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static boolean trySetDefaultDirectory(Activity a) {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q && !checkWriteExternalPermission(a))
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q && !checkWriteExternalPermission(a)) {
             ActivityCompat.requestPermissions(a, new String[]{
                     Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            return true; //Don't fallback to SAF, wait for permission being granted
+        }
 
         File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Warpinator");
         Log.d(TAG, "Trying to set default directory: " + dir.getAbsolutePath());
