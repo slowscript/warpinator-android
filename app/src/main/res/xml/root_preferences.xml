@@ -42,6 +42,11 @@
             android:summaryOn="@string/accept_setting_summary_on"
             android:summaryOff="@string/accept_setting_summary_off" />
 
+        <SwitchPreferenceCompat
+            android:key="useCompression"
+            android:defaultValue="false"
+            android:title="@string/compression_settings_title" />
+
     </PreferenceCategory>
 
     <PreferenceCategory>

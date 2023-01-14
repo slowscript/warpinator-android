@@ -196,10 +196,12 @@ public class Remote {
     }
 
     public void startSendTransfer(Transfer t) {
+        t.useCompression = Server.current.useCompression;
         WarpProto.OpInfo info = WarpProto.OpInfo.newBuilder()
                 .setIdent(Server.current.uuid)
                 .setTimestamp(t.startTime)
                 .setReadableName(Utils.getDeviceName())
+                .setUseCompression(t.useCompression)
                 .build();
         WarpProto.TransferOpRequest op = WarpProto.TransferOpRequest.newBuilder()
                 .setInfo(info)
@@ -220,7 +222,8 @@ public class Remote {
             WarpProto.OpInfo info = WarpProto.OpInfo.newBuilder()
                     .setIdent(Server.current.uuid)
                     .setTimestamp(t.startTime)
-                    .setReadableName(Utils.getDeviceName()).build();
+                    .setReadableName(Utils.getDeviceName())
+                    .setUseCompression(t.useCompression).build();
             try {
                 Iterator<WarpProto.FileChunk> i = blockingStub.startTransfer(info);
                 boolean cancelled = false;

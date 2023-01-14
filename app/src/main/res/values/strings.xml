@@ -56,6 +56,7 @@
     <string name="accept_settings_title">Automatically accept transfers</string>
     <string name="accept_setting_summary_on">Transfers will be accepted automatically</string>
     <string name="accept_setting_summary_off">Every transfer needs to be accepted by you</string>
+    <string name="compression_settings_title">Try use compression</string>
     <string name="background_settings_title">Run in background</string>
     <string name="boot_settings_title">Start automatically</string>
     <string name="stop_svc_when_leaving">Stop service after leaving app</string>

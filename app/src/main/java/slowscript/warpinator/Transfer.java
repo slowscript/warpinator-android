@@ -7,9 +7,7 @@ import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.FileUtils;
 import android.provider.DocumentsContract;
-import android.provider.OpenableColumns;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -34,6 +32,7 @@ import javax.annotation.Nullable;
 import io.grpc.StatusException;
 import io.grpc.stub.CallStreamObserver;
 
+import static java.util.zip.Deflater.DEFAULT_COMPRESSION;
 import static slowscript.warpinator.MainService.svc;
 
 public class Transfer {
@@ -58,6 +57,7 @@ public class Transfer {
     public String singleName = "";
     public String singleMime = "";
     public List<String> topDirBasenames;
+    public boolean useCompression = false;
     int privId;
     //SEND only
     public ArrayList<Uri> uris;
@@ -199,6 +199,7 @@ public class Transfer {
 
     public void startSending(CallStreamObserver<WarpProto.FileChunk> observer) {
         setStatus(Status.TRANSFERRING);
+        Log.d(TAG, "Sending, compression " + useCompression);
         actualStartTime = System.currentTimeMillis();
         bytesTransferred = 0;
         cancelled = false;
@@ -252,10 +253,16 @@ public class Transfer {
                                 ft = WarpProto.FileTime.newBuilder().setMtime(lastmod / 1000).setMtimeUsec((int)(lastmod % 1000) * 1000).build();
                             else Log.w(TAG, "File doesn't have lastmod");
                         }
+                        byte[] toSend = chunk;
+                        int chunkLen = read;
+                        if (useCompression) {
+                            toSend = ZlibCompressor.compress(chunk, read, DEFAULT_COMPRESSION);
+                            chunkLen = toSend.length;
+                        }
                         WarpProto.FileChunk fc = WarpProto.FileChunk.newBuilder()
                                 .setRelativePath(files.get(i).relPath)
                                 .setFileType(FileType.FILE)
-                                .setChunk(ByteString.copyFrom(chunk, 0, read))
+                                .setChunk(ByteString.copyFrom(toSend, 0, chunkLen))
                                 .setFileMode(0644)
                                 .setTime(ft)
                                 .build();
@@ -339,7 +346,7 @@ public class Transfer {
     }
 
     void startReceive() {
-        Log.i(TAG, "Transfer accepted");
+        Log.i(TAG, "Transfer accepted, compression " + useCompression);
         setStatus(Status.TRANSFERRING);
         actualStartTime = System.currentTimeMillis();
         updateUI();
@@ -387,8 +394,11 @@ public class Transfer {
                 }
                 try {
                     currentStream = openFileStream(sanitizedName);
-                    currentStream.write(chunk.getChunk().toByteArray());
-                    chunkSize = chunk.getChunk().size();
+                    byte[] data = chunk.getChunk().toByteArray();
+                    if (useCompression)
+                        data = ZlibCompressor.decompress(data);
+                    currentStream.write(data);
+                    chunkSize = data.length;
                 } catch (Exception e) {
                     Log.e(TAG, "Failed to open file for writing: " + currentRelativePath, e);
                     errors.add("Failed to open file for writing: " + currentRelativePath);
@@ -397,8 +407,11 @@ public class Transfer {
             }
         } else {
             try {
-                currentStream.write(chunk.getChunk().toByteArray());
-                chunkSize = chunk.getChunk().size();
+                byte[] data = chunk.getChunk().toByteArray();
+                if (useCompression)
+                    data = ZlibCompressor.decompress(data);
+                currentStream.write(data);
+                chunkSize = data.length;
             } catch (Exception e) {
                 Log.e(TAG, "Failed to write to file " + currentRelativePath + ": " + e.getMessage());
                 errors.add("Failed to write to file " + currentRelativePath);

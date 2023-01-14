@@ -64,6 +64,7 @@ public class Server {
     public String downloadDirUri;
     public boolean running = false;
     public HashSet<String> favorites = new HashSet<>();
+    public boolean useCompression;
 
     JmDNS jmdns;
     private Renewer renewer;
@@ -158,6 +159,7 @@ public class Server {
         allowOverwrite = svc.prefs.getBoolean("allowOverwrite", false);
         notifyIncoming = svc.prefs.getBoolean("notifyIncoming", true);
         downloadDirUri = svc.prefs.getString("downloadDir", "");
+        useCompression = svc.prefs.getBoolean("useCompression", false);
         if(!svc.prefs.contains("profile"))
             svc.prefs.edit().putString("profile",  String.valueOf(new Random().nextInt(12))).apply();
         profilePicture = svc.prefs.getString("profile", "0");

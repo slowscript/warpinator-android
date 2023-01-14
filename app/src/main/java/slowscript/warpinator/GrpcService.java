@@ -99,6 +99,7 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
         t.singleMime = request.getMimeIfSingle();
         t.singleName = request.getNameIfSingle();
         t.topDirBasenames = request.getTopDirBasenamesList();
+        t.useCompression = request.getInfo().getUseCompression() && Server.current.useCompression;
 
         r.addTransfer(t);
         t.prepareReceive();
@@ -112,16 +113,12 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
     }
 
     @Override
-    public void acceptTransferOpRequest(WarpProto.OpInfo request, StreamObserver<WarpProto.VoidType> responseObserver) {
-        super.acceptTransferOpRequest(request, responseObserver); //Not implemented in upstream either
-    }
-
-    @Override
     public void startTransfer(WarpProto.OpInfo request, StreamObserver<WarpProto.FileChunk> responseObserver) {
         Log.d(TAG, "Transfer started by the other side");
         Transfer t = getTransfer(request);
         if (t == null)
             return;
+        t.useCompression &= request.getUseCompression();
         t.startSending((ServerCallStreamObserver<WarpProto.FileChunk>) responseObserver);
     }
 
