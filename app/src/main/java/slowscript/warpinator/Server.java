@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
@@ -55,6 +56,7 @@ public class Server {
     public static Server current;
     public String displayName;
     public int port;
+    public int authPort;
     public String uuid;
     public String profilePicture;
     public boolean allowOverwrite;
@@ -69,6 +71,8 @@ public class Server {
     private final ServiceListener serviceListener;
     private final SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
     private io.grpc.Server gServer;
+    private io.grpc.Server regServer;
+    private int apiVersion = 2;
 
     private final MainService svc;
 
@@ -88,6 +92,7 @@ public class Server {
         Log.i(TAG, "--- Starting server");
         running = true;
         startGrpcServer();
+        startRegistrationServer();
         CertServer.Start(port);
         new Thread(this::startMDNS).start();
         svc.prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
@@ -101,6 +106,8 @@ public class Server {
         svc.prefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
         if (gServer != null)
             gServer.shutdownNow();
+        if (regServer != null)
+            regServer.shutdownNow();
         LocalBroadcasts.updateNetworkState(svc);
         Log.i(TAG, "--- Server stopped");
     }
@@ -146,6 +153,7 @@ public class Server {
         uuid = svc.prefs.getString("uuid", "default");
         displayName = svc.prefs.getString("displayName", "Android");
         port = Integer.parseInt(svc.prefs.getString("port", "42000"));
+        authPort = Integer.parseInt(svc.prefs.getString("authPort", "42001"));
         Authenticator.groupCode = svc.prefs.getString("groupCode", Authenticator.DEFAULT_GROUP_CODE);
         allowOverwrite = svc.prefs.getBoolean("allowOverwrite", false);
         notifyIncoming = svc.prefs.getBoolean("notifyIncoming", true);
@@ -177,6 +185,8 @@ public class Server {
             gServer = NettyServerBuilder.forPort(port)
                     .sslContext(ssl.build())
                     .addService(new GrpcService())
+                    .permitKeepAliveWithoutCalls(true)
+                    .permitKeepAliveTime(10, TimeUnit.SECONDS)
                     .build();
             gServer.start();
             Log.d(TAG, "GRPC server started");
@@ -184,6 +194,20 @@ public class Server {
             running = false;
             Log.e(TAG, "Failed to start GRPC server.", e);
             Toast.makeText(svc, "Failed to start GRPC server", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    void startRegistrationServer() {
+        try {
+            regServer = NettyServerBuilder.forPort(authPort)
+                    .addService(new RegistrationService())
+                    .build();
+            regServer.start();
+            Log.d(TAG, "startRegistrationServer: Success");
+        } catch(Exception e) {
+            apiVersion = 1;
+            Log.w(TAG, "Failed to start V2 registration service.", e);
+            Toast.makeText(svc, "Failed to start V2 registration service. Only V1 will be available.", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -195,6 +219,8 @@ public class Server {
         props.put("hostname", Utils.getDeviceName());
         String type = flush ? "flush" : "real";
         props.put("type", type);
+        props.put("api-version", String.valueOf(apiVersion));
+        props.put("auth-port", String.valueOf(authPort));
         serviceInfo.setText(props);
 
         try {
@@ -295,6 +321,10 @@ public class Server {
                     Log.d(TAG, "Service already known. Status: " + r.status);
                     if(props.contains("hostname"))
                         r.hostname = info.getPropertyString("hostname");
+                    if(props.contains("api-version"))
+                        r.api = Integer.parseInt(info.getPropertyString("api-version"));
+                    if(props.contains("auth-port"))
+                        r.authPort = Integer.parseInt(info.getPropertyString("auth-port"));
                     r.serviceAvailable = true;
                     if ((r.status == Remote.RemoteStatus.DISCONNECTED) || (r.status == Remote.RemoteStatus.ERROR)) {
                         //Update hostname, address, port

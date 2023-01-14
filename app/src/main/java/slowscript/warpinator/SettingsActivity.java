@@ -73,6 +73,7 @@ public class SettingsActivity extends AppCompatActivity {
                 
         private static final String DOWNLOAD_DIR_PREF = "downloadDir";
         private static final String PORT_PREF = "port";
+        private static final String AUTH_PORT_PREF = "authPort";
         private static final String GROUPCODE_PREF = "groupCode";
         private static final String BACKGROUND_PREF = "background";
         private static final String THEME_PREF = "theme_setting";
@@ -91,7 +92,9 @@ public class SettingsActivity extends AppCompatActivity {
             Preference themePref = findPreference(THEME_PREF);
             Preference profilePref = findPreference(PROFILE_PREF);
             EditTextPreference portPref = findPreference(PORT_PREF);
+            EditTextPreference authPortPref = findPreference(AUTH_PORT_PREF);
             portPref.setOnBindEditTextListener((edit)-> edit.setInputType(InputType.TYPE_CLASS_NUMBER));
+            authPortPref.setOnBindEditTextListener((edit)-> edit.setInputType(InputType.TYPE_CLASS_NUMBER));
 
             //Warn about preference not being applied immediately
             for (Preference pref : new Preference[]{gcPref, bgPref, debugPref}) {
@@ -101,7 +104,7 @@ public class SettingsActivity extends AppCompatActivity {
                 });
             }
             //Ensure port number is correct
-            portPref.setOnPreferenceChangeListener((p, val) -> {
+            Preference.OnPreferenceChangeListener onPortChanged = (p, val) -> {
                 int port = Integer.parseInt((String)val);
                 if (port > 65535 || port < 1024) {
                     Toast.makeText(getContext(), R.string.port_range_warning, Toast.LENGTH_LONG).show();
@@ -109,7 +112,9 @@ public class SettingsActivity extends AppCompatActivity {
                 }
                 Toast.makeText(getContext(), R.string.requires_restart_warning, Toast.LENGTH_SHORT).show();
                 return true;
-            });
+            };
+            portPref.setOnPreferenceChangeListener(onPortChanged);
+            authPortPref.setOnPreferenceChangeListener(onPortChanged);
             //Change theme based on the new value
             themePref.setOnPreferenceChangeListener((preference, newValue) -> {
                 switch (newValue.toString()){

@@ -63,7 +63,8 @@
     <string name="stop_svc_when_leaving_summary_off">Once started, the service will continue to run until manually stopped</string>
     <string name="export_log_settings_tile">Write debug log to file</string>
     <string name="group_code_settings_title">Group code</string>
-    <string name="port_settings_title">Port</string>
+    <string name="port_settings_title">Port for transfers</string>
+    <string name="auth_port_settings_title">Port for registration</string>
     <string name="theme_settings_title">Theme</string>
     <string name="notification_settings_summary">This may be affected by Android\'s notification settings</string>
     <string name="port_range_warning">Port number must be between 1024 and 65535</string>

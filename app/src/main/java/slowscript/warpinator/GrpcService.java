@@ -1,7 +1,12 @@
 package slowscript.warpinator;
 
+import android.util.Base64;
 import android.util.Log;
 
+import com.google.protobuf.ByteString;
+
+import io.grpc.Status;
+import io.grpc.StatusException;
 import io.grpc.stub.ServerCallStreamObserver;
 import io.grpc.stub.StreamObserver;
 
@@ -28,6 +33,34 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
         }
         Log.d(TAG, "Duplex check result: " + haveDuplex);
         responseObserver.onNext(WarpProto.HaveDuplex.newBuilder().setResponse(haveDuplex).build());
+        responseObserver.onCompleted();
+    }
+
+    private static final int MAX_TRIES = 20;
+    @Override
+    public void waitingForDuplex(WarpProto.LookupName request, StreamObserver<WarpProto.HaveDuplex> responseObserver) {
+        Log.d(TAG, request.getReadableName() + " is waiting for duplex...");
+        Remote r = MainService.remotes.get(request.getId());
+        if (r != null && (r.status == Remote.RemoteStatus.ERROR || r.status == Remote.RemoteStatus.DISCONNECTED))
+            r.connect();
+
+        int i = 0;
+        boolean response = false;
+        while (i < MAX_TRIES) {
+            r = MainService.remotes.get(request.getId());
+            if (r != null)
+                response = r.status == Remote.RemoteStatus.AWAITING_DUPLEX || r.status == Remote.RemoteStatus.CONNECTED;
+            if (response)
+                break;
+            i++;
+            if (i == MAX_TRIES) {
+                Log.d(TAG, request.getReadableName() + " failed to establish duplex");
+                responseObserver.onError(new StatusException(Status.DEADLINE_EXCEEDED));
+                return;
+            }
+            Utils.sleep(250);
+        }
+        responseObserver.onNext(WarpProto.HaveDuplex.newBuilder().setResponse(response).build());
         responseObserver.onCompleted();
     }
 
@@ -139,6 +172,17 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
 
     void returnVoid(StreamObserver<WarpProto.VoidType> responseObserver) {
         responseObserver.onNext(WarpProto.VoidType.getDefaultInstance());
+        responseObserver.onCompleted();
+    }
+}
+
+class RegistrationService extends WarpRegistrationGrpc.WarpRegistrationImplBase {
+    @Override
+    public void requestCertificate(WarpProto.RegRequest request, StreamObserver<WarpProto.RegResponse> responseObserver) {
+        byte[] cert = Authenticator.getBoxedCertificate();
+        byte[] sendData = Base64.encode(cert, Base64.DEFAULT);
+        Log.v("REG_V2", "Sending certificate to " + request.getHostname() + " on " + request.getIp());
+        responseObserver.onNext(WarpProto.RegResponse.newBuilder().setLockedCertBytes(ByteString.copyFrom(sendData)).build());
         responseObserver.onCompleted();
     }
 }

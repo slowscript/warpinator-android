@@ -36,6 +36,8 @@ public class Remote {
 
     public InetAddress address;
     public int port;
+    public int authPort;
+    public int api = 1;
     public String serviceName; //Zeroconf service name, also uuid
     public String userName;
     public String hostname;
