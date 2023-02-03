@@ -54,6 +54,8 @@ public class TransfersActivity extends AppCompatActivity {
     ImageView imgProfile;
     ImageView imgStatus;
     FloatingActionButton fabSend;
+    FloatingActionButton fabSendFiles;
+    FloatingActionButton fabSendDir;
     FloatingActionButton fabClear;
     Button btnReconnect;
     ToggleButton tglStar;
@@ -88,8 +90,14 @@ public class TransfersActivity extends AppCompatActivity {
         imgStatus = findViewById(R.id.imgStatus);
         imgProfile = findViewById(R.id.imgProfile);
         fabSend = findViewById(R.id.fabSend);
-        fabSend.setOnClickListener((v) -> openFiles());
-        fabSend.setOnLongClickListener((v) -> openFolder());
+        fabSendFiles = findViewById(R.id.fabSendFile);
+        fabSendDir = findViewById(R.id.fabSendDir);
+        fabSend.setOnClickListener((v) -> {
+            int vis = fabSendFiles.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE;
+            setFabVisibility(vis);
+        });
+        fabSendFiles.setOnClickListener((v) -> openFiles());
+        fabSendDir.setOnClickListener((v) -> openFolder());
         fabClear = findViewById(R.id.fabClear);
         fabClear.setOnClickListener((v) -> remote.clearTransfers());
         btnReconnect = findViewById(R.id.btnReconnect);
@@ -254,6 +262,11 @@ public class TransfersActivity extends AppCompatActivity {
         Server.current.saveFavorites();
     }
 
+    private void setFabVisibility(int vis) {
+        fabSendFiles.setVisibility(vis);
+        fabSendDir.setVisibility(vis);
+    }
+
     private void openFiles() {
         Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         i.addCategory(Intent.CATEGORY_OPENABLE);
@@ -264,9 +277,10 @@ public class TransfersActivity extends AppCompatActivity {
         Log.d(TAG, "Starting file browser activty (prevent autostop)");
         WarpinatorApp.activitiesRunning++; //Prevent autostop
         startActivityForResult(i, SEND_FILE_REQ_CODE);
+        setFabVisibility(View.GONE);
     }
 
-    private boolean openFolder() {
+    private void openFolder() {
         Toast.makeText(this, R.string.send_folder_toast, Toast.LENGTH_SHORT).show();
         Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
         i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -277,7 +291,7 @@ public class TransfersActivity extends AppCompatActivity {
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, R.string.required_dialog_not_found, Toast.LENGTH_LONG).show();
         }
-        return true;
+        setFabVisibility(View.GONE);
     }
 
     @Override
