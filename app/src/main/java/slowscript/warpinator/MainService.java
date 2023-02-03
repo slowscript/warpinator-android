@@ -98,7 +98,7 @@ public class MainService extends Service {
         server = new Server(this);
         Authenticator.getServerCertificate(); //Generate cert on start if doesn't exist
         if (Authenticator.certException != null) {
-            LocalBroadcasts.displayMessage(this, "Failed to create certificate",
+            LocalBroadcasts.displayMessage(this, "Failed to initialize service",
                     "A likely reason for this is that your IP address could not be obtained. " +
                     "Please make sure you are connected to WiFi.\n" +
                     "\nAvailable interfaces:\n" + Utils.dumpInterfaces() +
@@ -244,6 +244,7 @@ public class MainService extends Service {
                 Log.d(TAG, "Network lost");
                 networkAvailable = false;
                 LocalBroadcasts.updateNetworkState(MainService.this);
+                onNetworkLost();
             }
             @Override
             public void onLinkPropertiesChanged(@NonNull Network network, @NonNull LinkProperties linkProperties) {
@@ -264,6 +265,7 @@ public class MainService extends Service {
                     Log.d(TAG, "AP was disabled");
                     apOn = false;
                     LocalBroadcasts.updateNetworkState(MainService.this);
+                    onNetworkLost();
                 }
             }
         };
@@ -273,6 +275,11 @@ public class MainService extends Service {
 
     public boolean gotNetwork() {
         return networkAvailable || apOn;
+    }
+
+    private void onNetworkLost() {
+        if (!gotNetwork())
+            lastIP = null; //Rebind even if we reconnected to the same net
     }
 
     private void onNetworkChanged() {
@@ -340,6 +347,8 @@ public class MainService extends Service {
     }
 
     private void autoReconnect() {
+        if (!gotNetwork())
+            return;
         try {
             for (Remote r : remotes.values()) {
                 if ((r.status == Remote.RemoteStatus.DISCONNECTED || r.status == Remote.RemoteStatus.ERROR)

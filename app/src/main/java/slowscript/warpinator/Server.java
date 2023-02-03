@@ -118,12 +118,6 @@ public class Server {
             InetAddress addr = InetAddress.getByName(Utils.getIPAddress());
             jmdns = JmDNS.create(addr);
 
-            /*Log.v(TAG, "Flush registration");
-            registerService(true);
-            Utils.sleep(1000);
-            jmdns.unregisterAllServices();
-            Utils.sleep(500);*/
-            Log.v(TAG, "Real registration");
             registerService(false);
             Utils.sleep(500);
             //Start looking for others
@@ -205,7 +199,7 @@ public class Server {
                     .addService(new RegistrationService())
                     .build();
             regServer.start();
-            Log.d(TAG, "startRegistrationServer: Success");
+            Log.d(TAG, "Registration server started");
         } catch(Exception e) {
             apiVersion = 1;
             Log.w(TAG, "Failed to start V2 registration service.", e);
@@ -225,6 +219,9 @@ public class Server {
         props.put("auth-port", String.valueOf(authPort));
         serviceInfo.setText(props);
 
+        // Unregister possibly leftover service info
+        // -> Announcement will trigger "new service" behavior and reconnect on other clients
+        unregister(); //Safe if fails
         try {
             jmdns.registerService(serviceInfo);
             renewer = new Renewer((JmDNSImpl)jmdns);
@@ -266,6 +263,23 @@ public class Server {
             } catch (Exception e) {
                 Log.e(TAG, "Rescan failed", e);
                 LocalBroadcasts.displayToast(svc, "Rescan failed: " + e.getMessage(), Toast.LENGTH_LONG);
+            }
+        });
+    }
+
+    void unregister() {
+        svc.executor.submit(()->{
+            Log.d(TAG, "Unregistering");
+            try {
+                DNSOutgoing out = new DNSOutgoing(DNSConstants.FLAGS_QR_RESPONSE | DNSConstants.FLAGS_AA);
+                for (DNSRecord answer : ((ServiceInfoImpl) serviceInfo).answers(DNSRecordClass.CLASS_ANY,
+                        DNSRecordClass.UNIQUE, 0, ((JmDNSImpl)jmdns).getLocalHost())) {
+                    out = renewer.addAnswer(out, null, answer);
+                }
+                ((JmDNSImpl)jmdns).send(out);
+            } catch (Exception e) {
+                Log.e(TAG, "Unregistering failed", e);
+                LocalBroadcasts.displayToast(svc, "Unregistering failed: " + e.getMessage(), Toast.LENGTH_LONG);
             }
         });
     }
