@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLException;
 
+import io.grpc.ConnectivityState;
 import io.grpc.ManagedChannel;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
@@ -59,7 +60,7 @@ public class Remote {
     WarpGrpc.WarpStub asyncStub;
 
     public void connect() {
-        Log.i(TAG, "Connecting to " + hostname);
+        Log.i(TAG, "Connecting to " + hostname + ", api " + api);
         status = RemoteStatus.CONNECTING;
         updateUI();
         new Thread(() -> {
@@ -72,11 +73,18 @@ public class Remote {
             }
             Log.d(TAG, "Certificate for " + hostname + " received and saved");
 
-            //Authenticate
+            //Connect
             try {
-                channel = OkHttpChannelBuilder.forAddress(address.getHostAddress(), port)
-                        .sslSocketFactory(Authenticator.createSSLSocketFactory(uuid))
-                        .build();
+                OkHttpChannelBuilder builder = OkHttpChannelBuilder.forAddress(address.getHostAddress(), port)
+                        .sslSocketFactory(Authenticator.createSSLSocketFactory(uuid));
+                if (api >= 2) {
+                    builder.keepAliveWithoutCalls(true)
+                            .keepAliveTime(10, TimeUnit.SECONDS)
+                            .keepAliveTimeout(5, TimeUnit.SECONDS);
+                }
+                channel = builder.build();
+                if (api >= 2)
+                    channel.notifyWhenStateChanged(channel.getState(true), this::onChannelStateChanged);
                 blockingStub = WarpGrpc.newBlockingStub(channel);
                 asyncStub = WarpGrpc.newStub(channel);
             } catch (SSLException e) {
@@ -145,6 +153,16 @@ public class Remote {
             channel.shutdownNow();
         } catch (Exception ignored){}
         status = RemoteStatus.DISCONNECTED;
+    }
+
+    private void onChannelStateChanged() {
+        ConnectivityState state = channel.getState(false);
+        Log.d(TAG, "onChannelStateChanged: " + hostname + " -> " + state);
+        if (state == ConnectivityState.TRANSIENT_FAILURE || state == ConnectivityState.IDLE) {
+            status = RemoteStatus.DISCONNECTED;
+            updateUI();
+        }
+        channel.notifyWhenStateChanged(state, this::onChannelStateChanged);
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -272,8 +290,17 @@ public class Remote {
     // -- PRIVATE HELPERS --
 
     private boolean receiveCertificate() {
-        byte[] received = null;
         errorGroupCode = false;
+        if (api == 2) {
+            if (receiveCertificateV2())
+                return true; // Otherwise fall back in case of old port config etc...
+            else Log.d(TAG, "Falling back to receiveCertificateV1");
+        }
+        return receiveCertificateV1();
+    }
+
+    private boolean receiveCertificateV1() {
+        byte[] received = null;
         int tryCount = 0;
         while (tryCount < 3) {
             try {
@@ -288,10 +315,10 @@ public class Remote {
                 byte[] receiveData = new byte[2000];
                 DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
                 sock.receive(receivePacket);
+                sock.close();
 
                 if (receivePacket.getAddress().equals(address) && (receivePacket.getPort() == port)) {
                     received = Arrays.copyOfRange(receivePacket.getData(), 0, receivePacket.getLength());
-                    sock.close();
                     break;
                 } //Received from wrong host. Give it another shot.
             } catch (Exception e) {
@@ -316,7 +343,42 @@ public class Remote {
         return true;
     }
 
+    private boolean receiveCertificateV2() {
+        Log.v(TAG, "Receiving certificate (V2) from " + address.toString());
+        try {
+            channel = OkHttpChannelBuilder.forAddress(address.getHostAddress(), authPort)
+                    .usePlaintext().build();
+            WarpProto.RegResponse resp = WarpRegistrationGrpc.newBlockingStub(channel)
+                    .withWaitForReady() //This will retry connection after 1s, then after exp. delay
+                    .withDeadlineAfter(20, TimeUnit.SECONDS)
+                    .requestCertificate(WarpProto.RegRequest.newBuilder()
+                            .setHostname(Utils.getDeviceName())
+                            .setIp(Utils.getIPAddress()).build()
+                    );
+            channel.shutdownNow();
+            byte[] lockedCert = resp.getLockedCertBytes().toByteArray();
+            byte[] decoded = Base64.decode(lockedCert, Base64.DEFAULT);
+            //channel.awaitTermination(100, TimeUnit.MILLISECONDS);
+            if (!Authenticator.saveBoxedCert(decoded, uuid)) {
+                errorGroupCode = true;
+                return false;
+            }
+            errorReceiveCert = false;
+            return true;
+        } catch (Exception e) {
+            Log.w(TAG, "Could not receive certificate", e);
+            errorReceiveCert = true;
+        }
+        return false;
+    }
+
     private boolean waitForDuplex() {
+        if (api == 2)
+            return waitForDuplexV2();
+        else return waitForDuplexV1();
+    }
+
+    private boolean waitForDuplexV1() {
         int tries = 0;
         while (tries < 10) {
             try {
@@ -338,6 +400,20 @@ public class Remote {
             tries++;
         }
         return false;
+    }
+
+    private boolean waitForDuplexV2() {
+        Log.d(TAG, "Waiting for duplex - V2");
+        try {
+            return blockingStub.withDeadlineAfter(10, TimeUnit.SECONDS)
+                    .waitingForDuplex(WarpProto.LookupName.newBuilder()
+                            .setId(Server.current.uuid)
+                            .setReadableName("Android").build())
+                    .getResponse();
+        } catch (Exception e) {
+            Log.d(TAG, "Connection interrupted while waiting for duplex", e);
+            return false;
+        }
     }
 
     public void updateUI() {

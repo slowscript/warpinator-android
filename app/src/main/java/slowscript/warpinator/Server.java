@@ -323,8 +323,6 @@ public class Server {
                     Log.d(TAG, "Service already known. Status: " + r.status);
                     if(props.contains("hostname"))
                         r.hostname = info.getPropertyString("hostname");
-                    if(props.contains("api-version"))
-                        r.api = Integer.parseInt(info.getPropertyString("api-version"));
                     if(props.contains("auth-port"))
                         r.authPort = Integer.parseInt(info.getPropertyString("auth-port"));
                     r.serviceAvailable = true;
@@ -342,6 +340,10 @@ public class Server {
                 remote.address = info.getInetAddresses()[0];
                 if(props.contains("hostname"))
                     remote.hostname = info.getPropertyString("hostname");
+                if(props.contains("api-version"))
+                    remote.api = Integer.parseInt(info.getPropertyString("api-version"));
+                if(props.contains("auth-port"))
+                    remote.authPort = Integer.parseInt(info.getPropertyString("auth-port"));
                 remote.port = info.getPort();
                 remote.serviceName = svcName;
                 remote.uuid = svcName;

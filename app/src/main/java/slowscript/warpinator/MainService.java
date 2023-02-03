@@ -332,7 +332,7 @@ public class MainService extends Service {
     private void pingRemotes() {
         try {
         for (Remote r : remotes.values()) {
-            if (r.status == Remote.RemoteStatus.CONNECTED) {
+            if ((r.api == 1) && (r.status == Remote.RemoteStatus.CONNECTED)) {
                 r.ping();
             }
         }
