@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     RecyclerView recyclerView;
     RemotesAdapter adapter;
     LinearLayout layoutNotFound;
-    TextView txtError, txtNoNetwork;
+    TextView txtError, txtNoNetwork, txtOutgroup;
     BroadcastReceiver receiver;
 
     @Override
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         layoutNotFound = findViewById(R.id.layoutNotFound);
         txtError = findViewById(R.id.txtError);
         txtNoNetwork = findViewById(R.id.txtNoNetwork);
+        txtOutgroup = findViewById(R.id.txtOutgroup);
 
         //initializes theme based on preferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -164,6 +165,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         recyclerView.post(() -> {
             adapter.notifyDataSetChanged();
             layoutNotFound.setVisibility(MainService.remotes.size() == 0 ? View.VISIBLE : View.INVISIBLE);
+            int numOutgroup = 0;
+            for (Remote r : MainService.remotes.values())
+                if (r.errorGroupCode)
+                    numOutgroup++;
+            txtOutgroup.setText(numOutgroup > 0 ? getString(R.string.devices_outside_group, numOutgroup) : "");
         });
     }
 

@@ -19,6 +19,7 @@
     <string name="not_connected_to_wifi">You are not connected to WiFi or LAN. Use your hotspot if neither is available.
         Restart the application when you are connected.</string>
     <string name="changed_network">Network changed - restarting service…</string>
+    <string name="devices_outside_group">Devices outside your group: %1$d</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">Waiting for permission…</string>
     <string name="files_overwritten_warning">(Files may be overwritten!)</string>

@@ -294,7 +294,10 @@ public class Remote {
         if (api == 2) {
             if (receiveCertificateV2())
                 return true; // Otherwise fall back in case of old port config etc...
-            else Log.d(TAG, "Falling back to receiveCertificateV1");
+            else if (errorGroupCode)
+                return false;
+            else
+                Log.d(TAG, "Falling back to receiveCertificateV1");
         }
         return receiveCertificateV1();
     }
@@ -335,10 +338,9 @@ public class Remote {
             return false;
         }
         byte[] decoded = Base64.decode(received, Base64.DEFAULT);
-        if (!Authenticator.saveBoxedCert(decoded, uuid)) {
-            errorGroupCode = true;
+        errorGroupCode = !Authenticator.saveBoxedCert(decoded, uuid);
+        if (errorGroupCode)
             return false;
-        }
         errorReceiveCert = false;
         return true;
     }
@@ -359,10 +361,9 @@ public class Remote {
             byte[] lockedCert = resp.getLockedCertBytes().toByteArray();
             byte[] decoded = Base64.decode(lockedCert, Base64.DEFAULT);
             //channel.awaitTermination(100, TimeUnit.MILLISECONDS);
-            if (!Authenticator.saveBoxedCert(decoded, uuid)) {
-                errorGroupCode = true;
+            errorGroupCode = !Authenticator.saveBoxedCert(decoded, uuid);
+            if (errorGroupCode)
                 return false;
-            }
             errorReceiveCert = false;
             return true;
         } catch (Exception e) {

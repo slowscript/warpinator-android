@@ -239,10 +239,6 @@ public class TransfersActivity extends AppCompatActivity {
             btnReconnect.setVisibility((remote.status == Remote.RemoteStatus.ERROR)
                     || (remote.status == Remote.RemoteStatus.DISCONNECTED)
                     ? View.VISIBLE : View.INVISIBLE);
-            if (remote.errorGroupCode) {
-                remote.errorGroupCode = false;
-                Toast.makeText(this, R.string.wrong_group_code, Toast.LENGTH_LONG).show();
-            }
         });
     }
 

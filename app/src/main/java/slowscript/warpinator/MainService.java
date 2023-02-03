@@ -352,7 +352,7 @@ public class MainService extends Service {
         try {
             for (Remote r : remotes.values()) {
                 if ((r.status == Remote.RemoteStatus.DISCONNECTED || r.status == Remote.RemoteStatus.ERROR)
-                        && r.serviceAvailable) {
+                        && r.serviceAvailable && !r.errorGroupCode) {
                     // Try reconnecting
                     Log.d(TAG, "Automatically reconnecting to " + r.hostname);
                     r.connect();

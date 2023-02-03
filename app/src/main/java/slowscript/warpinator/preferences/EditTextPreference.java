@@ -45,7 +45,9 @@ public class EditTextPreference extends androidx.preference.EditTextPreference {
         }
 
         new MaterialAlertDialogBuilder(getContext()).setPositiveButton(android.R.string.ok, (dialog, which) -> {
-            setText(editText.getText().toString());
+            String newVal = editText.getText().toString();
+            if (callChangeListener(newVal))
+                setText(newVal);
             dialog.dismiss();
         }).setNegativeButton(android.R.string.cancel, null).setTitle(getDialogTitle()).setView(frameLayout).show();
         editText.requestFocus();

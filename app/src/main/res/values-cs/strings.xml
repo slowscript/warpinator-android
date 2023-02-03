@@ -14,6 +14,7 @@
     <string name="connection_error">Chyba spojení</string>
     <string name="not_connected_to_wifi">Nejste připojeni k WiFi ani k LAN. Pokud ani jedno není k dispozici,
     použijte hotspot. Až budete připojeni restartujte aplikaci.</string>
+    <string name="devices_outside_group">Zařízení mimo vaši skupinu: %1$d</string>
     <string name="waiting_for_permission">Čeká na přijetí…</string>
     <string name="files_overwritten_warning">(Soubory mohou být přepsány!)</string>
     <string name="remaining">zbývá</string>

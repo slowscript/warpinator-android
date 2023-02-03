@@ -68,10 +68,7 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
         holder.imgStatus.setImageTintList(ColorStateList.valueOf(color));
         holder.imgFav.setVisibility(r.isFavorite() ?  View.VISIBLE : View.INVISIBLE);
 
-        if (r.errorGroupCode) {
-            r.errorGroupCode = false;
-            Toast.makeText(app, R.string.wrong_group_code, Toast.LENGTH_LONG).show();
-        }
+        holder.cardView.setVisibility(r.errorGroupCode ? View.GONE : View.VISIBLE);
     }
 
     @Override
