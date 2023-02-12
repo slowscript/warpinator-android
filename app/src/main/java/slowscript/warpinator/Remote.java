@@ -261,6 +261,11 @@ public class Remote {
                     t.setStatus(Transfer.Status.FAILED);
                 }
                 t.updateUI();
+            } catch (Exception e) {
+                Log.e(TAG, "Transfer error", e);
+                t.errors.add("Transfer error: " + e.getLocalizedMessage());
+                t.setStatus(Transfer.Status.FAILED);
+                t.updateUI();
             }
         }).start();
     }

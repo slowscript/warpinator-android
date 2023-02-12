@@ -41,7 +41,7 @@ import java.security.Security;
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final String TAG = "MAIN";
-    private static final String helpUrl = "https://github.com/slowscript/warpinator-android/blob/master/connection-issues.md";
+    private static final String helpUrl = "https://slowscript.xyz/warpinator-android/connection-issues/";
 
     RecyclerView recyclerView;
     RemotesAdapter adapter;

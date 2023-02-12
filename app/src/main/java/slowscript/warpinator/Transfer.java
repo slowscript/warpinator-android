@@ -165,6 +165,10 @@ public class Transfer {
     private ArrayList<MFile> resolveUri(Uri u) {
         ArrayList<MFile> mfs = new ArrayList<>();
         try (Cursor c = svc.getContentResolver().query(u, null, null, null, null)) {
+            if (c == null) {
+                Log.w(TAG, "Could not resolve uri: " + u);
+                return mfs;
+            }
             int idCol = c.getColumnIndex(DocumentsContract.Document.COLUMN_DOCUMENT_ID);
             int nameCol = c.getColumnIndex(DocumentsContract.Document.COLUMN_DISPLAY_NAME);
             int mimeCol = c.getColumnIndex(DocumentsContract.Document.COLUMN_MIME_TYPE);
@@ -193,6 +197,8 @@ public class Transfer {
                 f.relPath = f.name;
                 mfs.add(f);
             }
+        } catch(SecurityException sec) {
+            Log.e(TAG, "Could not query resolver: ", sec);
         }
         return mfs;
     }

@@ -29,11 +29,14 @@ import androidx.core.app.NotificationManagerCompat;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
@@ -58,8 +61,8 @@ public class MainService extends Service {
     String lastIP = null;
 
     public static MainService svc;
-    public static HashMap<String, Remote> remotes = new HashMap<>();
-    public static ArrayList<String> remotesOrder = new ArrayList<>();
+    public static ConcurrentHashMap<String, Remote> remotes = new ConcurrentHashMap<>();
+    public static List<String> remotesOrder = Collections.synchronizedList(new ArrayList<>());
     SharedPreferences prefs;
     ExecutorService executor = Executors.newCachedThreadPool();
     public NotificationManagerCompat notificationMgr;
