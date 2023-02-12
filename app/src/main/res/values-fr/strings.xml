@@ -60,7 +60,7 @@
     <string name="stop_svc_when_leaving_summary_off">Une fois démarré, le service continuera à s\'exécuter jusqu\'à ce qu\'il soit arrêté manuellement</string>
     <string name="export_log_settings_tile">Écrire le journal de débogage dans le fichier</string>
     <string name="group_code_settings_title">Code de groupe</string>
-    <string name="port_settings_title">Port</string>
+    <string name="port_settings_title">Port pour les transferts</string>
     <string name="theme_settings_title">Thème</string>
     <string name="notification_settings_summary">Cela peut être affecté par les réglages de notification d\'Android</string>
     <string name="port_range_warning">Le numéro de port doit être compris entre 1024 et 65535</string>
@@ -127,4 +127,7 @@
     <string name="warning_lastmod">Les emplacements non par défaut ne prennent pas en charge la préservation de l\'horodatage de dernière modification. Vous pouvez revenir à la valeur par défaut avec le bouton de réinitialisation.</string>
     <string name="reset_cnt_des">Réinitialiser à la valeur par défaut</string>
     <string name="clear_transfers">Nettoyer les transferts terminés</string>
+    <string name="compression_settings_title">Essayer d\'utiliser la compression</string>
+    <string name="auth_port_settings_title">Port pour l\'enregistrement</string>
+    <string name="devices_outside_group">Appareils en dehors de votre groupe : %1$d</string>
 </resources>

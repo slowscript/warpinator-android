@@ -15,8 +15,7 @@
     <string name="no_devices_found">Устройства не обнаружены</string>
     <string name="wrong_group_code">Ошибка подключения: неверный групповой код</string>
     <string name="connection_error">Ошибка подключения</string>
-    <string name="not_connected_to_wifi">Вы не подключены к Wi-Fi или LAN. Используйте свою точку доступа, если ничего из вышеперечисленного не доступно.
-        После подключения перезапустите приложение.</string>
+    <string name="not_connected_to_wifi">Вы не подключены к Wi-Fi или локальной сети. Используйте свою точку доступа, если ни одна из них не доступна. После подключения перезапустите приложение.</string>
     <string name="changed_network">Сеть изменена - перезапуск службы…</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">Ожидание подтверждения…</string>
@@ -31,7 +30,7 @@
     <!--  About activity  -->
     <string name="version">Версия: %1$s</string>
     <string name="about_description">Это неофициальный порт Warpinator. \nОтправляйте и получайте файлы по локальной сети.</string>
-    <string name="warranty_html">Эта программа представляет собой программное обеспечение с открытым исходным кодом, лицензированным под &lt;a href=\"https://www.gnu.org/licenses/gpl-3.0.html\"&gt;GNU General Public License&lt;/a&gt;.&lt;br&gt; Вы можете получить исходный код на &lt;a href=\"https://github.com/slowscript/warpinator-android/\"&gt;GitHub&lt;/a&gt;.&lt;br&gt; &lt;br&gt; Программа поставляется без каких-либо гарантий.&lt;br&gt;Подробнее см. условия лицензии.</string>
+    <string name="warranty_html">Это приложение представляет собой программное обеспечение с открытым исходным кодом, лицензированное под &lt;a href=\"https://www.gnu.org/licenses/gpl-3.0.html\"&gt;Основной Общественной Лицензией GNU&lt;/a&gt;.&lt;br&gt; Вы можете получить исходный код на &lt;a href=\"https://github.com/slowscript/warpinator-android/\"&gt;GitHub&lt;/a&gt;.&lt;br&gt; &lt;br&gt; Приложение поставляется без каких-либо гарантий.&lt;br&gt;Подробнее см. условия лицензии.</string>
     <!--  Share activity  -->
     <string name="devices_to_share_with">Устройства, с которыми можно поделиться</string>
     <string name="no_share_devices">Нет доступных устройств, с которыми можно поделиться</string>
@@ -44,7 +43,7 @@
     <string name="aspect_setting_category">Внешний вид</string>
     <string name="display_settings_title">Отображаемое имя</string>
     <string name="picture_settings_title">Изображение профиля</string>
-    <string name="download_dir_settings_title">Каталог для загрузок</string>
+    <string name="download_dir_settings_title">Папка для загрузок</string>
     <string name="notification_settings_title">Показывать уведомления</string>
     <string name="overwrite_settings_title">Разрешить перезапись</string>
     <string name="accept_settings_title">Автоподтверждение</string>
@@ -53,24 +52,24 @@
     <string name="background_settings_title">Работа в фоновом режиме</string>
     <string name="boot_settings_title">Запускать автоматически</string>
     <string name="stop_svc_when_leaving">Автозавершение службы</string>
-    <string name="stop_svc_when_leaving_summary_on">Служба будет автоматически остановлена при очистке приложения из недавних, а также после определённого периода бездействия</string>
+    <string name="stop_svc_when_leaving_summary_on">Служба будет автоматически остановлена при очистке приложения из недавних, а также после определённого промежутка бездействия</string>
     <string name="stop_svc_when_leaving_summary_off">После запуска служба будет продолжать работать до момента остановки вручную</string>
     <string name="export_log_settings_tile">Записывать лог в файл</string>
     <string name="group_code_settings_title">Групповой код</string>
     <string name="port_settings_title">Порт</string>
     <string name="theme_settings_title">Тема</string>
-    <string name="notification_settings_summary">Параметр может зависеть от настроек уведомлений Android</string>
+    <string name="notification_settings_summary">Может зависеть от настроек уведомлений Android</string>
     <string name="port_range_warning">Номер порта должен быть от 1024 до 65535</string>
-    <string name="requires_restart_warning">Для изменения этого параметра требуется перезапуск приложения</string>
-    <string name="required_dialog_not_found">Производитель вашего телефона не реализовал требуемый диалог. Это будет исправлено в следующем выпуске.</string>
+    <string name="requires_restart_warning">Для изменения этой настройки требуется перезапуск приложения</string>
+    <string name="required_dialog_not_found">Производитель вашего телефона не осуществил требуемый диалог. Это будет исправлено в следующем выпуске.</string>
     <string name="overwrite_settings_summary_on">Входящие файлы с уже имеющимся именем перезапишут существующие</string>
     <string name="overwrite_settings_summary_off">Входящие файлы с уже имеющимся именем будут переименованы</string>
     <string name="custom">Другое</string>
     <string name="unsupported_provider">Вы выбрали неподдерживаемого поставщика контента. Пожалуйста, выберите каталог во внутренней памяти.</string>
     <!--  Theme settings -->
     <string name="sysDefault">Системная по умолчанию</string>
-    <string name="lightTheme">Светлая тема</string>
-    <string name="darkTheme">Тёмная тема</string>
+    <string name="lightTheme">Светлая внешность</string>
+    <string name="darkTheme">Тёмная внешность</string>
     <!--  Notification  -->
     <string name="warpinator_notification_title">Служба Warpinator запущена</string>
     <string name="warpinator_notification_button">Остановить</string>
@@ -81,10 +80,10 @@
     <string name="service_running">Служба запущена</string>
     <string name="notification_channel_description">Постоянное уведомление о службе</string>
     <string name="incoming_transfer_channel">Входящая передача</string>
-    <string name="transfer_progress_channel">Прогресс передачи</string>
+    <string name="transfer_progress_channel">Ход передачи</string>
     <!--  Content descriptions  -->
     <string name="reconnect_button_cnt_des">Переподключение</string>
-    <string name="status_image_cnt_des">Статус подключения</string>
+    <string name="status_image_cnt_des">Состояние подключения</string>
     <string name="profile_image_cnt_des">Изображение профиля</string>
     <string name="application_icon_cnt_des">Значок приложения</string>
     <string name="meh_face_cnt_des">Значок разочарованного лица</string>
@@ -94,9 +93,8 @@
     <string name="stop_button_cnt_des">Остановить передачу</string>
     <string name="retry_button_cnt_des">Повторить передачу</string>
     <!--  Other  -->
-    <string name="please_select_download_dir">Скорее всего, вы впервые запустили это приложение.
-        Пожалуйста, выберите каталог, в который вы бы хотели, чтобы Warpinator сохранял файлы.</string>
-    <string name="error_download_dir">Вы должны выбрать каталог для загрузок в настройках</string>
+    <string name="please_select_download_dir">Скорее всего, вы впервые запустили это приложение. Пожалуйста, выберите папку, в который вы бы хотели, чтобы Warpinator сохранял файлы.</string>
+    <string name="error_download_dir">Вы должны выбрать папку для загрузок в настройках</string>
     <string name="error_network_unavailable">Сеть недоступна - попробовать точку доступа?</string>
     <string name="error_service_not_running">Служба не работает</string>
     <string name="cert_not_received">Не удалось получить сертификат от %1$s. Обязательно разрешите трафик UDP (а также TCP) через порт %2$d в удаленном брандмауэре.</string>

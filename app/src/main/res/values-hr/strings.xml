@@ -4,100 +4,100 @@
     <!--  Main Activity  -->
     <string name="title_activity_transfers">Prijenosi</string>
     <string name="send_files">Pošalji datoteke</string>
-    <string name="quit">Zatvori</string>
-    <string name="connection_issues">Problem povezivanja</string>
-    <string name="reannounce">Ponovno najavi</string>
-    <string name="rescan">Pretraži uređaje</string>
+    <string name="quit">Zatvori aplikaciju</string>
+    <string name="connection_issues">Problemi povezivanja</string>
+    <string name="reannounce">Ponovo najavi</string>
+    <string name="rescan">Ponovo traži uređaje</string>
     <string name="about">O Warpinatoru</string>
     <string name="settings">Postavke</string>
     <string name="title_activity_share">Dijeli s</string>
     <string name="available_devices">Dostupni uređaji</string>
     <string name="no_devices_found">Nema dostupnih uređaja</string>
-    <string name="wrong_group_code">Neuspjelo povezivanje: pogrešan kôd grupe</string>
-    <string name="connection_error">Greška povezivanja</string>
-    <string name="not_connected_to_wifi">Niste povezani s bežičnom ili loklanom mrežom. Koristite svoju pristupnu točku ako druge mreže nisu dostupne.
-        Ponovno pokrenite aplikaciju kada se povežete.</string>
-    <string name="changed_network">Mreža je promijenjena - ponovno pokretanje usluge…</string>
+    <string name="wrong_group_code">Neuspjela veza: pogrešan kȏd grupe</string>
+    <string name="connection_error">Greška veze</string>
+    <string name="not_connected_to_wifi">Niste povezani s WiFi ili LAN mrežom. Koristite svoju pristupnu točku ako nijedna od tih mreža nije dostupna. Ponovo pokrenite aplikaciju kad ste povezani.</string>
+    <string name="changed_network">Mreža je promijenjena – usluga se ponovo pokreće …</string>
     <!--  Transfers activity  -->
-    <string name="waiting_for_permission">Čekanje odobrenja…</string>
-    <string name="files_overwritten_warning">(Datoteke mogu biti prebrisane!)</string>
+    <string name="waiting_for_permission">Čeka se odobrenje …</string>
+    <string name="files_overwritten_warning">(Datoteke se mogu prepisati!)</string>
     <string name="remaining">preostalo</string>
     <string name="open_failed">Neuspjelo otvaranje primljene datoteke</string>
     <string name="a_few_seconds">nekoliko sekundi</string>
     <string name="service_unavailable">, usluga je nedostupna</string>
     <string name="errors_during_transfer">Greške pri prijenosu:</string>
-    <string name="dont_close_when_sharing">Zatvaranje ove aktvnosti dok se dijeli može prouzrokovati neuspješan prijenos</string>
+    <string name="dont_close_when_sharing">Zatvaranje ove aktvnosti tijekom dijeljenja može prouzročiti neuspješan prijenos</string>
     <string name="files_being_sent">Poslane datoteke:</string>
     <!--  About activity  -->
-    <string name="version">Inačica: %1$s</string>
-    <string name="about_description">Ovo je neslužbeni port Warpinatora. \nŠaljite i primajte datoteke putem lokalne mreže.</string>
-    <string name="warranty_html">Ovaj program je softver otvorenog kôda licenciran pod uvjetima &lt;a href=\"https://www.gnu.org/licenses/gpl-3.0.html\"&gt;GNU Opće Javne Licence&lt;/a&gt;.&lt;br&gt; Izvorni kôd možete preuzeti s &lt;a href=\"https://github.com/slowscript/warpinator-android/\"&gt;GitHuba&lt;/a&gt;.&lt;br&gt; &lt;br&gt; Ovaj program dolazi bez bilo kakvog jamstva.&lt;br&gt;Pogledajte uvjete licence za više pojedinosti.</string>
+    <string name="version">Verzija %1$s</string>
+    <string name="about_description">Ovo je neslužbeni priključak Warpinatora.
+\nŠaljite i primajte datoteke putem lokalne mreže.</string>
+    <string name="warranty_html">Ovaj program je softver otvorenog koda licenciran pod uvjetima &lt;a href=\"https://www.gnu.org/licenses/gpl-3.0.html\"&gt;GNU Opće Javne Licence&lt;/a&gt;.&lt;br&gt; Izvorni kȏd možete preuzeti s &lt;a href=\"https://github.com/slowscript/warpinator-android/\"&gt;GitHuba&lt;/a&gt;.&lt;br&gt; &lt;br&gt; Ovaj se program nudi bez jamstva.&lt;br&gt;Pogledajte uvjete licence za više pojedinosti.</string>
     <!--  Share activity  -->
     <string name="devices_to_share_with">Uređaji za dijeljenje</string>
     <string name="no_share_devices">Nema dostupnih uređaja za dijeljenje</string>
     <string name="unsupported_intent">Primljena je nepodržana namjera radnje</string>
-    <string name="nothing_to_share">Nema ništa za dijeljenje</string>
+    <string name="nothing_to_share">Nema ničega za dijeljenje</string>
     <!--  Setting  -->
     <string name="identity_settings_category">Identitet</string>
     <string name="transfer_setting_category">Postavke prijenosa</string>
     <string name="network_setting_category">Mreža</string>
     <string name="aspect_setting_category">Izgled</string>
-    <string name="display_settings_title">Prikazani naziv</string>
+    <string name="display_settings_title">Prikazano ime</string>
     <string name="picture_settings_title">Slika profila</string>
     <string name="download_dir_settings_title">Direktorij preuzimanja</string>
     <string name="notification_settings_title">Prikaži obavijesti o dolaznim datotekama</string>
-    <string name="overwrite_settings_title">Dopusti prebrisivanje</string>
+    <string name="overwrite_settings_title">Dopusti prepisivanje</string>
     <string name="accept_settings_title">Automatski prihvati prijenose</string>
     <string name="accept_setting_summary_on">Prijenosi će se prihvatiti automatski</string>
-    <string name="accept_setting_summary_off">Svaki prijenos treba prihvatiti pojedinačno</string>
-    <string name="background_settings_title">Pokreni u pozadini</string>
+    <string name="accept_setting_summary_off">Morate prihvatiti svaki prijenos</string>
+    <string name="background_settings_title">Pokreći u pozadini</string>
     <string name="boot_settings_title">Pokreni automatski</string>
     <string name="stop_svc_when_leaving">Zaustavi uslugu nakon zatvaranja aplikacije</string>
-    <string name="export_log_settings_tile">Zapiši otklanjanje greške u datoteku zapisa</string>
-    <string name="group_code_settings_title">Kôd grupe</string>
-    <string name="port_settings_title">Ulaz</string>
+    <string name="export_log_settings_tile">Zapiši zapis otklanjanje grešaka u datoteku</string>
+    <string name="group_code_settings_title">Kȏd grupe</string>
+    <string name="port_settings_title">Priključak za prijenose</string>
     <string name="theme_settings_title">Teme</string>
     <string name="notification_settings_summary">Ovo može biti obuhvaćeno postavkama Android obavijesti</string>
-    <string name="port_range_warning">Broj ulaza mora biti između 1024 i 65535</string>
-    <string name="requires_restart_warning">Promjena ove postavke zahtijeva ponovno pokretanje aplikacije</string>
-    <string name="required_dialog_not_found">Vaš proizvođač telefona nije implementirao potreban dijalog. Ovo će raditi u budućim izdanjima.</string>
-    <string name="overwrite_settings_summary_on">Dolazne datoteke s postojećim nazivima će prebrisati već postojeće datoteke</string>
-    <string name="overwrite_settings_summary_off">Dolazne datoteke s postojećim nazivima će biti preimnovane</string>
+    <string name="port_range_warning">Broj priključka mora biti između 1024 i 65535</string>
+    <string name="requires_restart_warning">Mijenjanje ove postavke zahtijeva ponovno pokretanje aplikacije</string>
+    <string name="required_dialog_not_found">Vaš proizvođač telefona nije implementirao potreban dijalog. Ovo će se ispraviti u budućem izdanju.</string>
+    <string name="overwrite_settings_summary_on">Dolazne datoteke s već postojećim imenima će prepisati postojeće datoteke</string>
+    <string name="overwrite_settings_summary_off">Dolazne datoteke s imenom koje već postoji će se preimnovati</string>
     <string name="custom">Prilagođeno</string>
     <string name="unsupported_provider">Odabrali ste nepodržanog pružatelja sadržaja. Odaberite direktorij u vašoj unutarnjoj pohrani.</string>
     <!--  Theme settings -->
-    <string name="sysDefault">Koristi zadanu sustavom</string>
-    <string name="lightTheme">Svjetla tema</string>
+    <string name="sysDefault">Koristi standard sustava</string>
+    <string name="lightTheme">Svijetla tema</string>
     <string name="darkTheme">Tamna tema</string>
     <!--  Notification  -->
     <string name="warpinator_notification_title">Warpinator usluga je pokrenuta</string>
-    <string name="warpinator_notification_button">Zaustavi uslugu</string>
+    <string name="warpinator_notification_button">Prekini uslugu</string>
     <string name="transfers_complete">Svi prijenosi su završeni</string>
     <string name="transfer_notification">%1$.1f%%, %2$d prijenosa, %3$s/s</string>
     <string name="incoming_transfer">Dolazni prijenos od %s</string>
-    <string name="num_files">%d datoteka</string>
+    <string name="num_files">%d datoteke/a</string>
     <string name="service_running">Usluga je pokrenuta</string>
     <string name="notification_channel_description">Obavijest trajne usluge</string>
     <string name="incoming_transfer_channel">Dolazni prijenos</string>
     <string name="transfer_progress_channel">Napredak prijenosa</string>
     <!--  Content descriptions  -->
-    <string name="reconnect_button_cnt_des">Ponovno poveži</string>
+    <string name="reconnect_button_cnt_des">Ponovo poveži</string>
     <string name="status_image_cnt_des">Stanje povezivanja</string>
     <string name="profile_image_cnt_des">Slika profila</string>
     <string name="application_icon_cnt_des">Ikona aplikacije</string>
     <string name="meh_face_cnt_des">Ikona razočaranog lica</string>
     <string name="selected_picture_cnt_des">Odabrana slika</string>
-    <string name="decline_button_cnt_des">Uskrati prijenos</string>
+    <string name="decline_button_cnt_des">Odbij prijenos</string>
     <string name="accept_button_cnt_des">Prihvati prijenos</string>
-    <string name="stop_button_cnt_des">Zaustavi prijenos</string>
-    <string name="retry_button_cnt_des">Ponovno pokreni prijenos</string>
+    <string name="stop_button_cnt_des">Prekini prijenos</string>
+    <string name="retry_button_cnt_des">Ponovo pokreni prijenos</string>
     <!--  Other  -->
     <string name="please_select_download_dir">Vjerojatno prvi puta pokrećete ovu aplikaciju.
         Odaberite direktorij u koji će Warpinator spremati datoteke.</string>
-    <string name="error_download_dir">Direktorij preuzimanja možete odabrati i u postavkama</string>
-    <string name="error_network_unavailable">Mreža je nedostupna - pokušajte s pristupnom točkom?</string>
+    <string name="error_download_dir">Direktorij preuzimanja morate odabrati u postavkama</string>
+    <string name="error_network_unavailable">Mreža je nedostupna – pokušati s pristupnom točkom\?</string>
     <string name="error_service_not_running">Usluga nije pokrenuta</string>
-    <string name="cert_not_received">Neuspjelo preuzimanje vjerodajnice s %1$s. Provjerite imate li dopušteni UDP (kao i TCP) promet na ulazu %2$d u udaljenom vatrozidu.</string>
+    <string name="cert_not_received">Neuspjelo preuzimanje certifikata od %1$s. Dozvolite UDP (kao i TCP) promet na priključku %2$d u udaljenom vatrozidu.</string>
     <string-array name="connected_states">
         <item>Povezano</item>
         <item>Nepovezano</item>
@@ -118,10 +118,13 @@
         <item>Završeno</item>
         <item>Završeno s greškama (dodirnite za prikaz)</item>
     </string-array>
-    <string name="stop_svc_when_leaving_summary_off">Nakon pokretanja, usluga će biti pokrenuta sve dok se ručno ne zaustavi</string>
-    <string name="stop_svc_when_leaving_summary_on">Usluga će se automatski zaustaviti kada je uklonjena iz nedavnih ili nakon određenog razdoblja neaktivnosti</string>
-    <string name="clear_transfers">Izbriši gotove prijenose</string>
+    <string name="stop_svc_when_leaving_summary_off">Nakon pokretanja, usluga će raditi sve dok se ručno ne zaustavi</string>
+    <string name="stop_svc_when_leaving_summary_on">Usluga će automatski prekinuti rad kad se ukloni iz nedavnih ili nakon razdoblja neaktivnosti</string>
+    <string name="clear_transfers">Ukloni završene prijenose</string>
     <string name="send_folder_toast">Odaberi mapu za slanje</string>
-    <string name="reset_cnt_des">Resetiraj na standardnu vrijednost</string>
-    <string name="warning_lastmod">Nestandarne lokacije ne podržavaju čuvanje zadnjih promijenjenih vremenskih oznaka. Pomoću gumba za resetiranje mogu se vratiti na standardne lokacije.</string>
+    <string name="reset_cnt_des">Vrati izvornu vrijednost</string>
+    <string name="warning_lastmod">Ne standardne lokacije ne podržavaju očuvanje zadnjih promijenjenih vremenskih oznaka. Standardne lokacije možete vratiti pomoću gumba za resetiranje.</string>
+    <string name="auth_port_settings_title">Priključak za registraciju</string>
+    <string name="devices_outside_group">Uređaji izvan vaše grupe: %1$d</string>
+    <string name="compression_settings_title">Pokušaj koristiti komprimiranje</string>
 </resources>

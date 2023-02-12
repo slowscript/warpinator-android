@@ -54,7 +54,7 @@ Uruchom ponownie aplikację po połączeniu.</string>
     <string name="boot_settings_title">Uruchamiaj automatycznie</string>
     <string name="export_log_settings_tile">Zapisz logi debugowania do pliku</string>
     <string name="group_code_settings_title">Kod grupy</string>
-    <string name="port_settings_title">Port</string>
+    <string name="port_settings_title">Port do transferów</string>
     <string name="theme_settings_title">Motyw aplikacji</string>
     <string name="notification_settings_summary">Może zależeć od ustawień powiadomień Androida</string>
     <string name="port_range_warning">Numer portu musi być pomiędzy 1024 a 65535</string>
@@ -124,4 +124,7 @@ Uruchom ponownie aplikację po połączeniu.</string>
     <string name="warning_lastmod">Lokalizacje inne niż domyślne nie obsługują zachowywania sygnatur czasowych ostatniej modyfikacji. Możesz przywrócić ustawienia domyślne za pomocą przycisku resetowania.</string>
     <string name="reset_cnt_des">Przywróć wartość domyślną</string>
     <string name="clear_transfers">Wyczyść zakończone transfery</string>
+    <string name="compression_settings_title">Spróbuj użyć kompresji</string>
+    <string name="auth_port_settings_title">Port do rejestracji</string>
+    <string name="devices_outside_group">Urządzenia spoza grupy: %1$d</string>
 </resources>

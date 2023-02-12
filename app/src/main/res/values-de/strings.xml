@@ -51,7 +51,7 @@
     <string name="boot_settings_title">Automatisch starten</string>
     <string name="export_log_settings_tile">Debug-Protokoll in Datei schreiben</string>
     <string name="group_code_settings_title">Gruppenschlüssel</string>
-    <string name="port_settings_title">Port</string>
+    <string name="port_settings_title">Port für Übertragungen</string>
     <string name="theme_settings_title">Thema</string>
     <string name="notification_settings_summary">Dies wird möglicherweise durch Androids Benachrichtigungseinstellungen beeinflusst</string>
     <string name="port_range_warning">Port muss zwischen 1024 und 65535 liegen</string>
@@ -124,4 +124,10 @@
     <string name="send_folder_toast">Ordner zum Senden auswählen</string>
     <string name="reset_cnt_des">Auf Standardwert zurücksetzen</string>
     <string name="clear_transfers">Erledigte Übertragungen löschen</string>
+    <string name="stop_svc_when_leaving_summary_on">Der Dienst wird automatisch gestoppt, wenn er aus den Wiedervorlagen gelöscht wird oder nach einer gewissen Zeit der Inaktivität</string>
+    <string name="required_dialog_not_found">Der Hersteller Ihres Telefons hat den erforderlichen Dialog nicht implementiert. Dies wird in einer zukünftigen Version behoben werden.</string>
+    <string name="warning_lastmod">Nicht standardmäßige Speicherorte unterstützen nicht die Beibehaltung von Zeitstempeln der letzten Änderung. Mit der Schaltfläche Zurücksetzen können Sie zu den Standardeinstellungen zurückkehren.</string>
+    <string name="auth_port_settings_title">Port für die Registrierung</string>
+    <string name="compression_settings_title">Nutzung von Kompression versuchen</string>
+    <string name="devices_outside_group">Geräte außerhalb Ihrer Gruppe: %1$d</string>
 </resources>

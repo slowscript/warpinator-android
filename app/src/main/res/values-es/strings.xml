@@ -52,7 +52,7 @@
     <string name="boot_settings_title">Iniciar automáticamente</string>
     <string name="export_log_settings_tile">Registrar depuración en archivo</string>
     <string name="group_code_settings_title">Código de grupo</string>
-    <string name="port_settings_title">Puerto</string>
+    <string name="port_settings_title">Puerto para transferencias</string>
     <string name="theme_settings_title">Tema</string>
     <string name="notification_settings_summary">Esto puede verse afectado por la configuración de notificaciones de Android</string>
     <string name="port_range_warning">El número de puerto debe estar entre 1024 y 65535</string>
@@ -122,4 +122,7 @@
     <string name="stop_svc_when_leaving_summary_off">Una vez iniciado, el servicio seguirá funcionando hasta que se detenga manualmente</string>
     <string name="warning_lastmod">Ubicaciones no predeterminadas no permiten conservar marcas de tiempo modificadas recientemente. Puedes volver a los valores por defecto con el botón de reinicio.</string>
     <string name="reset_cnt_des">Restablecer el valor predeterminado</string>
+    <string name="compression_settings_title">Pruebe a usar la compresión</string>
+    <string name="auth_port_settings_title">Puerto para el registro</string>
+    <string name="devices_outside_group">Dispositivos fuera del grupo: %1$d</string>
 </resources>

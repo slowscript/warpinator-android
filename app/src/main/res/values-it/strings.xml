@@ -20,7 +20,7 @@
     <string name="changed_network">Rete cambiata - riavvio del servizio…</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">In attesa di autorizzazione…</string>
-    <string name="files_overwritten_warning">(I file potrebbero essere sovrascritti!)</string>
+    <string name="files_overwritten_warning">(I file potrebbero essere sostituiti!)</string>
     <string name="remaining">restante</string>
     <string name="open_failed">Impossibile aprire il file ricevuto</string>
     <string name="a_few_seconds">pochi secondi</string>
@@ -46,7 +46,7 @@
     <string name="picture_settings_title">Foto profilo</string>
     <string name="download_dir_settings_title">Cartella dei download</string>
     <string name="notification_settings_title">Mostra notifiche sui file in arrivo</string>
-    <string name="overwrite_settings_title">Consenti sovrascrittura</string>
+    <string name="overwrite_settings_title">Consenti sostituzione</string>
     <string name="accept_settings_title">Accetta automaticamente i trasferimenti</string>
     <string name="accept_setting_summary_on">I trasferimenti verranno accettati automaticamente</string>
     <string name="accept_setting_summary_off">Ogni trasferimento deve essere accettato da te</string>
@@ -57,7 +57,7 @@
     <string name="stop_svc_when_leaving_summary_off">Una volta avviato, il servizio continuerà a funzionare fino all\'arresto manuale</string>
     <string name="export_log_settings_tile">Scrivere il registro di debug su file</string>
     <string name="group_code_settings_title">Codice gruppo</string>
-    <string name="port_settings_title">Porta</string>
+    <string name="port_settings_title">Porta per trasferimenti</string>
     <string name="theme_settings_title">Tema</string>
     <string name="notification_settings_summary">Ciò potrebbe essere influenzato dalle impostazioni di notifica di Android</string>
     <string name="port_range_warning">Il numero della porta deve essere compreso tra 1024 e 65535</string>
@@ -124,4 +124,7 @@
     <string name="send_folder_toast">Seleziona una cartella da inviare</string>
     <string name="reset_cnt_des">Ripristina il valore predefinito</string>
     <string name="clear_transfers">Cancella i trasferimenti completati</string>
+    <string name="compression_settings_title">Usa la compressione</string>
+    <string name="auth_port_settings_title">Porta per iscrizione</string>
+    <string name="devices_outside_group">Dispositivi esterni al tuo gruppo: %1$d</string>
 </resources>

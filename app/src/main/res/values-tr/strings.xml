@@ -54,7 +54,7 @@
     <string name="boot_settings_title">Otomatik başlat</string>
     <string name="export_log_settings_tile">Dosyaya hata ayıklama günlüğü yaz</string>
     <string name="group_code_settings_title">Grup kodu</string>
-    <string name="port_settings_title">Bağlantı noktası</string>
+    <string name="port_settings_title">Aktarımlar için bağlantı noktası</string>
     <string name="theme_settings_title">Tema</string>
     <string name="notification_settings_summary">Bu, Android\'in bildirim ayarlarından etkilenebilir</string>
     <string name="port_range_warning">Bağlantı noktası numarası 1024 ile 65535 arasında olmalıdır</string>
@@ -124,4 +124,7 @@
     <string name="reset_cnt_des">Öntanımlı değere sıfırla</string>
     <string name="clear_transfers">Biten aktarımları temizle</string>
     <string name="warning_lastmod">Öntanımlı olmayan konumlar, son değiştirilen zaman damgalarının korunmasını desteklemez. Sıfırla düğmesi ile öntanımlıya geri dönebilirsiniz.</string>
+    <string name="auth_port_settings_title">Kayıt için bağlantı noktası</string>
+    <string name="compression_settings_title">Sıkıştırma kullanmayı dene</string>
+    <string name="devices_outside_group">Grubunuzun dışındaki aygıtlar: %1$d</string>
 </resources>

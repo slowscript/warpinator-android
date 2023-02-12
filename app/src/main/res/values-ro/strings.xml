@@ -24,7 +24,7 @@
     <string name="notification_settings_title">Arată notificări la primirea fișierelor</string>
     <string name="background_settings_title">Menține activ</string>
     <string name="group_code_settings_title">Cod de grup</string>
-    <string name="port_settings_title">Port</string>
+    <string name="port_settings_title">Port pentru transferuri</string>
     <string name="theme_settings_title">Aspect</string>
     <string name="notification_settings_summary">Acest lucru poate fi afectat de notificările sistemului Android</string>
     <string name="port_range_warning">Portul trebuie să fie între 1024 și 65535</string>
@@ -111,6 +111,9 @@
     <string name="required_dialog_not_found">Furnizorul telefonului nu a implementat un dialog necesar. Acest lucru va fi rezolvat într-o versiune viitoare.</string>
     <string name="warning_lastmod">Pozițiile care nu sunt prestabilite nu acceptă păstrarea datei ultimei modificări. Se poate reveni la valoarea prestabilită cu ajutorul butonului de restabilire.</string>
     <string name="send_folder_toast">Alege un dosar de trimis</string>
-    <string name="reset_cnt_des">Restabilește la valoarea inițială</string>
+    <string name="reset_cnt_des">Restabilește valoarea inițială</string>
     <string name="clear_transfers">Șterge transferurile terminate</string>
+    <string name="compression_settings_title">Folosește comprimarea</string>
+    <string name="auth_port_settings_title">Port pentru înscriere</string>
+    <string name="devices_outside_group">Aparate din afara grupului tău: %1$d</string>
 </resources>
