@@ -20,6 +20,7 @@ import org.conscrypt.Conscrypt;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.security.Security;
 import java.util.ArrayList;
@@ -339,11 +340,12 @@ public class Server {
                         r.hostname = info.getPropertyString("hostname");
                     if(props.contains("auth-port"))
                         r.authPort = Integer.parseInt(info.getPropertyString("auth-port"));
+                    InetAddress addr = getIPv4Address(info.getInetAddresses());
+                    if (addr != null)
+                        r.address = addr;
+                    r.port = info.getPort();
                     r.serviceAvailable = true;
                     if ((r.status == Remote.RemoteStatus.DISCONNECTED) || (r.status == Remote.RemoteStatus.ERROR)) {
-                        //Update hostname, address, port
-                        r.address = info.getInetAddresses()[0];
-                        r.port = info.getPort();
                         Log.d(TAG, "Reconnecting to " + r.hostname);
                         r.connect();
                     } else r.updateUI();
@@ -351,7 +353,10 @@ public class Server {
                 }
 
                 Remote remote = new Remote();
-                remote.address = info.getInetAddresses()[0];
+                InetAddress addr = getIPv4Address(info.getInetAddresses());
+                if (addr != null)
+                    remote.address = addr;
+                else remote.address = info.getInetAddresses()[0];
                 if(props.contains("hostname"))
                     remote.hostname = info.getPropertyString("hostname");
                 if(props.contains("api-version"))
@@ -395,5 +400,13 @@ public class Server {
         Bitmap bmp = getProfilePicture(profilePicture, svc);
         bmp.compress(Bitmap.CompressFormat.PNG, 90, os);
         return ByteString.copyFrom(os.toByteArray());
+    }
+
+    private InetAddress getIPv4Address(InetAddress[] addresses) {
+        for (InetAddress a : addresses){
+            if (a instanceof Inet4Address)
+                return a;
+        }
+        return null;
     }
 }
