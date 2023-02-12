@@ -67,7 +67,10 @@ public class Remote {
             //Receive certificate
             if (!receiveCertificate()) {
                 status = RemoteStatus.ERROR;
-                errorText = "Couldn't receive certificate - check firewall";
+                if (errorGroupCode)
+                    errorText = MainService.svc.getString(R.string.wrong_group_code);
+                else
+                    errorText = "Couldn't receive certificate - check firewall";
                 updateUI();
                 return;
             }
