@@ -1,16 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--  App Name  -->
     <!--  Main Activity  -->
     <string name="title_activity_transfers">കൈമാറ്റങ്ങൾ</string>
     <string name="send_files">ഫയലുകൾ അയയ്‌ക്കുക</string>
     <string name="quit">ഉപേക്ഷിക്കുക</string>
-    <string name="about">അറിയുക</string>
+    <string name="about">കുറിച്ച്</string>
     <string name="settings">ക്രമീകരണങ്ങൾ</string>
     <string name="title_activity_share">പങ്കിടുക</string>
     <string name="available_devices">ലഭ്യമായ ഉപകരണങ്ങൾ</string>
     <string name="no_devices_found">മറ്റ് ഉപകരണങ്ങളൊന്നും കണ്ടെത്തിയില്ല</string>
-    <string name="wrong_group_code">കണക്ഷൻ പരാജയപ്പെട്ടു: തെറ്റായ ഗ്രൂപ്പ് കോഡ്</string>
-    <string name="connection_error">കണക്ഷൻ തകരാറ്</string>
+    <string name="wrong_group_code">ബന്ധിപ്പിക്കുന്നത് പരാജയപ്പെട്ടു: തെറ്റായ സംഘ സംഖ്യ</string>
     <string name="not_connected_to_wifi">നിങ്ങൾ വൈഫൈ അല്ലെങ്കിൽ ലാനിലേക്ക് കണക്റ്റു ചെയ്‌തിട്ടില്ല. ഒന്നും ലഭ്യമല്ലെങ്കിൽ നിങ്ങളുടെ ഹോട്ട്‌സ്പോട്ട് ഉപയോഗിക്കുക.
          നിങ്ങൾ കണക്റ്റു ചെയ്‌തിരിക്കുമ്പോൾ അപ്ലിക്കേഷൻ പുനരാരംഭിക്കുക.</string>
     <!--  Transfers activity  -->
@@ -25,10 +25,10 @@
     <string name="version">പതിപ്പ്: %1$s</string>
     <string name="about_description">ഇത് വാർ‌പിനേറ്ററിന്റെ അനൗദ്യോഗിക ബഹുരൂപമാണ്. \nപ്രാദേശിക ശൃംഖലയിൽ ഫയലുകൾ അയക്കാം, സ്വീകരിക്കാം.</string>
     <string name="warranty_html">
-        ഈ പ്രോഗ്രാം ഓപ്പൺ സോഴ്‌സ് സോഫ്റ്റ്‌വെയറാണ് under &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html">ഗ്നു ജനറൽ പബ്ലിക് ലൈസൻസ് &lt;/a>.&lt;br>
-        നിങ്ങൾക്ക് എവിടെ നിന്ന് ഉറവിട കോഡ് ലഭിക്കും &lt;a href="https://github.com/slowscript/warpinator-android/">GitHub&lt;/a>.&lt;br>
-        &lt;br>
-        ഈ പ്രോഗ്രാമിന് യാതൊരു വാറന്റിയുമില്ല.&lt;br>See the terms of the license for more details.</string>
+        ഈ പ്രോഗ്രാം ഓപ്പൺ സോഴ്‌സ് സോഫ്റ്റ്‌വെയറാണ് under &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;ഗ്നു ജനറൽ പബ്ലിക് ലൈസൻസ് &lt;/a&gt;.&lt;br&gt;
+        നിങ്ങൾക്ക് എവിടെ നിന്ന് ഉറവിട കോഡ് ലഭിക്കും &lt;a href="https://github.com/slowscript/warpinator-android/"&gt;GitHub&lt;/a&gt;.&lt;br&gt;
+        &lt;br&gt;
+        ഈ പ്രോഗ്രാമിന് യാതൊരു വാറന്റിയുമില്ല.&lt;br&gt;See the terms of the license for more details.</string>
     <!--  Share activity  -->
     <string name="devices_to_share_with">പങ്കിടാനുള്ള ഉപകരണങ്ങൾ</string>
     <string name="no_share_devices">പങ്കിടാൻ ലഭ്യമായ ഉപകരണങ്ങളൊന്നുമില്ല</string>
@@ -50,7 +50,7 @@
     <string name="background_settings_title">പശ്ചാത്തലത്തിൽ പ്രവർത്തിപ്പിക്കുക</string>
     <string name="boot_settings_title">യാന്ത്രികമായി ആരംഭിക്കുക</string>
     <string name="group_code_settings_title">ഗ്രൂപ്പ് കോഡ്</string>
-    <string name="port_settings_title">പോർട്ട്</string>
+    <string name="port_settings_title">കൈമാറ്റങ്ങൾക്കുള്ള പോർട്ട്</string>
     <string name="theme_settings_title">ഉടുപ്പ് </string>
     <string name="notification_settings_summary">ഇത് ആൻഡ്രോയിഡ് ന്റെ അറിയിപ്പ് ക്രമീകരണങ്ങളെ ബാധിച്ചേക്കാം</string>
     <string name="port_range_warning">പോർട്ട് നമ്പർ 1024 നും 65535 നും ഇടയിലായിരിക്കണം</string>
@@ -98,4 +98,26 @@
         <item>പൂർത്തിയായി</item>
         <item>പിശകുകളോടെ പൂർത്തിയാക്കി (കാണാൻ തൊടുക))</item>
     </string-array>
+    <string name="reannounce">വീണ്ടും പ്രഖ്യാപിക്കുക</string>
+    <string name="changed_network">നെറ്റ്‌വർക്ക് മാറി - സേവനം പുനരാരംഭിക്കുന്നു…</string>
+    <string name="retry_button_cnt_des">കൈമാറ്റം വീണ്ടും ശ്രമിക്കുക</string>
+    <string name="stop_button_cnt_des">കൈമാറ്റം നിർത്തുക</string>
+    <string name="devices_outside_group">നിങ്ങളുടെ സംഘത്തിന് പുറത്തുള്ള ഉപകരണങ്ങൾ: %1$d</string>
+    <string name="stop_svc_when_leaving_summary_off">ഒരിക്കൽ ആരംഭിച്ചാൽ, സ്വമേധയാ നിർത്തുന്നത് വരെ സേവനം തുടരും</string>
+    <string name="stop_svc_when_leaving">പ്രയോഗം വിട്ടതിന് ശേഷം സേവനം നിർത്തുക</string>
+    <string name="files_being_sent">അയയ്‌ക്കുന്ന ഫയലുകൾ:</string>
+    <string name="compression_settings_title">കംപ്രഷൻ ഉപയോഗിക്കാൻ ശ്രമിക്കുക</string>
+    <string name="clear_transfers">പൂർത്തിയായ കൈമാറ്റങ്ങൾ മായ്‌ക്കുക</string>
+    <string name="error_network_unavailable">നെറ്റ്‌വർക്ക് ലഭ്യമല്ല - ഹോട്ട്‌സ്‌പോട്ട് പരീക്ഷിക്കണോ\?</string>
+    <string name="meh_face_cnt_des">നിരാശാജനകമായ മുഖത്തിന്റെ ബിംബം</string>
+    <string name="required_dialog_not_found">നിങ്ങളുടെ ഫോണിന്റെ വെണ്ടർ ആവശ്യമായ ഡയലോഗ് നടപ്പിലാക്കിയില്ല. ഭാവി റിലീസിൽ ഇത് പ്രവർത്തിക്കും.</string>
+    <string name="stop_svc_when_leaving_summary_on">സമീപകാലങ്ങളിൽ നിന്ന് മായ്‌ക്കുമ്പോൾ അല്ലെങ്കിൽ ഒരു നിശ്ചിത സമയത്തിന് ശേഷം നിഷ്‌ക്രിയത്വത്തിന് ശേഷം സേവനം സ്വയമേവ നിർത്തപ്പെടും</string>
+    <string name="profile_image_cnt_des">രൂപരേഖ ചരിത്രം</string>
+    <string name="error_service_not_running">സേവനം പ്രവർത്തിക്കുന്നില്ല</string>
+    <string name="application_icon_cnt_des">പ്രയോഗ ബിംബം</string>
+    <string name="reset_cnt_des">സ്ഥിര മൂല്യത്തിലേക്ക് പുനഃസജ്ജമാക്കുക</string>
+    <string name="accept_button_cnt_des">കൈമാറ്റം സ്വീകരിക്കുക</string>
+    <string name="decline_button_cnt_des">കൈമാറ്റം നിരസിക്കുക</string>
+    <string name="selected_picture_cnt_des">തിരഞ്ഞെടുത്ത ചിത്രം</string>
+    <string name="send_folder_toast">അയയ്ക്കാൻ ഒരു ഫോൾഡർ തിരഞ്ഞെടുക്കുക</string>
 </resources>
