@@ -340,9 +340,10 @@ public class Transfer {
             LocalBroadcasts.updateTransfers(svc, remoteUUID);
         else if (Server.current.notifyIncoming && !autoAccept) {  //Notification
             Intent intent = new Intent(svc, TransfersActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("remote", remoteUUID);
             int immutable = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0;
-            PendingIntent pendingIntent = PendingIntent.getActivity(svc, 0, intent, immutable);
+            PendingIntent pendingIntent = PendingIntent.getActivity(svc, svc.notifId, intent, immutable);
             Uri notifSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             Notification notification = new NotificationCompat.Builder(svc, MainService.CHANNEL_INCOMING)
                     .setContentTitle(svc.getString(R.string.incoming_transfer, MainService.remotes.get(remoteUUID).displayName))
