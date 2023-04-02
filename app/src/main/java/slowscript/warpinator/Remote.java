@@ -79,7 +79,8 @@ public class Remote {
             //Connect
             try {
                 OkHttpChannelBuilder builder = OkHttpChannelBuilder.forAddress(address.getHostAddress(), port)
-                        .sslSocketFactory(Authenticator.createSSLSocketFactory(uuid));
+                        .sslSocketFactory(Authenticator.createSSLSocketFactory(uuid))
+                        .flowControlWindow(1280*1024);
                 if (api >= 2) {
                     builder.keepAliveWithoutCalls(true)
                             .keepAliveTime(10, TimeUnit.SECONDS)
