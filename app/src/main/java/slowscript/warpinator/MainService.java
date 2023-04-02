@@ -334,7 +334,7 @@ public class MainService extends Service {
             notifBuilder.setOngoing(false);
             scheduleAutoStop();
         }
-        if (runningTransfers > 0 || TransfersActivity.topmostRemote != null)
+        if (runningTransfers > 0 || TransfersActivity.topmostRemote == null)
             notificationMgr.notify(PROGRESS_NOTIFICATION_ID, notifBuilder.build());
         else notificationMgr.cancel(PROGRESS_NOTIFICATION_ID);
     }

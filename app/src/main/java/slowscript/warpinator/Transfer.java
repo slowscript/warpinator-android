@@ -47,6 +47,7 @@ public class Transfer {
 
     private static final String TAG = "TRANSFER";
     private static final int CHUNK_SIZE = 1024 * 512; //512 kB
+    private static final long UI_UPDATE_LIMIT = 250;
 
     private final AtomicReference<Status> status = new AtomicReference<>();
     public Direction direction;
@@ -77,6 +78,7 @@ public class Transfer {
     public long bytesPerSecond;
     public long actualStartTime;
     long lastMillis = 0;
+    long lastUiUpdate = 0;
 
     // -- COMMON --
     public void stop(boolean error) {
@@ -107,6 +109,11 @@ public class Transfer {
     }
 
     void updateUI() {
+        long now = System.currentTimeMillis();
+        if (getStatus() == Status.TRANSFERRING && (now - lastUiUpdate) < UI_UPDATE_LIMIT)
+            return;
+
+        lastUiUpdate = now;
         LocalBroadcasts.updateTransfer(svc, remoteUUID, privId);
         //Update notification
         svc.updateProgress();
@@ -280,14 +287,14 @@ public class Transfer {
                         updateUI();
                     } catch (FileNotFoundException e) {
                         observer.onError(new StatusException(io.grpc.Status.NOT_FOUND));
-                        errors.add(e.getLocalizedMessage());
+                        errors.add("Not found: " + e.getMessage());
                         setStatus(Status.FAILED);
                         updateUI();
                         return;
                     } catch (Exception e) {
                         Log.e(TAG, "Error sending files", e);
                         setStatus(Status.FAILED);
-                        errors.add(e.getLocalizedMessage());
+                        errors.add("Unknown error: " + e.getMessage());
                         updateUI();
                         observer.onError(e);
                         return;
