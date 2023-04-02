@@ -88,6 +88,10 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
             return;
         }
         Log.i(TAG, "Receiving transfer from " + r.userName);
+        if (r.errorGroupCode) {
+            Log.w(TAG, "Sending user has wrong group code, transfer ignored");
+            return;
+        }
 
         Transfer t = new Transfer();
         t.direction = Transfer.Direction.RECEIVE;
