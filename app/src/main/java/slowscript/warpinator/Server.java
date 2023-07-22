@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.core.content.res.ResourcesCompat;
 
+import com.google.common.net.InetAddresses;
 import com.google.protobuf.ByteString;
 
 import org.conscrypt.Conscrypt;
@@ -46,8 +47,12 @@ import javax.jmdns.impl.constants.DNSRecordType;
 import javax.jmdns.impl.tasks.resolver.ServiceResolver;
 import javax.jmdns.impl.tasks.state.Renewer;
 
+import io.grpc.ManagedChannel;
+import io.grpc.Status;
+import io.grpc.StatusRuntimeException;
 import io.grpc.netty.GrpcSslContexts;
 import io.grpc.netty.NettyServerBuilder;
+import io.grpc.okhttp.OkHttpChannelBuilder;
 import io.netty.handler.ssl.SslContextBuilder;
 
 public class Server {
@@ -240,6 +245,51 @@ public class Server {
                 .setApiVersion(apiVersion)
                 .setAuthPort(authPort)
                 .build();
+    }
+
+    void registerWithHost(String host) {
+        new Thread(() -> {
+            Log.d(TAG, "Registering with host " + host);
+            try {
+                ManagedChannel channel = OkHttpChannelBuilder.forTarget(host).usePlaintext().build();
+                WarpProto.ServiceRegistration resp = WarpRegistrationGrpc.newBlockingStub(channel)
+                        .registerService(getServiceRegistrationMsg());
+                Log.d(TAG, "registerWithHost: registration sent");
+                int sep = host.lastIndexOf(':');
+                // Use ip and authPort as specified by user
+                String IP = host.substring(0,sep);
+                int aport = Integer.parseInt(host.substring(sep+1));
+                Remote r = MainService.remotes.get(resp.getServiceId());
+                boolean newRemote = r == null;
+                if (newRemote) {
+                    r = new Remote();
+                    r.uuid = resp.getServiceId();
+                } else if (r.status == Remote.RemoteStatus.CONNECTED) {
+                    Log.w(TAG, "registerWithHost: remote already connected");
+                    LocalBroadcasts.displayToast(svc, "Device already connected", Toast.LENGTH_SHORT);
+                    return;
+                }
+                r.address = InetAddresses.forString(IP);
+                r.authPort = aport;
+                r.updateFromServiceRegistration(resp);
+                if (newRemote) {
+                    addRemote(r);
+                    Log.d(TAG, "registerWithHost: remote added");
+                } else {
+                    if (r.status == Remote.RemoteStatus.DISCONNECTED || r.status == Remote.RemoteStatus.ERROR)
+                        r.connect();
+                    else r.updateUI();
+                }
+            } catch (Exception e) {
+                if (e instanceof StatusRuntimeException && ((StatusRuntimeException)e).getStatus() == Status.Code.UNIMPLEMENTED.toStatus()) {
+                    Log.e(TAG, "Host " + host + " does not support manual connect -- " + e);
+                    LocalBroadcasts.displayToast(svc, "Host " + host + " does not support manual connect", Toast.LENGTH_LONG);
+                } else {
+                    Log.e(TAG, "Failed to connect to " + host, e);
+                    LocalBroadcasts.displayToast(svc, "Failed to connect to " + host + " - " + e, Toast.LENGTH_LONG);
+                }
+            }
+        }).start();
     }
 
     void reannounce() {

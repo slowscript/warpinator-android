@@ -7,6 +7,7 @@
     <string name="send_files">Send files</string>
     <string name="quit">Quit</string>
     <string name="connection_issues">Connection issues</string>
+    <string name="manual_connection">Manual connection</string>
     <string name="reannounce">Reannounce</string>
     <string name="rescan">Rescan for devices</string>
     <string name="about">About</string>
@@ -112,6 +113,8 @@
     <string name="error_service_not_running">Service not running</string>
     <string name="cert_not_received">Failed to receive certificate from %1$s. Make sure to allow UDP (as well as TCP) traffic on port %2$d in remote\'s firewall.</string>
     <string name="clear_transfers">Clear finished transfers</string>
+    <string name="manual_connect_text">Scan the QR code above with a camera app and open the link or use the following address to initiate the connection from the other device:</string>
+    <string name="initiate_connection">Initiate connection</string>
     <string-array name="connected_states">
         <item>Connected</item>
         <item>Disconnected</item>

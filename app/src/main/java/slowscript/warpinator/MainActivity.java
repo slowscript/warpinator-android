@@ -14,15 +14,20 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -138,6 +143,17 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         int itemID = item.getItemId();
         if (itemID == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
+        } else if (itemID == R.id.manual_connect) {
+            LayoutInflater inflater = LayoutInflater.from(this);
+            View v = inflater.inflate(R.layout.dialog_manual_connect, null);
+            AlertDialog dialog = new MaterialAlertDialogBuilder(this).setView(v)
+                    .setPositiveButton(R.string.initiate_connection, (o,w) -> initiateConnection())
+                    .setNeutralButton(android.R.string.cancel, null)
+                    .create();
+            String host = MainService.svc.lastIP + ":" + Server.current.authPort;
+            ((TextView)v.findViewById(R.id.txtHost)).setText(host);
+            ((ImageView)v.findViewById(R.id.imgQR)).setImageBitmap(Utils.getQRCodeBitmap(host));
+            dialog.show();
         } else if (itemID == R.id.conn_issues) {
             Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
             startActivity(helpIntent);
@@ -159,6 +175,23 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    void initiateConnection() {
+        FrameLayout layout = new FrameLayout(this);
+        layout.setPadding(16,16,16,16);
+        EditText editText = new EditText(this);
+        editText.setSingleLine();
+        layout.addView(editText);
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Enter IP and port")
+                .setView(layout)
+                .setPositiveButton(android.R.string.ok, (a,b)->{
+                    String host = editText.getText().toString();
+                    Log.d(TAG, "initiateConnection: " + host);
+                    Server.current.registerWithHost(host);
+                })
+                .show();
     }
 
     private void updateRemoteList() {

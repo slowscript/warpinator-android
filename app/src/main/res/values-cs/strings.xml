@@ -4,6 +4,7 @@
     <string name="send_files">Poslat soubory</string>
     <string name="quit">Ukončit</string>
     <string name="about">O aplikaci</string>
+    <string name="manual_connection">Ruční spojení</string>
     <string name="reannounce">Znovu se ohlásit</string>
     <string name="rescan">Znovu vyhledat zařízení</string>
     <string name="settings">Nastavení</string>
@@ -121,4 +122,6 @@
     <string name="warning_lastmod">Jiné než výchozí umístění nepodporují zachování časové známky poslední změny. Výchozí vrátíte tlačítkem reset.</string>
     <string name="reset_cnt_des">Vrátit výchozí hodnotu</string>
     <string name="clear_transfers">Odstranit ukončené přenosy</string>
+    <string name="manual_connect_text">Naskenujte QR kód pomocí libovolné aplikace a otevřete odkaz nebo použijte následující adresu:</string>
+    <string name="initiate_connection">Navázat spojení</string>
 </resources>

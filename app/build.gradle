@@ -57,6 +57,7 @@ dependencies {
     implementation 'com.google.guava:guava:31.1-android' //This was included by gRPC anyway, so why not use it
     implementation 'org.jmdns:jmdns:3.5.8'
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
+    implementation 'com.google.zxing:core:3.3.0'
 }
 
 protobuf {
