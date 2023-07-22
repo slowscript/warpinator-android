@@ -116,6 +116,16 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+            Log.d(TAG, "recv action " + intent.getAction() + " -- " + intent.getData());
+            String host = intent.getData().getAuthority();
+            Server.current.registerWithHost(host);
+        }
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
