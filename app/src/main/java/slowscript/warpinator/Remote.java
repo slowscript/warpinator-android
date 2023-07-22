@@ -47,6 +47,7 @@ public class Remote {
     public Bitmap picture;
     public RemoteStatus status;
     public boolean serviceAvailable;
+    public boolean staticService = false;
 
     //Error flags
     public boolean errorGroupCode = false; //Shown once by RemotesAdapter or TransfersActivity
@@ -184,6 +185,16 @@ public class Remote {
 
     public boolean isFavorite() {
         return Server.current.favorites.contains(uuid);
+    }
+
+    // This does not update uuid, ip and authPort
+    void updateFromServiceRegistration(WarpProto.ServiceRegistration reg) {
+        hostname = reg.getHostname();
+        api = reg.getApiVersion();
+        port = reg.getPort();
+        serviceName = reg.getServiceId();
+        //r.serviceAvailable = true;
+        staticService = true;
     }
 
     public Transfer findTransfer(long timestamp) {

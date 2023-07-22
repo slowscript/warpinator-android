@@ -3,7 +3,11 @@ package slowscript.warpinator;
 import android.util.Base64;
 import android.util.Log;
 
+import com.google.common.net.InetAddresses;
 import com.google.protobuf.ByteString;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import io.grpc.Status;
 import io.grpc.StatusException;
@@ -184,6 +188,30 @@ class RegistrationService extends WarpRegistrationGrpc.WarpRegistrationImplBase 
         byte[] sendData = Base64.encode(cert, Base64.DEFAULT);
         Log.v("REG_V2", "Sending certificate to " + request.getHostname() + " on " + request.getIp());
         responseObserver.onNext(WarpProto.RegResponse.newBuilder().setLockedCertBytes(ByteString.copyFrom(sendData)).build());
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void registerService(WarpProto.ServiceRegistration req, StreamObserver<WarpProto.ServiceRegistration> responseObserver) {
+        Remote r = MainService.remotes.get(req.getServiceId());
+        if (r != null) {
+            if (r.status != Remote.RemoteStatus.CONNECTED) {
+                r.address = InetAddresses.forString(req.getIp());
+                r.authPort = req.getAuthPort();
+                r.updateFromServiceRegistration(req);
+                if (r.status == Remote.RemoteStatus.DISCONNECTED || r.status == Remote.RemoteStatus.ERROR)
+                    r.connect();
+                else r.updateUI();
+            } else Log.w("REG_V2", "Attempted registration from already connected remote");
+        } else {
+            r = new Remote();
+            r.uuid = req.getServiceId();
+            r.address = InetAddresses.forString(req.getIp());
+            r.authPort = req.getAuthPort();
+            r.updateFromServiceRegistration(req);
+            Server.current.addRemote(r);
+        }
+        responseObserver.onNext(Server.current.getServiceRegistrationMsg());
         responseObserver.onCompleted();
     }
 }

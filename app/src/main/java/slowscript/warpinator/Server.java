@@ -231,6 +231,17 @@ public class Server {
         }
     }
 
+    WarpProto.ServiceRegistration getServiceRegistrationMsg() {
+        return WarpProto.ServiceRegistration.newBuilder()
+                .setServiceId(uuid)
+                .setIp(svc.lastIP)
+                .setPort(port)
+                .setHostname(Utils.getDeviceName())
+                .setApiVersion(apiVersion)
+                .setAuthPort(authPort)
+                .build();
+    }
+
     void reannounce() {
         svc.executor.submit(()->{
             Log.d(TAG, "Reannouncing");
