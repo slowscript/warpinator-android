@@ -130,4 +130,7 @@
     <string name="compression_settings_title">Essayer d\'utiliser la compression</string>
     <string name="auth_port_settings_title">Port pour l\'enregistrement</string>
     <string name="devices_outside_group">Appareils en dehors de votre groupe : %1$d</string>
+    <string name="initiate_connection">Lancer la connexion</string>
+    <string name="manual_connect_text">Analysez le code QR ci-dessus avec une application de caméra et ouvrez le lien ou bien utilisez l\'adresse suivante pour lancer la connexion depuis l\'autre appareil :</string>
+    <string name="manual_connection">Connexion manuelle</string>
 </resources>

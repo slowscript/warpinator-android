@@ -127,4 +127,7 @@
     <string name="auth_port_settings_title">Kayıt için bağlantı noktası</string>
     <string name="compression_settings_title">Sıkıştırma kullanmayı dene</string>
     <string name="devices_outside_group">Grubunuzun dışındaki aygıtlar: %1$d</string>
+    <string name="initiate_connection">Bağlantı başlat</string>
+    <string name="manual_connect_text">Yukarıdaki QR kodunu bir kamera uygulaması ile tarayın ve bağlantıyı açın veya başka aygıttan bağlantıyı başlatmak için aşağıdaki adresi kullanın:</string>
+    <string name="manual_connection">Elle bağlantı</string>
 </resources>

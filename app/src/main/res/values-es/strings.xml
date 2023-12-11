@@ -125,4 +125,7 @@
     <string name="compression_settings_title">Pruebe a usar la compresión</string>
     <string name="auth_port_settings_title">Puerto para el registro</string>
     <string name="devices_outside_group">Dispositivos fuera del grupo: %1$d</string>
+    <string name="initiate_connection">Iniciar la conexión</string>
+    <string name="manual_connect_text">Escanee el código QR anterior con una aplicación de cámara y abra el enlace o utilice la siguiente dirección para iniciar la conexión desde el otro dispositivo:</string>
+    <string name="manual_connection">Conexión manual</string>
 </resources>

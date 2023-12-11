@@ -120,4 +120,5 @@
     <string name="decline_button_cnt_des">കൈമാറ്റം നിരസിക്കുക</string>
     <string name="selected_picture_cnt_des">തിരഞ്ഞെടുത്ത ചിത്രം</string>
     <string name="send_folder_toast">അയയ്ക്കാൻ ഒരു ഫോൾഡർ തിരഞ്ഞെടുക്കുക</string>
+    <string name="connection_issues">ബന്ധ പ്രശ്നങ്ങൾ</string>
 </resources>

@@ -58,7 +58,7 @@
     <string name="export_log_settings_tile">Scrivere il registro di debug su file</string>
     <string name="group_code_settings_title">Codice gruppo</string>
     <string name="port_settings_title">Porta per trasferimenti</string>
-    <string name="theme_settings_title">Tema</string>
+    <string name="theme_settings_title">Aspetto</string>
     <string name="notification_settings_summary">Ciò potrebbe essere influenzato dalle impostazioni di notifica di Android</string>
     <string name="port_range_warning">Il numero della porta deve essere compreso tra 1024 e 65535</string>
     <string name="requires_restart_warning">La modifica di questa impostazione richiede il riavvio dell\'applicazione</string>
@@ -68,9 +68,9 @@
     <string name="custom">Personalizzate</string>
     <string name="unsupported_provider">È stato selezionato un fornitore di contenuti non compatibile. Selezionare una cartella nella memoria interna.</string>
     <!--  Theme settings -->
-    <string name="sysDefault">Usa l\'impostazione predefinita del sistema</string>
-    <string name="lightTheme">Tema chiaro</string>
-    <string name="darkTheme">Tema scuro</string>
+    <string name="sysDefault">Aspetto del sistema</string>
+    <string name="lightTheme">Aspetto chiaro</string>
+    <string name="darkTheme">Aspetto scuro</string>
     <!--  Notification  -->
     <string name="warpinator_notification_title">Il servizio Warpinator è in esecuzione</string>
     <string name="warpinator_notification_button">Interrompi servizio</string>
@@ -79,7 +79,7 @@
     <string name="incoming_transfer">Trasferimento in arrivo da %s</string>
     <string name="num_files">%d file</string>
     <string name="service_running">Servizio in esecuzione</string>
-    <string name="notification_channel_description">Notifica di servizio persistente</string>
+    <string name="notification_channel_description">Notifica permanente del servizio</string>
     <string name="incoming_transfer_channel">Trasferimento in arrivo</string>
     <string name="transfer_progress_channel">Avanzamento del trasferimento</string>
     <!--  Content descriptions  -->

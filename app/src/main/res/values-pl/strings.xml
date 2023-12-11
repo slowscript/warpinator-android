@@ -127,4 +127,7 @@ Uruchom ponownie aplikację po połączeniu.</string>
     <string name="compression_settings_title">Spróbuj użyć kompresji</string>
     <string name="auth_port_settings_title">Port do rejestracji</string>
     <string name="devices_outside_group">Urządzenia spoza grupy: %1$d</string>
+    <string name="initiate_connection">Zainicjuj połączenie</string>
+    <string name="manual_connect_text">Zeskanuj powyższy kod QR za pomocą aplikacji aparatu i otwórz łącze lub użyj poniższego adresu, aby zainicjować połączenie z drugiego urządzenia:</string>
+    <string name="manual_connection">Połączenie ręczne</string>
 </resources>

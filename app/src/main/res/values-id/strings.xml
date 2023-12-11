@@ -52,7 +52,7 @@
     <string name="boot_settings_title">Mulai secara otomatis</string>
     <string name="export_log_settings_tile">Tulis catatan debug pada file</string>
     <string name="group_code_settings_title">Kode grup</string>
-    <string name="port_settings_title">Port</string>
+    <string name="port_settings_title">Port untuk pemindahan</string>
     <string name="theme_settings_title">Tema</string>
     <string name="notification_settings_summary">Ini mungkin dapat terpengaruh pengaturan notifikasi Android</string>
     <string name="port_range_warning">Nomor port harus diantara 1024 hingga 65535</string>
@@ -123,4 +123,11 @@
     <string name="changed_network">Jaringan berubah - layanan distart ulang…</string>
     <string name="application_icon_cnt_des">Ikon Applikasi</string>
     <string name="meh_face_cnt_des">Ikon wajah kecewa</string>
+    <string name="devices_outside_group">Perangkat-perangkat di luar grup anda: %1$d</string>
+    <string name="send_folder_toast">Pilih folder untuk mengirim</string>
+    <string name="compression_settings_title">Coba gunakan kompresi</string>
+    <string name="auth_port_settings_title">Port untuk pendaftaran</string>
+    <string name="warning_lastmod">Lokasi non-default tidak mendukung penyimpanan timestamps yang terakhir dimodifikasi. Anda dapat kembali ke default dengan tombol reset.</string>
+    <string name="reset_cnt_des">Atur ulang ke nilai default</string>
+    <string name="clear_transfers">Hapus transfer yang sudah selesai</string>
 </resources>

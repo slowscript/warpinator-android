@@ -51,7 +51,7 @@
     <string name="boot_settings_title">Iniciar automaticamente</string>
     <string name="export_log_settings_tile">Salvar logs no arquivo</string>
     <string name="group_code_settings_title">Código do grupo</string>
-    <string name="port_settings_title">Porta</string>
+    <string name="port_settings_title">Porto para transferências</string>
     <string name="theme_settings_title">Tema</string>
     <string name="notification_settings_summary">Pode ser afetado pelas configurações de notificações do Android</string>
     <string name="port_range_warning">Defina número da Porta entre 1024 e 65535</string>
@@ -120,4 +120,11 @@
     <string name="stop_svc_when_leaving_summary_on">Serviço será interrompido automaticamente ao remover de recentes ou após um período de inatividade</string>
     <string name="stop_svc_when_leaving_summary_off">Uma vez iniciado, o serviço ficará funcionando até ser interrompido manualmente</string>
     <string name="required_dialog_not_found">Fabricante do seu telefone não implementou diálogo solicitado. Isto será solucionado em lançamento futuro.</string>
+    <string name="compression_settings_title">Tente usar compressão</string>
+    <string name="auth_port_settings_title">Porta para registar</string>
+    <string name="reset_cnt_des">Redefinir para valor padrão</string>
+    <string name="clear_transfers">Limpar transferências concluídas</string>
+    <string name="send_folder_toast">Selecione uma pasta a enviar</string>
+    <string name="warning_lastmod">Locais não padrões não oferecem suporte à preservação de marcações de data/hora da última modificação. Você pode reverter para o padrão com o botão de redefinição.</string>
+    <string name="devices_outside_group">Aparelhos fora do seu grupo: %1$d</string>
 </resources>

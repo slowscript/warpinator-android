@@ -127,4 +127,7 @@
     <string name="compression_settings_title">尝试使用压缩</string>
     <string name="auth_port_settings_title">注册用端口</string>
     <string name="devices_outside_group">你的群组之外的设备：%1$d</string>
+    <string name="initiate_connection">发起连接</string>
+    <string name="manual_connect_text">用相机应用扫描上方二维码并打开链接或使用下列地址从其他设备发起连接：</string>
+    <string name="manual_connection">手动连接</string>
 </resources>

@@ -6,32 +6,29 @@
     <string name="quit">Beenden</string>
     <string name="about">Über</string>
     <string name="settings">Einstellungen</string>
-    <string name="title_activity_share">Teilen mit</string>
+    <string name="title_activity_share">Freigeben für</string>
     <string name="available_devices">Verfügbare Geräte</string>
-    <string name="no_devices_found">Keine Geräte gefunden</string>
-    <string name="wrong_group_code">Verbindung fehlgeschlagen: Falscher Gruppenschlüssel</string>
+    <string name="no_devices_found">Keine anderen Geräte gefunden</string>
+    <string name="wrong_group_code">Verbindung fehlgeschlagen: falscher Gruppenschlüssel</string>
     <string name="connection_error">Verbindungsfehler</string>
     <string name="not_connected_to_wifi">Sie sind mit keinem WiFi oder LAN verbunden. Nutzen Sie den Hotspot, wenn nichts anderes verfügbar ist.
         Starten Sie die Anwendung neu, wenn Sie verbunden sind.</string>
     <!--  Transfers activity  -->
-    <string name="waiting_for_permission">Warte auf Genehmigung…</string>
+    <string name="waiting_for_permission">Auf Genehmigung wird gewartet …</string>
     <string name="files_overwritten_warning">(Dateien werden möglicherweise überschrieben!)</string>
     <string name="remaining">verbleibend</string>
     <string name="a_few_seconds">ein paar Sekunden</string>
-    <string name="service_unavailable">, Service nicht verfügbar</string>
-    <string name="errors_during_transfer">Fehler während Transfer:</string>
-    <string name="dont_close_when_sharing">Das Schließen dieser Aktivität während der Übertragung könnte zum Fehlschlagen des Transfers führen</string>
+    <string name="service_unavailable">, Dienst nicht verfügbar</string>
+    <string name="errors_during_transfer">Fehler während der Übertragung:</string>
+    <string name="dont_close_when_sharing">Das Beenden dieser Aktivität während der Freigabe kann dazu führen, dass die Übertragung fehlschlägt.</string>
     <!--  About activity  -->
     <string name="version">Version: %1$s</string>
-    <string name="about_description">Dies ist eine inoffizieller Portierung von Warpinator. \nSenden und Empfangen von Dateien im lokalen Netzwerk.</string>
-    <string name="warranty_html">
-        Dieses Programm ist quelloffene Software lizenziert unter &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;GNU General Public License&lt;/a&gt;.&lt;br&gt;
-        Sie können den Quellcode über &lt;a href="https://github.com/slowscript/warpinator-android/"&gt;GitHub&lt;/a&gt; beziehen.&lt;br&gt;
-        &lt;br&gt;
-        Dieses Programm kommt mit keinerlei Garantien.&lt;br&gt;Für mehr Details, sehen Sie sich die Bedinungen der Lizenz an.</string>
+    <string name="about_description">Das ist eine inoffizielle Umsetzung von Warpinator.
+\nSenden und Empfangen von Dateien im lokalen Netzwerk.</string>
+    <string name="warranty_html">Dieses Programm ist eine quelloffene Anwendung und lizenziert unter der &lt;a href=\"https://www.gnu.org/licenses/gpl-3.0.html\"&gt;»GNU General Public License«&lt;/a&gt;.&lt;br&gt; Sie können den Quellcode über &lt;a href=\"https://github.com/slowscript/warpinator-android/\"&gt;GitHub&lt;/a&gt; beziehen.&lt;br&gt; &lt;br&gt; Dieses Programm kommt mit keinerlei Garantien.&lt;br&gt;Für mehr Details, sehen Sie sich bitte die Bedingungen der Lizenz an.</string>
     <!--  Share activity  -->
-    <string name="devices_to_share_with">Geräte für Teilen mit</string>
-    <string name="no_share_devices">Keine Geräte für Teilen mit verfügbar</string>
+    <string name="devices_to_share_with">Geräte zur Freigabe</string>
+    <string name="no_share_devices">Keine verfügbaren Geräte zur Freigabe</string>
     <string name="unsupported_intent">Wir haben eine nicht unterstützte Aktion erhalten</string>
     <string name="nothing_to_share">Nichts zu teilen</string>
     <!--  Setting  -->
@@ -41,7 +38,7 @@
     <string name="aspect_setting_category">Aussehen</string>
     <string name="display_settings_title">Anzeigename</string>
     <string name="picture_settings_title">Profilbild</string>
-    <string name="download_dir_settings_title">Downloadverzeichnis</string>
+    <string name="download_dir_settings_title">Transferverzeichnis</string>
     <string name="notification_settings_title">Benachrichtigung über eingehende Dateien anzeigen</string>
     <string name="overwrite_settings_title">Überschreiben erlauben</string>
     <string name="accept_settings_title">Transfer automatisch akzeptieren</string>
@@ -49,7 +46,7 @@
     <string name="accept_setting_summary_off">Jeder Transfer muss von Dir bestätigt werden</string>
     <string name="background_settings_title">Im Hintergrund ausführen</string>
     <string name="boot_settings_title">Automatisch starten</string>
-    <string name="export_log_settings_tile">Debug-Protokoll in Datei schreiben</string>
+    <string name="export_log_settings_tile">Fehlerprotokoll in eine Datei schreiben</string>
     <string name="group_code_settings_title">Gruppenschlüssel</string>
     <string name="port_settings_title">Port für Übertragungen</string>
     <string name="theme_settings_title">Thema</string>
@@ -80,7 +77,7 @@
     <string name="status_image_cnt_des">Verbindungsstatus</string>
     <string name="profile_image_cnt_des">Profilbild</string>
     <string name="application_icon_cnt_des">Anwendungssymbol</string>
-    <string name="meh_face_cnt_des">Entäuschtes Gesicht-Symbol</string>
+    <string name="meh_face_cnt_des">Entäuschtes Gesichtssymbol</string>
     <string name="selected_picture_cnt_des">Ausgewähltes Bild</string>
     <string name="decline_button_cnt_des">Transfer ablehnen</string>
     <string name="accept_button_cnt_des">Transfer annehmen</string>
@@ -113,18 +110,18 @@
         <item>Fertiggestellt</item>
         <item>Fertiggestellt mit Fehlern (Drücken zum Anzeigen)</item>
     </string-array>
-    <string name="connection_issues">Verbindungsproblem</string>
+    <string name="connection_issues">Verbindungsprobleme</string>
     <string name="reannounce">Neu verbinden</string>
     <string name="rescan">Erneut nach Geräten suchen</string>
-    <string name="changed_network">Netzwerk geändert - Dienst wird neu gestartet …</string>
+    <string name="changed_network">Netzwerk geändert – Dienst wird neu gestartet …</string>
     <string name="files_being_sent">Dateien werden gesendet:</string>
-    <string name="stop_svc_when_leaving">Dienst nach Verlassen der App stoppen</string>
+    <string name="stop_svc_when_leaving">Dienst nach Verlassen der App beenden</string>
     <string name="stop_svc_when_leaving_summary_off">Einmal gestartet, läuft der Dienst weiter, bis er manuell gestoppt wird</string>
     <string name="open_failed">Empfangene Datei konnte nicht geöffnet werden</string>
     <string name="send_folder_toast">Ordner zum Senden auswählen</string>
     <string name="reset_cnt_des">Auf Standardwert zurücksetzen</string>
     <string name="clear_transfers">Erledigte Übertragungen löschen</string>
-    <string name="stop_svc_when_leaving_summary_on">Der Dienst wird automatisch gestoppt, wenn er aus den Wiedervorlagen gelöscht wird oder nach einer gewissen Zeit der Inaktivität</string>
+    <string name="stop_svc_when_leaving_summary_on">Der Dienst wird automatisch angehalten, wenn er aus den Wiedervorlagen gelöscht wird oder nach einer gewissen Zeit der Inaktivität</string>
     <string name="required_dialog_not_found">Der Hersteller Ihres Telefons hat den erforderlichen Dialog nicht implementiert. Dies wird in einer zukünftigen Version behoben werden.</string>
     <string name="warning_lastmod">Nicht standardmäßige Speicherorte unterstützen nicht die Beibehaltung von Zeitstempeln der letzten Änderung. Mit der Schaltfläche Zurücksetzen können Sie zu den Standardeinstellungen zurückkehren.</string>
     <string name="auth_port_settings_title">Port für die Registrierung</string>
