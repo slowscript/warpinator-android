@@ -28,6 +28,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
@@ -272,8 +273,22 @@ public class MainService extends Service {
                 }
             }
         };
+        apOn = isHotspotOn(); // Manually get state, some devices don't fire broadcast when registered
         registerReceiver(apStateChangeReceiver, new IntentFilter("android.net.wifi.WIFI_AP_STATE_CHANGED"));
         connMgr.registerNetworkCallback(nr, networkCallback);
+    }
+
+    private boolean isHotspotOn() {
+        WifiManager manager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        assert manager != null;
+        try {
+            final Method method = manager.getClass().getDeclaredMethod("isWifiApEnabled");
+            method.setAccessible(true); //in the case of visibility change in future APIs
+            return (Boolean) method.invoke(manager);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to get hotspot state", e);
+        }
+        return false;
     }
 
     public boolean gotNetwork() {
