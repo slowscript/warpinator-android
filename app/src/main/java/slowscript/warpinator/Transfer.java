@@ -549,9 +549,12 @@ public class Transfer {
         if (Server.current.downloadDirUri.startsWith("content:")) {
             Uri rootUri = Uri.parse(Server.current.downloadDirUri);
             DocumentFile root = DocumentFile.fromTreeUri(svc, rootUri);
-            createDirectories(root, path, null);
+            createDirectories(root, path, null); // Note: .. segment is created as (invalid)
         } else {
-            if (!new File(Server.current.downloadDirUri, path).mkdirs()) {
+            File dir = new File(Server.current.downloadDirUri, path);
+            if (!validateFile(dir))
+                throw new IllegalArgumentException("The dir path leads outside download dir");
+            if (!dir.mkdirs()) {
                 errors.add("Failed to create directory " + path);
                 Log.e(TAG, "Failed to create directory " + path);
             }
@@ -586,7 +589,7 @@ public class Transfer {
             if(Utils.pathExistsInTree(svc, rootUri, fileName)) {
                 fileName = handleUriExists(fileName);
             }
-            //Get parent
+            //Get parent - createFile will substitute / with _ and checks if parent is descendant of tree root
             DocumentFile parent = root;
             if (fileName.contains("/")) {
                 String parentRelPath = fileName.substring(0, fileName.lastIndexOf("/"));
@@ -604,8 +607,20 @@ public class Transfer {
             if(currentFile.exists()) {
                 currentFile = handleFileExists(currentFile);
             }
+            if (!validateFile(currentFile))
+                throw new IllegalArgumentException("The file name leads to a file outside download dir");
             return new FileOutputStream(currentFile, false);
         }
+    }
+
+    private boolean validateFile(File f) {
+        boolean res = false;
+        try {
+            res = (f.getCanonicalPath() + "/").startsWith(Server.current.downloadDirUri);
+        } catch (Exception e) {
+            Log.w(TAG, "Could not resolve canonical path for " + f.getAbsolutePath() + ": " + e.getMessage());
+        }
+        return res;
     }
 
     private String guessMimeType(String name) {
