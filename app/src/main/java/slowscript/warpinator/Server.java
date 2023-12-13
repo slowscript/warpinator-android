@@ -195,7 +195,7 @@ public class Server {
         } catch(Exception e) {
             running = false;
             Log.e(TAG, "Failed to start GRPC server.", e);
-            Toast.makeText(svc, "Failed to start GRPC server", Toast.LENGTH_LONG).show();
+            Toast.makeText(svc, "Failed to start GRPC server. Please try rebooting your phone or changing port numbers.", Toast.LENGTH_LONG).show();
         }
     }
 

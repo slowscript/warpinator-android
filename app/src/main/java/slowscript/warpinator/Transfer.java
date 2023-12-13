@@ -262,7 +262,7 @@ public class Transfer {
                         if (first_chunk) {
                             first_chunk = false;
                             long lastmod = files.get(i).lastMod;
-                            if (lastmod >= 0)
+                            if (lastmod > 0) // lastmod 0 is likely invalid
                                 ft = WarpProto.FileTime.newBuilder().setMtime(lastmod / 1000).setMtimeUsec((int)(lastmod % 1000) * 1000).build();
                             else Log.w(TAG, "File doesn't have lastmod");
                         }
@@ -446,7 +446,7 @@ public class Transfer {
             setStatus(Status.FINISHED_WITH_ERRORS);
         else setStatus(Status.FINISHED);
         closeStream();
-        if (currentLastMod != -1)
+        if (currentLastMod > 0)
             setLastModified();
         updateUI();
     }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.Cursor;
@@ -194,17 +195,21 @@ public class Utils {
     }
 
     public static byte[] readAllBytes(File file) throws IOException {
-        RandomAccessFile f = new RandomAccessFile(file, "r");
-        byte[] b = new byte[(int)f.length()];
-        f.readFully(b);
-        return b;
+        try (RandomAccessFile f = new RandomAccessFile(file, "r")) {
+            byte[] b = new byte[(int) f.length()];
+            f.readFully(b);
+            return b;
+        }
     }
 
     public static void displayMessage(Context ctx, String title, String msg) {
+        displayMessage(ctx, title, msg, null);
+    }
+    public static void displayMessage(Context ctx, String title, String msg, DialogInterface.OnClickListener listener) {
         new MaterialAlertDialogBuilder(ctx)
                 .setTitle(title)
                 .setMessage(msg)
-                .setPositiveButton(android.R.string.ok, null)
+                .setPositiveButton(android.R.string.ok, listener)
                 .show();
     }
 

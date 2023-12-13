@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                     .create();
             String host = MainService.svc.lastIP + ":" + Server.current.authPort;
             ((TextView)v.findViewById(R.id.txtHost)).setText(host);
-            ((ImageView)v.findViewById(R.id.imgQR)).setImageBitmap(Utils.getQRCodeBitmap(host));
+            ((ImageView)v.findViewById(R.id.imgQR)).setImageBitmap(Utils.getQRCodeBitmap("warpinator://"+host));
             dialog.show();
         } else if (itemID == R.id.conn_issues) {
             Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
@@ -180,11 +180,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         } else if (itemID == R.id.reannounce) {
             if (Server.current != null && Server.current.running)
                 Server.current.reannounce();
-            else Toast.makeText(this, R.string.error_service_not_running, Toast.LENGTH_SHORT);
+            else Toast.makeText(this, R.string.error_service_not_running, Toast.LENGTH_SHORT).show();
         } else if (itemID == R.id.rescan) {
             if (Server.current != null)
                 Server.current.rescan();
-            else Toast.makeText(this, R.string.error_service_not_running, Toast.LENGTH_SHORT);
+            else Toast.makeText(this, R.string.error_service_not_running, Toast.LENGTH_SHORT).show();
         } else if (itemID == R.id.about) {
             startActivity(new Intent(this, AboutActivity.class));
         } else if (itemID == R.id.menu_quit) {
