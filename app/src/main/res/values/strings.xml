@@ -8,6 +8,7 @@
     <string name="quit">Quit</string>
     <string name="connection_issues">Connection issues</string>
     <string name="manual_connection">Manual connection</string>
+    <string name="save_log">Save log</string>
     <string name="reannounce">Reannounce</string>
     <string name="rescan">Rescan for devices</string>
     <string name="about">About</string>

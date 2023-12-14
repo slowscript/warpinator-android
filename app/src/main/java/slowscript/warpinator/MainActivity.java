@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -37,16 +38,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.common.io.Files;
 
 import org.conscrypt.Conscrypt;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.security.Security;
 
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final String TAG = "MAIN";
     private static final String helpUrl = "https://slowscript.xyz/warpinator-android/connection-issues/";
+    private static final int SAVE_LOG_REQCODE = 4;
 
     RecyclerView recyclerView;
     RemotesAdapter adapter;
@@ -177,6 +181,12 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         } else if (itemID == R.id.conn_issues) {
             Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
             startActivity(helpIntent);
+        } else if (itemID == R.id.save_log) {
+            Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TITLE, "warpinator-log.txt");
+            startActivityForResult(intent, SAVE_LOG_REQCODE);
         } else if (itemID == R.id.reannounce) {
             if (Server.current != null && Server.current.running)
                 Server.current.reannounce();
@@ -246,6 +256,22 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             } else {
                 Log.d(TAG, "Storage permission denied");
                 askForDirectoryAccess(this);
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SAVE_LOG_REQCODE && resultCode == Activity.RESULT_OK) {
+            Uri savePath = data.getData();
+            try (OutputStream os = getContentResolver().openOutputStream(savePath)) {
+                File logFile = new File(getExternalFilesDir(null), "latest.log");
+                Files.copy(logFile, os);
+                Log.d(TAG, "Log exported");
+            } catch (Exception e) {
+                Log.e(TAG, "Could not save log to file", e);
+                Toast.makeText(this, "Could not save log to file: " + e, Toast.LENGTH_LONG).show();
             }
         }
     }

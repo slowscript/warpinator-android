@@ -5,6 +5,7 @@
     <string name="quit">Ukončit</string>
     <string name="about">O aplikaci</string>
     <string name="manual_connection">Ruční spojení</string>
+    <string name="save_log">Uložit ladící záznam</string>
     <string name="reannounce">Znovu se ohlásit</string>
     <string name="rescan">Znovu vyhledat zařízení</string>
     <string name="settings">Nastavení</string>

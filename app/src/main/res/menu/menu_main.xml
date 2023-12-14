@@ -6,6 +6,8 @@
         android:title="@string/manual_connection"/>
     <item android:id="@+id/conn_issues"
         android:title="@string/connection_issues"/>
+    <item android:id="@+id/save_log"
+        android:title="@string/save_log"/>
     <item android:id="@+id/reannounce"
         android:title="@string/reannounce" />
     <item android:id="@+id/rescan"
