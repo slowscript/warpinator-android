@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     LinearLayout layoutNotFound;
     TextView txtError, txtNoNetwork, txtOutgroup;
     BroadcastReceiver receiver;
+    boolean allowSaveLog = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 break;
         }
+        allowSaveLog = prefs.getBoolean("debugLog", false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (checkCallingOrSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -158,6 +160,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
+        MenuItem menuSaveLog = menu.findItem(R.id.save_log);
+        menuSaveLog.setEnabled(allowSaveLog);
         return true;
     }
 
