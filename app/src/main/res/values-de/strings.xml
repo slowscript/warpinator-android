@@ -86,7 +86,7 @@
     <!--  Other  -->
     <string name="please_select_download_dir">Dies ist das erste Mal, dass Sie die Anwendung starten.
         Bitten wählen Sie ein Verzeichnis, in dem Warpinator Dateien speichern soll.</string>
-    <string name="error_download_dir">Sie müssen in den Einstellungen ein Downloadverzeichnis auswählen.</string>
+    <string name="error_download_dir">Sie müssen in den Einstellungen ein Zielverzeichnis auswählen.</string>
     <string name="error_network_unavailable">Netzwerk nicht verfügbar - Hotspot versuchen?</string>
     <string name="error_service_not_running">Dienst wird nicht ausgeführt</string>
     <string name="cert_not_received">Abruf des Zertifikats von %1$s fehlgeschlagen. Stellen Sie sicher, dass UDP (genauso wie TCP) Datenverkehr auf Port %2$d in der Firewall der Gegenstelle erlaubt ist.</string>
@@ -111,7 +111,7 @@
         <item>Fertiggestellt mit Fehlern (Drücken zum Anzeigen)</item>
     </string-array>
     <string name="connection_issues">Verbindungsprobleme</string>
-    <string name="reannounce">Neu verbinden</string>
+    <string name="reannounce">Neu ankündigen</string>
     <string name="rescan">Erneut nach Geräten suchen</string>
     <string name="changed_network">Netzwerk geändert – Dienst wird neu gestartet …</string>
     <string name="files_being_sent">Dateien werden gesendet:</string>
@@ -127,4 +127,8 @@
     <string name="auth_port_settings_title">Port für die Registrierung</string>
     <string name="compression_settings_title">Nutzung von Kompression versuchen</string>
     <string name="devices_outside_group">Geräte außerhalb Ihrer Gruppe: %1$d</string>
+    <string name="save_log">Protokoll speichern</string>
+    <string name="initiate_connection">Verbindung initiieren</string>
+    <string name="manual_connection">Manuelle Verbindung</string>
+    <string name="manual_connect_text">Scannen Sie den obigen QR-Code mit einer Kamera-App und öffnen Sie den Link oder verwenden Sie die folgende Adresse, um die Verbindung vom anderen Gerät aus zu initiieren:</string>
 </resources>

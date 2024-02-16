@@ -127,4 +127,8 @@
     <string name="auth_port_settings_title">Priključak za registraciju</string>
     <string name="devices_outside_group">Uređaji izvan vaše grupe: %1$d</string>
     <string name="compression_settings_title">Pokušaj koristiti komprimiranje</string>
+    <string name="initiate_connection">Pokreni povezivanje</string>
+    <string name="manual_connect_text">Skeniraj gornji QR kod pomoću aplikacije kamere i otvori poveznicu ili koristi sljedeću adresu za pokretanje veze s drugog uređaja:</string>
+    <string name="manual_connection">Ručno povezivanje</string>
+    <string name="save_log">Spremi dnevnik radnji</string>
 </resources>

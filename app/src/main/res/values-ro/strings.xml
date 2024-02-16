@@ -116,4 +116,8 @@
     <string name="compression_settings_title">Folosește comprimarea</string>
     <string name="auth_port_settings_title">Port pentru înscriere</string>
     <string name="devices_outside_group">Aparate din afara grupului tău: %1$d</string>
+    <string name="initiate_connection">Stabilește legătura</string>
+    <string name="manual_connect_text">Scanează codul QR de mai sus cu fotocamera și deschide adresa sau folosește următoarea adresă pentru a stabili legătura din celălalt aparat:</string>
+    <string name="manual_connection">Conectare manuală</string>
+    <string name="save_log">Salvează jurnalul</string>
 </resources>

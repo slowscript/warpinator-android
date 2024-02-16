@@ -52,7 +52,7 @@ Uruchom ponownie aplikację po połączeniu.</string>
     <string name="accept_setting_summary_off">Wszystkie przychodzące pliki muszą być zaakceptowane przez Ciebie</string>
     <string name="background_settings_title">Działaj w tle</string>
     <string name="boot_settings_title">Uruchamiaj automatycznie</string>
-    <string name="export_log_settings_tile">Zapisz logi debugowania do pliku</string>
+    <string name="export_log_settings_tile">Zapisz dziennik debugowania do pliku</string>
     <string name="group_code_settings_title">Kod grupy</string>
     <string name="port_settings_title">Port do transferów</string>
     <string name="theme_settings_title">Motyw aplikacji</string>
@@ -130,4 +130,5 @@ Uruchom ponownie aplikację po połączeniu.</string>
     <string name="initiate_connection">Zainicjuj połączenie</string>
     <string name="manual_connect_text">Zeskanuj powyższy kod QR za pomocą aplikacji aparatu i otwórz łącze lub użyj poniższego adresu, aby zainicjować połączenie z drugiego urządzenia:</string>
     <string name="manual_connection">Połączenie ręczne</string>
+    <string name="save_log">Zapisz dziennik</string>
 </resources>

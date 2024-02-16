@@ -96,4 +96,8 @@
     <string name="error_network_unavailable">Rede indisponível - configure próprio hotspot\?</string>
     <string name="error_service_not_running">Serviço não está em execução</string>
     <string name="cert_not_received">Falha ao receber certificado de %1$s. Assegure-se de que o tráfego no firewall remoto para UDP (e TCP) na Porta %2$d está permitido.</string>
+    <string name="initiate_connection">Iniciar conexão</string>
+    <string name="manual_connect_text">Digitalize o código QR acima com um aplicativo de câmara e abra a ligação ou use o seguinte endereço para iniciar a conexão do outro dispositivo:</string>
+    <string name="manual_connection">Conexão manual</string>
+    <string name="save_log">Gravar regito</string>
 </resources>

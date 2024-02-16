@@ -130,4 +130,5 @@
     <string name="initiate_connection">Bağlantı başlat</string>
     <string name="manual_connect_text">Yukarıdaki QR kodunu bir kamera uygulaması ile tarayın ve bağlantıyı açın veya başka aygıttan bağlantıyı başlatmak için aşağıdaki adresi kullanın:</string>
     <string name="manual_connection">Elle bağlantı</string>
+    <string name="save_log">Kütüğü kaydet</string>
 </resources>

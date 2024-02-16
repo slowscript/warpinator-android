@@ -99,4 +99,5 @@
     <string name="initiate_connection">Initiera anslutning</string>
     <string name="manual_connect_text">Skanna QR-koden ovan med en kameraapp och öppna länken eller använd följande adress för att initiera anslutningen från den andra enheten:</string>
     <string name="manual_connection">Manuell anslutning</string>
+    <string name="save_log">Spara logg</string>
 </resources>
