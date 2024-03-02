@@ -136,4 +136,5 @@
         <item>Finished</item>
         <item>Finished with errors (tap to view)</item>
     </string-array>
+    <string name="qs_discovered_count">%d in range</string>
 </resources>
