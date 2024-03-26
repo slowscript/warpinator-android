@@ -349,6 +349,7 @@ public class Server {
     void addRemote(Remote remote) {
         //Add to remotes list
         MainService.remotes.put(remote.uuid, remote);
+        svc.notifyDeviceCountUpdate();
         if (favorites.contains(remote.uuid)) //Add favorites at the beginning
             MainService.remotesOrder.add(0, remote.uuid);
         else
