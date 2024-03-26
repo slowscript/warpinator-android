@@ -6,6 +6,7 @@ import android.util.Log;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.GeneralName;
 import org.bouncycastle.asn1.x509.GeneralNames;
+import org.bouncycastle.asn1.x509.Time;
 import org.bouncycastle.asn1.x509.X509Extensions;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
@@ -36,6 +37,7 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -119,8 +121,8 @@ public class Authenticator {
             //Build certificate
             X500Name name = new X500Name("CN="+hostname);
             BigInteger serial = new BigInteger(Long.toString(now)); //Use current time as serial num
-            Date notBefore = new Date(now - day);
-            Date notAfter = new Date(now + expireTime);
+            Time notBefore = new Time(new Date(now - day), Locale.ENGLISH);
+            Time notAfter = new Time(new Date(now + expireTime), Locale.ENGLISH);
 
             JcaX509v3CertificateBuilder builder = new JcaX509v3CertificateBuilder(
                     name, serial, notBefore, notAfter, name, kp.getPublic());
