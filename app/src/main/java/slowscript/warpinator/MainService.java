@@ -31,6 +31,7 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.List;
@@ -456,7 +457,14 @@ public class MainService extends Service {
     }
 
     public void notifyDeviceCountUpdate() {
-        int count = remotes.size();
+        int count = 0;
+        Collection<Remote> remotes = MainService.remotes.values();
+        for (Remote remote : remotes) {
+            if (remote.status == Remote.RemoteStatus.CONNECTED) {
+                count++;
+            }
+        }
+
         for (WeakReference<RemoteCountObserver> observer : remoteCountObservers) {
             RemoteCountObserver obs = observer.get();
             if (obs != null) {

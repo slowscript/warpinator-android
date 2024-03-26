@@ -133,5 +133,5 @@
     <string name="initiate_connection">Lancer la connexion</string>
     <string name="manual_connect_text">Analysez le code QR ci-dessus avec une application de caméra et ouvrez le lien ou bien utilisez l\'adresse suivante pour lancer la connexion depuis l\'autre appareil :</string>
     <string name="manual_connection">Connexion manuelle</string>
-    <string name="qs_discovered_count">%d à portée</string>
+    <string name="qs_discovered_count">%d connectés</string>
 </resources>
