@@ -28,11 +28,12 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
@@ -63,6 +64,7 @@ public class MainService extends Service {
 
     public static MainService svc;
     public static ConcurrentHashMap<String, Remote> remotes = new ConcurrentHashMap<>();
+    public static final ArrayList<WeakReference<RemoteCountObserver>> remoteCountObservers = new ArrayList<>();
     public static List<String> remotesOrder = Collections.synchronizedList(new ArrayList<>());
     SharedPreferences prefs;
     ExecutorService executor = Executors.newCachedThreadPool();
@@ -81,7 +83,13 @@ public class MainService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return new MainServiceBinder(this);
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        remoteCountObservers.clear();
+        return false;
     }
 
     @Override
@@ -132,6 +140,11 @@ public class MainService extends Service {
         if(prefs.getBoolean("background", true)) {
             Notification notification = createForegroundNotification();
             startForeground(SVC_NOTIFICATION_ID, notification);
+        }
+
+        // Notify the tile service that MainService just started, so it can attempt to bind
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            TileMainService.requestListeningState(this);
         }
 
         return START_STICKY;
@@ -441,6 +454,40 @@ public class MainService extends Service {
         if (prefs == null)
             return false;
         return prefs.getBoolean("autoStop", true) && !prefs.getBoolean("bootStart", false);
+    }
+
+    public void notifyDeviceCountUpdate() {
+        int count = 0;
+        Collection<Remote> remotes = MainService.remotes.values();
+        for (Remote remote : remotes) {
+            if (remote.status == Remote.RemoteStatus.CONNECTED) {
+                count++;
+            }
+        }
+
+        for (WeakReference<RemoteCountObserver> observer : remoteCountObservers) {
+            RemoteCountObserver obs = observer.get();
+            if (obs != null) {
+                obs.onDeviceCountChange(count);
+            }
+        }
+    }
+
+    public DisposableRemoteCountObserver observeDeviceCount(RemoteCountObserver observer) {
+        remoteCountObservers.add(new WeakReference<>(observer));
+        observer.onDeviceCountChange(remotes.size());
+
+        return () -> {
+            remoteCountObservers.remove(new WeakReference<>(observer));
+        };
+    }
+
+    public interface RemoteCountObserver {
+        void onDeviceCountChange(int newCount);
+    }
+
+    public interface DisposableRemoteCountObserver {
+        void dispose();
     }
 
     public static class StopSvcReceiver extends BroadcastReceiver {
