@@ -50,15 +50,18 @@
 
         <TextView
             android:id="@+id/txtRemote"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:text="android@PhoneName"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
+            app:layout_constraintEnd_toStartOf="@+id/tglStar"
             app:layout_constraintStart_toEndOf="@+id/imgProfile"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="HardcodedText" />
+            tools:text="android@PhoneName" />
 
         <TextView
             android:id="@+id/txtIP"
@@ -106,13 +109,17 @@
 
         <TextView
             android:id="@+id/txtDisplayName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="Name"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             app:layout_constraintBottom_toTopOf="@+id/txtRemote"
+            app:layout_constraintEnd_toStartOf="@+id/tglStar"
             app:layout_constraintStart_toStartOf="@+id/txtRemote"
             tools:ignore="HardcodedText" />
 

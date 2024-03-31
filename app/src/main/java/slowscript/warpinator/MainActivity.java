@@ -139,7 +139,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             Log.d(TAG, "recv action " + intent.getAction() + " -- " + intent.getData());
             String host = intent.getData().getAuthority();
-            Server.current.registerWithHost(host);
+            new MaterialAlertDialogBuilder(this).setTitle(R.string.manual_connection)
+                    .setMessage(getString(R.string.confirm_connection, host))
+                    .setPositiveButton(android.R.string.yes,(a,b) -> Server.current.registerWithHost(host))
+                    .setNegativeButton(android.R.string.no, null)
+                    .show();
         }
     }
 

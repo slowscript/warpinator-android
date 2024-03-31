@@ -118,6 +118,7 @@
     <string name="initiate_connection">Initiate connection</string>
     <string name="enter_address">Enter address and port</string>
     <string name="manual_connect_hint">Try Manual connection in the menu</string>
+    <string name="confirm_connection">Connect to \'%s\'?</string>
     <string name="qs_discovered_count">%d connected</string>
     <string-array name="connected_states">
         <item>Connected</item>

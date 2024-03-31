@@ -108,16 +108,18 @@ public class MainService extends Service {
 
         lastIP = Utils.getIPAddress();
         server = new Server(this);
-        Authenticator.getServerCertificate(); //Generate cert on start if doesn't exist
-        if (Authenticator.certException != null) {
-            LocalBroadcasts.displayMessage(this, "Failed to initialize service",
-                    "A likely reason for this is that your IP address could not be obtained. " +
-                    "Please make sure you are connected to WiFi.\n" +
-                    "\nAvailable interfaces:\n" + Utils.dumpInterfaces() +
-                    "\nException: " + Authenticator.certException.toString());
-            Log.w(TAG, "Server will not start due to error");
-        } else {
-            server.Start();
+        if (lastIP != null) {
+            Authenticator.getServerCertificate(); //Generate cert on start if doesn't exist
+            if (Authenticator.certException != null) {
+                LocalBroadcasts.displayMessage(this, "Failed to initialize service",
+                        "A likely reason for this is that your IP address could not be obtained. " +
+                                "Please make sure you are connected to WiFi.\n" +
+                                "\nAvailable interfaces:\n" + Utils.dumpInterfaces() +
+                                "\nException: " + Authenticator.certException.toString());
+                Log.w(TAG, "Server will not start due to error");
+            } else {
+                server.Start();
+            }
         }
 
         timer = new Timer();

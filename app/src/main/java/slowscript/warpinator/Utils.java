@@ -91,9 +91,12 @@ public class Utils {
                     ip = ia.getHostAddress();
             }
             //Get IP of some random active interface (except loopback and data)
-            if (ip == null)
-                ip = getIPForIface(getActiveIface()).getHostAddress();
-            return ip != null ? ip : "IP Unknown";
+            if (ip == null) {
+                NetworkInterface activeNi = getActiveIface();
+                if (activeNi != null)
+                    ip = getIPForIface(activeNi).getHostAddress();
+            }
+            return ip;// != null ? ip : "IP Unknown";
         } catch (Exception ex) {
             Log.e(TAG, "Couldn't get IP address", ex);
             return "Error getting IP";
