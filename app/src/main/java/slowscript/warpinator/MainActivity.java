@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     RecyclerView recyclerView;
     RemotesAdapter adapter;
     LinearLayout layoutNotFound;
-    TextView txtError, txtNoNetwork, txtOutgroup;
+    TextView txtError, txtNoNetwork, txtOutgroup, txtManualConnectHint;
     BroadcastReceiver receiver;
     boolean allowSaveLog = false;
 
@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         txtError = findViewById(R.id.txtError);
         txtNoNetwork = findViewById(R.id.txtNoNetwork);
         txtOutgroup = findViewById(R.id.txtOutgroup);
+        txtManualConnectHint = findViewById(R.id.txtManualConnectHint);
+        txtManualConnectHint.postDelayed(() -> txtManualConnectHint.setVisibility(View.VISIBLE), 8000);
 
         //initializes theme based on preferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -216,9 +218,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         layout.setPadding(16,16,16,16);
         EditText editText = new EditText(this);
         editText.setSingleLine();
+        editText.setHint("0.0.0.0:1234");
         layout.addView(editText);
         new MaterialAlertDialogBuilder(this)
-                .setTitle("Enter IP and port")
+                .setTitle(getString(R.string.enter_address))
                 .setView(layout)
                 .setPositiveButton(android.R.string.ok, (a,b)->{
                     String host = editText.getText().toString();

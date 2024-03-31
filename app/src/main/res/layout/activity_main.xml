@@ -67,6 +67,17 @@
             android:textSize="20sp"
             android:textStyle="bold"/>
 
+        <TextView
+            android:id="@+id/txtManualConnectHint"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:maxLines="2"
+            android:paddingTop="8dp"
+            android:text="@string/manual_connect_hint"
+            android:textAlignment="center"
+            android:visibility="gone"
+            android:textColor="?colorOnBackground" />
+
     </LinearLayout>
 
     <LinearLayout
