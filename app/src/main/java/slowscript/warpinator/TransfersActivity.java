@@ -261,6 +261,7 @@ public class TransfersActivity extends AppCompatActivity {
     private void setFabVisibility(int vis) {
         fabSendFiles.setVisibility(vis);
         fabSendDir.setVisibility(vis);
+        fabSend.setImageResource(vis == View.VISIBLE ? R.drawable.ic_decline : R.drawable.ic_upload);
     }
 
     private void openFiles() {

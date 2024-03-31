@@ -1,0 +1,4 @@
+- New Quick Settings tile to toggle Warpinator service
+- UI improvements
+- Fixed certificate error on some locales
+- Updated translations
