@@ -116,43 +116,6 @@
             app:layout_constraintStart_toStartOf="@+id/txtRemote"
             tools:ignore="HardcodedText" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabSendFile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:contentDescription="@string/send_files"
-            app:layout_constraintBottom_toTopOf="@id/fabSend"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_file" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabSendDir"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:contentDescription="@string/send_files"
-            app:layout_constraintBottom_toTopOf="@id/fabSendFile"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_folder" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabSend"
-            style="?attr/floatingActionButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
-            android:clickable="true"
-            android:contentDescription="@string/send_files"
-            android:focusable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_upload"
-            tools:ignore="ImageContrastCheck" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -166,5 +129,43 @@
         android:contentDescription="@string/clear_transfers"
         android:focusable="true"
         app:srcCompat="@drawable/ic_remove_items" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabSendDir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="145dp"
+            android:contentDescription="Send folder"
+            android:layout_gravity="bottom|end"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_folder"
+            tools:visibility="visible" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabSendFile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="80dp"
+            android:contentDescription="@string/send_files"
+            android:layout_gravity="bottom|end"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_file"
+            tools:visibility="visible" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabSend"
+            style="?attr/floatingActionButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:contentDescription="@string/send_files"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="bottom|end"
+            android:focusable="true"
+            app:srcCompat="@drawable/ic_upload"
+            tools:ignore="ImageContrastCheck" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
