@@ -75,7 +75,6 @@ public class SettingsActivity extends AppCompatActivity {
         private static final String PORT_PREF = "port";
         private static final String AUTH_PORT_PREF = "authPort";
         private static final String GROUPCODE_PREF = "groupCode";
-        private static final String BACKGROUND_PREF = "background";
         private static final String THEME_PREF = "theme_setting";
         private static final String PROFILE_PREF = "profile";
         private static final String DEBUGLOG_PREF = "debugLog";
@@ -86,7 +85,6 @@ public class SettingsActivity extends AppCompatActivity {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
             EditTextPreference gcPref = findPreference(GROUPCODE_PREF);
-            SwitchPreferenceCompat bgPref = findPreference(BACKGROUND_PREF);
             SwitchPreferenceCompat debugPref = findPreference(DEBUGLOG_PREF);
             ResetablePreference dlPref = findPreference(DOWNLOAD_DIR_PREF);
             Preference themePref = findPreference(THEME_PREF);
@@ -97,7 +95,7 @@ public class SettingsActivity extends AppCompatActivity {
             authPortPref.setOnBindEditTextListener((edit)-> edit.setInputType(InputType.TYPE_CLASS_NUMBER));
 
             //Warn about preference not being applied immediately
-            for (Preference pref : new Preference[]{gcPref, bgPref, debugPref}) {
+            for (Preference pref : new Preference[]{gcPref, debugPref}) {
                 pref.setOnPreferenceChangeListener((p,v) -> {
                     Toast.makeText(getContext(), R.string.requires_restart_warning, Toast.LENGTH_SHORT).show();
                     return true;

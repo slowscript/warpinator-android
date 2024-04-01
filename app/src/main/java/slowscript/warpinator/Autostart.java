@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 
 public class Autostart extends BroadcastReceiver {
 
@@ -13,15 +13,11 @@ public class Autostart extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        if (
-                (
-                        intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED) ||
-                        intent.getAction().equals(Intent.ACTION_REBOOT)         ||
-                        intent.getAction().equals(Intent.ACTION_MY_PACKAGE_REPLACED)
-                ) && (
-                        prefs.getBoolean("background", true) &&
-                        prefs.getBoolean("bootStart", false)
-                )
+        if ((
+             intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED) ||
+             intent.getAction().equals(Intent.ACTION_REBOOT)         ||
+             intent.getAction().equals(Intent.ACTION_MY_PACKAGE_REPLACED)
+            ) && prefs.getBoolean("bootStart", false)
         ) {
             Intent i = new Intent(context, MainService.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

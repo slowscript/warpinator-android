@@ -50,25 +50,18 @@
     </PreferenceCategory>
 
     <PreferenceCategory>
-
-        <SwitchPreferenceCompat
-            android:title="@string/background_settings_title"
-            android:key="background"
-            android:defaultValue="true" />
         <SwitchPreferenceCompat
             android:title="@string/boot_settings_title"
             android:key="bootStart"
-            android:defaultValue="false"
-            android:dependency="background"
-            android:disableDependentsState="true" />
+            android:disableDependentsState="true"
+            android:defaultValue="false" />
         <SwitchPreferenceCompat
             android:title="@string/stop_svc_when_leaving"
 	    android:summaryOn="@string/stop_svc_when_leaving_summary_on"
             android:summaryOff="@string/stop_svc_when_leaving_summary_off"
             android:key="autoStop"
             android:defaultValue="true"
-            android:dependency="bootStart"
-            android:disableDependentsState="true" />
+            android:dependency="bootStart" />
         <SwitchPreferenceCompat
             android:title="@string/export_log_settings_tile"
             android:summary="Android/data/slowscript.warpinator/files/"

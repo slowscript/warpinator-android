@@ -167,12 +167,9 @@ public class Server {
         favorites.addAll(svc.prefs.getStringSet("favorites", Collections.emptySet()));
 
         boolean bootStart = svc.prefs.getBoolean("bootStart", false);
-        boolean background = svc.prefs.getBoolean("background", true);
         boolean autoStop = svc.prefs.getBoolean("autoStop", true);
         if (bootStart && autoStop)
             svc.prefs.edit().putBoolean("autoStop", false).apply();
-        if (bootStart && !background)
-            svc.prefs.edit().putBoolean("bootStart", false).apply();
     }
 
     void saveFavorites() {

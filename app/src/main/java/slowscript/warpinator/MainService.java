@@ -139,10 +139,8 @@ public class MainService extends Service {
         listenOnNetworkChanges();
         createNotificationChannels();
 
-        if(prefs.getBoolean("background", true)) {
-            Notification notification = createForegroundNotification();
-            startForeground(SVC_NOTIFICATION_ID, notification);
-        }
+        Notification notification = createForegroundNotification();
+        startForeground(SVC_NOTIFICATION_ID, notification);
 
         // Notify the tile service that MainService just started, so it can attempt to bind
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
