@@ -3,7 +3,7 @@ Warpinator per a Android és una adaptació no oficial de l'aplicació homònima
 Característiques:
 - Cerca automàtica de serveis compatibles dins la xarxa local.
 - Funciona amb connexió WiFi o punts d'accés (hotspot), no cal connexió a la Internet.
-- Tramesa de tota mena fitxers, ràpidament i amb facilitat.
+- Tramesa de tota mena de fitxers, ràpidament i amb facilitat.
 - Tramet carpetes senceres.
 - Múltiples transferències en paral·lel.
 - Comparteix fitxers des d'altres aplicacions.
