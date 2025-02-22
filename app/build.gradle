@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.protobuf'
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId 'slowscript.warpinator'
@@ -21,8 +21,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
+        sourceCompatibility = 17
+        targetCompatibility = 17
     }
     packagingOptions {
         resources {
@@ -86,7 +86,7 @@ protobuf {
 configurations.all {
     resolutionStrategy {
         dependencySubstitution {
-            substitute module('ch.qos.logback:logback-classic') with module('com.github.tony19:logback-android:2.0.0')
+            substitute module('ch.qos.logback:logback-classic') using module('com.github.tony19:logback-android:2.0.0')
         }
     }
 }
