@@ -3,12 +3,16 @@ package slowscript.warpinator.preferences;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -95,8 +99,29 @@ public class ProfilePicturePreference extends Preference {
                         Intent data = result.getData();
                         if (data != null) {
                             Uri u = data.getData();
-                            mContext.getContentResolver().takePersistableUriPermission(u, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                            getSharedPreferences().edit().putString("profile", u.toString()).apply();
+                            if (u != null) {
+                                try (var is = mContext.getContentResolver().openInputStream(u)) {
+                                    var bmp = BitmapFactory.decodeStream(is);
+                                    // Save "profilePic" to private app storage in reduced resolution
+                                    int outW, outH;
+                                    int maxDim = Math.min(512, Math.max(bmp.getWidth(), bmp.getHeight()));
+                                    if(bmp.getWidth() > bmp.getHeight()){
+                                        outW = maxDim;
+                                        outH = (bmp.getHeight() * maxDim) / bmp.getWidth();
+                                    } else {
+                                        outH = maxDim;
+                                        outW = (bmp.getWidth() * maxDim) / bmp.getHeight();
+                                    }
+                                    Bitmap resized = Bitmap.createScaledBitmap(bmp, outW, outH, true);
+                                    try (var os = mContext.openFileOutput("profilePic.png", Context.MODE_PRIVATE)) {
+                                        //quality is irrelevant for PNG
+                                        resized.compress(Bitmap.CompressFormat.PNG, 100, os);
+                                    }
+                                    getSharedPreferences().edit().putString("profile", "profilePic.png").apply();
+                                } catch (Exception e) {
+                                    Log.e("ProfilePic", "Failed to save profile picture: " + u, e);
+                                }
+                            }
                         }
                     }
                 });

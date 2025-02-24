@@ -3,6 +3,7 @@ package slowscript.warpinator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
@@ -436,9 +437,18 @@ public class Server {
         int[] colors = new int[]{0xfff44336, 0xffe91e63, 0xff9c27b0, 0xff3f51b5, 0xff2196f3, 0xff4caf50,
                 0xff8bc34a, 0xffcddc39, 0xffffeb3b, 0xffffc107, 0xffff9800, 0xffff5722};
         if (picture.startsWith("content")) {
+            // Legacy: load from persisted uri
             try {
                 return MediaStore.Images.Media.getBitmap(ctx.getContentResolver(), Uri.parse(picture));
             } catch (Exception e) {
+                picture = "0";
+            }
+        } else if ("profilePic.png".equals(picture)) {
+            try {
+                var is = ctx.openFileInput("profilePic.png");
+                return BitmapFactory.decodeStream(is);
+            } catch (Exception e) {
+                Log.e(TAG, "Could not load profile pic", e);
                 picture = "0";
             }
         }
