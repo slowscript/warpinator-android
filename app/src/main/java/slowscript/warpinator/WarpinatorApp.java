@@ -2,11 +2,13 @@ package slowscript.warpinator;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.material.color.DynamicColors;
 
@@ -19,6 +21,13 @@ public class WarpinatorApp extends Application implements Application.ActivityLi
         DynamicColors.applyToActivitiesIfAvailable(this);
         registerActivityLifecycleCallbacks(this);
         activitiesRunning = 0;
+        // Clear old persisted URI permissions (except profile picture)
+        String picture = PreferenceManager.getDefaultSharedPreferences(this).getString("profile", "0");
+        for (var u : getContentResolver().getPersistedUriPermissions()) {
+            if (u.getUri().toString().equals(picture))
+                continue;
+            getContentResolver().releasePersistableUriPermission(u.getUri(), Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
     }
 
     @Override

@@ -309,11 +309,14 @@ public class TransfersActivity extends AppCompatActivity {
                     return;
                 }
                 Log.v(TAG, u.toString());
+                getContentResolver().takePersistableUriPermission(u, Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 t.uris.add(u);
             } else {
                 for (int i = 0; i < cd.getItemCount(); i++) {
-                    t.uris.add(cd.getItemAt(i).getUri());
-                    Log.v(TAG, cd.getItemAt(i).getUri().toString());
+                    var uri = cd.getItemAt(i).getUri();
+                    getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    t.uris.add(uri);
+                    Log.v(TAG, uri.toString());
                 }
             }
             t.remoteUUID = remote.uuid;

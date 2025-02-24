@@ -254,6 +254,7 @@ public class Transfer {
                             if (i >= files.size()) {
                                 observer.onCompleted();
                                 setStatus(Status.FINISHED);
+                                unpersistUris();
                                 updateUI();
                             }
                             continue;
@@ -306,6 +307,12 @@ public class Transfer {
 
     private void stopSending() {
         cancelled = true;
+    }
+
+    private void unpersistUris() {
+        for (Uri u : uris) {
+            svc.getContentResolver().releasePersistableUriPermission(u, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
     }
 
     long getTotalSendSize() {

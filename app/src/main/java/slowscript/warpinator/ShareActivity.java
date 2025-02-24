@@ -65,8 +65,10 @@ public class ShareActivity extends AppCompatActivity {
             return;
         }
         Log.d(TAG, "Sharing " + uris.size() + " files");
-        for (Uri u : uris)
+        for (Uri u : uris) {
             Log.v(TAG, u.toString());
+            getContentResolver().takePersistableUriPermission(u, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
 
         //Start service (if not running)
         if (!Utils.isMyServiceRunning(this, MainService.class))
