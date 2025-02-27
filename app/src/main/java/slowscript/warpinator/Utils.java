@@ -135,7 +135,9 @@ public class Utils {
             ni = nis.nextElement();
             if ((!ni.isLoopback()) && ni.isUp()) {
                 String name = ni.getDisplayName();
-                if (name.contains("dummy") || name.contains("rmnet"))
+                if (name.contains("dummy") || name.contains("rmnet") || name.contains("ifb"))
+                    continue;
+                if (getIPForIface(ni) == null) //Skip ifaces with no IPv4 address
                     continue;
                 Log.d(TAG, "Selected interface: " + ni.getDisplayName());
                 return ni;
