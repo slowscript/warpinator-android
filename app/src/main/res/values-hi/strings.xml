@@ -100,4 +100,8 @@
     <string name="error_download_dir">आपको सेटिंग्स में एक डाउनलोड डायरेक्टरी का चयन करना होगा</string>
     <string name="cert_not_received">%1$s से प्रमाणपत्र प्राप्त करने में विफल. रिमोट के फ़ायरवॉल में पोर्ट %2$d पर UDP (साथ ही TCP) ट्रैफ़िक की अनुमति देना सुनिश्चित करें।</string>
     <string name="manual_connect_text">उपरोक्त QR कोड को कैमरा ऐप से स्कैन करें और लिंक खोलें या अन्य डिवाइस से कनेक्शन शुरू करने के लिए निम्नलिखित पते का उपयोग करें:</string>
+    <string name="enter_address">पता और पोर्ट दर्ज करें</string>
+    <string name="manual_connect_hint">मेनू में मैन्युअल कनेक्शन का प्रयास करें</string>
+    <string name="confirm_connection">\'%s\' से कनेक्ट करें?</string>
+    <string name="qs_discovered_count">%d जुड़ा</string>
 </resources>

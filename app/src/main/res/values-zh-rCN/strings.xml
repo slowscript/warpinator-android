@@ -131,4 +131,8 @@
     <string name="manual_connect_text">用相机应用扫描上方二维码并打开链接或使用下列地址从其他设备发起连接：</string>
     <string name="manual_connection">手动连接</string>
     <string name="save_log">保存日志</string>
+    <string name="enter_address">输入地址和端口</string>
+    <string name="manual_connect_hint">尝试菜单中的手动连接</string>
+    <string name="confirm_connection">连接到“%s“？</string>
+    <string name="qs_discovered_count">%d 已连接</string>
 </resources>

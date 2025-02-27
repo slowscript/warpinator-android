@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quit">Tuffɣa</string>
+    <string name="remaining">d-yegran</string>
+    <string name="identity_settings_category">Tamagit</string>
+    <string name="reconnect_button_cnt_des">Ales tuqqna</string>
+    <string name="save_log">Sekles aɣmis</string>
+    <string name="settings">Iɣewwaṛen</string>
+    <string name="send_files">Azen ifuyla</string>
+    <string name="manual_connection">Tuqqna s ufus</string>
+    <string name="title_activity_share">Bḍu d</string>
+    <string name="available_devices">Ibenkan i yellan</string>
+    <string name="rescan">Anadi ɣef ibenkan imaynuten</string>
+    <string name="a_few_seconds">kra n tasinin kan</string>
+    <string name="connection_error">Tuccḍa n tuqqna</string>
+    <string name="send_folder_toast">Fren akaram akken ad tazneḍ</string>
+    <string name="devices_to_share_with">Ibenkan akked wara tebḍuḍ d yifuyla-k·m</string>
+    <string name="network_setting_category">Aẓeṭṭa</string>
+    <string name="version">Lqem: %1$s</string>
+    <string name="nothing_to_share">Ulac d acu ara tebḍuḍ</string>
+    <string name="picture_settings_title">Tugna n umaɣnu</string>
+    <string name="download_dir_settings_title">Akaram n isidar</string>
+    <string name="theme_settings_title">Asentel</string>
+    <string name="boot_settings_title">Sekker s wudem awurman</string>
+    <string name="group_code_settings_title">Tangalt n wegraw</string>
+    <string name="custom">Udmawan</string>
+    <string name="lightTheme">Asentel aceɛlal</string>
+    <string name="darkTheme">Asentel ubrik</string>
+    <string name="num_files">%d n yifuyla</string>
+    <string name="sysDefault">Seqdec imezwura n unagraw</string>
+    <string name="profile_image_cnt_des">Tugna n umaɣnu</string>
+    <string name="application_icon_cnt_des">Tignit n wesnas</string>
+    <string name="manual_connect_hint">Ɛreḍ tuqqna s ufus seg wumuɣ</string>
+    <string name="qs_discovered_count">%d i yettwaqqnen</string>
+    <string name="confirm_connection">Qqen ɣer \'%s\'?</string>
+    <string name="about">Ɣef</string>
+    <string name="aspect_setting_category">Udem</string>
+    <string name="enter_address">Sekcem tansa akked tawwurt</string>
+    <string name="no_share_devices">Ulac ibenkan d wara tebḍuḍ</string>
+</resources>

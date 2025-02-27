@@ -13,7 +13,7 @@
     <string name="title_activity_share">Dijeli s</string>
     <string name="available_devices">Dostupni uređaji</string>
     <string name="no_devices_found">Nema dostupnih uređaja</string>
-    <string name="wrong_group_code">Neuspjela veza: pogrešan kȏd grupe</string>
+    <string name="wrong_group_code">Neuspjela veza: pogrešan kod grupe</string>
     <string name="connection_error">Greška veze</string>
     <string name="not_connected_to_wifi">Niste povezani s WiFi ili LAN mrežom. Koristite svoju pristupnu točku ako nijedna od tih mreža nije dostupna. Ponovo pokrenite aplikaciju kad ste povezani.</string>
     <string name="changed_network">Mreža je promijenjena – usluga se ponovo pokreće …</string>
@@ -24,14 +24,14 @@
     <string name="open_failed">Neuspjelo otvaranje primljene datoteke</string>
     <string name="a_few_seconds">nekoliko sekundi</string>
     <string name="service_unavailable">, usluga je nedostupna</string>
-    <string name="errors_during_transfer">Greške pri prijenosu:</string>
+    <string name="errors_during_transfer">Greške tijekom prijenosa:</string>
     <string name="dont_close_when_sharing">Zatvaranje ove aktvnosti tijekom dijeljenja može prouzročiti neuspješan prijenos</string>
     <string name="files_being_sent">Poslane datoteke:</string>
     <!--  About activity  -->
     <string name="version">Verzija %1$s</string>
     <string name="about_description">Ovo je neslužbeni priključak Warpinatora.
 \nŠaljite i primajte datoteke putem lokalne mreže.</string>
-    <string name="warranty_html">Ovaj program je softver otvorenog koda licenciran pod uvjetima &lt;a href=\"https://www.gnu.org/licenses/gpl-3.0.html\"&gt;GNU Opće Javne Licence&lt;/a&gt;.&lt;br&gt; Izvorni kȏd možete preuzeti s &lt;a href=\"https://github.com/slowscript/warpinator-android/\"&gt;GitHuba&lt;/a&gt;.&lt;br&gt; &lt;br&gt; Ovaj se program nudi bez jamstva.&lt;br&gt;Pogledajte uvjete licence za više pojedinosti.</string>
+    <string name="warranty_html">Ovaj program je softver otvorenog koda licenciran pod uvjetima &lt;a href=\"https://www.gnu.org/licenses/gpl-3.0.html\"&gt;GNU Opće Javne Licence&lt;/a&gt;.&lt;br&gt; Izvorni kod možete preuzeti s &lt;a href=\"https://github.com/slowscript/warpinator-android/\"&gt;GitHuba&lt;/a&gt;.&lt;br&gt; &lt;br&gt; Ovaj se program nudi bez jamstva.&lt;br&gt;Pogledajte uvjete licence za više pojedinosti.</string>
     <!--  Share activity  -->
     <string name="devices_to_share_with">Uređaji za dijeljenje</string>
     <string name="no_share_devices">Nema dostupnih uređaja za dijeljenje</string>
@@ -48,7 +48,7 @@
     <string name="notification_settings_title">Prikaži obavijesti o dolaznim datotekama</string>
     <string name="overwrite_settings_title">Dopusti prepisivanje</string>
     <string name="accept_settings_title">Automatski prihvati prijenose</string>
-    <string name="accept_setting_summary_on">Prijenosi će se prihvatiti automatski</string>
+    <string name="accept_setting_summary_on">Prijenosi će se automatski prihvatit</string>
     <string name="accept_setting_summary_off">Morate prihvatiti svaki prijenos</string>
     <string name="background_settings_title">Pokreći u pozadini</string>
     <string name="boot_settings_title">Pokreni automatski</string>
@@ -131,4 +131,8 @@
     <string name="manual_connect_text">Skeniraj gornji QR kod pomoću aplikacije kamere i otvori poveznicu ili koristi sljedeću adresu za pokretanje veze s drugog uređaja:</string>
     <string name="manual_connection">Ručno povezivanje</string>
     <string name="save_log">Spremi dnevnik radnji</string>
+    <string name="enter_address">Upišite adresu i priključak</string>
+    <string name="manual_connect_hint">Pokušajte ručno povezivanje u izborniku</string>
+    <string name="confirm_connection">Povezati se na \'%s\'?</string>
+    <string name="qs_discovered_count">Povezano: %d</string>
 </resources>

@@ -131,4 +131,8 @@
     <string name="initiate_connection">Verbindung initiieren</string>
     <string name="manual_connection">Manuelle Verbindung</string>
     <string name="manual_connect_text">Scannen Sie den obigen QR-Code mit einer Kamera-App und öffnen Sie den Link oder verwenden Sie die folgende Adresse, um die Verbindung vom anderen Gerät aus zu initiieren:</string>
+    <string name="qs_discovered_count">%d verbunden</string>
+    <string name="enter_address">Adresse und Port eingeben</string>
+    <string name="manual_connect_hint">Manuelle Verbindung im Menü versuchen</string>
+    <string name="confirm_connection">Mit »%s« verbinden?</string>
 </resources>

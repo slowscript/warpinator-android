@@ -131,4 +131,8 @@
     <string name="manual_connect_text">Scansionare il codice QR qui sopra con un\'app fotocamera e aprire il collegamento o utilizzare il seguente indirizzo per stabilire la connessione dall\'altro dispositivo:</string>
     <string name="manual_connection">Connessione manuale</string>
     <string name="save_log">Salva il registro</string>
+    <string name="enter_address">Inserire l\'indirizzo e la porta</string>
+    <string name="manual_connect_hint">Provare la connessione manuale</string>
+    <string name="confirm_connection">Connettersi a \'%s\'?</string>
+    <string name="qs_discovered_count">%d connesso</string>
 </resources>

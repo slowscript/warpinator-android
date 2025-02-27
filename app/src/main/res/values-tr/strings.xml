@@ -131,4 +131,8 @@
     <string name="manual_connect_text">Yukarıdaki QR kodunu bir kamera uygulaması ile tarayın ve bağlantıyı açın veya başka aygıttan bağlantıyı başlatmak için aşağıdaki adresi kullanın:</string>
     <string name="manual_connection">Elle bağlantı</string>
     <string name="save_log">Kütüğü kaydet</string>
+    <string name="enter_address">Adres ve bağlantı noktasını girin</string>
+    <string name="manual_connect_hint">Menüden elle bağlantıyı deneyin</string>
+    <string name="confirm_connection">\'%s\' adresine bağlanılsın mı?</string>
+    <string name="qs_discovered_count">%d bağlandı</string>
 </resources>

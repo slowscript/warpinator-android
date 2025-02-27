@@ -120,4 +120,8 @@
     <string name="manual_connect_text">Scanează codul QR de mai sus cu fotocamera și deschide adresa sau folosește următoarea adresă pentru a stabili legătura din celălalt aparat:</string>
     <string name="manual_connection">Conectare manuală</string>
     <string name="save_log">Salvează jurnalul</string>
+    <string name="enter_address">Introdu adresa și portul</string>
+    <string name="qs_discovered_count">%d conectat</string>
+    <string name="manual_connect_hint">Încearcă conectarea manuală</string>
+    <string name="confirm_connection">Conectezi la „%s”?</string>
 </resources>

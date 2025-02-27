@@ -100,4 +100,8 @@
     <string name="manual_connect_text">Digitalize o código QR acima com um aplicativo de câmara e abra a ligação ou use o seguinte endereço para iniciar a conexão do outro dispositivo:</string>
     <string name="manual_connection">Conexão manual</string>
     <string name="save_log">Gravar regito</string>
+    <string name="manual_connect_hint">Tentar conexão manual no menu</string>
+    <string name="enter_address">Insira endereço e porta</string>
+    <string name="confirm_connection">Conectar a \'%s\'?</string>
+    <string name="qs_discovered_count">%d conectado</string>
 </resources>

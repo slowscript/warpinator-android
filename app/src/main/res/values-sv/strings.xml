@@ -100,4 +100,8 @@
     <string name="manual_connect_text">Skanna QR-koden ovan med en kameraapp och öppna länken eller använd följande adress för att initiera anslutningen från den andra enheten:</string>
     <string name="manual_connection">Manuell anslutning</string>
     <string name="save_log">Spara logg</string>
+    <string name="enter_address">Ange adress och port</string>
+    <string name="manual_connect_hint">Prova Manuell anslutning i menyn</string>
+    <string name="confirm_connection">Anslut till \'%s\'?</string>
+    <string name="qs_discovered_count">%d ansluten</string>
 </resources>
