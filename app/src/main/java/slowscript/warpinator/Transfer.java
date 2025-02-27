@@ -62,8 +62,8 @@ public class Transfer {
     int privId;
     //SEND only
     public ArrayList<Uri> uris;
-    public ArrayList<MFile> files;
-    public ArrayList<MFile> dirs;
+    private ArrayList<MFile> files;
+    private ArrayList<MFile> dirs;
 
     public boolean overwriteWarning = false;
 
@@ -216,6 +216,9 @@ public class Transfer {
         actualStartTime = System.currentTimeMillis();
         bytesTransferred = 0;
         cancelled = false;
+        MainService.cancelAutoStop();
+        Log.i(TAG, "Acquiring wake lock for " + MainService.WAKELOCK_TIMEOUT + " min");
+        svc.wakeLock.acquire(MainService.WAKELOCK_TIMEOUT*60*1000L);
         updateUI();
         observer.setOnReadyHandler(new Runnable() {
             int i, iDir = 0;
@@ -372,6 +375,9 @@ public class Transfer {
         actualStartTime = System.currentTimeMillis();
         updateUI();
         MainService.remotes.get(remoteUUID).startReceiveTransfer(this);
+        MainService.cancelAutoStop(); //startRecv is asynchronous and may fail -> do this after
+        Log.i(TAG, "Acquiring wake lock for " + MainService.WAKELOCK_TIMEOUT + " min");
+        svc.wakeLock.acquire(MainService.WAKELOCK_TIMEOUT*60*1000L);
     }
 
     void declineTransfer() {

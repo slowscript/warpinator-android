@@ -18,6 +18,7 @@ import android.net.NetworkRequest;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.text.format.Formatter;
 import android.util.Log;
@@ -52,6 +53,7 @@ public class MainService extends Service {
     static int SVC_NOTIFICATION_ID = 1;
     static int PROGRESS_NOTIFICATION_ID = 2;
     static String ACTION_STOP = "StopSvc";
+    static int WAKELOCK_TIMEOUT = 10; // 10 min
     static long pingTime = 10_000;
     static long reconnectTime = 40_000;
     static long autoStopTime = 60_000;
@@ -69,6 +71,7 @@ public class MainService extends Service {
     SharedPreferences prefs;
     ExecutorService executor = Executors.newCachedThreadPool();
     public NotificationManagerCompat notificationMgr;
+    PowerManager.WakeLock wakeLock;
 
     private NotificationCompat.Builder notifBuilder = null;
     private Server server;
@@ -105,6 +108,10 @@ public class MainService extends Service {
 
         // Acquire multicast lock for mDNS
         acquireMulticastLock();
+
+        PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"MainService::TransferWakeLock");
+        wakeLock.setReferenceCounted(false);
 
         lastIP = Utils.getIPAddress();
         server = new Server(this);
@@ -361,6 +368,10 @@ public class MainService extends Service {
             notifBuilder.setContentTitle(getString(R.string.transfers_complete));
             notifBuilder.setOngoing(false);
             scheduleAutoStop();
+            if (wakeLock.isHeld()) {
+                Log.i(TAG, "Releasing transfer wake lock");
+                wakeLock.release();
+            }
         }
         if (runningTransfers > 0 || TransfersActivity.topmostRemote == null)
             notificationMgr.notify(PROGRESS_NOTIFICATION_ID, notifBuilder.build());
