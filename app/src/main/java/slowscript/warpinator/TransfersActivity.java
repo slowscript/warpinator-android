@@ -28,7 +28,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -231,7 +230,7 @@ public class TransfersActivity extends AppCompatActivity {
                 if (!remote.serviceAvailable)
                     imgStatus.setImageResource(R.drawable.ic_unavailable);
                 else
-                    color = Utils.getAttributeColor(getTheme(), R.attr.colorError);
+                    color = Utils.getAttributeColor(getTheme(), androidx.appcompat.R.attr.colorError);
             }
             imgStatus.setImageTintList(ColorStateList.valueOf(color));
 

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -63,7 +62,7 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
             if (!r.serviceAvailable)
                 holder.imgStatus.setImageResource(R.drawable.ic_unavailable);
             else
-                color = Utils.getAttributeColor(context.getTheme(), R.attr.colorError);
+                color = Utils.getAttributeColor(context.getTheme(), androidx.appcompat.R.attr.colorError);
         }
         holder.imgStatus.setImageTintList(ColorStateList.valueOf(color));
         holder.imgFav.setVisibility(r.isFavorite() ?  View.VISIBLE : View.INVISIBLE);
