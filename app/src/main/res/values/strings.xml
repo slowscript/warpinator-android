@@ -107,6 +107,7 @@
     <string name="stop_button_cnt_des">Stop the transfer</string>
     <string name="retry_button_cnt_des">Retry the transfer</string>
     <string name="reset_cnt_des">Reset to default value</string>
+    <string name="qr_code_cnt_des">QR code</string>
     <!--  Other  -->
     <string name="please_select_download_dir">This is likely the first time you are launching this application.
         Please select a directory where you want Warpinator to save files into.</string>

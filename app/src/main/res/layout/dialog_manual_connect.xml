@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
     android:id="@+id/dialogManualConnect"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:gravity="center"
     android:orientation="vertical">
@@ -14,6 +16,7 @@
         android:layout_width="320dp"
         android:layout_height="320dp"
         android:layout_marginTop="16dp"
+        android:contentDescription="@string/qr_code_cnt_des"
         tools:srcCompat="@tools:sample/avatars[0]" />
 
     <TextView
@@ -30,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="192.168.1.1:42001"
+        tools:text="192.168.1.1:42001"
         android:textStyle="bold" />
 </LinearLayout>
+</ScrollView>
