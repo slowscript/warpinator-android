@@ -22,6 +22,7 @@
         Restart the application when you are connected.</string>
     <string name="changed_network">Network changed - restarting service…</string>
     <string name="devices_outside_group">Devices outside your group: %1$d</string>
+    <string name="address_copied">Address copied to clipboard</string>
     <!--  Transfers activity  -->
     <string name="waiting_for_permission">Waiting for permission…</string>
     <string name="files_overwritten_warning">(Files may be overwritten!)</string>

@@ -3,6 +3,8 @@ package slowscript.warpinator;
 import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -185,8 +187,18 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                     .setNeutralButton(android.R.string.cancel, null)
                     .create();
             String host = MainService.svc.lastIP + ":" + Server.current.authPort;
-            ((TextView)v.findViewById(R.id.txtHost)).setText(host);
-            ((ImageView)v.findViewById(R.id.imgQR)).setImageBitmap(Utils.getQRCodeBitmap("warpinator://"+host));
+            String uri = "warpinator://"+host;
+            View.OnClickListener copyListener = (s) -> {
+                ClipData clip = ClipData.newPlainText("Device address", uri);
+                ((ClipboardManager)getSystemService(CLIPBOARD_SERVICE)).setPrimaryClip(clip);
+                Toast.makeText(this, R.string.address_copied, Toast.LENGTH_SHORT).show();
+            };
+            var txtHost = ((TextView)v.findViewById(R.id.txtHost));
+            txtHost.setText(host);
+            txtHost.setOnClickListener(copyListener);
+            var imgQR = ((ImageView)v.findViewById(R.id.imgQR));
+            imgQR.setImageBitmap(Utils.getQRCodeBitmap(uri));
+            imgQR.setOnClickListener(copyListener);
             dialog.show();
         } else if (itemID == R.id.conn_issues) {
             Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
