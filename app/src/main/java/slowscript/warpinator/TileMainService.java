@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.IBinder;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
@@ -92,7 +94,16 @@ public class TileMainService extends TileService implements MainService.RemoteCo
 
     private void startService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(serviceIntent);
+            try {
+                startForegroundService(serviceIntent);
+            } catch (Exception e) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    Log.e("Tile", "Cannot start main service from background on Android 14+", e);
+                    Toast.makeText(this, "Cannot Warpinator from tile on Android 14+", Toast.LENGTH_LONG).show();
+                }
+                else Log.e("Tile", "Cannot start main service (Android <14)", e);
+                return;
+            }
         } else {
             startService(serviceIntent);
         }
