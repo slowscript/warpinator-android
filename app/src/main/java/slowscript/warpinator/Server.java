@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.security.Security;
+import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -192,6 +193,11 @@ public class Server {
             Log.d(TAG, "GRPC server started");
         } catch(Exception e) {
             running = false;
+            if (e.getCause() instanceof CertificateException) {
+                Log.e(TAG, "Failed to initialize SSL context", e);
+                Toast.makeText(svc, "Failed to start service due to TLS error. Please contact the developers.", Toast.LENGTH_LONG).show();
+                return;
+            }
             Log.e(TAG, "Failed to start GRPC server.", e);
             Toast.makeText(svc, "Failed to start GRPC server. Please try rebooting your phone or changing port numbers.", Toast.LENGTH_LONG).show();
         }

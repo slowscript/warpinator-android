@@ -27,7 +27,7 @@ import slowscript.warpinator.SettingsActivity;
 public class ProfilePicturePreference extends Preference {
 
     ActivityResultLauncher<Intent> customImageActivityResultLauncher;
-    private Context mContext;
+    private final Context mContext;
 
     public ProfilePicturePreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
@@ -120,6 +120,7 @@ public class ProfilePicturePreference extends Preference {
                                     getSharedPreferences().edit().putString("profile", "profilePic.png").apply();
                                 } catch (Exception e) {
                                     Log.e("ProfilePic", "Failed to save profile picture: " + u, e);
+                                    Toast.makeText(mContext, "Failed to save profile picture: " + e, Toast.LENGTH_LONG).show();
                                 }
                             }
                         }

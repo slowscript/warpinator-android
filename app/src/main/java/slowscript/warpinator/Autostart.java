@@ -14,9 +14,9 @@ public class Autostart extends BroadcastReceiver {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         if ((
-             intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED) ||
-             intent.getAction().equals(Intent.ACTION_REBOOT)         ||
-             intent.getAction().equals(Intent.ACTION_MY_PACKAGE_REPLACED)
+             Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction()) ||
+             Intent.ACTION_REBOOT.equals(intent.getAction())         ||
+             Intent.ACTION_MY_PACKAGE_REPLACED.equals(intent.getAction())
             ) && prefs.getBoolean("bootStart", false)
         ) {
             Intent i = new Intent(context, MainService.class);

@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 	        startService(new Intent(this, MainService.class));
         } catch (Exception e) {
         	Log.e(TAG, "Could not start service", e);
-        	Toast.makeText(this, "Could not start service: " + e.toString(), Toast.LENGTH_LONG).show(); 
+        	Toast.makeText(this, "Could not start service: " + e.toString(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -176,6 +176,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         if (itemID == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         } else if (itemID == R.id.manual_connect) {
+            if (Server.current == null || !Server.current.running) {
+                Toast.makeText(this, "Service is not running", Toast.LENGTH_LONG).show();
+                return true;
+            }
             LayoutInflater inflater = LayoutInflater.from(this);
             View v = inflater.inflate(R.layout.dialog_manual_connect, null);
             AlertDialog dialog = new MaterialAlertDialogBuilder(this).setView(v)

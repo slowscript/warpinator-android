@@ -14,6 +14,7 @@ import com.google.android.material.color.DynamicColors;
 
 public class WarpinatorApp extends Application implements Application.ActivityLifecycleCallbacks {
     static int activitiesRunning = 0;
+    static final String TAG = "APP";
 
     @Override
     public void onCreate() {
@@ -21,18 +22,22 @@ public class WarpinatorApp extends Application implements Application.ActivityLi
         DynamicColors.applyToActivitiesIfAvailable(this);
         registerActivityLifecycleCallbacks(this);
         activitiesRunning = 0;
+
         // Clear old persisted URI permissions (except profile picture)
         String picture = PreferenceManager.getDefaultSharedPreferences(this).getString("profile", "0");
         for (var u : getContentResolver().getPersistedUriPermissions()) {
-            if (u.getUri().toString().equals(picture))
+            if (u.getUri().toString().equals(picture)) {
+                Log.v(TAG, "keeping permission for " + u);
                 continue;
+            }
+            Log.v(TAG, "releasing uri permission " + u);
             getContentResolver().releasePersistableUriPermission(u.getUri(), Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
     }
 
     @Override
     public void onActivityStarted(@NonNull Activity activity) {
-        Log.d("APP", "Start");
+        Log.d(TAG, "Started activity");
         activitiesRunning++;
         MainService.cancelAutoStop();
     }
@@ -40,7 +45,7 @@ public class WarpinatorApp extends Application implements Application.ActivityLi
     @Override
     public void onActivityStopped(@NonNull Activity activity) {
         activitiesRunning--;
-        Log.d("APP", "Stop -> " + activitiesRunning);
+        Log.d(TAG, "Stopped activity -> " + activitiesRunning);
         if (activitiesRunning < 1)
             MainService.scheduleAutoStop();
     }
