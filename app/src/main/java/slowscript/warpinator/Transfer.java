@@ -190,7 +190,7 @@ public class Transfer {
                 f.name = c.getString(nameCol); //Name is mandatory
                 if (mimeCol != -1)
                     f.mime = c.getString(mimeCol);
-                else {
+                if (mimeCol == -1 || f.mime == null) {
                     Log.w(TAG, "Could not get MIME type");
                     f.mime = "application/octet-stream";
                 }
@@ -204,8 +204,8 @@ public class Transfer {
                 f.relPath = f.name;
                 mfs.add(f);
             }
-        } catch(SecurityException sec) {
-            Log.e(TAG, "Could not query resolver: ", sec);
+        } catch(Exception e) {
+            Log.e(TAG, "Could not query resolver: ", e);
         }
         return mfs;
     }

@@ -322,6 +322,11 @@ public class MainService extends Service {
 
     private void onNetworkChanged() {
         String newIP = Utils.getIPAddress();
+        if (newIP == null) {
+            Log.w(TAG, "Network changed, but we do not have an IP");
+            lastIP = null;
+            return;
+        }
         if (!newIP.equals(lastIP)) {
             Log.d(TAG, ":: Restarting. New IP: " + newIP);
             LocalBroadcasts.displayToast(this, getString(R.string.changed_network), 1);

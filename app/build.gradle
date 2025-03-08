@@ -86,7 +86,7 @@ protobuf {
 configurations.all {
     resolutionStrategy {
         dependencySubstitution {
-            substitute module('ch.qos.logback:logback-classic') using module('com.github.tony19:logback-android:2.0.0')
+            substitute module('ch.qos.logback:logback-classic') using module('com.github.tony19:logback-android:3.0.0')
         }
     }
 }
