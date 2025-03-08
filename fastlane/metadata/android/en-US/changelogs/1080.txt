@@ -1,0 +1,7 @@
+- Use a wake lock during transfer to prevent it being interrupted
+- Manual connection dialog is now scrollable on small screens
+- Added option to copy address for manual connection by tapping on it
+- Fixed file permissions expiring before transfer completes
+- Make a resized copy of profile picture in app storage in case original is deleted
+- Always start service in foreground
+- Target Android 14
