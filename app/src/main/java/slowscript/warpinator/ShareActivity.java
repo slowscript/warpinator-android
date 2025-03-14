@@ -58,7 +58,7 @@ public class ShareActivity extends AppCompatActivity {
             return;
         }
 
-        if (uris == null || uris.size() < 1) {
+        if (uris == null || uris.isEmpty()) {
             Log.d(TAG, "Nothing to share");
             Toast.makeText(this, R.string.nothing_to_share, Toast.LENGTH_LONG).show();
             finish();
@@ -67,7 +67,11 @@ public class ShareActivity extends AppCompatActivity {
         Log.d(TAG, "Sharing " + uris.size() + " files");
         for (Uri u : uris) {
             Log.v(TAG, u.toString());
-            getContentResolver().takePersistableUriPermission(u, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            try { // This doesn't seem to work most of the time, we need a better solution
+                getContentResolver().takePersistableUriPermission(u, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            } catch (Exception e) {
+                Log.w(TAG, "Uri permission was not persisted: " + e);
+            }
         }
 
         //Start service (if not running)
