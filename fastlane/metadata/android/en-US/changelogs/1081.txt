@@ -1,0 +1,2 @@
+- Improved transfer speed calculation
+- Fixed crash when sharing
