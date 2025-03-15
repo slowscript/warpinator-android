@@ -76,7 +76,9 @@ public class Transfer {
     private boolean cancelled = false;
     public long bytesTransferred;
     public long bytesPerSecond;
+    TransferSpeed transferSpeed = new TransferSpeed(24);
     public long actualStartTime;
+    long lastBytes = 0;
     long lastMillis = 0;
     long lastUiUpdate = 0;
 
@@ -112,6 +114,12 @@ public class Transfer {
         long now = System.currentTimeMillis();
         if (getStatus() == Status.TRANSFERRING && (now - lastUiUpdate) < UI_UPDATE_LIMIT)
             return;
+        if (direction == Direction.SEND) {
+            long bps = (long) ((bytesTransferred - lastBytes) / ((now - lastUiUpdate) / 1000f));
+            transferSpeed.add(bps);
+            bytesPerSecond = transferSpeed.getMovingAverage();
+            lastBytes = bytesTransferred;
+        }
 
         lastUiUpdate = now;
         LocalBroadcasts.updateTransfer(svc, remoteUUID, privId);
@@ -214,7 +222,8 @@ public class Transfer {
         setStatus(Status.TRANSFERRING);
         Log.d(TAG, "Sending, compression " + useCompression);
         actualStartTime = System.currentTimeMillis();
-        bytesTransferred = 0;
+        transferSpeed = new TransferSpeed(8);
+        bytesTransferred = lastBytes = 0;
         cancelled = false;
         MainService.cancelAutoStop();
         Log.i(TAG, "Acquiring wake lock for " + MainService.WAKELOCK_TIMEOUT + " min");
@@ -285,9 +294,6 @@ public class Transfer {
                                 .build();
                         observer.onNext(fc);
                         bytesTransferred += read;
-                        long now = System.currentTimeMillis();
-                        bytesPerSecond = (long)(read / ((now - lastMillis) / 1000f));
-                        lastMillis = now;
                         updateUI();
                     } catch (FileNotFoundException e) {
                         observer.onError(new StatusException(io.grpc.Status.NOT_FOUND));
@@ -447,7 +453,9 @@ public class Transfer {
         }
         bytesTransferred += chunkSize;
         long now = System.currentTimeMillis();
-        bytesPerSecond = (long)(chunkSize / ((now - lastMillis) / 1000f));
+        long bps = (long)(chunkSize / ((now - lastMillis) / 1000f));
+        transferSpeed.add(bps);
+        bytesPerSecond = transferSpeed.getMovingAverage();
         lastMillis = now;
         updateUI();
         return getStatus() == Status.TRANSFERRING; //True if not interrupted
@@ -662,5 +670,36 @@ public class Transfer {
         long length;
         long lastMod;
         boolean isDirectory;
+    }
+
+    static class TransferSpeed {
+        private final int historyLength;
+        private final long[] history;
+        private int idx = 0;
+        private int count = 0;
+
+        public TransferSpeed(int historyLen) {
+            historyLength = historyLen;
+            history = new long[historyLength];
+        }
+
+        public void add(long bps) {
+            history[idx] = bps;
+            idx = (idx + 1) % historyLength;
+            if (count < historyLength)
+                count++;
+        }
+
+        public long getMovingAverage() {
+            if (count == 0)
+                return 0;
+            else if (count == 1)
+                return history[0];
+
+            long sum = 0;
+            for (int i = 0; i < count; i++)
+                sum += history[i];
+            return sum / count;
+        }
     }
 }
