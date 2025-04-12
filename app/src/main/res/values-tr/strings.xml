@@ -135,4 +135,6 @@
     <string name="manual_connect_hint">Menüden elle bağlantıyı deneyin</string>
     <string name="confirm_connection">\'%s\' adresine bağlanılsın mı?</string>
     <string name="qs_discovered_count">%d bağlandı</string>
+    <string name="address_copied">Adres panoya kopyalandı</string>
+    <string name="qr_code_cnt_des">QR kod</string>
 </resources>

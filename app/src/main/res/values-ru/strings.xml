@@ -129,4 +129,5 @@
     <string name="manual_connect_text">Отсканируйте QR-код на другом устройстве и перейдите по ссылке или введите следующий адрес:</string>
     <string name="initiate_connection">Соединиться</string>
     <string name="manual_connection">Подключиться вручную</string>
+    <string name="enter_address">Введите адрес и порт</string>
 </resources>

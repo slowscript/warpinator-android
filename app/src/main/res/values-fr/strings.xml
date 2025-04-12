@@ -138,4 +138,6 @@
     <string name="enter_address">Saisir l\'adresse et le port</string>
     <string name="manual_connect_hint">Essayez la connexion manuelle dans le menu</string>
     <string name="confirm_connection">Se connecter à \"%s\" ?</string>
+    <string name="address_copied">Adresse copiée dans le presse-papiers</string>
+    <string name="qr_code_cnt_des">Code QR</string>
 </resources>

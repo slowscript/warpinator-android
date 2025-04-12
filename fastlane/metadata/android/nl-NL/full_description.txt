@@ -1,0 +1,15 @@
+Warpinator voor Android is een onofficiele 'port' van Linux Mint's  tool Warpinator om bestanden uit te wisselen. Het is volledig compatibel met het oorspronkelijke protocol en maakt het eenvoudig uitwisselen van bestand tussen Android en Linux machines.
+
+Eigenschappen:
+- Automatische herkenning van compatible services op lokaal network
+- Werkt op wifi of hotspot, geen internetverbinding nodig
+- Verzend elk bestandstype snel en  eenvoudig
+- Ontvang volledige bestandsdirectory's
+- Verzend meerdere bestanden of directory's tegelijk
+- Deel bestanden van andere applicaties
+- Hou met een groepscode controle over wie verbinding kan maken
+- Mogelijkheid om mee op te starten bij booten
+- locatie of andere onnodige toestemming niet vereist
+
+Deze applicatie is vrije software onder GNU General Public License v3.
+De broncode is beschikbaar op https://github.com/slowscript/warpinator-android.

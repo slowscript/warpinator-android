@@ -135,4 +135,6 @@
     <string name="enter_address">Adresse und Port eingeben</string>
     <string name="manual_connect_hint">Manuelle Verbindung im Menü versuchen</string>
     <string name="confirm_connection">Mit »%s« verbinden?</string>
+    <string name="address_copied">Adresse in die Zwischenablage kopiert</string>
+    <string name="qr_code_cnt_des">QR-Code</string>
 </resources>
