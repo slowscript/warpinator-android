@@ -56,7 +56,9 @@ dependencies {
     implementation 'com.github.tony19:logback-android:3.0.0'
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'com.google.guava:guava:33.4.0-android' //This was included by gRPC anyway, so why not use it
-    implementation 'org.jmdns:jmdns:3.6.0'
+    implementation 'org.jmdns:jmdns:3.5.8' //Device discovery worsened after update, let's see if this was the problem
+                                           // Also, new versions require desugaring on Android 5 and 6
+    implementation 'org.slf4j:slf4j-api:2.0.17' // For jmdns, it declares a too old dependency
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
     implementation 'com.google.zxing:core:3.5.3'
 }
