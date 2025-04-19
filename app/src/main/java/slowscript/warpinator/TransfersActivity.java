@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +29,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -55,6 +58,7 @@ public class TransfersActivity extends AppCompatActivity {
     FloatingActionButton fabSend;
     FloatingActionButton fabSendFiles;
     FloatingActionButton fabSendDir;
+    FloatingActionButton fabSendMsg;
     FloatingActionButton fabClear;
     Button btnReconnect;
     ToggleButton tglStar;
@@ -92,12 +96,14 @@ public class TransfersActivity extends AppCompatActivity {
         fabSend = findViewById(R.id.fabSend);
         fabSendFiles = findViewById(R.id.fabSendFile);
         fabSendDir = findViewById(R.id.fabSendDir);
+        fabSendMsg = findViewById(R.id.fabSendMsg);
         fabSend.setOnClickListener((v) -> {
             int vis = fabSendFiles.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE;
             setFabVisibility(vis);
         });
         fabSendFiles.setOnClickListener((v) -> openFiles());
         fabSendDir.setOnClickListener((v) -> openFolder());
+        fabSendMsg.setOnClickListener((v) -> sendMessage());
         fabClear = findViewById(R.id.fabClear);
         fabClear.setOnClickListener((v) -> remote.clearTransfers());
         btnReconnect = findViewById(R.id.btnReconnect);
@@ -239,7 +245,10 @@ public class TransfersActivity extends AppCompatActivity {
             }
             imgStatus.setImageTintList(ColorStateList.valueOf(color));
 
-            fabSend.setEnabled(remote.status == Remote.RemoteStatus.CONNECTED);
+            boolean sendEnabled = remote.status == Remote.RemoteStatus.CONNECTED;
+            fabSend.setEnabled(sendEnabled);
+            if (!sendEnabled)
+                setFabVisibility(View.GONE);
             btnReconnect.setVisibility((remote.status == Remote.RemoteStatus.ERROR)
                     || (remote.status == Remote.RemoteStatus.DISCONNECTED)
                     ? View.VISIBLE : View.INVISIBLE);
@@ -265,6 +274,7 @@ public class TransfersActivity extends AppCompatActivity {
     private void setFabVisibility(int vis) {
         fabSendFiles.setVisibility(vis);
         fabSendDir.setVisibility(vis);
+        fabSendMsg.setVisibility(vis);
         fabSend.setImageResource(vis == View.VISIBLE ? R.drawable.ic_decline : R.drawable.ic_upload);
     }
 
@@ -292,6 +302,27 @@ public class TransfersActivity extends AppCompatActivity {
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, R.string.required_dialog_not_found, Toast.LENGTH_LONG).show();
         }
+        setFabVisibility(View.GONE);
+    }
+
+    private void sendMessage() {
+        FrameLayout layout = new FrameLayout(this);
+        layout.setPadding(16,16,16,16);
+        EditText editText = new EditText(this);
+        editText.setSingleLine(false);
+        editText.setMinLines(2);
+        editText.setHint("Your message");
+        layout.addView(editText);
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Enter your message")
+                .setView(layout)
+                .setPositiveButton(android.R.string.ok, (a,b)->{
+                    String msg = editText.getText().toString();
+                    Log.d(TAG, "will send message: " + msg);
+                    //TODO: Make transfer and show in list...
+                    remote.sendTextMessage(msg);
+                })
+                .show();
         setFabVisibility(View.GONE);
     }
 

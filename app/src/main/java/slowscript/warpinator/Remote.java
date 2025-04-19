@@ -305,6 +305,15 @@ public class Remote {
         }).start();
     }
 
+    public void sendTextMessage(String txt) {
+        WarpProto.TextMessage msg = WarpProto.TextMessage.newBuilder()
+                .setIdent(Server.current.uuid)
+                .setTimestamp(System.currentTimeMillis())
+                .setMessage(txt)
+                .build();
+        asyncStub.sendTextMessage(msg, new Utils.VoidObserver());
+    }
+
     public void declineTransfer(Transfer t) {
         WarpProto.OpInfo info = WarpProto.OpInfo.newBuilder()
                 .setIdent(Server.current.uuid)

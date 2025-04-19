@@ -21,6 +21,8 @@ service Warp {
     rpc GetRemoteMachineAvatar(LookupName) returns (stream RemoteMachineAvatar) {}
     rpc ProcessTransferOpRequest(TransferOpRequest) returns (VoidType) {}
     rpc PauseTransferOp(OpInfo) returns (VoidType) {}
+    rpc SendTextMessage(TextMessage) returns (VoidType) {}
+
 
     // Receiver methods
     rpc StartTransfer(OpInfo) returns (stream FileChunk) {}
@@ -113,5 +115,11 @@ message ServiceRegistration {
 	string hostname = 4;
 	uint32 api_version = 5;
 	uint32 auth_port = 6;
+}
+
+message TextMessage {
+    string ident = 1;
+    uint64 timestamp = 2;
+    string message = 3;
 }
 

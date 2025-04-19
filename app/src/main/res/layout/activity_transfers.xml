@@ -139,6 +139,18 @@
         app:srcCompat="@drawable/ic_remove_items" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabSendMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="210dp"
+            android:contentDescription="Send message"
+            android:layout_gravity="bottom|end"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_message"
+            tools:visibility="visible" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabSendDir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

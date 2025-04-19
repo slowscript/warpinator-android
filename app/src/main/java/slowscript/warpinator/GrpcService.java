@@ -118,6 +118,13 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
     }
 
     @Override
+    public void sendTextMessage(WarpProto.TextMessage request, StreamObserver<WarpProto.VoidType> responseObserver) {
+        Log.d(TAG, "sendTextMessage from " + request.getIdent() + ": " + request.getMessage());
+
+        returnVoid(responseObserver);
+    }
+
+    @Override
     public void startTransfer(WarpProto.OpInfo request, StreamObserver<WarpProto.FileChunk> responseObserver) {
         Log.d(TAG, "Transfer started by the other side");
         Transfer t = getTransfer(request);
