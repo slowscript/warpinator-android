@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.MediaScannerConnection;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -64,6 +65,8 @@ public class Transfer {
     public ArrayList<Uri> uris;
     private ArrayList<MFile> files;
     private ArrayList<MFile> dirs;
+    //RECEIVE only
+    private ArrayList<String> recvdPaths;
 
     public boolean overwriteWarning = false;
 
@@ -379,6 +382,7 @@ public class Transfer {
         Log.i(TAG, "Transfer accepted, compression " + useCompression);
         setStatus(Status.TRANSFERRING);
         actualStartTime = System.currentTimeMillis();
+        recvdPaths = new ArrayList<>();
         updateUI();
         MainService.remotes.get(remoteUUID).startReceiveTransfer(this);
         MainService.cancelAutoStop(); //startRecv is asynchronous and may fail -> do this after
@@ -469,6 +473,8 @@ public class Transfer {
         closeStream();
         if (currentLastMod > 0)
             setLastModified();
+        if (!Server.current.downloadDirUri.startsWith("content:"))
+            MediaScannerConnection.scanFile(svc, recvdPaths.toArray(new String[0]), null, null);
         updateUI();
     }
 
@@ -630,6 +636,7 @@ public class Transfer {
             }
             if (!validateFile(currentFile))
                 throw new IllegalArgumentException("The file name leads to a file outside download dir");
+            recvdPaths.add(currentFile.getAbsolutePath());
             return new FileOutputStream(currentFile, false);
         }
     }
