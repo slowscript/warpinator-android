@@ -108,15 +108,22 @@ public class Server {
         LocalBroadcasts.updateNetworkState(svc);
     }
 
-    public void Stop() {
+    public void Stop(boolean async) {
         running = false;
         CertServer.Stop();
-        new Thread(this::stopMDNS).start(); //This takes a long time and we may be on the main thread
+        if (async)
+            new Thread(this::stopMDNS).start(); //This takes a long time and we may be on the main thread
+        else stopMDNS();
         svc.prefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
         if (gServer != null)
             gServer.shutdownNow();
         if (regServer != null)
             regServer.shutdownNow();
+        if (!async && gServer != null) {
+            try {
+                gServer.awaitTermination();
+            } catch (InterruptedException ignored) {}
+        }
         LocalBroadcasts.updateNetworkState(svc);
         Log.i(TAG, "--- Server stopped");
     }

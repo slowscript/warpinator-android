@@ -180,7 +180,7 @@ public class MainService extends Service {
         }
         remotes.clear();
         remotesOrder.clear();
-        server.Stop();
+        server.Stop(true);
         notificationMgr.cancelAll();
         connMgr.unregisterNetworkCallback(networkCallback);
         unregisterReceiver(apStateChangeReceiver);
@@ -334,7 +334,7 @@ public class MainService extends Service {
             // Regenerate cert
             Authenticator.getServerCertificate();
             // Restart server
-            server.Stop();
+            server.Stop(false); //Not async, so it finishes before we restart
             if (Authenticator.certException == null)
                 server.Start();
             else Log.w(TAG, "No cert. Server not started.");
