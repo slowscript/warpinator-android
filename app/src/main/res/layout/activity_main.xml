@@ -38,7 +38,7 @@
 
     <LinearLayout
         android:id="@+id/layoutNotFound"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,7 +60,7 @@
         <TextView
             android:id="@+id/txtNotFound"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:text="@string/no_devices_found"
             android:textAlignment="center"
             android:textColor="?colorOnBackground"
@@ -68,9 +68,17 @@
             android:textStyle="bold"/>
 
         <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:text="@string/same_network_hint"
+            android:textAlignment="center"
+            android:textColor="?colorOnBackground" />
+
+        <TextView
             android:id="@+id/txtManualConnectHint"
             android:layout_width="match_parent"
-            android:layout_height="34dp"
+            android:layout_height="wrap_content"
             android:maxLines="2"
             android:layout_marginTop="8dp"
             android:text="@string/manual_connect_hint"
