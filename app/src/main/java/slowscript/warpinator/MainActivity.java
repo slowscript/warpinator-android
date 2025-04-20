@@ -22,7 +22,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,6 +48,7 @@ import org.conscrypt.Conscrypt;
 import java.io.File;
 import java.io.OutputStream;
 import java.security.Security;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -201,6 +201,17 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             var imgQR = ((ImageView)v.findViewById(R.id.imgQR));
             imgQR.setImageBitmap(Utils.getQRCodeBitmap(uri));
             imgQR.setOnClickListener(copyListener);
+            var linearLayout = (LinearLayout)v.findViewById(R.id.dialogManualConnect);
+            for (int i = 0; i < Math.min(Server.current.recentRemotes.size(), 5); i++) {
+                var itm = inflater.inflate(R.layout.simple_list_item, linearLayout, false);
+                String txt = Server.current.recentRemotes.get(i);
+                ((TextView)itm).setText(txt);
+                itm.setOnClickListener((w) -> {
+                    Server.current.registerWithHost(txt.split(" \\| ")[0]);
+                    dialog.cancel();
+                });
+                linearLayout.addView(itm);
+            }
             dialog.show();
         } else if (itemID == R.id.conn_issues) {
             Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
@@ -234,13 +245,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     void initiateConnection() {
         FrameLayout layout = new FrameLayout(this);
         layout.setPadding(16,16,16,16);
-        AutoCompleteTextView editText = new AutoCompleteTextView(this);
-        editText.setSingleLine();
-        editText.setHint("0.0.0.0:1234");
-        editText.setThreshold(1);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.select_dialog_singlechoice, Server.current.recentRemotes);
-        editText.setAdapter(adapter);
+        AutoCompleteTextView editText = getIPAutoCompleteTextView();
         layout.addView(editText);
         new MaterialAlertDialogBuilder(this)
                 .setTitle(getString(R.string.enter_address))
@@ -251,6 +256,21 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                     Server.current.registerWithHost(host);
                 })
                 .show();
+    }
+
+    @NonNull
+    private AutoCompleteTextView getIPAutoCompleteTextView() {
+        AutoCompleteTextView editText = new AutoCompleteTextView(this);
+        editText.setSingleLine();
+        editText.setHint("0.0.0.0:1234");
+        editText.setThreshold(1);
+        var remoteIPs = new ArrayList<String>(Server.current.recentRemotes.size());
+        for (var r : Server.current.recentRemotes)
+            remoteIPs.add(r.split(" \\| ")[0]);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, remoteIPs);
+        editText.setAdapter(adapter);
+        return editText;
     }
 
     private void updateRemoteList() {

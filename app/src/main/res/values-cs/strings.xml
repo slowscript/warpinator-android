@@ -126,7 +126,7 @@
     <string name="reset_cnt_des">Vrátit výchozí hodnotu</string>
     <string name="clear_transfers">Odstranit ukončené přenosy</string>
     <string name="manual_connect_text">Naskenujte QR kód pomocí libovolné aplikace a otevřete odkaz nebo použijte následující adresu:</string>
-    <string name="initiate_connection">Navázat spojení</string>
+    <string name="initiate_connection">Nové spojení</string>
     <string name="manual_connect_hint">Zkuste Ruční spojení v menu</string>
     <string name="same_network_hint">Zařízení musí být ve stejné síti</string>
     <string name="confirm_connection">Připojit k \'%s\'?</string>

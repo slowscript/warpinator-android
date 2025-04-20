@@ -178,7 +178,9 @@ public class Server {
         favorites.clear();
         favorites.addAll(svc.prefs.getStringSet("favorites", Collections.emptySet()));
         recentRemotes.clear();
-        recentRemotes.addAll(Arrays.asList(svc.prefs.getString("recentRemotes", "").split(";")));
+        String recentStr = svc.prefs.getString("recentRemotes", null);
+        if (recentStr != null)
+            recentRemotes.addAll(Arrays.asList(recentStr.split("\n")));
 
         boolean bootStart = svc.prefs.getBoolean("bootStart", false);
         boolean autoStop = svc.prefs.getBoolean("autoStop", true);
@@ -190,13 +192,14 @@ public class Server {
         svc.prefs.edit().putStringSet("favorites", favorites).apply();
     }
 
-    void addRecentRemote(String host) {
-        recentRemotes.remove(host); // Ensure only one occurrence
-        recentRemotes.add(0, host); // Most recently used is first
+    void addRecentRemote(String host, String hostname) {
+        String r = host + " | " + hostname;
+        recentRemotes.remove(r); // Ensure only one occurrence
+        recentRemotes.add(0, r); // Most recently used is first
         if (recentRemotes.size() > 10) {
             recentRemotes.remove(10); // Remove least recently used
         }
-        svc.prefs.edit().putString("recentRemotes", TextUtils.join(";", recentRemotes)).apply();
+        svc.prefs.edit().putString("recentRemotes", TextUtils.join("\n", recentRemotes)).apply();
     }
 
     void startGrpcServer() {
@@ -280,7 +283,7 @@ public class Server {
                 WarpProto.ServiceRegistration resp = WarpRegistrationGrpc.newBlockingStub(channel)
                         .registerService(getServiceRegistrationMsg());
                 Log.d(TAG, "registerWithHost: registration sent");
-                addRecentRemote(host);
+                addRecentRemote(host, resp.getHostname());
                 int sep = host.lastIndexOf(':');
                 // Use ip and authPort as specified by user
                 String IP = host.substring(0,sep);
