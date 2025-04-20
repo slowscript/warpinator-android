@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import java.net.InetAddress;
 import java.security.Security;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -72,6 +74,7 @@ public class Server {
     public String downloadDirUri;
     public boolean running = false;
     public HashSet<String> favorites = new HashSet<>();
+    public ArrayList<String> recentRemotes = new ArrayList<>(); // recent manually connected remotes
     public boolean useCompression;
 
     JmDNS jmdns;
@@ -174,6 +177,8 @@ public class Server {
         profilePicture = svc.prefs.getString("profile", "0");
         favorites.clear();
         favorites.addAll(svc.prefs.getStringSet("favorites", Collections.emptySet()));
+        recentRemotes.clear();
+        recentRemotes.addAll(Arrays.asList(svc.prefs.getString("recentRemotes", "").split(";")));
 
         boolean bootStart = svc.prefs.getBoolean("bootStart", false);
         boolean autoStop = svc.prefs.getBoolean("autoStop", true);
@@ -183,6 +188,15 @@ public class Server {
 
     void saveFavorites() {
         svc.prefs.edit().putStringSet("favorites", favorites).apply();
+    }
+
+    void addRecentRemote(String host) {
+        recentRemotes.remove(host); // Ensure only one occurrence
+        recentRemotes.add(0, host); // Most recently used is first
+        if (recentRemotes.size() > 10) {
+            recentRemotes.remove(10); // Remove least recently used
+        }
+        svc.prefs.edit().putString("recentRemotes", TextUtils.join(";", recentRemotes)).apply();
     }
 
     void startGrpcServer() {
@@ -266,6 +280,7 @@ public class Server {
                 WarpProto.ServiceRegistration resp = WarpRegistrationGrpc.newBlockingStub(channel)
                         .registerService(getServiceRegistrationMsg());
                 Log.d(TAG, "registerWithHost: registration sent");
+                addRecentRemote(host);
                 int sep = host.lastIndexOf(':');
                 // Use ip and authPort as specified by user
                 String IP = host.substring(0,sep);

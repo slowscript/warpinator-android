@@ -20,6 +20,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -232,9 +234,13 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     void initiateConnection() {
         FrameLayout layout = new FrameLayout(this);
         layout.setPadding(16,16,16,16);
-        EditText editText = new EditText(this);
+        AutoCompleteTextView editText = new AutoCompleteTextView(this);
         editText.setSingleLine();
         editText.setHint("0.0.0.0:1234");
+        editText.setThreshold(1);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.select_dialog_singlechoice, Server.current.recentRemotes);
+        editText.setAdapter(adapter);
         layout.addView(editText);
         new MaterialAlertDialogBuilder(this)
                 .setTitle(getString(R.string.enter_address))
