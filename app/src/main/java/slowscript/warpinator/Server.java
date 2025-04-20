@@ -447,7 +447,11 @@ public class Server {
                 InetAddress addr = getIPv4Address(info.getInetAddresses());
                 if (addr != null)
                     remote.address = addr;
-                else remote.address = info.getInetAddresses()[0];
+                else {
+                    //remote.address = info.getInetAddresses()[0];
+                    Log.w(TAG, "Service resolved with no IPv4 address. Most implementations don't properly support IPv6.");
+                    return;
+                }
                 if(props.contains("hostname"))
                     remote.hostname = info.getPropertyString("hostname");
                 if(props.contains("api-version"))

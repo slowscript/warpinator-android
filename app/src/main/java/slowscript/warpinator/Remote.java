@@ -372,7 +372,7 @@ public class Remote {
                     .usePlaintext().build();
             WarpProto.RegResponse resp = WarpRegistrationGrpc.newBlockingStub(channel)
                     .withWaitForReady() //This will retry connection after 1s, then after exp. delay
-                    .withDeadlineAfter(20, TimeUnit.SECONDS)
+                    .withDeadlineAfter(8, TimeUnit.SECONDS)
                     .requestCertificate(WarpProto.RegRequest.newBuilder()
                             .setHostname(Utils.getDeviceName())
                             .setIp(Utils.getIPAddress()).build()

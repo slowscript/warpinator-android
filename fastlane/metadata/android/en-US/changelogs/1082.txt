@@ -1,0 +1,5 @@
+- Attempts to improve device discovery and connection
+- Received files are now added to Media Store
+- Fixed crash on Android 5-6
+- Show recently used addresses in Manual Connection dialog
+- Bug fixes
