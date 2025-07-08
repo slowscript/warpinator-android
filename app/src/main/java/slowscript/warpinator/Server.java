@@ -243,7 +243,6 @@ public class Server {
 
     void registerService(boolean flush) {
         serviceInfo = ServiceInfo.create(SERVICE_TYPE, uuid, port, "");
-        Log.d(TAG, "Registering as " + uuid);
 
         Map<String, String> props = new HashMap<>();
         props.put("hostname", Utils.getDeviceName());
@@ -257,6 +256,7 @@ public class Server {
         // -> Announcement will trigger "new service" behavior and reconnect on other clients
         unregister(); //Safe if fails
         try {
+            Log.d(TAG, "Registering as " + uuid);
             jmdns.registerService(serviceInfo);
             renewer = new Renewer((JmDNSImpl)jmdns);
         } catch (IOException e) {
@@ -359,20 +359,18 @@ public class Server {
     }
 
     void unregister() {
-        svc.executor.submit(()->{
-            Log.d(TAG, "Unregistering");
-            try {
-                DNSOutgoing out = new DNSOutgoing(DNSConstants.FLAGS_QR_RESPONSE | DNSConstants.FLAGS_AA);
-                for (DNSRecord answer : ((ServiceInfoImpl) serviceInfo).answers(DNSRecordClass.CLASS_ANY,
-                        DNSRecordClass.UNIQUE, 0, ((JmDNSImpl)jmdns).getLocalHost())) {
-                    out = renewer.addAnswer(out, null, answer);
-                }
-                ((JmDNSImpl)jmdns).send(out);
-            } catch (Exception e) {
-                Log.e(TAG, "Unregistering failed", e);
-                LocalBroadcasts.displayToast(svc, "Unregistering failed: " + e.getMessage(), Toast.LENGTH_LONG);
+        Log.d(TAG, "Unregistering");
+        try {
+            DNSOutgoing out = new DNSOutgoing(DNSConstants.FLAGS_QR_RESPONSE | DNSConstants.FLAGS_AA);
+            for (DNSRecord answer : ((ServiceInfoImpl) serviceInfo).answers(DNSRecordClass.CLASS_ANY,
+                    DNSRecordClass.UNIQUE, 0, ((JmDNSImpl)jmdns).getLocalHost())) {
+                out = renewer.addAnswer(out, null, answer);
             }
-        });
+            ((JmDNSImpl)jmdns).send(out);
+        } catch (Exception e) {
+            Log.e(TAG, "Unregistering failed", e);
+            LocalBroadcasts.displayToast(svc, "Unregistering failed: " + e.getMessage(), Toast.LENGTH_LONG);
+        }
     }
 
     void addRemote(Remote remote) {
