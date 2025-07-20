@@ -1,6 +1,7 @@
 Warpinator para Android es una adaptación no oficial de la aplicación homónima de LinuxMint para transferir archivos. Es completamente compatible con el protocolo original y permite enviar y recibir archivos fácilmente entre dispositivos Android y GNU/Linux.
 
 Características:
+
 - Búsqueda automática de servicios compatibles en la red local.
 - Funciona con conexión WiFi o a un punto de acceso. No se requiere conexión a la Internet.
 - Transfiere archivos de cualquier tipo de forma fácil y rápida.
