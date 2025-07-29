@@ -1,6 +1,7 @@
 Warpinator per a Android és una adaptació no oficial de l'aplicació homònima del LinuxMint per a trametre fitxers. És totalment compatible amb el protocol original i permet transferir fàcilment fitxers entre dispositius Android i GNU/Linux.
 
 Característiques:
+
 - Cerca automàtica de serveis compatibles dins la xarxa local.
 - Funciona amb connexió WiFi o punts d'accés (hotspot), no cal connexió a la Internet.
 - Tramesa de tota mena de fitxers, ràpidament i amb facilitat.
