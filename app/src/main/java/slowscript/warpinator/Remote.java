@@ -84,7 +84,7 @@ public class Remote {
                         .flowControlWindow(1280*1024);
                 if (api >= 2) {
                     builder.keepAliveWithoutCalls(true)
-                            .keepAliveTime(10, TimeUnit.SECONDS)
+                            .keepAliveTime(11, TimeUnit.SECONDS)
                             .keepAliveTimeout(5, TimeUnit.SECONDS);
                 }
                 channel = builder.build();

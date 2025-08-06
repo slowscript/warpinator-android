@@ -211,7 +211,7 @@ public class Server {
                     .sslContext(ssl.build())
                     .addService(new GrpcService())
                     .permitKeepAliveWithoutCalls(true)
-                    .permitKeepAliveTime(10, TimeUnit.SECONDS)
+                    .permitKeepAliveTime(5, TimeUnit.SECONDS)
                     .build();
             gServer.start();
             Log.d(TAG, "GRPC server started");
