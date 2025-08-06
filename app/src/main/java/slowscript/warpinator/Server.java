@@ -40,6 +40,7 @@ import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
+import javax.jmdns.impl.DNSIncoming;
 import javax.jmdns.impl.DNSOutgoing;
 import javax.jmdns.impl.DNSQuestion;
 import javax.jmdns.impl.DNSRecord;
@@ -49,7 +50,6 @@ import javax.jmdns.impl.constants.DNSConstants;
 import javax.jmdns.impl.constants.DNSRecordClass;
 import javax.jmdns.impl.constants.DNSRecordType;
 import javax.jmdns.impl.tasks.resolver.ServiceResolver;
-import javax.jmdns.impl.tasks.state.Renewer;
 
 import io.grpc.ManagedChannel;
 import io.grpc.Status;
@@ -78,7 +78,6 @@ public class Server {
     public boolean useCompression;
 
     JmDNS jmdns;
-    private Renewer renewer;
     private ServiceInfo serviceInfo;
     private final ServiceListener serviceListener;
     private final SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
@@ -134,6 +133,7 @@ public class Server {
     void startMDNS() {
         try {
             InetAddress addr = InetAddress.getByName(Utils.getIPAddress());
+            Log.d(TAG, "Starting mDNS on " + addr);
             jmdns = JmDNS.create(addr);
 
             registerService(false);
@@ -258,7 +258,6 @@ public class Server {
         try {
             Log.d(TAG, "Registering as " + uuid);
             jmdns.registerService(serviceInfo);
-            renewer = new Renewer((JmDNSImpl)jmdns);
         } catch (IOException e) {
             Log.e(TAG, "Failed to register service.", e);
         }
@@ -327,11 +326,11 @@ public class Server {
             try {
                 DNSOutgoing out = new DNSOutgoing(DNSConstants.FLAGS_QR_RESPONSE | DNSConstants.FLAGS_AA);
                 for (DNSRecord answer : ((JmDNSImpl)jmdns).getLocalHost().answers(DNSRecordClass.CLASS_ANY, DNSRecordClass.UNIQUE, DNSConstants.DNS_TTL)) {
-                    out = renewer.addAnswer(out, null, answer);
+                    out = dnsAddAnswer(out, null, answer);
                 }
                 for (DNSRecord answer : ((ServiceInfoImpl) serviceInfo).answers(DNSRecordClass.CLASS_ANY,
                         DNSRecordClass.UNIQUE, DNSConstants.DNS_TTL, ((JmDNSImpl)jmdns).getLocalHost())) {
-                    out = renewer.addAnswer(out, null, answer);
+                    out = dnsAddAnswer(out, null, answer);
                 }
                 ((JmDNSImpl)jmdns).send(out);
             } catch (Exception e) {
@@ -364,13 +363,28 @@ public class Server {
             DNSOutgoing out = new DNSOutgoing(DNSConstants.FLAGS_QR_RESPONSE | DNSConstants.FLAGS_AA);
             for (DNSRecord answer : ((ServiceInfoImpl) serviceInfo).answers(DNSRecordClass.CLASS_ANY,
                     DNSRecordClass.UNIQUE, 0, ((JmDNSImpl)jmdns).getLocalHost())) {
-                out = renewer.addAnswer(out, null, answer);
+                out = dnsAddAnswer(out, null, answer);
             }
             ((JmDNSImpl)jmdns).send(out);
         } catch (Exception e) {
             Log.e(TAG, "Unregistering failed", e);
             LocalBroadcasts.displayToast(svc, "Unregistering failed: " + e.getMessage(), Toast.LENGTH_LONG);
         }
+    }
+
+    DNSOutgoing dnsAddAnswer(DNSOutgoing out, DNSIncoming in, DNSRecord rec) throws IOException {
+        DNSOutgoing newOut = out;
+        try {
+            newOut.addAnswer(in, rec);
+        } catch (final IOException e) {
+            int flags = newOut.getFlags();
+            newOut.setFlags(flags | DNSConstants.FLAGS_TC);
+            ((JmDNSImpl)jmdns).send(newOut);
+
+            newOut = new DNSOutgoing(flags, newOut.isMulticast(), newOut.getMaxUDPPayload());
+            newOut.addAnswer(in, rec);
+        }
+        return newOut;
     }
 
     void addRemote(Remote remote) {
