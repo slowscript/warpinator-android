@@ -95,7 +95,7 @@
         <item>Getrennt</item>
         <item>Verbinde</item>
         <item>Verbindung fehlgeschlagen</item>
-        <item>Warten auf Duplex</item>
+        <item>Warten auf Verbindung vom anderen Gerät</item>
     </string-array>
     <string-array name="transfer_states">
         <item>Initialisiere</item>

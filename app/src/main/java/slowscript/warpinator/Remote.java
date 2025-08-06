@@ -113,7 +113,7 @@ public class Remote {
             if (!waitForDuplex()) {
                 Log.e(TAG, "Couldn't establish duplex with " + hostname);
                 status = RemoteStatus.ERROR;
-                errorText = "Couldn't establish duplex";
+                errorText = MainService.svc.getString(R.string.error_no_duplex);
                 updateUI();
                 return;
             }

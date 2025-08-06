@@ -87,7 +87,7 @@
         <item>Odpojeno</item>
         <item>Připojuje se</item>
         <item>Připojení selhalo</item>
-        <item>Čeká se na obousměrné přpojení</item>
+        <item>Čeká se na přpojení druhého zařízení</item>
     </string-array>
     <string-array name="transfer_states">
         <item>Inicializuje se</item>
@@ -131,4 +131,5 @@
     <string name="same_network_hint">Zařízení musí být ve stejné síti</string>
     <string name="confirm_connection">Připojit k \'%s\'?</string>
     <string name="qs_discovered_count">%d v dosahu</string>
+    <string name="error_no_duplex">Druhé zařízení nevytvořilo zpětné spojení. Možná nás nevidí?</string>
 </resources>

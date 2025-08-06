@@ -123,12 +123,13 @@
     <string name="manual_connect_hint">Try Manual connection in the menu</string>
     <string name="confirm_connection">Connect to \'%s\'?</string>
     <string name="qs_discovered_count">%d connected</string>
+    <string name="error_no_duplex">The other device did not connect back. Maybe it doesn\'t see us?</string>
     <string-array name="connected_states">
         <item>Connected</item>
         <item>Disconnected</item>
         <item>Connecting</item>
         <item>Connection failed</item>
-        <item>Awaiting duplex</item>
+        <item>Waiting for the other device to connect</item>
     </string-array>
     <string-array name="transfer_states">
         <item>Initializing</item>
