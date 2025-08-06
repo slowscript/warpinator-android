@@ -48,7 +48,9 @@ import java.net.SocketException;
 import java.net.URLDecoder;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -90,7 +92,7 @@ public class Utils {
                 if (ia != null)
                     ip = ia.getHostAddress();
             }
-            //Get IP of some random active interface (except loopback and data)
+            //Get IP of an active interface (except loopback and data)
             if (ip == null) {
                 NetworkInterface activeNi = getActiveIface();
                 if (activeNi != null)
@@ -119,6 +121,7 @@ public class Utils {
         NetworkCapabilities networkCaps = connMgr.getNetworkCapabilities(activeNetwork);
         LinkProperties properties = connMgr.getLinkProperties(activeNetwork);
         if (properties != null && networkCaps != null &&
+                networkCaps.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN) &&
                 (networkCaps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
                 networkCaps.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET))) {
             for (LinkAddress addr : properties.getLinkAddresses())
@@ -129,10 +132,22 @@ public class Utils {
     }
 
     static NetworkInterface getActiveIface() throws SocketException {
-        Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
-        NetworkInterface ni;
-        while (nis.hasMoreElements()) {
-            ni = nis.nextElement();
+        List<NetworkInterface> nis = Collections.list(NetworkInterface.getNetworkInterfaces());
+        //prioritize wlan(...) interfaces and deprioritize tun(...) which can be leftover from VPN apps
+        Collections.sort(nis,
+            (i1, i2) -> {
+                String i1Name = i1.getDisplayName();
+                String i2Name = i2.getDisplayName();
+                if (i1Name.contains("wlan") || i2Name.contains("tun")) {
+                    return -1;
+                } else if (i1Name.contains("tun") || i2Name.contains("wlan")){
+                    return 1;
+                }
+                return 0;
+            }
+        );
+
+        for (NetworkInterface ni : nis) {
             if ((!ni.isLoopback()) && ni.isUp()) {
                 String name = ni.getDisplayName();
                 if (name.contains("dummy") || name.contains("rmnet") || name.contains("ifb"))
