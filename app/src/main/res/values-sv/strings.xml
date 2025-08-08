@@ -96,7 +96,7 @@
     <string name="accept_setting_summary_off">Varje överföring måste accepteras av dig</string>
     <string name="stop_svc_when_leaving">Stoppa tjänsten efter att ha lämnat appen</string>
     <string name="custom">Anpassad</string>
-    <string name="initiate_connection">Initiera anslutning</string>
+    <string name="initiate_connection">Ny anslutning</string>
     <string name="manual_connect_text">Skanna QR-koden ovan med en kameraapp och öppna länken eller använd följande adress för att initiera anslutningen från den andra enheten:</string>
     <string name="manual_connection">Manuell anslutning</string>
     <string name="save_log">Spara logg</string>
@@ -104,4 +104,7 @@
     <string name="manual_connect_hint">Prova Manuell anslutning i menyn</string>
     <string name="confirm_connection">Anslut till \'%s\'?</string>
     <string name="qs_discovered_count">%d ansluten</string>
+    <string name="address_copied">Adress kopierad till urklipp</string>
+    <string name="same_network_hint">Enheterna måste vara på samma nätverk</string>
+    <string name="qr_code_cnt_des">QR-kod</string>
 </resources>

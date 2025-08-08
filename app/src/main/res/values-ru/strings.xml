@@ -127,7 +127,13 @@
     <string name="compression_settings_title">Попробуйте использовать сжатие</string>
     <string name="save_log">Сохранить лог</string>
     <string name="manual_connect_text">Отсканируйте QR-код на другом устройстве и перейдите по ссылке или введите следующий адрес:</string>
-    <string name="initiate_connection">Соединиться</string>
+    <string name="initiate_connection">Новое соединение</string>
     <string name="manual_connection">Подключиться вручную</string>
     <string name="enter_address">Введите адрес и порт</string>
+    <string name="address_copied">Адрес скопирован в буфер обмена</string>
+    <string name="qr_code_cnt_des">QR-код</string>
+    <string name="same_network_hint">Устройства должны находиться в одной сети</string>
+    <string name="manual_connect_hint">Попробуйте ручное подключение в меню</string>
+    <string name="confirm_connection">Подключиться к \'%s\'?</string>
+    <string name="qs_discovered_count">%d подключен</string>
 </resources>

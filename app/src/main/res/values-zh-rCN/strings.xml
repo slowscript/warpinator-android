@@ -137,4 +137,6 @@
     <string name="qs_discovered_count">%d 已连接</string>
     <string name="address_copied">地址已复制到剪贴板</string>
     <string name="qr_code_cnt_des">二维码</string>
+    <string name="same_network_hint">设备必须在相同网络上</string>
+    <string name="error_no_duplex">其他设备未回连。可能它没看到我们？</string>
 </resources>

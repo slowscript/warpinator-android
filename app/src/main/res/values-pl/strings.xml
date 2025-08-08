@@ -127,8 +127,8 @@ Uruchom ponownie aplikację po połączeniu.</string>
     <string name="compression_settings_title">Spróbuj użyć kompresji</string>
     <string name="auth_port_settings_title">Port do rejestracji</string>
     <string name="devices_outside_group">Urządzenia spoza grupy: %1$d</string>
-    <string name="initiate_connection">Zainicjuj połączenie</string>
-    <string name="manual_connect_text">Zeskanuj powyższy kod QR za pomocą aplikacji aparatu i otwórz łącze lub użyj poniższego adresu, aby zainicjować połączenie z drugiego urządzenia:</string>
+    <string name="initiate_connection">Nowe połączenie</string>
+    <string name="manual_connect_text">Zeskanuj powyższy kod QR za pomocą aplikacji aparatu i otwórz łącze lub użyj poniższego adresu, aby zainicjować połączenie z innego urządzenia:</string>
     <string name="manual_connection">Połączenie ręczne</string>
     <string name="save_log">Zapisz dziennik</string>
     <string name="confirm_connection">Połączyć się z \'%s\'?</string>
@@ -137,4 +137,6 @@ Uruchom ponownie aplikację po połączeniu.</string>
     <string name="manual_connect_hint">Wypróbuj połączenie ręczne w menu</string>
     <string name="address_copied">Adres skopiowano do schowka</string>
     <string name="qr_code_cnt_des">Kod QR</string>
+    <string name="same_network_hint">Urządzenia muszą znajdować się w tej samej sieci</string>
+    <string name="error_no_duplex">Inne urządzenie nie nawiązało połączenia. Może nas nie widzi?</string>
 </resources>

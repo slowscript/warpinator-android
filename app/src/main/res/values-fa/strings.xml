@@ -2,14 +2,14 @@
 <resources>
     <string name="send_files">ارسال پرونده ها</string>
     <string name="quit">خروج</string>
-    <string name="connection_issues">مشکلات ارتباط</string>
+    <string name="connection_issues">مشکلات اتصال</string>
     <string name="save_log">ذخیره گزارش</string>
     <string name="settings">تنظیمات</string>
     <string name="title_activity_share">اشتراک گذاری با</string>
     <string name="available_devices">دستگاه‌های موجود</string>
     <string name="rescan">جستجو دوباره برای دستگاه‌ها</string>
     <string name="no_devices_found">دستگاه دیگری یافت نشد</string>
-    <string name="connection_error">خطا در ارتباط</string>
+    <string name="connection_error">خطا در اتصال</string>
     <string name="devices_outside_group">دستگاه خارج از گروه شماست: %1$d</string>
     <string name="open_failed">تلاش برای بازکردن فایل دریافتی ناموفق بود</string>
     <string name="a_few_seconds">چند ثانیه</string>
@@ -51,7 +51,7 @@
     <string name="notification_channel_description">آگاه‌سازی مداوم سامانه</string>
     <string name="incoming_transfer_channel">انتقالات دریافتی</string>
     <string name="transfer_progress_channel">پیشرفت انتقال</string>
-    <string name="status_image_cnt_des">وضعیت ارتباط</string>
+    <string name="status_image_cnt_des">وضعیت اتصال</string>
     <string name="profile_image_cnt_des">تصویر نمایه</string>
     <string name="meh_face_cnt_des">نماد ناامید چهره</string>
     <string name="selected_picture_cnt_des">تصویر انتخاب شده</string>
@@ -64,13 +64,13 @@
     <string name="error_service_not_running">سامانه در حال اجرا نیست</string>
     <string name="cert_not_received">دریافت گواهی از %1$s انجام نشد. حتماً اجازه ترافیک UDP (و همچنین TCP) را در پورت %2$d در فایروال از راه دور اجازه دهید.</string>
     <string name="clear_transfers">پاک‌سازی انتقالات پایان یافته</string>
-    <string name="initiate_connection">آغاز ارتباط</string>
+    <string name="initiate_connection">آغاز اتصال</string>
     <string name="title_activity_transfers">انتقال</string>
-    <string name="manual_connection">ارتباط دستی</string>
+    <string name="manual_connection">اتصال دستی</string>
     <string name="reannounce">دوباره</string>
     <string name="about">درباره</string>
-    <string name="wrong_group_code">ارتباط ناموفق: نام گروه اشتباه است</string>
-    <string name="not_connected_to_wifi">شما به WiFi یا LAN متصل نیستید. اگر در دسترس نیست از نقطه اتصال خود استفاده کنید. پس از اتصال، برنامه را مجدداً راه اندازی کنید.</string>
+    <string name="wrong_group_code">اتصال ناموفق: نام گروه اشتباه است</string>
+    <string name="not_connected_to_wifi">شما به WiFi یا LAN متصل نیستید. اگر در دسترس نیست از نقطه اتصال خود استفاده کنید. پس از اتصال، برنامه را باز راه‌اندازی کنید.</string>
     <string name="waiting_for_permission">در انتظار دسترسی…</string>
     <string name="files_overwritten_warning">(پرونده ها ممکن است بازنویسی شده باشند!)</string>
     <string name="remaining">باقیمانده</string>
@@ -95,9 +95,16 @@
     <string name="incoming_transfer">انتقالات دریافتی از %s</string>
     <string name="num_files">%d پرونده</string>
     <string name="service_running">سامانه در حال اجرا</string>
-    <string name="reconnect_button_cnt_des">ارتباط دوباره</string>
+    <string name="reconnect_button_cnt_des">اتصال دوباره</string>
     <string name="application_icon_cnt_des">نماد برنامه</string>
     <string name="stop_button_cnt_des">توقف انتقال</string>
     <string name="manual_connect_text">رمزینه بالا را با دوربین کاوش کنید و پیوند را باز کنید یا از آدرس زیر برای شروع اتصال از دستگاه دیگر استفاده کنید:</string>
     <string name="stop_svc_when_leaving_summary_on">سامانه هنگام پاکسازی از برنامه های اخیر یا پس از مدتی عدم فعالیت به طور خودکار متوقف می شود</string>
+    <string name="address_copied">نشانی در بریده‌دان رونوشت شد</string>
+    <string name="same_network_hint">دستگاه ها باید در یک شبکه باشد</string>
+    <string name="confirm_connection">اتصال به \'%s\'؟</string>
+    <string name="qs_discovered_count">%d متصل شد</string>
+    <string name="manual_connect_hint">اتصال دستی را در این فهرست آزمایش کنید</string>
+    <string name="qr_code_cnt_des">رمزینه QR</string>
+    <string name="enter_address">نشانی و درگاه رایانامه</string>
 </resources>

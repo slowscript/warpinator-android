@@ -32,7 +32,7 @@
     <string name="send_folder_toast">அனுப்ப ஒரு கோப்புறையைத் தேர்ந்தெடுக்கவும்</string>
     <string name="version">பதிப்பு: %1$s</string>
     <string name="about_description">இது அதிகாரப்பூர்வமற்ற போர்க்களம்.\n உள்ளக பிணையம் முழுவதும் கோப்புகளை அனுப்பவும் பெறவும்.</string>
-    <string name="warranty_html">இந்த நிரல் <a> குனு பொது பொது உரிமம் </a> இன் கீழ் உரிமம் பெற்ற திறந்த மூல மென்பொருளாகும். \u0020a href = https: //github.com/slowscript/warpinator-android/&gt; github . .</string>
+    <string name="warranty_html">இந்த நிரல் &lt;a href=\"https://www.gnu.org/licenses/gpl-3.0.html\"&gt;GNU பொது பொதுமக்கள் உரிமம்&lt;/a&gt; இன் கீழ் உரிமம் பெற்ற திறந்த மூல மென்பொருளாகும்.&lt;br&gt; நீங்கள் &lt;a href=\"https://github.com/slowscript/warpinator-android/\"&gt;GitHub&lt;/a&gt; இலிருந்து மூலக் குறியீட்டைப் பெறலாம்.&lt;br&gt;&lt;br&gt; இந்த நிரல் எந்த உத்தரவாதமும் இல்லாமல் வருகிறது.&lt;br&gt;மேலும் விவரங்களுக்கு உரிமத்தின் விதிமுறைகளைப் பார்க்கவும்.</string>
     <string name="devices_to_share_with">பகிர்ந்து கொள்ள வேண்டிய சாதனங்கள்</string>
     <string name="no_share_devices">பகிர்ந்து கொள்ள கிடைக்கக்கூடிய சாதனங்கள் எதுவும் இல்லை</string>
     <string name="unsupported_intent">நாங்கள் ஆதரிக்கப்படாத நோக்கம் நடவடிக்கை பெற்றோம்</string>
@@ -99,8 +99,11 @@
     <string name="cert_not_received">%1$s இலிருந்து சான்றிதழைப் பெறுவதில் தோல்வி. ரிமோட்டின் ஃபயர்வாலில் துறைமுகம் %2$d இல் யுடிபி (அத்துடன் டி.சி.பி) போக்குவரத்தை அனுமதிப்பதை உறுதிசெய்க.</string>
     <string name="clear_transfers">முடிக்கப்பட்ட இடமாற்றங்கள்</string>
     <string name="manual_connect_text">மேலே உள்ள QR குறியீட்டை கேமரா பயன்பாட்டுடன் ச்கேன் செய்து இணைப்பைத் திறக்கவும் அல்லது பிற சாதனத்திலிருந்து இணைப்பைத் தொடங்க பின்வரும் முகவரியைப் பயன்படுத்தவும்:</string>
-    <string name="initiate_connection">இணைப்பைத் தொடங்கவும்</string>
+    <string name="initiate_connection">புதிய இணைப்பு</string>
     <string name="enter_address">முகவரி மற்றும் துறைமுகத்தை உள்ளிடவும்</string>
     <string name="manual_connect_hint">பட்டியலில் கையேடு இணைப்பை முயற்சிக்கவும்</string>
     <string name="qs_discovered_count">%d இணைக்கப்பட்டுள்ளது</string>
+    <string name="address_copied">முகவரி இடைநிலைப்பலகைக்கு நகலெடுக்கப்பட்டது</string>
+    <string name="same_network_hint">சாதனங்கள் ஒரே பிணையத்தில் இருக்க வேண்டும்</string>
+    <string name="qr_code_cnt_des">விப குறியீடு</string>
 </resources>
