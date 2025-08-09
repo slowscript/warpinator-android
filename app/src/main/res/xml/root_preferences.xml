@@ -86,6 +86,10 @@
             android:title="@string/auth_port_settings_title"
             android:key="authPort"
             android:defaultValue="42001" />
+        <slowscript.warpinator.preferences.ListPreference
+            android:title="@string/network_interface_settings_title"
+            android:key="networkInterface"
+            android:defaultValue="auto" />
 
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/aspect_setting_category">
@@ -95,6 +99,7 @@
             android:entries="@array/theme_settings_array"
             android:entryValues="@array/theme_settings_entries_array"
             android:key="theme_setting"
+            android:summary="%s"
             android:title="@string/theme_settings_title" />
     </PreferenceCategory>
 

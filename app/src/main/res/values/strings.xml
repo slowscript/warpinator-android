@@ -70,6 +70,8 @@
     <string name="group_code_settings_title">Group code</string>
     <string name="port_settings_title">Port for transfers</string>
     <string name="auth_port_settings_title">Port for registration</string>
+    <string name="network_interface_settings_title">Preferred network interface</string>
+    <string name="network_interface_settings_summary">%s (falls back to automatic if unavailable)</string>
     <string name="theme_settings_title">Theme</string>
     <string name="notification_settings_summary">This may be affected by Android\'s notification settings</string>
     <string name="port_range_warning">Port number must be between 1024 and 65535</string>

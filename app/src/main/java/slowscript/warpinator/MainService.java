@@ -113,8 +113,9 @@ public class MainService extends Service {
         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"MainService::TransferWakeLock");
         wakeLock.setReferenceCounted(false);
 
-        lastIP = Utils.getIPAddress();
         server = new Server(this);
+        lastIP = Utils.getIPAddress(); // Server needs to load iface setting before this
+        Log.d(TAG, Utils.dumpInterfaces());
         if (lastIP != null) {
             Authenticator.getServerCertificate(); //Generate cert on start if doesn't exist
             if (Authenticator.certException != null) {

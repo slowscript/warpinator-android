@@ -24,6 +24,7 @@ import androidx.preference.SwitchPreferenceCompat;
 
 import java.util.Objects;
 
+import slowscript.warpinator.preferences.ListPreference;
 import slowscript.warpinator.preferences.ResetablePreference;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -78,6 +79,7 @@ public class SettingsActivity extends AppCompatActivity {
         private static final String THEME_PREF = "theme_setting";
         private static final String PROFILE_PREF = "profile";
         private static final String DEBUGLOG_PREF = "debugLog";
+        private static final String NETIFACE_PREF = "networkInterface";
         public boolean pickDirOnStart = false;
 
         @Override
@@ -89,6 +91,7 @@ public class SettingsActivity extends AppCompatActivity {
             ResetablePreference dlPref = findPreference(DOWNLOAD_DIR_PREF);
             Preference themePref = findPreference(THEME_PREF);
             Preference profilePref = findPreference(PROFILE_PREF);
+            ListPreference networkIfacePref = findPreference(NETIFACE_PREF);
             EditTextPreference portPref = findPreference(PORT_PREF);
             EditTextPreference authPortPref = findPreference(AUTH_PORT_PREF);
             portPref.setOnBindEditTextListener((edit)-> edit.setInputType(InputType.TYPE_CLASS_NUMBER));
@@ -142,6 +145,23 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
             dlPref.setResetEnabled(dlDest.startsWith("content"));
+
+            var ifaces = Utils.getNetworkInterfaces();
+            if (ifaces == null) ifaces = new String[] {"Failed to get network interfaces"};
+            String[] newIfaces = new String[ifaces.length+1];
+            newIfaces[0] = Server.NETIFACE_AUTO;
+            System.arraycopy(ifaces, 0, newIfaces, 1, ifaces.length);
+            networkIfacePref.setEntries(newIfaces);
+            networkIfacePref.setEntryValues(newIfaces);
+            String curIface = getPreferenceManager().getSharedPreferences().getString(NETIFACE_PREF, Server.NETIFACE_AUTO);
+            networkIfacePref.setSummary(Server.NETIFACE_AUTO.equals(curIface) ? curIface :
+                    getString(R.string.network_interface_settings_summary, curIface));
+            networkIfacePref.setOnPreferenceChangeListener((pre, val) -> {
+                pre.setSummary(Server.NETIFACE_AUTO.equals(val) ? (String)val :
+                        getString(R.string.network_interface_settings_summary, val));
+                Toast.makeText(getContext(), R.string.requires_restart_warning, Toast.LENGTH_SHORT).show();
+                return true;
+            });
 
             PreferenceScreen screen = getPreferenceScreen();
             for (int i = 0; i < screen.getPreferenceCount(); i++) {

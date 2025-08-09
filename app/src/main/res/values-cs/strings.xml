@@ -55,6 +55,8 @@
     <string name="group_code_settings_title">Kód skupiny</string>
     <string name="port_settings_title">Port pro přenosy</string>
     <string name="auth_port_settings_title">Port pro registraci</string>
+    <string name="network_interface_settings_title">Upřednostňované síťové rozhraní</string>
+    <string name="network_interface_settings_summary">%s (pokud není dostupné, vybere se automaticky)</string>
     <string name="theme_settings_title">Motiv</string>
     <string name="notification_settings_summary">Toto může být ovlivněno systémovým nastavením oznámení</string>
     <string name="port_range_warning">Port musí být mezi 1024 a 65535</string>

@@ -22,6 +22,7 @@ import android.os.Build;
 import android.provider.DocumentsContract;
 import android.provider.OpenableColumns;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.util.TypedValue;
@@ -48,6 +49,7 @@ import java.net.SocketException;
 import java.net.URLDecoder;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
@@ -80,6 +82,12 @@ public class Utils {
 
     public static String getIPAddress() {
         try {
+            if (Server.iface != null && !Server.iface.isEmpty() && !Server.iface.equals(Server.NETIFACE_AUTO)) {
+                InetAddress ia = getIPForIfaceName(Server.iface);
+                if (ia != null)
+                    return ia.getHostAddress();
+                else Log.d(TAG, "Preferred network interface is unavailable, falling back to automatic");
+            }
             String ip = null;
             //Works for most cases
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
@@ -172,18 +180,28 @@ public class Utils {
         return iface;
     }
 
-    public static String dumpInterfaces() {
-        StringBuilder res = new StringBuilder();
+    public static String[] getNetworkInterfaces() {
+        ArrayList<String> nisNames = new ArrayList<>();
         try {
             Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
             while (nis.hasMoreElements()) {
                 NetworkInterface ni = nis.nextElement();
                 if (ni.isUp()) {
-                    res.append(ni.getDisplayName()); res.append("\n");
+                    nisNames.add(ni.getDisplayName());
                 }
             }
-        } catch (Exception e) {res.append(e.getMessage());}
-        return String.valueOf(res);
+        } catch (SocketException e) {
+            Log.e(TAG, "Could not get network interfaces", e);
+            return null;
+        }
+        return nisNames.toArray(new String[0]);
+    }
+
+    public static String dumpInterfaces() {
+        var nis = getNetworkInterfaces();
+        if (nis == null)
+            return "Failed to get network interfaces";
+        return TextUtils.join("\n", nis);
     }
 
     public static InetAddress getIPForIfaceName(String ifaceName) throws SocketException {

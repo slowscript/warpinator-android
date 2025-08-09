@@ -62,11 +62,13 @@ import io.netty.handler.ssl.SslContextBuilder;
 public class Server {
     private static final String TAG = "SRV";
     public static final String SERVICE_TYPE = "_warpinator._tcp.local.";
+    public static final String NETIFACE_AUTO = "auto";
 
     public static Server current;
     public String displayName;
     public int port;
     public int authPort;
+    public static String iface;
     public String uuid;
     public String profilePicture;
     public boolean allowOverwrite;
@@ -167,6 +169,7 @@ public class Server {
         displayName = svc.prefs.getString("displayName", "Android");
         port = Integer.parseInt(svc.prefs.getString("port", "42000"));
         authPort = Integer.parseInt(svc.prefs.getString("authPort", "42001"));
+        iface = svc.prefs.getString("networkInterface", NETIFACE_AUTO);
         Authenticator.groupCode = svc.prefs.getString("groupCode", Authenticator.DEFAULT_GROUP_CODE);
         allowOverwrite = svc.prefs.getBoolean("allowOverwrite", false);
         notifyIncoming = svc.prefs.getBoolean("notifyIncoming", true);
