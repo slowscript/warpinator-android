@@ -451,7 +451,7 @@ public class Transfer {
                 chunkSize = data.length;
             } catch (Exception e) {
                 Log.e(TAG, "Failed to write to file " + currentRelativePath + ": " + e.getMessage());
-                errors.add("Failed to write to file " + currentRelativePath);
+                errors.add("Failed to write to file " + currentRelativePath + ": " + e.getMessage());
                 failReceive();
             }
         }

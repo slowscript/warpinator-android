@@ -1,0 +1,4 @@
+- Prefer non-VPN networks
+- Option to select preferred network interface manually
+- Maybe fixed some connections immediately breaking
+- Some minor tweaks and fixes

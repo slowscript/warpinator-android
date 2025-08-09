@@ -182,11 +182,12 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
 }
 
 class RegistrationService extends WarpRegistrationGrpc.WarpRegistrationImplBase {
+    private static final String TAG = "REG_V2";
     @Override
     public void requestCertificate(WarpProto.RegRequest request, StreamObserver<WarpProto.RegResponse> responseObserver) {
         byte[] cert = Authenticator.getBoxedCertificate();
         byte[] sendData = Base64.encode(cert, Base64.DEFAULT);
-        Log.v("REG_V2", "Sending certificate to " + request.getHostname() + " on " + request.getIp());
+        Log.v(TAG, "Sending certificate to " + request.getHostname() + " on " + request.getIp());
         responseObserver.onNext(WarpProto.RegResponse.newBuilder().setLockedCertBytes(ByteString.copyFrom(sendData)).build());
         responseObserver.onCompleted();
     }
@@ -194,6 +195,7 @@ class RegistrationService extends WarpRegistrationGrpc.WarpRegistrationImplBase 
     @Override
     public void registerService(WarpProto.ServiceRegistration req, StreamObserver<WarpProto.ServiceRegistration> responseObserver) {
         Remote r = MainService.remotes.get(req.getServiceId());
+        Log.i(TAG, "Service registration from " + req.getServiceId());
         if (r != null) {
             if (r.status != Remote.RemoteStatus.CONNECTED) {
                 r.address = InetAddresses.forString(req.getIp());
