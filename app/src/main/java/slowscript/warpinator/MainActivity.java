@@ -112,6 +112,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             if (!trySetDefaultDirectory(this))
                 askForDirectoryAccess(this);
         }
+
+        if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) == 0)
+            handleIntent(getIntent());
     }
 
     @Override
@@ -136,6 +139,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        handleIntent(intent);
+    }
+    private void handleIntent(Intent intent) {
         if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             Log.d(TAG, "recv action " + intent.getAction() + " -- " + intent.getData());
             String host = intent.getData().getAuthority();
