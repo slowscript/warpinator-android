@@ -2,6 +2,14 @@
 
 This is an unofficial reimplementation of Linux Mint's file sharing tool [Warpinator](https://github.com/linuxmint/warpinator) for Android.
 
+## ⚠️ Warning: Fake/malicious website
+
+`http://warpinator.com` is a fake website, potentially malicious!
+
+Do **NOT** download or run any software from it!
+
+We do not know who maintains it. See [notice from the Linux Mint team](https://github.com/linuxmint/warpinator?tab=readme-ov-file#%EF%B8%8F-warning-fakemalicious-website).
+
 ## Download
 Get the APK from the [Releases](https://github.com/slowscript/warpinator-android/releases) page
 
