@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.protobuf'
 
 android {
-    compileSdk 34
+    compileSdkVersion 36
 
     defaultConfig {
         applicationId 'slowscript.warpinator'
@@ -10,8 +10,6 @@ android {
         targetSdkVersion 34
         versionCode 1083
         versionName "1.8.3"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -35,27 +33,28 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'androidx.core:core:1.17.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
-    implementation 'androidx.documentfile:documentfile:1.0.1'
-    implementation 'com.google.android.material:material:1.12.0'
-    implementation 'androidx.recyclerview:recyclerview:1.3.2' //1.4 needs SDK 35
+    implementation 'androidx.documentfile:documentfile:1.1.0'
+    implementation 'com.google.android.material:material:1.13.0'
+    implementation 'androidx.recyclerview:recyclerview:1.4.0'
     implementation 'androidx.cardview:cardview:1.0.0'
 
     implementation 'org.openjax.security:nacl:0.3.2' //Update available, but API is weird now
-    implementation 'org.bouncycastle:bcpkix-jdk14:1.80'
-    implementation 'io.grpc:grpc-netty:1.49.0' //Updating gRPC caused a problem with connecting, must investigate
-    implementation 'io.grpc:grpc-okhttp:1.49.0'
-    implementation ('io.grpc:grpc-protobuf:1.49.0') {
+    implementation 'org.bouncycastle:bcpkix-jdk15to18:1.82'
+    implementation 'io.grpc:grpc-netty:1.75.0'
+    implementation 'io.grpc:grpc-okhttp:1.75.0'
+    implementation ('io.grpc:grpc-protobuf:1.75.0') {
         exclude group: 'com.google.api.grpc', module: 'proto-google-common-protos'
     }
-    implementation 'io.grpc:grpc-stub:1.49.0'
+    implementation 'io.grpc:grpc-stub:1.75.0'
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
     implementation 'org.conscrypt:conscrypt-android:2.5.3'
 
     implementation 'com.github.tony19:logback-android:3.0.0'
     implementation 'androidx.preference:preference:1.2.1'
-    implementation 'com.google.guava:guava:33.4.0-android' //This was included by gRPC anyway, so why not use it
+    implementation 'com.google.guava:guava:33.4.8-android' //This was included by gRPC anyway, so why not use it
     implementation 'org.jmdns:jmdns:3.5.8' //Device discovery worsened after update, let's see if this was the problem
                                            // Also, new versions require desugaring on Android 5 and 6
     implementation 'org.slf4j:slf4j-api:2.0.17' // For jmdns, it declares a too old dependency
@@ -69,7 +68,7 @@ protobuf {
     }
     plugins {
         grpc {
-            artifact = 'io.grpc:protoc-gen-grpc-java:1.57.0'
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.75.0'
         }
     }
     generateProtoTasks {
