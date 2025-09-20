@@ -50,6 +50,7 @@
     <string name="compression_settings_title">Pokusit se použít kompresi</string>
     <string name="background_settings_title">Běžet na pozadí</string>
     <string name="boot_settings_title">Spouštět při startu</string>
+    <string name="boot_settings_summary_a15">Automatické spouštění na Androidu 15+ dostupné</string>
     <string name="stop_svc_when_leaving">Zastavit službu po opuštění aplikace</string>
     <string name="export_log_settings_tile">Zapisovat ladící záznamy do souboru</string>
     <string name="group_code_settings_title">Kód skupiny</string>

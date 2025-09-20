@@ -63,6 +63,7 @@
     <string name="compression_settings_title">Try use compression</string>
     <string name="background_settings_title">Run in background</string>
     <string name="boot_settings_title">Start automatically</string>
+    <string name="boot_settings_summary_a15">Autostart unavailable on Android 15+</string>
     <string name="stop_svc_when_leaving">Stop service after leaving app</string>
     <string name="stop_svc_when_leaving_summary_on">The service will be stopped automatically when cleared from recents or after a period of inactivity</string>
     <string name="stop_svc_when_leaving_summary_off">Once started, the service will continue to run until manually stopped</string>

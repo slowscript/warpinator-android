@@ -172,6 +172,13 @@ public class MainService extends Service {
         super.onTaskRemoved(rootIntent);
     }
 
+    @Override
+    public void onTimeout(int startId, int fgsType) {
+        super.onTimeout(startId, fgsType);
+        Log.e(TAG, "Service has run out of time and must be stopped (Android 15+)");
+        stopSelf();
+    }
+
     private void stopServer () {
         if (server == null) //I have no idea how this can happen
             return;

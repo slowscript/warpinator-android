@@ -87,17 +87,19 @@ public class SettingsActivity extends AppCompatActivity {
         private static final String PROFILE_PREF = "profile";
         private static final String DEBUGLOG_PREF = "debugLog";
         private static final String NETIFACE_PREF = "networkInterface";
+        private static final String AUTOSTART_PREF = "bootStart";
         public boolean pickDirOnStart = false;
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
+            var prefs = getPreferenceManager().getSharedPreferences();
 
             EditTextPreference gcPref = findPreference(GROUPCODE_PREF);
             SwitchPreferenceCompat debugPref = findPreference(DEBUGLOG_PREF);
             ResetablePreference dlPref = findPreference(DOWNLOAD_DIR_PREF);
             Preference themePref = findPreference(THEME_PREF);
-            Preference profilePref = findPreference(PROFILE_PREF);
+            Preference autostartPref = findPreference(AUTOSTART_PREF);
             ListPreference networkIfacePref = findPreference(NETIFACE_PREF);
             EditTextPreference portPref = findPreference(PORT_PREF);
             EditTextPreference authPortPref = findPreference(AUTH_PORT_PREF);
@@ -138,8 +140,22 @@ public class SettingsActivity extends AppCompatActivity {
                 }
                 return true;
             });
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+                autostartPref.setEnabled(false);
+                autostartPref.setSummary(getString(R.string.boot_settings_summary_a15));
+            }
+            var autoStopPref = ((SwitchPreferenceCompat)findPreference("autoStop"));
+            if (prefs.getBoolean(AUTOSTART_PREF, false))
+                autoStopPref.setEnabled(false);
+            autostartPref.setOnPreferenceChangeListener((p, val) -> {
+                if ((boolean)val) {
+                    autoStopPref.setChecked(false);
+                    autoStopPref.setEnabled(false);
+                } else autoStopPref.setEnabled(true);
+                return true;
+            });
 
-            String dlDest = getPreferenceManager().getSharedPreferences().getString(DOWNLOAD_DIR_PREF, "");
+            String dlDest = prefs.getString(DOWNLOAD_DIR_PREF, "");
             dlPref.setSummary(Uri.parse(dlDest).getPath());
             dlPref.setOnPreferenceClickListener((p)->{
                 pickDirectory();
@@ -160,7 +176,7 @@ public class SettingsActivity extends AppCompatActivity {
             System.arraycopy(ifaces, 0, newIfaces, 1, ifaces.length);
             networkIfacePref.setEntries(newIfaces);
             networkIfacePref.setEntryValues(newIfaces);
-            String curIface = getPreferenceManager().getSharedPreferences().getString(NETIFACE_PREF, Server.NETIFACE_AUTO);
+            String curIface = prefs.getString(NETIFACE_PREF, Server.NETIFACE_AUTO);
             networkIfacePref.setSummary(Server.NETIFACE_AUTO.equals(curIface) ? curIface :
                     getString(R.string.network_interface_settings_summary, curIface));
             networkIfacePref.setOnPreferenceChangeListener((pre, val) -> {
