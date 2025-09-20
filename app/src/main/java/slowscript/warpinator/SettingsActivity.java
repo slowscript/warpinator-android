@@ -22,6 +22,8 @@ import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreferenceCompat;
 
+import com.google.android.material.appbar.MaterialToolbar;
+
 import java.util.Objects;
 
 import slowscript.warpinator.preferences.ListPreference;
@@ -35,15 +37,20 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
+        Utils.setEdgeToEdge(getWindow());
         fragment = new SettingsFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.settings, fragment)
                 .commit();
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        Utils.setToolbarInsets(toolbar);
+        Utils.setContentInsets(findViewById(R.id.settings));
         pickDir = getIntent().getBooleanExtra("pickDir", false);
     }
 

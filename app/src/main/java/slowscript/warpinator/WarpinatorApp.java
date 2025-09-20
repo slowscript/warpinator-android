@@ -12,6 +12,10 @@ import androidx.preference.PreferenceManager;
 
 import com.google.android.material.color.DynamicColors;
 
+import org.conscrypt.Conscrypt;
+
+import java.security.Security;
+
 public class WarpinatorApp extends Application implements Application.ActivityLifecycleCallbacks {
     static int activitiesRunning = 0;
     static final String TAG = "APP";
@@ -19,6 +23,7 @@ public class WarpinatorApp extends Application implements Application.ActivityLi
     @Override
     public void onCreate() {
         super.onCreate();
+        Security.insertProviderAt(Conscrypt.newProvider(), 1);
         DynamicColors.applyToActivitiesIfAvailable(this);
         registerActivityLifecycleCallbacks(this);
         activitiesRunning = 0;

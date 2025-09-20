@@ -1,9 +1,11 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
 
     <style name="AppTheme" parent="Theme.Material3.DayNight">
         <item name="android:statusBarColor">#3E000000</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
     </style>
 
     <!--  Use the colors as here: https://github.com/material-components/material-components-android/blob/master/docs/theming/Color.md  -->

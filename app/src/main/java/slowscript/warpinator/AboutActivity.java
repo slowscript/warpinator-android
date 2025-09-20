@@ -9,6 +9,8 @@ import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.android.material.appbar.MaterialToolbar;
+
 public class AboutActivity extends AppCompatActivity {
 
     TextView versionView, warrantyView;
@@ -17,10 +19,15 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+        Utils.setEdgeToEdge(getWindow());
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        Utils.setToolbarInsets(toolbar);
+        Utils.setContentInsets(findViewById(R.id.scrollView));
 
         versionView = findViewById(R.id.versionText);
         warrantyView = findViewById(R.id.warrantyText);

@@ -40,14 +40,12 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.common.io.Files;
 
-import org.conscrypt.Conscrypt;
-
 import java.io.File;
 import java.io.OutputStream;
-import java.security.Security;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
@@ -67,8 +65,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Security.insertProviderAt(Conscrypt.newProvider(), 1);
+        Utils.setEdgeToEdge(getWindow());
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Utils.setToolbarInsets(toolbar);
+        Utils.setContentInsets(findViewById(R.id.layout));
 
         receiver = newBroadcastReceiver();
         recyclerView = findViewById(R.id.recyclerView);

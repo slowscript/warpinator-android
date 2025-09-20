@@ -26,9 +26,16 @@ import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
+import android.view.Window;
 
 import androidx.annotation.AttrRes;
 import androidx.annotation.RequiresApi;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.ViewGroupCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.documentfile.provider.DocumentFile;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -249,6 +256,30 @@ public class Utils {
                 .setMessage(msg)
                 .setPositiveButton(android.R.string.ok, listener)
                 .show();
+    }
+
+    static void setEdgeToEdge(Window window) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) // Problems with statusbar icon color on A5
+            WindowCompat.enableEdgeToEdge(window);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) // No automatic content protection
+            window.setNavigationBarColor(Color.parseColor("#3E000000"));
+        ViewGroupCompat.installCompatInsetsDispatch(window.getDecorView().getRootView());
+    }
+
+    static void setToolbarInsets(View toolbar) {
+        ViewCompat.setOnApplyWindowInsetsListener(toolbar, (v, i) -> {
+            Insets insets = i.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+            v.setPadding(insets.left, insets.top, insets.right, 0);
+            return WindowInsetsCompat.CONSUMED;
+        });
+    }
+
+    static void setContentInsets(View content) {
+        ViewCompat.setOnApplyWindowInsetsListener(content, (v, i) -> {
+            Insets insets = i.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+            v.setPadding(insets.left, 0, insets.right, insets.bottom);
+            return WindowInsetsCompat.CONSUMED;
+        });
     }
 
     public static String bytesToHumanReadable(long bytes) {

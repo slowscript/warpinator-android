@@ -22,6 +22,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.MaterialToolbar;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -39,7 +41,12 @@ public class ShareActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share);
+        Utils.setEdgeToEdge(getWindow());
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         setTitle(R.string.title_activity_share);
+        Utils.setToolbarInsets(toolbar);
+        Utils.setContentInsets(findViewById(R.id.layout));
         receiver = newBroadcastReceiver();
 
         //Get uris to send

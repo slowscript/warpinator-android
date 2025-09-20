@@ -64,6 +64,7 @@ public class TransfersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.anim_push_up, R.anim.anim_null);
         setContentView(R.layout.activity_transfers);
+        Utils.setEdgeToEdge(getWindow());
         String id = getIntent().getStringExtra("remote");
         shareMode = getIntent().getBooleanExtra("shareMode", false);
         if (!MainService.remotes.containsKey(id)) {
