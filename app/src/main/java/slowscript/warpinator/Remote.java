@@ -375,7 +375,7 @@ public class Remote {
                     .withDeadlineAfter(8, TimeUnit.SECONDS)
                     .requestCertificate(WarpProto.RegRequest.newBuilder()
                             .setHostname(Utils.getDeviceName())
-                            .setIp(Utils.getIPAddress()).build()
+                            .setIp(MainService.svc.getCurrentIPStr()).build()
                     );
             channel.shutdownNow();
             byte[] lockedCert = resp.getLockedCertBytes().toByteArray();

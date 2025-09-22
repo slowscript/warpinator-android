@@ -23,7 +23,6 @@ import android.provider.DocumentsContract;
 import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.text.format.Formatter;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -39,6 +38,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.documentfile.provider.DocumentFile;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.common.net.InetAddresses;
+import com.google.common.primitives.Ints;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -49,11 +50,11 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Method;
 import java.net.Inet4Address;
-import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.URLDecoder;
+import java.net.UnknownHostException;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.ArrayList;
@@ -87,49 +88,52 @@ public class Utils {
         return name;
     }
 
-    public static String getIPAddress() {
+    public static IPInfo getIPAddress() {
         try {
             if (Server.iface != null && !Server.iface.isEmpty() && !Server.iface.equals(Server.NETIFACE_AUTO)) {
-                InetAddress ia = getIPForIfaceName(Server.iface);
+                IPInfo ia = getIPForIfaceName(Server.iface);
                 if (ia != null)
-                    return ia.getHostAddress();
+                    return ia;
                 else Log.d(TAG, "Preferred network interface is unavailable, falling back to automatic");
             }
-            String ip = null;
+            IPInfo ip = null;
             //Works for most cases
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                 ip = getNetworkIP();
             if (ip == null)
                 ip = getWifiIP();
             //Try figuring out what interface wifi has, fallback to wlan0 - in case of hotspot
-            if (ip == null) {
-                InetAddress ia = getIPForIfaceName(getWifiInterface());
-                if (ia != null)
-                    ip = ia.getHostAddress();
-            }
+            if (ip == null)
+                ip = getIPForIfaceName(getWifiInterface());
             //Get IP of an active interface (except loopback and data)
             if (ip == null) {
                 NetworkInterface activeNi = getActiveIface();
                 if (activeNi != null)
-                    ip = getIPForIface(activeNi).getHostAddress();
+                    ip = getIPForIface(activeNi);
             }
-            return ip;// != null ? ip : "IP Unknown";
+            Log.v(TAG, "Got IP: " + (ip == null ? "null" : (ip.address.getHostAddress() + "/" + ip.prefixLength)));
+            return ip;
         } catch (Exception ex) {
             Log.e(TAG, "Couldn't get IP address", ex);
-            return "Error getting IP";
+            return null;
         }
     }
 
-    static String getWifiIP() {
+    static IPInfo getWifiIP() {
         WifiManager wifiManager = (WifiManager) MainService.svc.getSystemService(WIFI_SERVICE);
         if (wifiManager == null) return null;
         int ip = wifiManager.getConnectionInfo().getIpAddress();
         if (ip == 0) return null;
-        return Formatter.formatIpAddress(ip);
+        try {
+            // No way to get prefix length, guess 24
+            return new IPInfo((Inet4Address)InetAddresses.fromLittleEndianByteArray(Ints.toByteArray(ip)), 24);
+        } catch (UnknownHostException e) {
+            return null;
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    static String getNetworkIP() {
+    static IPInfo getNetworkIP() {
         ConnectivityManager connMgr = (ConnectivityManager)MainService.svc.getSystemService(CONNECTIVITY_SERVICE);
         assert connMgr != null;
         Network activeNetwork = connMgr.getActiveNetwork();
@@ -141,7 +145,7 @@ public class Utils {
                 networkCaps.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET))) {
             for (LinkAddress addr : properties.getLinkAddresses())
                 if (addr.getAddress() instanceof Inet4Address)
-                    return addr.getAddress().getHostAddress();
+                    return new IPInfo((Inet4Address)addr.getAddress(), addr.getPrefixLength());
         }
         return null;
     }
@@ -211,7 +215,7 @@ public class Utils {
         return TextUtils.join("\n", nis);
     }
 
-    public static InetAddress getIPForIfaceName(String ifaceName) throws SocketException {
+    public static IPInfo getIPForIfaceName(String ifaceName) throws SocketException {
         Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
         NetworkInterface ni;
         while (nis.hasMoreElements()) {
@@ -223,12 +227,12 @@ public class Utils {
         return null;
     }
 
-    static InetAddress getIPForIface(NetworkInterface ni) {
+    static IPInfo getIPForIface(NetworkInterface ni) {
         for (InterfaceAddress ia : ni.getInterfaceAddresses()) {
             //filter for ipv4/ipv6
             if (ia.getAddress().getAddress().length == 4) {
                 //4 for ipv4, 16 for ipv6
-                return ia.getAddress();
+                return new IPInfo((Inet4Address)ia.getAddress(), ia.getNetworkPrefixLength());
             }
         }
         return null;
@@ -454,6 +458,15 @@ public class Utils {
             hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
         }
         return new String(hexChars);
+    }
+
+    public static class IPInfo {
+        public Inet4Address address;
+        public int prefixLength;
+        IPInfo(Inet4Address addr, int prefix) {
+            address = addr;
+            prefixLength = prefix;
+        }
     }
 
     static class VoidObserver implements StreamObserver<WarpProto.VoidType> {

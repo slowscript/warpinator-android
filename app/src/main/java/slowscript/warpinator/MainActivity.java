@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                     .setPositiveButton(R.string.initiate_connection, (o,w) -> initiateConnection())
                     .setNeutralButton(android.R.string.cancel, null)
                     .create();
-            String host = MainService.svc.lastIP + ":" + Server.current.authPort;
+            String host = MainService.svc.getCurrentIPStr() + ":" + Server.current.authPort;
             String uri = "warpinator://"+host;
             View.OnClickListener copyListener = (s) -> {
                 ClipData clip = ClipData.newPlainText("Device address", uri);

@@ -31,6 +31,7 @@ import androidx.core.app.NotificationManagerCompat;
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -62,7 +63,7 @@ public class MainService extends Service {
     public boolean networkAvailable = false;
     public boolean apOn = false;
     int notifId = 1300;
-    String lastIP = null;
+    Utils.IPInfo currentIPInfo = null;
 
     public static MainService svc;
     public static ConcurrentHashMap<String, Remote> remotes = new ConcurrentHashMap<>();
@@ -114,9 +115,9 @@ public class MainService extends Service {
         wakeLock.setReferenceCounted(false);
 
         server = new Server(this);
-        lastIP = Utils.getIPAddress(); // Server needs to load iface setting before this
+        currentIPInfo = Utils.getIPAddress(); // Server needs to load iface setting before this
         Log.d(TAG, Utils.dumpInterfaces());
-        if (lastIP != null) {
+        if (currentIPInfo != null) {
             Authenticator.getServerCertificate(); //Generate cert on start if doesn't exist
             if (Authenticator.certException != null) {
                 LocalBroadcasts.displayMessage(this, "Failed to initialize service",
@@ -325,20 +326,21 @@ public class MainService extends Service {
 
     private void onNetworkLost() {
         if (!gotNetwork())
-            lastIP = null; //Rebind even if we reconnected to the same net
+            currentIPInfo = null; //Rebind even if we reconnected to the same net
     }
 
     private void onNetworkChanged() {
-        String newIP = Utils.getIPAddress();
-        if (newIP == null) {
+        var newInfo = Utils.getIPAddress();
+        if (newInfo == null) {
             Log.w(TAG, "Network changed, but we do not have an IP");
-            lastIP = null;
+            currentIPInfo = null;
             return;
         }
-        if (!newIP.equals(lastIP)) {
+        InetAddress newIP = newInfo.address;
+        if (!newIP.equals(currentIPInfo == null ? null : currentIPInfo.address)) {
             Log.d(TAG, ":: Restarting. New IP: " + newIP);
             LocalBroadcasts.displayToast(this, getString(R.string.changed_network), 1);
-            lastIP = newIP;
+            currentIPInfo = newInfo;
             // Regenerate cert
             Authenticator.getServerCertificate();
             // Restart server
@@ -347,6 +349,10 @@ public class MainService extends Service {
                 server.Start();
             else Log.w(TAG, "No cert. Server not started.");
         }
+    }
+
+    String getCurrentIPStr() {
+        return currentIPInfo == null ? null : currentIPInfo.address.getHostAddress();
     }
 
     private void updateNotification() {

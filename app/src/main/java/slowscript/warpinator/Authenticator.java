@@ -77,6 +77,7 @@ public class Authenticator {
     }
 
     public static byte[] getServerCertificate() {
+        String serverIP = MainService.svc.getCurrentIPStr();
         //Try loading it first
         try {
             Log.d(TAG, "Loading server certificate...");
@@ -85,14 +86,14 @@ public class Authenticator {
             X509Certificate cert = getX509fromFile(f);
             cert.checkValidity(); //Will throw if expired (and we generate a new one)
             String ip = (String)((List<?>)cert.getSubjectAlternativeNames().toArray()[0]).get(1);
-            if (!ip.equals(Utils.getIPAddress()))
+            if (!ip.equals(serverIP))
                 throw new Exception(); //Throw if IPs don't match (and regenerate cert)
             
             return Utils.readAllBytes(f);
         } catch (Exception ignored) {}
 
         //Create new one if doesn't exist yet
-        byte[] cert = createCertificate(Utils.getDeviceName());
+        byte[] cert = createCertificate(Utils.getDeviceName(), serverIP);
         if (cert != null)
             saveCertOrKey(".self.pem", cert, false);
         return cert;
@@ -103,11 +104,10 @@ public class Authenticator {
         return new File(certsDir, hostname + ".pem");
     }
 
-    static byte[] createCertificate(String hostname) {
+    static byte[] createCertificate(String hostname, String ip) {
         try {
             Log.d(TAG, "Creating new server certificate...");
 
-            String ip = Utils.getIPAddress();
             Security.addProvider(new BouncyCastleProvider());
             //Create KeyPair
             KeyPair kp = createKeyPair("RSA", 2048);

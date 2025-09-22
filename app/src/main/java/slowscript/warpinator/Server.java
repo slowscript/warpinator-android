@@ -134,7 +134,7 @@ public class Server {
 
     void startMDNS() {
         try {
-            InetAddress addr = InetAddress.getByName(Utils.getIPAddress());
+            InetAddress addr = svc.currentIPInfo.address;
             Log.d(TAG, "Starting mDNS on " + addr);
             jmdns = JmDNS.create(addr);
 
@@ -269,7 +269,7 @@ public class Server {
     WarpProto.ServiceRegistration getServiceRegistrationMsg() {
         return WarpProto.ServiceRegistration.newBuilder()
                 .setServiceId(uuid)
-                .setIp(svc.lastIP)
+                .setIp(svc.getCurrentIPStr())
                 .setPort(port)
                 .setHostname(Utils.getDeviceName())
                 .setApiVersion(apiVersion)
