@@ -45,7 +45,7 @@ public class Remote {
     public String displayName;
     public String uuid;
     public Bitmap picture;
-    public RemoteStatus status;
+    public volatile RemoteStatus status;
     public boolean serviceAvailable;
     public boolean staticService = false;
 
@@ -166,6 +166,7 @@ public class Remote {
         if (state == ConnectivityState.TRANSIENT_FAILURE || state == ConnectivityState.IDLE) {
             status = RemoteStatus.DISCONNECTED;
             updateUI();
+            channel.shutdown(); //Dispose of channel so it can be recreated if device comes back
         }
         channel.notifyWhenStateChanged(state, this::onChannelStateChanged);
     }

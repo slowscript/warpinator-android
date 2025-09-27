@@ -187,7 +187,7 @@ class RegistrationService extends WarpRegistrationGrpc.WarpRegistrationImplBase 
     public void requestCertificate(WarpProto.RegRequest request, StreamObserver<WarpProto.RegResponse> responseObserver) {
         byte[] cert = Authenticator.getBoxedCertificate();
         byte[] sendData = Base64.encode(cert, Base64.DEFAULT);
-        Log.v(TAG, "Sending certificate to " + request.getHostname() + " on " + request.getIp());
+        Log.v(TAG, "Sending certificate to " + request.getHostname() + " ; IP=" + request.getIp()); // IP can by mine (Linux impl) or remote's
         responseObserver.onNext(WarpProto.RegResponse.newBuilder().setLockedCertBytes(ByteString.copyFrom(sendData)).build());
         responseObserver.onCompleted();
     }

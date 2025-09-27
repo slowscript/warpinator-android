@@ -107,7 +107,7 @@ public class Server {
         startGrpcServer();
         startRegistrationServer();
         CertServer.Start(port);
-        new Thread(this::startMDNS).start();
+        svc.executor.submit(this::startMDNS);
         svc.prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
         LocalBroadcasts.updateNetworkState(svc);
     }
@@ -116,7 +116,7 @@ public class Server {
         running = false;
         CertServer.Stop();
         if (async)
-            new Thread(this::stopMDNS).start(); //This takes a long time and we may be on the main thread
+            svc.executor.submit(this::stopMDNS); //This takes a long time and we may be on the main thread
         else stopMDNS();
         svc.prefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
         if (gServer != null)
@@ -213,6 +213,7 @@ public class Server {
             gServer = NettyServerBuilder.forPort(port)
                     .sslContext(ssl.build())
                     .addService(new GrpcService())
+                    .executor(svc.executor)
                     .permitKeepAliveWithoutCalls(true)
                     .permitKeepAliveTime(5, TimeUnit.SECONDS)
                     .build();
@@ -278,7 +279,7 @@ public class Server {
     }
 
     void registerWithHost(String host) {
-        new Thread(() -> {
+        svc.executor.submit(() -> {
             Log.d(TAG, "Registering with host " + host);
             try {
                 int sep = host.lastIndexOf(':');
@@ -324,7 +325,7 @@ public class Server {
                     LocalBroadcasts.displayToast(svc, "Failed to connect to " + host + " - " + e, Toast.LENGTH_LONG);
                 }
             }
-        }).start();
+        });
     }
 
     void reannounce() {
