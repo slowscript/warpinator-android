@@ -281,15 +281,19 @@ public class Server {
         new Thread(() -> {
             Log.d(TAG, "Registering with host " + host);
             try {
+                int sep = host.lastIndexOf(':');
+                // Use ip and authPort as specified by user
+                String IP = host.substring(0,sep);
+                int aport = Integer.parseInt(host.substring(sep+1));
+                InetAddress ia = InetAddress.getByName(IP);
+                if (!Utils.isSameSubnet(ia, MainService.svc.currentIPInfo.address, MainService.svc.currentIPInfo.prefixLength))
+                    LocalBroadcasts.displayToast(svc, svc.getString(R.string.warning_subnet), Toast.LENGTH_LONG);
+
                 ManagedChannel channel = OkHttpChannelBuilder.forTarget(host).usePlaintext().build();
                 WarpProto.ServiceRegistration resp = WarpRegistrationGrpc.newBlockingStub(channel)
                         .registerService(getServiceRegistrationMsg());
                 Log.d(TAG, "registerWithHost: registration sent");
                 addRecentRemote(host, resp.getHostname());
-                int sep = host.lastIndexOf(':');
-                // Use ip and authPort as specified by user
-                String IP = host.substring(0,sep);
-                int aport = Integer.parseInt(host.substring(sep+1));
                 Remote r = MainService.remotes.get(resp.getServiceId());
                 boolean newRemote = r == null;
                 if (newRemote) {

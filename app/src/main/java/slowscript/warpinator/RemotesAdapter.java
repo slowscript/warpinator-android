@@ -45,7 +45,7 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
     void setupViewHolder(ViewHolder holder, Remote r) {
         holder.txtName.setText(r.displayName);
         holder.txtUsername.setText(r.userName + "@" + r.hostname);
-        holder.txtIP.setText(r.address.getHostAddress() + ":" + r.port);
+        holder.txtIP.setText((r.sameSubnetWarning() ? "⚠ " : "") + r.address.getHostAddress() + ":" + r.port);
 
         Context context = holder.imgProfile.getContext();
 

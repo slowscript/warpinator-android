@@ -50,6 +50,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Method;
 import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -236,6 +237,27 @@ public class Utils {
             }
         }
         return null;
+    }
+
+    static boolean isSameSubnet(InetAddress a, InetAddress b, int prefix) {
+        var aa = a.getAddress();
+        var ba = b.getAddress();
+        if (aa.length != ba.length)
+            return false;
+        for (int i = 0; i < prefix; i+=8) {
+            int bi = i / 8;
+            if (bi >= aa.length) break;
+            int rem = prefix-i;
+            if (rem >= 8) {
+                if (aa[bi] != ba[bi])
+                    return false;
+            } else {
+                byte mask = (byte) ((0xFF << (8-rem)) & 0xFF);
+                if ((aa[bi] & mask) != (ba[bi] & mask))
+                    return false;
+            }
+        }
+        return true;
     }
 
     public static File getCertsDir()

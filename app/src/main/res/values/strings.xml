@@ -30,6 +30,7 @@
     <string name="open_failed">Failed to open received file</string>
     <string name="a_few_seconds">a few seconds</string>
     <string name="service_unavailable">, service unavailable</string>
+    <string name="wrong_subnet">, not on the same subnet</string>
     <string name="errors_during_transfer">Errors during transfer:</string>
     <string name="dont_close_when_sharing">Closing this activity while sharing might cause the transfer to fail</string>
     <string name="files_being_sent">Files being sent:</string>
@@ -122,11 +123,13 @@
     <string name="manual_connect_text">Scan the QR code above with a camera app and open the link or use the following address to initiate the connection from the other device:</string>
     <string name="initiate_connection">New connection</string>
     <string name="enter_address">Enter address and port</string>
-    <string name="same_network_hint">Devices have to be on the same network</string>
+    <string name="same_network_hint">Devices have to be on the same network and use the same group code</string>
     <string name="manual_connect_hint">Try Manual connection in the menu</string>
     <string name="confirm_connection">Connect to \'%s\'?</string>
     <string name="qs_discovered_count">%d connected</string>
     <string name="error_no_duplex">The other device did not connect back. Maybe it doesn\'t see us?</string>
+    <string name="warning">Warning</string>
+    <string name="warning_subnet">This device is not on the same subnet. Connecting to it is likely to fail.</string>
     <string-array name="connected_states">
         <item>Connected</item>
         <item>Disconnected</item>

@@ -197,6 +197,14 @@ public class Remote {
         staticService = true;
     }
 
+    boolean sameSubnetWarning() {
+        if (status == RemoteStatus.CONNECTED)
+            return false;
+        if (MainService.svc.currentIPInfo == null)
+            return false;
+        return !Utils.isSameSubnet(address, MainService.svc.currentIPInfo.address, MainService.svc.currentIPInfo.prefixLength);
+    }
+
     public Transfer findTransfer(long timestamp) {
         for (Transfer t : transfers) {
             if(t.startTime == timestamp)

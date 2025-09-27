@@ -24,6 +24,7 @@
     <string name="a_few_seconds">několik vteřin</string>
     <string name="open_failed">Soubor se nepodařilo otevřít</string>
     <string name="service_unavailable">, služba není dostupná</string>
+    <string name="wrong_subnet">, není ve stejné podsíti</string>
     <string name="errors_during_transfer">Chyby během přenosu:</string>
     <string name="dont_close_when_sharing">Zavření této aktivity během sdílení může způsobit že odesílání selže</string>
     <string name="version">Verze: %1$s</string>
@@ -85,6 +86,8 @@
     <string name="no_share_devices">Žádná zařízení se kterými by bylo možné sdílet</string>
     <string name="unsupported_intent">Přijali jsme příkaz který není podporován</string>
     <string name="cert_not_received">Nepovedlo se nám získat certifikát od %1$s. Ujistěte se že máte povolen protokol UDP (i TCP) na portu %2$d ve firewallu protějšku.</string>
+    <string name="warning">Varování</string>
+    <string name="warning_subnet">Toto zařízení není ve stejné podsíti. Pravděpodobně nebude možné se k němu připojit.</string>
     <string-array name="connected_states">
         <item>Připojeno</item>
         <item>Odpojeno</item>
@@ -131,7 +134,7 @@
     <string name="manual_connect_text">Naskenujte QR kód pomocí libovolné aplikace a otevřete odkaz nebo použijte následující adresu:</string>
     <string name="initiate_connection">Nové spojení</string>
     <string name="manual_connect_hint">Zkuste Ruční spojení v menu</string>
-    <string name="same_network_hint">Zařízení musí být ve stejné síti</string>
+    <string name="same_network_hint">Zařízení musí být ve stejné síti a mít stejný kód skupiny</string>
     <string name="confirm_connection">Připojit k \'%s\'?</string>
     <string name="qs_discovered_count">%d v dosahu</string>
     <string name="error_no_duplex">Druhé zařízení nevytvořilo zpětné spojení. Možná nás nevidí?</string>

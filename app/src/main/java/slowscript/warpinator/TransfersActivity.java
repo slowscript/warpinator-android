@@ -111,6 +111,8 @@ public class TransfersActivity extends AppCompatActivity {
             String s = getResources().getStringArray(R.array.connected_states)[remote.status.ordinal()];
             if (!remote.serviceAvailable)
                 s += getString(R.string.service_unavailable);
+            if (remote.sameSubnetWarning())
+                s += getString(R.string.wrong_subnet);
             if (remote.status == Remote.RemoteStatus.ERROR)
                 s += " (" + remote.errorText + ")";
             CoordinatorLayout cdView = findViewById(R.id.activityTransfersRoot);
@@ -133,8 +135,10 @@ public class TransfersActivity extends AppCompatActivity {
         updateUI();
         if (MainService.svc.runningTransfers == 0)
             MainService.svc.notificationMgr.cancel(MainService.PROGRESS_NOTIFICATION_ID);
-        if (remote.errorReceiveCert)
-            Utils.displayMessage(this, getString(R.string.connection_error), getString(R.string.cert_not_received, remote.hostname, remote.port));
+        //if (remote.errorReceiveCert)
+        //    Utils.displayMessage(this, getString(R.string.connection_error), getString(R.string.cert_not_received, remote.hostname, remote.port));
+        if (remote.sameSubnetWarning())
+            Utils.displayMessage(this, getString(R.string.warning), getString(R.string.warning_subnet));
 
         IntentFilter f = new IntentFilter(LocalBroadcasts.ACTION_UPDATE_REMOTES);
         f.addAction(LocalBroadcasts.ACTION_UPDATE_TRANSFERS);
@@ -215,7 +219,7 @@ public class TransfersActivity extends AppCompatActivity {
         runOnUiThread(() -> { //Will run immediately if on correct thread already
             txtName.setText(remote.displayName);
             txtRemote.setText(remote.userName + "@" + remote.hostname);
-            txtIP.setText(remote.address.getHostAddress());
+            txtIP.setText((remote.sameSubnetWarning() ? "⚠ " : "") + remote.address.getHostAddress());
             imgStatus.setImageResource(Utils.getIconForRemoteStatus(remote.status));
 
             int color = Utils.getAndroidAttributeColor(this, android.R.attr.textColorTertiary);
