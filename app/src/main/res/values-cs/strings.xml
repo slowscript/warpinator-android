@@ -87,7 +87,7 @@
     <string name="unsupported_intent">Přijali jsme příkaz který není podporován</string>
     <string name="cert_not_received">Nepovedlo se nám získat certifikát od %1$s. Ujistěte se že máte povolen protokol UDP (i TCP) na portu %2$d ve firewallu protějšku.</string>
     <string name="warning">Varování</string>
-    <string name="warning_subnet">Toto zařízení není ve stejné podsíti. Pravděpodobně nebude možné se k němu připojit.</string>
+    <string name="warning_subnet">Toto zařízení není ve stejné podsíti. Pravděpodobně nebude možné se k němu připojit. Zkontrolujte v nastavení obou zařízení že Warpinator používá správné síťové rozhraní.</string>
     <string-array name="connected_states">
         <item>Připojeno</item>
         <item>Odpojeno</item>

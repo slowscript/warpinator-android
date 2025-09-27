@@ -24,6 +24,7 @@ import androidx.preference.SwitchPreferenceCompat;
 
 import com.google.android.material.appbar.MaterialToolbar;
 
+import java.net.SocketException;
 import java.util.Objects;
 
 import slowscript.warpinator.preferences.ListPreference;
@@ -174,7 +175,14 @@ public class SettingsActivity extends AppCompatActivity {
             String[] newIfaces = new String[ifaces.length+1];
             newIfaces[0] = Server.NETIFACE_AUTO;
             System.arraycopy(ifaces, 0, newIfaces, 1, ifaces.length);
-            networkIfacePref.setEntries(newIfaces);
+            String[] newIfaceNames = newIfaces.clone();
+            for (int i = 1; i < newIfaceNames.length; i++) {
+                try {
+                    var ip = Utils.getIPForIfaceName(newIfaceNames[i]);
+                    if (ip != null) newIfaceNames[i] += " (" + ip.address.getHostAddress() + " /" + ip.prefixLength + ")";
+                } catch (Exception ignored) {}
+            }
+            networkIfacePref.setEntries(newIfaceNames);
             networkIfacePref.setEntryValues(newIfaces);
             String curIface = prefs.getString(NETIFACE_PREF, Server.NETIFACE_AUTO);
             networkIfacePref.setSummary(Server.NETIFACE_AUTO.equals(curIface) ? curIface :

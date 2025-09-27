@@ -129,7 +129,8 @@
     <string name="qs_discovered_count">%d connected</string>
     <string name="error_no_duplex">The other device did not connect back. Maybe it doesn\'t see us?</string>
     <string name="warning">Warning</string>
-    <string name="warning_subnet">This device is not on the same subnet. Connecting to it is likely to fail.</string>
+    <string name="warning_subnet">This device is not on the same subnet. Connecting to it is likely to fail.
+        Please check in the settings of both devices that Warpinator is using the correct network interface.</string>
     <string-array name="connected_states">
         <item>Connected</item>
         <item>Disconnected</item>
