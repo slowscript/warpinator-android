@@ -117,6 +117,13 @@ public class MainService extends Service {
         server = new Server(this);
         currentIPInfo = Utils.getIPAddress(); // Server needs to load iface setting before this
         Log.d(TAG, Utils.dumpInterfaces());
+
+        createNotificationChannels();
+        Notification notification = createForegroundNotification();
+        startForeground(SVC_NOTIFICATION_ID, notification); //Sometimes fails. Maybe takes too long to get here?
+        Log.v(TAG, "Entered foreground");
+
+        // Actually start server if possible. This takes a long time so should be after startForeground()
         if (currentIPInfo != null) {
             Authenticator.getServerCertificate(); //Generate cert on start if doesn't exist
             if (Authenticator.certException != null) {
@@ -146,10 +153,6 @@ public class MainService extends Service {
         }, 5L, reconnectTime);
 
         listenOnNetworkChanges();
-        createNotificationChannels();
-
-        Notification notification = createForegroundNotification();
-        startForeground(SVC_NOTIFICATION_ID, notification);
 
         // Notify the tile service that MainService just started, so it can attempt to bind
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
