@@ -322,9 +322,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         if (requestCode == SAVE_LOG_REQCODE && resultCode == Activity.RESULT_OK) {
             Uri savePath = data.getData();
             try (OutputStream os = getContentResolver().openOutputStream(savePath)) {
-                File logFile = new File(getExternalFilesDir(null), "latest.log");
-                Files.copy(logFile, os);
-                Log.d(TAG, "Log exported");
+                File logFile = MainService.dumpLog();
+                if (logFile != null) {
+                    Files.copy(logFile, os);
+                    Log.d(TAG, "Log exported");
+                }
             } catch (Exception e) {
                 Log.e(TAG, "Could not save log to file", e);
                 Toast.makeText(this, "Could not save log to file: " + e, Toast.LENGTH_LONG).show();

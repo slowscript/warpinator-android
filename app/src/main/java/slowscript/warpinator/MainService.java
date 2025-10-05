@@ -200,6 +200,8 @@ public class MainService extends Service {
         timer.cancel();
         if (lock != null)
             lock.release();
+        if (logcatProcess != null)
+            logcatProcess.destroy();
     }
 
     static void scheduleAutoStop() {
@@ -257,6 +259,20 @@ public class MainService extends Service {
             Log.e(TAG, "Failed to start logging to file", e);
         }
         return process;
+    }
+
+    public static File dumpLog() {
+        Log.d(TAG, "Saving log...");
+        File output = new File(svc.getExternalCacheDir(), "dump.log");
+        String cmd = "logcat -d -f " + output.getAbsolutePath() + "\n";
+        try {
+            Process process = Runtime.getRuntime().exec(cmd);
+            process.waitFor();
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to dump log", e);
+            return null;
+        }
+        return output;
     }
 
     private void listenOnNetworkChanges() {

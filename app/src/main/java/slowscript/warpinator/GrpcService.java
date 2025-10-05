@@ -64,6 +64,7 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
             }
             Utils.sleep(250);
         }
+        Log.d(TAG, "Duplex wait result: " + response);
         responseObserver.onNext(WarpProto.HaveDuplex.newBuilder().setResponse(response).build());
         responseObserver.onCompleted();
     }

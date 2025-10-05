@@ -375,7 +375,7 @@ public class Remote {
     }
 
     private boolean receiveCertificateV2() {
-        Log.v(TAG, "Receiving certificate (V2) from " + address.toString());
+        Log.v(TAG, "Receiving certificate (V2) from " + hostname + " at " + address.toString());
         try {
             channel = OkHttpChannelBuilder.forAddress(address.getHostAddress(), authPort)
                     .usePlaintext().build();
