@@ -6,9 +6,6 @@ import android.util.Log;
 import com.google.common.net.InetAddresses;
 import com.google.protobuf.ByteString;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 import io.grpc.Status;
 import io.grpc.StatusException;
 import io.grpc.stub.ServerCallStreamObserver;
@@ -20,10 +17,9 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
     @Override
     public void checkDuplexConnection(WarpProto.LookupName request, StreamObserver<WarpProto.HaveDuplex> responseObserver) {
         String id = request.getId();
-
+        Remote r = MainService.remotes.get(id);
         boolean haveDuplex = false;
-        if(MainService.remotes.containsKey(id)) {
-            Remote r = MainService.remotes.get(id);
+        if (r != null) {
             haveDuplex = (r.status == Remote.RemoteStatus.CONNECTED)
                         || (r.status == Remote.RemoteStatus.AWAITING_DUPLEX);
             //The other side is trying to connect with use after a connection failed

@@ -1,0 +1,7 @@
+- Target Android 15 (no autostart on A15+)
+- Edge to edge UI (as required by A15)
+- Warn about device not being on the same subnet
+- Show IP in network interface picker
+- Use fixed color app icon
+- Fixed showing manual connect dialog
+- More fixes, could solve some connection issues

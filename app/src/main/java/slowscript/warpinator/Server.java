@@ -259,6 +259,7 @@ public class Server {
         // Unregister possibly leftover service info
         // -> Announcement will trigger "new service" behavior and reconnect on other clients
         unregister(); //Safe if fails
+        Utils.sleep(250);
         try {
             Log.d(TAG, "Registering as " + uuid);
             jmdns.registerService(serviceInfo);

@@ -338,7 +338,7 @@ public class Remote {
             try {
                 Log.v(TAG, "Receiving certificate from " + address.toString() + ", try " + tryCount);
                 DatagramSocket sock = new DatagramSocket();
-                sock.setSoTimeout(1000);
+                sock.setSoTimeout(1500);
 
                 byte[] req = CertServer.REQUEST.getBytes();
                 DatagramPacket p = new DatagramPacket(req, req.length, address, port);
@@ -356,9 +356,6 @@ public class Remote {
             } catch (Exception e) {
                 tryCount++;
                 Log.d(TAG, "receiveCertificate: attempt " + tryCount + " failed: " + e.getMessage());
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception ignored) { }
             }
         }
         if (tryCount == 3) {
@@ -396,7 +393,7 @@ public class Remote {
             errorReceiveCert = false;
             return true;
         } catch (Exception e) {
-            Log.w(TAG, "Could not receive certificate", e);
+            Log.w(TAG, "Could not receive certificate from " + hostname, e);
             errorReceiveCert = true;
         }
         return false;
