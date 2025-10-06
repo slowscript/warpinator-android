@@ -443,13 +443,16 @@ public class Server {
                     Log.v(TAG, "Ignoring \"flush\" registration");
                     return;
                 }
+                if (!props.contains("hostname")) {
+                    Log.d(TAG, "Ignoring incomplete service info. (no hostname, might be resolved later)");
+                    return;
+                }
 
                 String svcName = info.getName();
                 if (MainService.remotes.containsKey(svcName)) {
                     Remote r = MainService.remotes.get(svcName);
                     Log.d(TAG, "Service already known. Status: " + r.status);
-                    if(props.contains("hostname"))
-                        r.hostname = info.getPropertyString("hostname");
+                    r.hostname = info.getPropertyString("hostname");
                     if(props.contains("auth-port"))
                         r.authPort = Integer.parseInt(info.getPropertyString("auth-port"));
                     InetAddress addr = getIPv4Address(info.getInetAddresses());
@@ -473,8 +476,7 @@ public class Server {
                     Log.w(TAG, "Service resolved with no IPv4 address. Most implementations don't properly support IPv6.");
                     return;
                 }
-                if(props.contains("hostname"))
-                    remote.hostname = info.getPropertyString("hostname");
+                remote.hostname = info.getPropertyString("hostname");
                 if(props.contains("api-version"))
                     remote.api = Integer.parseInt(info.getPropertyString("api-version"));
                 if(props.contains("auth-port"))
