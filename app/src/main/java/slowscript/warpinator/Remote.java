@@ -104,6 +104,10 @@ public class Remote {
                 errorText = e.toString();
                 updateUI();
                 return;
+            } finally {
+                // Clean up channel on failure
+                if (channel != null && status == RemoteStatus.ERROR)
+                    channel.shutdownNow();
             }
 
             status = RemoteStatus.AWAITING_DUPLEX;
@@ -181,6 +185,7 @@ public class Remote {
             Log.d(TAG, "ping: Failed with exception", e);
             status = RemoteStatus.DISCONNECTED;
             updateUI();
+            channel.shutdown();
         }
     }
 
@@ -335,9 +340,8 @@ public class Remote {
         byte[] received = null;
         int tryCount = 0;
         while (tryCount < 3) {
-            try {
+            try (DatagramSocket sock = new DatagramSocket()) {
                 Log.v(TAG, "Receiving certificate from " + address.toString() + ", try " + tryCount);
-                DatagramSocket sock = new DatagramSocket();
                 sock.setSoTimeout(1500);
 
                 byte[] req = CertServer.REQUEST.getBytes();
@@ -347,7 +351,6 @@ public class Remote {
                 byte[] receiveData = new byte[2000];
                 DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
                 sock.receive(receivePacket);
-                sock.close();
 
                 if (receivePacket.getAddress().equals(address) && (receivePacket.getPort() == port)) {
                     received = Arrays.copyOfRange(receivePacket.getData(), 0, receivePacket.getLength());
@@ -373,20 +376,19 @@ public class Remote {
 
     private boolean receiveCertificateV2() {
         Log.v(TAG, "Receiving certificate (V2) from " + hostname + " at " + address.toString());
+        ManagedChannel authChannel = null;
         try {
-            channel = OkHttpChannelBuilder.forAddress(address.getHostAddress(), authPort)
+            authChannel = OkHttpChannelBuilder.forAddress(address.getHostAddress(), authPort)
                     .usePlaintext().build();
-            WarpProto.RegResponse resp = WarpRegistrationGrpc.newBlockingStub(channel)
+            WarpProto.RegResponse resp = WarpRegistrationGrpc.newBlockingStub(authChannel)
                     .withWaitForReady() //This will retry connection after 1s, then after exp. delay
                     .withDeadlineAfter(8, TimeUnit.SECONDS)
                     .requestCertificate(WarpProto.RegRequest.newBuilder()
                             .setHostname(Utils.getDeviceName())
                             .setIp(MainService.svc.getCurrentIPStr()).build()
                     );
-            channel.shutdownNow();
             byte[] lockedCert = resp.getLockedCertBytes().toByteArray();
             byte[] decoded = Base64.decode(lockedCert, Base64.DEFAULT);
-            //channel.awaitTermination(100, TimeUnit.MILLISECONDS);
             errorGroupCode = !Authenticator.saveBoxedCert(decoded, uuid);
             if (errorGroupCode)
                 return false;
@@ -395,6 +397,9 @@ public class Remote {
         } catch (Exception e) {
             Log.w(TAG, "Could not receive certificate from " + hostname, e);
             errorReceiveCert = true;
+        } finally {
+            if (authChannel != null)
+                authChannel.shutdownNow();
         }
         return false;
     }

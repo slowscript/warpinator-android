@@ -282,6 +282,7 @@ public class Server {
     void registerWithHost(String host) {
         svc.executor.submit(() -> {
             Log.d(TAG, "Registering with host " + host);
+            ManagedChannel channel = null;
             try {
                 int sep = host.lastIndexOf(':');
                 // Use ip and authPort as specified by user
@@ -291,7 +292,7 @@ public class Server {
                 if (!Utils.isSameSubnet(ia, MainService.svc.currentIPInfo.address, MainService.svc.currentIPInfo.prefixLength))
                     LocalBroadcasts.displayToast(svc, svc.getString(R.string.warning_subnet), Toast.LENGTH_LONG);
 
-                ManagedChannel channel = OkHttpChannelBuilder.forTarget(host).usePlaintext().build();
+                channel = OkHttpChannelBuilder.forTarget(host).usePlaintext().build();
                 WarpProto.ServiceRegistration resp = WarpRegistrationGrpc.newBlockingStub(channel)
                         .registerService(getServiceRegistrationMsg());
                 Log.d(TAG, "registerWithHost: registration sent");
@@ -325,6 +326,9 @@ public class Server {
                     Log.e(TAG, "Failed to connect to " + host, e);
                     LocalBroadcasts.displayToast(svc, "Failed to connect to " + host + " - " + e, Toast.LENGTH_LONG);
                 }
+            } finally {
+                if (channel != null)
+                    channel.shutdown();
             }
         });
     }
