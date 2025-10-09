@@ -87,11 +87,15 @@ public class Remote {
                             .keepAliveTime(11, TimeUnit.SECONDS)
                             .keepAliveTimeout(5, TimeUnit.SECONDS);
                 }
+                if (channel != null && !channel.isShutdown())
+                    channel.shutdown(); //just in case
                 channel = builder.build();
                 if (api >= 2)
                     channel.notifyWhenStateChanged(channel.getState(true), this::onChannelStateChanged);
                 blockingStub = WarpGrpc.newBlockingStub(channel);
                 asyncStub = WarpGrpc.newStub(channel);
+                // Ensure connection is created, otherwise give correct error (not "duplex failed")
+                blockingStub.withDeadlineAfter(5, TimeUnit.SECONDS).ping(WarpProto.LookupName.newBuilder().setId(Server.current.uuid).build());
             } catch (SSLException e) {
                 Log.e(TAG, "Authentication with remote "+ hostname +" failed: " + e.getMessage(), e);
                 status = RemoteStatus.ERROR;
@@ -119,6 +123,7 @@ public class Remote {
                 status = RemoteStatus.ERROR;
                 errorText = MainService.svc.getString(R.string.error_no_duplex);
                 updateUI();
+                channel.shutdown();
                 return;
             }
 
@@ -135,6 +140,7 @@ public class Remote {
                 errorText = "Couldn't get username: " + ex.toString();
                 Log.e(TAG, "connect: cannot get name: connection broken?", ex);
                 updateUI();
+                channel.shutdown();
                 return;
             }
             //Get avatar
@@ -411,6 +417,7 @@ public class Remote {
     }
 
     private boolean waitForDuplexV1() {
+        Log.d(TAG, "Waiting for duplex - V1");
         int tries = 0;
         while (tries < 10) {
             try {
@@ -421,7 +428,7 @@ public class Remote {
                 if (haveDuplex)
                     return true;
             } catch (Exception e) {
-               Log.d(TAG, "Connection interrupted while waiting for duplex", e);
+               Log.d(TAG, "Error while checking duplex", e);
                return false;
             }
             Log.d (TAG, "Attempt " + tries + ": No duplex");
@@ -440,10 +447,10 @@ public class Remote {
             return blockingStub.withDeadlineAfter(10, TimeUnit.SECONDS)
                     .waitingForDuplex(WarpProto.LookupName.newBuilder()
                             .setId(Server.current.uuid)
-                            .setReadableName("Android").build())
+                            .setReadableName(Utils.getDeviceName()).build())
                     .getResponse();
         } catch (Exception e) {
-            Log.d(TAG, "Connection interrupted while waiting for duplex", e);
+            Log.d(TAG, "Error while waiting for duplex", e);
             return false;
         }
     }

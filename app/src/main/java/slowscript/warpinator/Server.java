@@ -91,13 +91,10 @@ public class Server {
 
     public Server(MainService _svc) {
         svc = _svc;
-
         current = this;
-        Security.insertProviderAt(Conscrypt.newProvider(), 1);
         loadSettings();
 
         serviceListener = newServiceListener();
-
         preferenceChangeListener = (p, k) -> loadSettings();
     }
 
@@ -213,7 +210,6 @@ public class Server {
             gServer = NettyServerBuilder.forPort(port)
                     .sslContext(ssl.build())
                     .addService(new GrpcService())
-                    .executor(svc.executor)
                     .permitKeepAliveWithoutCalls(true)
                     .permitKeepAliveTime(5, TimeUnit.SECONDS)
                     .build();

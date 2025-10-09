@@ -4,10 +4,10 @@ import android.util.Base64;
 import android.util.Log;
 
 import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.asn1.x509.GeneralName;
 import org.bouncycastle.asn1.x509.GeneralNames;
 import org.bouncycastle.asn1.x509.Time;
-import org.bouncycastle.asn1.x509.X509Extensions;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -45,7 +45,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
 public class Authenticator {
-    private static String TAG = "AUTH";
+    private static final String TAG = "AUTH";
     public static String DEFAULT_GROUP_CODE = "Warpinator";
 
     static long day = 1000L * 60L * 60L * 24;
@@ -93,10 +93,7 @@ public class Authenticator {
         } catch (Exception ignored) {}
 
         //Create new one if doesn't exist yet
-        byte[] cert = createCertificate(Utils.getDeviceName(), serverIP);
-        if (cert != null)
-            saveCertOrKey(".self.pem", cert, false);
-        return cert;
+        return createCertificate(Utils.getDeviceName(), serverIP);
     }
 
     public static File getCertificateFile(String hostname) {
@@ -126,7 +123,7 @@ public class Authenticator {
 
             JcaX509v3CertificateBuilder builder = new JcaX509v3CertificateBuilder(
                     name, serial, notBefore, notAfter, name, kp.getPublic());
-            builder.addExtension(X509Extensions.SubjectAlternativeName, true, new GeneralNames(new GeneralName(GeneralName.iPAddress, ip)));
+            builder.addExtension(Extension.subjectAlternativeName, true, new GeneralNames(new GeneralName(GeneralName.iPAddress, ip)));
 
             //Sign certificate
             ContentSigner signer = new JcaContentSignerBuilder("SHA256withRSA").build(kp.getPrivate());
@@ -136,7 +133,11 @@ public class Authenticator {
             byte[] privKeyBytes = kp.getPrivate().getEncoded();
             saveCertOrKey(".self.key-pem", privKeyBytes, true);
 
-            return cert.getEncoded();
+            //Save cert
+            byte[] certBytes = cert.getEncoded();
+            saveCertOrKey(".self.pem", certBytes, false);
+
+            return certBytes;
         }
         catch(Exception e) {
             Log.e(TAG, "Failed to create certificate", e);
@@ -186,8 +187,7 @@ public class Authenticator {
         try (FileOutputStream stream = new FileOutputStream(cert, false)) {
             stream.write(certString.getBytes());
         } catch (Exception e) {
-            Log.w(TAG, "Failed to save certificate or private key: " + filename);
-            e.printStackTrace();
+            Log.w(TAG, "Failed to save certificate or private key: " + filename, e);
         }
     }
 

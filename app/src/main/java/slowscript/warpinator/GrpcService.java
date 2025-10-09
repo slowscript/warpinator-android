@@ -36,7 +36,7 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
         responseObserver.onCompleted();
     }
 
-    private static final int MAX_TRIES = 20;
+    private static final int MAX_TRIES = 32; //8 sec; Linux has 20 (5 sec), calling side timeout is 10s
     @Override
     public void waitingForDuplex(WarpProto.LookupName request, StreamObserver<WarpProto.HaveDuplex> responseObserver) {
         Log.d(TAG, request.getReadableName() + " is waiting for duplex...");
