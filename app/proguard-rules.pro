@@ -29,6 +29,20 @@
 -keep public interface io.netty.channel.ChannelOutboundInvoker {
     *;
 }
+-keep class io.netty.handler.ssl.SslHandler { *; }
+-keep class io.netty.handler.codec.http2.* { *; }
+-keep class io.netty.channel.* { *; }
+-keep class io.grpc.netty.ProtocolNegotiators$GrpcNegotiationHandler { *; }
+-keep class io.grpc.netty.NettyServerHandler { *; }
+-keep class io.grpc.netty.ProtocolNegotiators$ServerTlsHandler { *; }
+-keep class io.grpc.netty.ProtocolNegotiators$WaitUntilActiveHandler { *; }
+-keep class io.grpc.netty.WriteBufferingAndExceptionHandler { *; }
+
+# related to netty:
+-dontwarn com.aayushatharva.brotli4j.**
+-dontwarn com.github.luben.zstd.**
+-dontwarn com.jcraft.jzlib.*
+
 # These should not be needed
 -dontwarn com.android.org.conscrypt.SSLParametersImpl
 -dontwarn org.apache.harmony.xnet.provider.jsse.SSLParametersImpl
