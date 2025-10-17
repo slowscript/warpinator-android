@@ -1,0 +1,4 @@
+- Fixed error when connecting more than 1 other device
+- Fixed issue where devices would sometimes register with API v1 even if both support V2
+- Report connection error in second phase instead of just "no duplex"
+- Extended duplex timeout to 8 seconds
