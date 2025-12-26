@@ -63,6 +63,7 @@ public class Server {
     private static final String TAG = "SRV";
     public static final String SERVICE_TYPE = "_warpinator._tcp.local.";
     public static final String NETIFACE_AUTO = "auto";
+    public static final int SERVER_FEATURES = Remote.RemoteFeatures.TEXT_MESSAGES;
 
     public static Server current;
     public String displayName;

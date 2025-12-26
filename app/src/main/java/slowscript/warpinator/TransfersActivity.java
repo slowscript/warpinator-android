@@ -249,6 +249,7 @@ public class TransfersActivity extends AppCompatActivity {
             fabSend.setEnabled(sendEnabled);
             if (!sendEnabled)
                 setFabVisibility(View.GONE);
+            fabSendMsg.setEnabled(remote.supportsMessages);
             btnReconnect.setVisibility((remote.status == Remote.RemoteStatus.ERROR)
                     || (remote.status == Remote.RemoteStatus.DISCONNECTED)
                     ? View.VISIBLE : View.INVISIBLE);
@@ -311,16 +312,23 @@ public class TransfersActivity extends AppCompatActivity {
         EditText editText = new EditText(this);
         editText.setSingleLine(false);
         editText.setMinLines(2);
-        editText.setHint("Your message");
+        editText.setHint(R.string.message_hint);
         layout.addView(editText);
         new MaterialAlertDialogBuilder(this)
-                .setTitle("Enter your message")
+                .setTitle(R.string.enter_message)
                 .setView(layout)
                 .setPositiveButton(android.R.string.ok, (a,b)->{
                     String msg = editText.getText().toString();
-                    Log.d(TAG, "will send message: " + msg);
-                    //TODO: Make transfer and show in list...
-                    remote.sendTextMessage(msg);
+                    Log.d(TAG, "Sending text message to " + remote.hostname);
+                    Transfer t = new Transfer();
+                    t.direction = Transfer.Direction.SEND;
+                    t.remoteUUID = remote.uuid;
+                    t.startTime = System.currentTimeMillis();
+                    t.message = msg;
+                    t.setStatus(Transfer.Status.TRANSFERRING);
+                    remote.addTransfer(t);
+                    updateTransfers(remote.uuid);
+                    remote.sendTextMessage(t);
                 })
                 .show();
         setFabVisibility(View.GONE);

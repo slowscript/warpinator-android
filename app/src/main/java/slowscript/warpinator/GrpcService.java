@@ -68,7 +68,7 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
     @Override
     public void getRemoteMachineInfo(WarpProto.LookupName request, StreamObserver<WarpProto.RemoteMachineInfo> responseObserver) {
         responseObserver.onNext(WarpProto.RemoteMachineInfo.newBuilder()
-                .setDisplayName(Server.current.displayName).setUserName("android").build());
+                .setDisplayName(Server.current.displayName).setUserName("android").setFeatureFlags(Server.SERVER_FEATURES).build());
         responseObserver.onCompleted();
     }
 
@@ -79,20 +79,28 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
         responseObserver.onCompleted();
     }
 
+    private Remote remoteForUUID(String uuid) {
+        Remote r = MainService.remotes.get(uuid);
+        if (r == null) {
+            Log.w(TAG, "Received transfer request from unknown remote");
+            return null;
+        }
+        if (r.errorGroupCode) {
+            Log.w(TAG, "Sending user has wrong group code, transfer ignored");
+            return null;
+        }
+        return r;
+    }
+
     @Override
     public void processTransferOpRequest(WarpProto.TransferOpRequest request, StreamObserver<WarpProto.VoidType> responseObserver) {
         String remoteUUID = request.getInfo().getIdent();
-        Remote r = MainService.remotes.get(remoteUUID);
+        Remote r = remoteForUUID(remoteUUID);
         if (r == null) {
-            Log.w(TAG, "Received transfer request from unknown remote");
             returnVoid(responseObserver);
             return;
         }
         Log.i(TAG, "Receiving transfer from " + r.userName);
-        if (r.errorGroupCode) {
-            Log.w(TAG, "Sending user has wrong group code, transfer ignored");
-            return;
-        }
 
         Transfer t = new Transfer();
         t.direction = Transfer.Direction.RECEIVE;
@@ -119,7 +127,23 @@ public class GrpcService extends WarpGrpc.WarpImplBase {
 
     @Override
     public void sendTextMessage(WarpProto.TextMessage request, StreamObserver<WarpProto.VoidType> responseObserver) {
+        String remoteUUID = request.getIdent();
+        Remote r = remoteForUUID(remoteUUID);
+        if (r == null) {
+            returnVoid(responseObserver);
+            return;
+        }
         Log.d(TAG, "sendTextMessage from " + request.getIdent() + ": " + request.getMessage());
+
+        Transfer t = new Transfer();
+        t.direction = Transfer.Direction.RECEIVE;
+        t.remoteUUID = remoteUUID;
+        t.startTime = request.getTimestamp();
+        t.message = request.getMessage();
+        t.setStatus(Transfer.Status.FINISHED);
+
+        r.addTransfer(t);
+        t.showNewReceiveTransfer(true);
 
         returnVoid(responseObserver);
     }

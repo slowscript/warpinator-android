@@ -23,6 +23,7 @@ import io.grpc.ManagedChannel;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.okhttp.OkHttpChannelBuilder;
+import io.grpc.stub.StreamObserver;
 
 public class Remote {
     public enum RemoteStatus {
@@ -31,6 +32,9 @@ public class Remote {
         CONNECTING, //Connect thread running -> Don't touch data!!
         ERROR, //Failed to connect
         AWAITING_DUPLEX
+    }
+    public static class RemoteFeatures {
+        public static final int TEXT_MESSAGES = 1;
     }
 
     static String TAG = "Remote";
@@ -48,6 +52,7 @@ public class Remote {
     public volatile RemoteStatus status;
     public boolean serviceAvailable;
     public boolean staticService = false;
+    public boolean supportsMessages = false;
 
     //Error flags
     public boolean errorGroupCode = false; //Shown once by RemotesAdapter or TransfersActivity
@@ -135,6 +140,7 @@ public class Remote {
                 WarpProto.RemoteMachineInfo info = blockingStub.getRemoteMachineInfo(WarpProto.LookupName.getDefaultInstance());
                 displayName = info.getDisplayName();
                 userName = info.getUserName();
+                supportsMessages = (info.getFeatureFlags() & RemoteFeatures.TEXT_MESSAGES) != 0;
             } catch (StatusRuntimeException ex) {
                 status = RemoteStatus.ERROR;
                 errorText = "Couldn't get username: " + ex.toString();
@@ -305,13 +311,25 @@ public class Remote {
         }).start();
     }
 
-    public void sendTextMessage(String txt) {
+    public void sendTextMessage(Transfer t) {
         WarpProto.TextMessage msg = WarpProto.TextMessage.newBuilder()
                 .setIdent(Server.current.uuid)
-                .setTimestamp(System.currentTimeMillis())
-                .setMessage(txt)
+                .setTimestamp(t.startTime)
+                .setMessage(t.message)
                 .build();
-        asyncStub.sendTextMessage(msg, new Utils.VoidObserver());
+        asyncStub.sendTextMessage(msg, new StreamObserver<>() {
+            @Override public void onNext(WarpProto.VoidType value) {}
+            @Override public void onError(Throwable e) {
+                Log.e(TAG, "Failed to send message", e);
+                t.setStatus(Transfer.Status.FAILED);
+                t.errors.add("Failed to send message: " + e);
+                t.updateUI();
+            }
+            @Override public void onCompleted() {
+                t.setStatus(Transfer.Status.FINISHED);
+                t.updateUI();
+            }
+        });
     }
 
     public void declineTransfer(Transfer t) {

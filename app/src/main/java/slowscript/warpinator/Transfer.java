@@ -1,8 +1,10 @@
 package slowscript.warpinator;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.media.MediaScannerConnection;
 import android.media.RingtoneManager;
@@ -11,6 +13,7 @@ import android.os.Build;
 import android.provider.DocumentsContract;
 import android.util.Log;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.documentfile.provider.DocumentFile;
 
@@ -49,6 +52,7 @@ public class Transfer {
     private static final String TAG = "TRANSFER";
     private static final int CHUNK_SIZE = 1024 * 512; //512 kB
     private static final long UI_UPDATE_LIMIT = 250;
+    private static final String NOTIFICATION_GROUP_MESSAGE = "slowscript.warpinator.MESSAGE_NOTIFICATION";
 
     private final AtomicReference<Status> status = new AtomicReference<>();
     public Direction direction;
@@ -67,6 +71,8 @@ public class Transfer {
     private ArrayList<MFile> dirs;
     //RECEIVE only
     private ArrayList<String> recvdPaths;
+    //MESSAGE
+    public String message; // Transfer is message type when this is not null
 
     public boolean overwriteWarning = false;
 
@@ -355,27 +361,36 @@ public class Transfer {
         boolean autoAccept = svc.prefs.getBoolean("autoAccept", false);
 
         //Show in UI
+        showNewReceiveTransfer(!autoAccept);
+        if (autoAccept) this.startReceive();
+    }
+
+    public void showNewReceiveTransfer(boolean notify) {
         if (remoteUUID.equals(TransfersActivity.topmostRemote))
             LocalBroadcasts.updateTransfers(svc, remoteUUID);
-        else if (Server.current.notifyIncoming && !autoAccept) {  //Notification
+        else if (Server.current.notifyIncoming && notify) {  //Notification
+            if (ActivityCompat.checkSelfPermission(svc, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
+                return;
             Intent intent = new Intent(svc, TransfersActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("remote", remoteUUID);
             int immutable = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0;
             PendingIntent pendingIntent = PendingIntent.getActivity(svc, svc.notifId, intent, immutable);
             Uri notifSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            Notification notification = new NotificationCompat.Builder(svc, MainService.CHANNEL_INCOMING)
-                    .setContentTitle(svc.getString(R.string.incoming_transfer, MainService.remotes.get(remoteUUID).displayName))
-                    .setContentText(fileCount == 1 ? singleName : svc.getString(R.string.num_files, fileCount))
-                    .setSmallIcon(android.R.drawable.stat_sys_download_done)
+            var notifBuilder = new NotificationCompat.Builder(svc, MainService.CHANNEL_INCOMING)
+                    .setContentTitle(svc.getString(message == null ? R.string.incoming_transfer : R.string.incoming_message, MainService.remotes.get(remoteUUID).displayName))
+                    .setContentText(message != null ? message : (fileCount == 1 ? singleName : svc.getString(R.string.num_files, fileCount)))
+                    .setSmallIcon(message != null ? R.drawable.ic_notification : android.R.drawable.stat_sys_download_done)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setSound(notifSound)
                     .setContentIntent(pendingIntent)
-                    .setAutoCancel(true)
-                    .build();
+                    .setAutoCancel(true);
+            if (message != null) {
+                notifBuilder.setGroup(NOTIFICATION_GROUP_MESSAGE);
+            }
+            Notification notification = notifBuilder.build();
             svc.notificationMgr.notify(svc.notifId++, notification);
         }
-        if (autoAccept) this.startReceive();
     }
 
     void startReceive() {

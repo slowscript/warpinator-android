@@ -129,6 +129,20 @@
             app:tint="?android:attr/textColorSecondary"
             android:contentDescription="@string/retry_button_cnt_des" />
 
+        <ImageButton
+            android:id="@+id/btnCopyMessage"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:background="#00000000"
+            android:contentDescription="@string/copy_button_cnt_des"
+            android:src="?attr/actionModeCopyDrawable"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:tint="?android:attr/textColorSecondary" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

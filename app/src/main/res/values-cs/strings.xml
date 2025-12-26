@@ -27,6 +27,11 @@
     <string name="wrong_subnet">, není ve stejné podsíti</string>
     <string name="errors_during_transfer">Chyby během přenosu:</string>
     <string name="dont_close_when_sharing">Zavření této aktivity během sdílení může způsobit že odesílání selže</string>
+    <string name="enter_message">Vložte zprávu</string>
+    <string name="message_hint">Vaše zpráva</string>
+    <string name="message_copied">Zpráva zkopírována</string>
+    <string name="sent">Odesláno</string>
+    <string name="received">Přijato</string>
     <string name="version">Verze: %1$s</string>
     <string name="about_description">Toto je neoficiální port Warpinatoru. \nPosílejte a přijímejte soubory v místní síti.</string>
     <string name="warranty_html">
@@ -76,6 +81,7 @@
     <string name="transfers_complete">Všechny přenosy byly dokončeny</string>
     <string name="transfer_notification">%1$.1f%%, %2$d přenosů, %3$s/s</string>
     <string name="incoming_transfer">%s posílá soubory</string>
+    <string name="incoming_message">%s posílá zprávu</string>
     <string name="num_files">%d souborů</string>
     <string name="service_running">Služba běží</string>
     <string name="incoming_transfer_channel">Příchozí přenos</string>
@@ -123,6 +129,7 @@
     <string name="accept_button_cnt_des">Přijmout přenos</string>
     <string name="stop_button_cnt_des">Zastavit přenos</string>
     <string name="retry_button_cnt_des">Znovu odeslat</string>
+    <string name="copy_button_cnt_des">Zkopírovat zprávu</string>
     <string name="qr_code_cnt_des">QR kód</string>
     <string name="changed_network">Změna sítě - restartuji službu…</string>
     <string name="stop_svc_when_leaving_summary_on">Služba bude automaticky zastavena po odstranění z nedávných nebo době bez aktivity</string>

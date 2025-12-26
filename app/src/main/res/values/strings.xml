@@ -35,6 +35,11 @@
     <string name="dont_close_when_sharing">Closing this activity while sharing might cause the transfer to fail</string>
     <string name="files_being_sent">Files being sent:</string>
     <string name="send_folder_toast">Select a folder to send</string>
+    <string name="enter_message">Enter your message</string>
+    <string name="message_hint">Your message</string>
+    <string name="message_copied">Message copied</string>
+    <string name="sent">Sent</string>
+    <string name="received">Received</string>
     <!--  About activity  -->
     <string name="version">Version: %1$s</string>
     <string name="about_description">This is an unofficial port of Warpinator. \nSend and receive files across local network.</string>
@@ -94,6 +99,7 @@
     <string name="transfers_complete">All transfers are complete</string>
     <string name="transfer_notification">%1$.1f%%, %2$d transfers, %3$s/s</string>
     <string name="incoming_transfer">Incoming transfer from %s</string>
+    <string name="incoming_message">Message from %s</string>
     <string name="num_files">%d files</string>
     <string name="service_running">Service running</string>
     <string name="notification_channel_description">Persistent service notification</string>
@@ -110,6 +116,7 @@
     <string name="accept_button_cnt_des">Accept the transfer</string>
     <string name="stop_button_cnt_des">Stop the transfer</string>
     <string name="retry_button_cnt_des">Retry the transfer</string>
+    <string name="copy_button_cnt_des">Copy message</string>
     <string name="reset_cnt_des">Reset to default value</string>
     <string name="qr_code_cnt_des">QR code</string>
     <!--  Other  -->
