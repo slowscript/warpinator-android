@@ -8,8 +8,8 @@ android {
         applicationId 'slowscript.warpinator'
         minSdkVersion 21 //Required by NSD (attributes)
         targetSdkVersion 35
-        versionCode 1085
-        versionName "1.8.5"
+        versionCode 1090
+        versionName "1.9"
     }
 
     buildTypes {

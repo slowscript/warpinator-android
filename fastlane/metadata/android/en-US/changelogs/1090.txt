@@ -1,0 +1,6 @@
+- Ability to send and receive text messages
+- Send non-file shared content from other apps as text
+- Option to connect manually, rescan and reannounce also from Share activity
+- Use a temp file for safer overwriting
+- Updated legacy launcher icon bitmaps
+- Fixed missing spacing between remote cards
