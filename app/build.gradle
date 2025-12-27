@@ -28,6 +28,9 @@ android {
         }
     }
     namespace 'slowscript.warpinator'
+    buildFeatures {
+        buildConfig true
+    }
 }
 
 dependencies {

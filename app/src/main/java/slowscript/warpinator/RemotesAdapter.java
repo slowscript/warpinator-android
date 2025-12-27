@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -68,9 +69,9 @@ public class RemotesAdapter extends RecyclerView.Adapter<RemotesAdapter.ViewHold
         holder.imgFav.setVisibility(r.isFavorite() ?  View.VISIBLE : View.INVISIBLE);
 
         holder.cardView.setVisibility(r.errorGroupCode ? View.GONE : View.VISIBLE);
-        if (r.errorGroupCode)
-            holder.cardView.setLayoutParams(new ViewGroup.LayoutParams(0, 0));
-        else holder.cardView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        var layout = holder.cardView.getLayoutParams();
+        layout.height = r.errorGroupCode ? 0 : ViewGroup.LayoutParams.WRAP_CONTENT;
+        holder.cardView.setLayoutParams(layout);
     }
 
     @Override

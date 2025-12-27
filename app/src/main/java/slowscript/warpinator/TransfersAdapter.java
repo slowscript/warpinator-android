@@ -80,7 +80,7 @@ public class TransfersAdapter extends RecyclerView.Adapter<TransfersAdapter.View
                     activity.remote.sendTextMessage(t);
             });
         } else holder.btnRetry.setVisibility(View.INVISIBLE);
-        if ((t.getStatus() == Transfer.Status.FINISHED && t.direction == Transfer.Direction.RECEIVE)) {
+        if (t.message != null && t.getStatus() == Transfer.Status.FINISHED && t.direction == Transfer.Direction.RECEIVE) {
             holder.btnCopy.setVisibility(View.VISIBLE);
             holder.btnCopy.setOnClickListener((v) -> {
                 ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
