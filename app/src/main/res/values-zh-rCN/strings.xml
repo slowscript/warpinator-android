@@ -137,6 +137,12 @@
     <string name="qs_discovered_count">%d 已连接</string>
     <string name="address_copied">地址已复制到剪贴板</string>
     <string name="qr_code_cnt_des">二维码</string>
-    <string name="same_network_hint">设备必须在相同网络上</string>
+    <string name="same_network_hint">设备必须在相同网络上并使用相同的群组码</string>
     <string name="error_no_duplex">其他设备未回连。可能它没看到我们？</string>
+    <string name="network_interface_settings_title">首选的网络接口</string>
+    <string name="network_interface_settings_summary">%s （如不可用将回退到自动）</string>
+    <string name="wrong_subnet">, 不在相同子网上</string>
+    <string name="boot_settings_summary_a15">在 Android 15+ 上不可用</string>
+    <string name="warning">警告</string>
+    <string name="warning_subnet">此设备不在相同子网上。连接到设备可能失败。请检查两台设备的设置，确认 Warpinator 使用的是正确的网络接口。</string>
 </resources>

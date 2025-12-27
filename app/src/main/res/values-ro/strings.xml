@@ -116,7 +116,7 @@
     <string name="compression_settings_title">Folosește comprimarea</string>
     <string name="auth_port_settings_title">Port pentru înscriere</string>
     <string name="devices_outside_group">Aparate din afara grupului tău: %1$d</string>
-    <string name="initiate_connection">Stabilește legătura</string>
+    <string name="initiate_connection">Conexiune nouă</string>
     <string name="manual_connect_text">Scanează codul QR de mai sus cu fotocamera și deschide adresa sau folosește următoarea adresă pentru a stabili legătura din celălalt aparat:</string>
     <string name="manual_connection">Conectare manuală</string>
     <string name="save_log">Salvează jurnalul</string>
@@ -124,4 +124,13 @@
     <string name="qs_discovered_count">%d conectat</string>
     <string name="manual_connect_hint">Încearcă conectarea manuală</string>
     <string name="confirm_connection">Conectezi la „%s”?</string>
+    <string name="address_copied">Adresa a fost copiată</string>
+    <string name="wrong_subnet">, nu în aceeași subrețea</string>
+    <string name="boot_settings_summary_a15">Pornirea automată nu este disponibilă cu Android 15+</string>
+    <string name="network_interface_settings_title">Interfața de rețea preferată</string>
+    <string name="qr_code_cnt_des">Cod QR</string>
+    <string name="same_network_hint">Aparatele trebuie să fie în aceeași rețea și să aibă același cod de grup</string>
+    <string name="error_no_duplex">Celălalt aparat nu s-a reconectat. Poate că nu ne vede?</string>
+    <string name="warning">Atenție</string>
+    <string name="warning_subnet">Acest aparat nu se află în aceeași subrețea. Conectarea la acesta este posibil să nu reușească. Trebuie ca Warpinator să folosească interfața de rețea corectă.</string>
 </resources>

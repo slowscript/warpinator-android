@@ -136,5 +136,12 @@
     <string name="confirm_connection">Se connecter à \"%s\" ?</string>
     <string name="address_copied">Adresse copiée dans le presse-papiers</string>
     <string name="qr_code_cnt_des">Code QR</string>
-    <string name="same_network_hint">Les appareils doivent être sur le même réseau</string>
+    <string name="same_network_hint">Les appareils doivent être sur le même réseau et utiliser le même code de groupe</string>
+    <string name="network_interface_settings_title">Interface réseau préférée</string>
+    <string name="network_interface_settings_summary">%s (revient en automatique si indisponible)</string>
+    <string name="error_no_duplex">L\'autre appareil n\'a pas établi de connexion. Peut-être ne nous voit-il pas ?</string>
+    <string name="wrong_subnet">, pas sur le même sous-réseau</string>
+    <string name="boot_settings_summary_a15">Le démarrage automatique n\'est pas disponible sur Android 15+</string>
+    <string name="warning">Avertissement</string>
+    <string name="warning_subnet">Cet appareil n\'est pas sur le même sous-réseau. La connexion risque d\'échouer. Veuillez vérifier que Warpinator utilise l\'interface réseau correcte dans les réglages des deux appareils.</string>
 </resources>

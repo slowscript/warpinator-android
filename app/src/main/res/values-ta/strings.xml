@@ -104,6 +104,13 @@
     <string name="manual_connect_hint">பட்டியலில் கையேடு இணைப்பை முயற்சிக்கவும்</string>
     <string name="qs_discovered_count">%d இணைக்கப்பட்டுள்ளது</string>
     <string name="address_copied">முகவரி இடைநிலைப்பலகைக்கு நகலெடுக்கப்பட்டது</string>
-    <string name="same_network_hint">சாதனங்கள் ஒரே பிணையத்தில் இருக்க வேண்டும்</string>
+    <string name="same_network_hint">சாதனங்கள் ஒரே பிணையத்தில் இருக்க வேண்டும் மற்றும் அதே குழு குறியீட்டைப் பயன்படுத்தவும்</string>
     <string name="qr_code_cnt_des">விப குறியீடு</string>
+    <string name="wrong_subnet">, ஒரே சப்நெட்டில் இல்லை</string>
+    <string name="boot_settings_summary_a15">ஆண்ட்ராய்ட் 15+ இல் தானியங்கு தொடக்கம் கிடைக்கவில்லை</string>
+    <string name="network_interface_settings_title">விருப்பமான நெட்வொர்க் இடைமுகம்</string>
+    <string name="network_interface_settings_summary">%s (கிடைக்கவில்லை என்றால் தானியங்கு நிலைக்குத் திரும்புகிறது)</string>
+    <string name="error_no_duplex">மற்ற சாதனம் மீண்டும் இணைக்கப்படவில்லை. ஒருவேளை அது நம்மைப் பார்க்காமல் இருக்கலாம்?</string>
+    <string name="warning">முன்னறிவிப்பு</string>
+    <string name="warning_subnet">இந்த சாதனம் ஒரே துணை வலையில் இல்லை. அதனுடன் இணைப்பது தோல்வியடைய வாய்ப்புள்ளது. Warpinator சரியான நெட்வொர்க் இடைமுகத்தைப் பயன்படுத்துகிறதா என்பதை இரண்டு சாதனங்களின் அமைப்புகளையும் சரிபார்க்கவும்.</string>
 </resources>

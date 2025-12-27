@@ -127,7 +127,7 @@
     <string name="auth_port_settings_title">Priključak za registraciju</string>
     <string name="devices_outside_group">Uređaji izvan vaše grupe: %1$d</string>
     <string name="compression_settings_title">Pokušaj koristiti komprimiranje</string>
-    <string name="initiate_connection">Pokreni povezivanje</string>
+    <string name="initiate_connection">Nova veza</string>
     <string name="manual_connect_text">Skeniraj gornji QR kod pomoću aplikacije kamere i otvori poveznicu ili koristi sljedeću adresu za pokretanje veze s drugog uređaja:</string>
     <string name="manual_connection">Ručno povezivanje</string>
     <string name="save_log">Spremi dnevnik radnji</string>
@@ -135,4 +135,14 @@
     <string name="manual_connect_hint">Pokušajte ručno povezivanje u izborniku</string>
     <string name="confirm_connection">Povezati se na \'%s\'?</string>
     <string name="qs_discovered_count">Povezano: %d</string>
+    <string name="address_copied">Adresa kopirana u međuspremnik</string>
+    <string name="wrong_subnet">, nije na istoj podmreži</string>
+    <string name="boot_settings_summary_a15">Automatsko pokretanje nije dostupno na Androidu 15+</string>
+    <string name="network_interface_settings_title">Preferirano mrežno sučelje</string>
+    <string name="network_interface_settings_summary">%s (vraća se na automatski način ako nije dostupno)</string>
+    <string name="qr_code_cnt_des">QR kod</string>
+    <string name="same_network_hint">Uređaji moraju biti na istoj mreži i koristiti isti grupni kod</string>
+    <string name="error_no_duplex">Drugi uređaj se nije ponovo povezao. Možda nas ne vidi?</string>
+    <string name="warning">Upozorenje</string>
+    <string name="warning_subnet">Ovaj uređaj nije na istoj podmreži. Povezivanje s njim vjerojatno neće uspjeti. Provjeri u postavkama oba uređaja je li Warpinator koristi ispravno mrežno sučelje.</string>
 </resources>

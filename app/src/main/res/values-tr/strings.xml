@@ -137,5 +137,12 @@
     <string name="qs_discovered_count">%d bağlandı</string>
     <string name="address_copied">Adres panoya kopyalandı</string>
     <string name="qr_code_cnt_des">QR kod</string>
-    <string name="same_network_hint">Cihazların aynı ağ üzerinde olmaları gerekir</string>
+    <string name="same_network_hint">Aygıtlar aynı ağda olmalı ve aynı grup kodunu kullanmalıdır</string>
+    <string name="wrong_subnet">, aynı alt ağda değil</string>
+    <string name="boot_settings_summary_a15">Android 15 ve üstünde otomatik başlatma kullanılamıyor</string>
+    <string name="network_interface_settings_title">Tercih edilen ağ arayüzü</string>
+    <string name="network_interface_settings_summary">%s ( yoksa otomatik seçeneği kullanılır)</string>
+    <string name="error_no_duplex">Diğer aygıt geri bağlanmadı. Belki bizi görmüyordur?</string>
+    <string name="warning">Uyarı</string>
+    <string name="warning_subnet">Bu aygıt aynı alt ağda değil. Bağlantı kurulamayabilir. Lütfen her iki aygıtın ayarlarında Warpinator\'ın doğru ağ arayüzünü kullandığını doğrulayın.</string>
 </resources>

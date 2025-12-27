@@ -137,5 +137,8 @@
     <string name="confirm_connection">Mit »%s« verbinden?</string>
     <string name="address_copied">Adresse in die Zwischenablage kopiert</string>
     <string name="qr_code_cnt_des">QR-Code</string>
-    <string name="same_network_hint">Geräte müssen sich im selben Netzwerk befinden</string>
+    <string name="same_network_hint">Die Geräte müssen sich im selben Netzwerk befinden und denselben Gruppencode verwenden</string>
+    <string name="warning">Warnung</string>
+    <string name="network_interface_settings_title">Bevorzugte Netzwerkschnittstelle</string>
+    <string name="wrong_subnet">, nicht im gleichen Subnetz</string>
 </resources>

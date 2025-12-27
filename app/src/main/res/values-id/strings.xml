@@ -25,11 +25,7 @@
     <!--  About activity  -->
     <string name="version">Versi: %1$s</string>
     <string name="about_description">Ini adalah port tidak resmi dari Warpinator. \nKirim dan terima berkas melintasi jaringan lokal .</string>
-    <string name="warranty_html">
-        Program ini merupakan perangkat lunak open source dilisensikan di bawah &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;GNU General Public License&lt;/a&gt;.&lt;br&gt;
-        Anda dapat mendapatkan kode sumbernya dari &lt;a href="https://github.com/slowscript/warpinator-android/"&gt;GitHub&lt;/a&gt;.&lt;br&gt;
-        &lt;br&gt;
-        Program ini dihadirkan tanpa garansi sama sekali.&lt;br&gt;Lihat ketentuan lisensinya untuk keterangan lebih rinci.</string>
+    <string name="warranty_html">Program ini merupakan perangkat lunak open source dilisensikan di bawah &lt;a href=\"https://www.gnu.org/licenses/gpl-3.0.html\"&gt;GNU General Public License&lt;/a&gt;.&lt;br&gt; Anda dapat mendapatkan kode sumbernya dari &lt;a href=\"https://github.com/slowscript/warpinator-android/\"&gt;GitHub&lt;/a&gt;.&lt;br&gt; &lt;br&gt; Program ini dihadirkan tanpa garansi sama sekali.&lt;br&gt;Lihat ketentuan lisensinya untuk keterangan lebih rinci.</string>
     <!--  Share activity  -->
     <string name="devices_to_share_with">Perangkat untuk berbagi</string>
     <string name="no_share_devices">Tidak ada perangkat yang dapat digunakan untuk berbagi</string>
@@ -130,4 +126,22 @@
     <string name="warning_lastmod">Lokasi non-default tidak mendukung penyimpanan timestamps yang terakhir dimodifikasi. Anda dapat kembali ke default dengan tombol reset.</string>
     <string name="reset_cnt_des">Atur ulang ke nilai default</string>
     <string name="clear_transfers">Hapus transfer yang sudah selesai</string>
+    <string name="manual_connection">Koneksi manual</string>
+    <string name="save_log">Simpan log</string>
+    <string name="address_copied">Alamat disalin ke papan klip</string>
+    <string name="boot_settings_summary_a15">Pemulaian otomatis tidak tersedia di Android 15+</string>
+    <string name="network_interface_settings_title">Antarmuka jaringan yang disukai</string>
+    <string name="network_interface_settings_summary">%s (akan kembali ke otomatis jika tidak tersedia)</string>
+    <string name="qr_code_cnt_des">Kode QR</string>
+    <string name="manual_connect_text">Pindai kode QR di atas dengan aplikasi kamera dan buka tautan atau gunakan alamat berikut untuk memulai koneksi dari perangkat lain:</string>
+    <string name="initiate_connection">Koneksi baru</string>
+    <string name="enter_address">Masukkan alamat dan port</string>
+    <string name="same_network_hint">Perangkat harus berada di jaringan yang sama dan menggunakan kode grup yang sama</string>
+    <string name="manual_connect_hint">Coba Koneksi manual di menu</string>
+    <string name="confirm_connection">Sambungkan ke \'%s\'?</string>
+    <string name="qs_discovered_count">%d tersambung</string>
+    <string name="error_no_duplex">Perangkat lain tidak menyambung kembali. Mungkin perangkat tersebut tidak melihat kita?</string>
+    <string name="warning">Peringatan</string>
+    <string name="warning_subnet">Perangkat ini tidak berada pada subnet yang sama. Koneksi ke perangkat ini kemungkinan akan gagal. Harap periksa di pengaturan kedua perangkat bahwa Warpinator menggunakan antarmuka jaringan yang benar.</string>
+    <string name="wrong_subnet">, tidak berada pada subnet yang sama</string>
 </resources>

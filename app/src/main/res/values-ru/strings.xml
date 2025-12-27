@@ -136,4 +136,7 @@
     <string name="manual_connect_hint">Попробуйте ручное подключение в меню</string>
     <string name="confirm_connection">Подключиться к \'%s\'?</string>
     <string name="qs_discovered_count">%d подключен</string>
+    <string name="network_interface_settings_title">Предпочтительный сетевой интерфейс</string>
+    <string name="network_interface_settings_summary">%s (переходит на автоматический режим, если недоступно)</string>
+    <string name="error_no_duplex">Другое устройство не подключилось. Может быть, оно нас не видит?</string>
 </resources>

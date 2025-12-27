@@ -137,6 +137,12 @@ Uruchom ponownie aplikację po połączeniu.</string>
     <string name="manual_connect_hint">Wypróbuj połączenie ręczne w menu</string>
     <string name="address_copied">Adres skopiowano do schowka</string>
     <string name="qr_code_cnt_des">Kod QR</string>
-    <string name="same_network_hint">Urządzenia muszą znajdować się w tej samej sieci</string>
+    <string name="same_network_hint">Urządzenia muszą znajdować się w tej samej sieci i używać tego samego kodu grupy</string>
     <string name="error_no_duplex">Inne urządzenie nie nawiązało połączenia. Może nas nie widzi?</string>
+    <string name="network_interface_settings_title">Preferowany interfejs sieciowy</string>
+    <string name="network_interface_settings_summary">%s (wraca do trybu automatycznego, jeśli niedostępny)</string>
+    <string name="boot_settings_summary_a15">Autostart niedostępny w systemie Android 15 i nowszych</string>
+    <string name="wrong_subnet">, nie w tej samej podsieci</string>
+    <string name="warning">Uwaga</string>
+    <string name="warning_subnet">To urządzenie nie znajduje się w tej samej podsieci. Połączenie z nim prawdopodobnie się nie powiedzie. Sprawdź w ustawieniach obu urządzeń, czy Warpinator korzysta z prawidłowego interfejsu sieciowego.</string>
 </resources>
