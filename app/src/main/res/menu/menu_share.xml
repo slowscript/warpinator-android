@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/manual_connect"
+        android:title="@string/manual_connection"/>
+    <item android:id="@+id/reannounce"
+        android:title="@string/reannounce" />
+    <item android:id="@+id/rescan"
+        android:title="@string/rescan" />
+</menu>

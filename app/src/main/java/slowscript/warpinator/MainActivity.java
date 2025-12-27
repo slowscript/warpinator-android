@@ -181,41 +181,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         if (itemID == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         } else if (itemID == R.id.manual_connect) {
-            if (Server.current == null || !Server.current.running) {
-                Toast.makeText(this, "Service is not running", Toast.LENGTH_LONG).show();
-                return true;
-            }
-            LayoutInflater inflater = LayoutInflater.from(this);
-            View v = inflater.inflate(R.layout.dialog_manual_connect, null);
-            AlertDialog dialog = new MaterialAlertDialogBuilder(this).setView(v)
-                    .setPositiveButton(R.string.initiate_connection, (o,w) -> initiateConnection())
-                    .setNeutralButton(android.R.string.cancel, null)
-                    .create();
-            String host = MainService.svc.getCurrentIPStr() + ":" + Server.current.authPort;
-            String uri = "warpinator://"+host;
-            View.OnClickListener copyListener = (s) -> {
-                ClipData clip = ClipData.newPlainText("Device address", uri);
-                ((ClipboardManager)getSystemService(CLIPBOARD_SERVICE)).setPrimaryClip(clip);
-                Toast.makeText(this, R.string.address_copied, Toast.LENGTH_SHORT).show();
-            };
-            var txtHost = ((TextView)v.findViewById(R.id.txtHost));
-            txtHost.setText(host);
-            txtHost.setOnClickListener(copyListener);
-            var imgQR = ((ImageView)v.findViewById(R.id.imgQR));
-            imgQR.setImageBitmap(Utils.getQRCodeBitmap(uri));
-            imgQR.setOnClickListener(copyListener);
-            var linearLayout = (LinearLayout)v.findViewById(R.id.dialogManualConnect);
-            for (int i = 0; i < Math.min(Server.current.recentRemotes.size(), 5); i++) {
-                var itm = inflater.inflate(R.layout.simple_list_item, linearLayout, false);
-                String txt = Server.current.recentRemotes.get(i);
-                ((TextView)itm).setText(txt);
-                itm.setOnClickListener((w) -> {
-                    Server.current.registerWithHost(txt.split(" \\| ")[0]);
-                    dialog.cancel();
-                });
-                linearLayout.addView(itm);
-            }
-            dialog.show();
+            manualConnectDialog(this);
         } else if (itemID == R.id.conn_issues) {
             Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl));
             startActivity(helpIntent);
@@ -245,13 +211,51 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         return true;
     }
 
-    void initiateConnection() {
-        FrameLayout layout = new FrameLayout(this);
+    static void manualConnectDialog(Context c) {
+        if (Server.current == null || !Server.current.running) {
+            Toast.makeText(c, "Service is not running", Toast.LENGTH_LONG).show();
+            return;
+        }
+        LayoutInflater inflater = LayoutInflater.from(c);
+        View v = inflater.inflate(R.layout.dialog_manual_connect, null);
+        AlertDialog dialog = new MaterialAlertDialogBuilder(c).setView(v)
+                .setPositiveButton(R.string.initiate_connection, (o,w) -> initiateConnection(c))
+                .setNeutralButton(android.R.string.cancel, null)
+                .create();
+        String host = MainService.svc.getCurrentIPStr() + ":" + Server.current.authPort;
+        String uri = "warpinator://"+host;
+        View.OnClickListener copyListener = (s) -> {
+            ClipData clip = ClipData.newPlainText("Device address", uri);
+            ((ClipboardManager)c.getSystemService(CLIPBOARD_SERVICE)).setPrimaryClip(clip);
+            Toast.makeText(c, R.string.address_copied, Toast.LENGTH_SHORT).show();
+        };
+        var txtHost = ((TextView)v.findViewById(R.id.txtHost));
+        txtHost.setText(host);
+        txtHost.setOnClickListener(copyListener);
+        var imgQR = ((ImageView)v.findViewById(R.id.imgQR));
+        imgQR.setImageBitmap(Utils.getQRCodeBitmap(uri));
+        imgQR.setOnClickListener(copyListener);
+        var linearLayout = (LinearLayout)v.findViewById(R.id.dialogManualConnect);
+        for (int i = 0; i < Math.min(Server.current.recentRemotes.size(), 5); i++) {
+            var itm = inflater.inflate(R.layout.simple_list_item, linearLayout, false);
+            String txt = Server.current.recentRemotes.get(i);
+            ((TextView)itm).setText(txt);
+            itm.setOnClickListener((w) -> {
+                Server.current.registerWithHost(txt.split(" \\| ")[0]);
+                dialog.cancel();
+            });
+            linearLayout.addView(itm);
+        }
+        dialog.show();
+    }
+
+    static void initiateConnection(Context c) {
+        FrameLayout layout = new FrameLayout(c);
         layout.setPadding(16,16,16,16);
-        AutoCompleteTextView editText = getIPAutoCompleteTextView();
+        AutoCompleteTextView editText = getIPAutoCompleteTextView(c);
         layout.addView(editText);
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(getString(R.string.enter_address))
+        new MaterialAlertDialogBuilder(c)
+                .setTitle(c.getString(R.string.enter_address))
                 .setView(layout)
                 .setPositiveButton(android.R.string.ok, (a,b)->{
                     String host = editText.getText().toString();
@@ -262,15 +266,15 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     }
 
     @NonNull
-    private AutoCompleteTextView getIPAutoCompleteTextView() {
-        AutoCompleteTextView editText = new AutoCompleteTextView(this);
+    private static AutoCompleteTextView getIPAutoCompleteTextView(Context c) {
+        AutoCompleteTextView editText = new AutoCompleteTextView(c);
         editText.setSingleLine();
         editText.setHint("0.0.0.0:1234");
         editText.setThreshold(1);
         var remoteIPs = new ArrayList<String>(Server.current.recentRemotes.size());
         for (var r : Server.current.recentRemotes)
             remoteIPs.add(r.split(" \\| ")[0]);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(c,
                 android.R.layout.simple_list_item_1, remoteIPs);
         editText.setAdapter(adapter);
         return editText;

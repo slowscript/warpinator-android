@@ -11,6 +11,9 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -200,6 +203,32 @@ public class ShareActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_share, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemID = item.getItemId();
+        if (itemID == R.id.manual_connect) {
+            MainActivity.manualConnectDialog(this);
+        } else if (itemID == R.id.reannounce) {
+            if (Server.current != null && Server.current.running)
+                Server.current.reannounce();
+            else Toast.makeText(this, R.string.error_service_not_running, Toast.LENGTH_SHORT).show();
+        } else if (itemID == R.id.rescan) {
+            if (Server.current != null)
+                Server.current.rescan();
+            else Toast.makeText(this, R.string.error_service_not_running, Toast.LENGTH_SHORT).show();
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 
     private BroadcastReceiver newBroadcastReceiver() {
