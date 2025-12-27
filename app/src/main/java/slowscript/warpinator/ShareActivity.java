@@ -8,9 +8,11 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,9 +34,10 @@ public class ShareActivity extends AppCompatActivity {
     static final String TAG = "Share";
 
     RecyclerView recyclerView;
-    LinearLayout layoutNotFound;
+    LinearLayout layoutNotFound, layoutMessage;
     RemotesAdapter adapter;
     TextView txtError, txtNoNetwork, txtSharing;
+    EditText editMessage;
     BroadcastReceiver receiver;
 
     @Override
@@ -46,32 +49,41 @@ public class ShareActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle(R.string.title_activity_share);
         Utils.setToolbarInsets(toolbar);
-        Utils.setContentInsets(findViewById(R.id.layout));
+        Utils.setContentInsets(findViewById(R.id.layout), true);
         receiver = newBroadcastReceiver();
 
         //Get uris to send
         Intent intent = getIntent();
         ArrayList<Uri> uris;
+        String message = null;
         if(Intent.ACTION_SEND.equals(intent.getAction())) {
+            Log.d(TAG, String.valueOf(intent));
             uris = new ArrayList<>();
             Uri u = intent.getParcelableExtra(Intent.EXTRA_STREAM);
             if (u != null)
                 uris.add(u);
+            else
+                message = intent.getStringExtra(Intent.EXTRA_TEXT);
         } else if (Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction())) {
             uris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
         } else {
+            Log.w(TAG, "Received unsupported intent: " + intent.getAction());
             Toast.makeText(this, R.string.unsupported_intent, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
 
-        if (uris == null || uris.isEmpty()) {
+        if (message == null && (uris == null || uris.isEmpty())) {
             Log.d(TAG, "Nothing to share");
             Toast.makeText(this, R.string.nothing_to_share, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
-        Log.d(TAG, "Sharing " + uris.size() + " files");
+        boolean isTextMessage = message != null;
+        if (isTextMessage)
+            Log.d(TAG, "Sharing a text message - l" + message.length());
+        else
+            Log.d(TAG, "Sharing " + uris.size() + " files");
         for (Uri u : uris) {
             Log.v(TAG, u.toString());
             try { // This doesn't seem to work most of the time, we need a better solution
@@ -88,6 +100,7 @@ public class ShareActivity extends AppCompatActivity {
         //Set up UI
         recyclerView = findViewById(R.id.recyclerView);
         layoutNotFound = findViewById(R.id.layoutNotFound);
+        layoutMessage = findViewById(R.id.messageLayout);
         txtError = findViewById(R.id.txtError);
         txtNoNetwork = findViewById(R.id.txtNoNetwork);
         txtSharing = findViewById(R.id.txtSharing);
@@ -100,7 +113,16 @@ public class ShareActivity extends AppCompatActivity {
                 break;
             }
         }
-        txtSharing.setText(sharedFilesList);
+        editMessage = findViewById(R.id.editMessage);
+        if (isTextMessage) {
+            txtSharing.setVisibility(View.INVISIBLE);
+            layoutMessage.setVisibility(View.VISIBLE);
+            editMessage.setText(message);
+        } else {
+            txtSharing.setVisibility(View.VISIBLE);
+            layoutMessage.setVisibility(View.INVISIBLE);
+            txtSharing.setText(sharedFilesList);
+        }
         adapter = new RemotesAdapter(this) {
             boolean sent = false;
             @Override
@@ -117,11 +139,20 @@ public class ShareActivity extends AppCompatActivity {
                     t.remoteUUID = remote.uuid;
 
                     remote.addTransfer(t);
-                    t.setStatus(Transfer.Status.INITIALIZING);
-                    new Thread(()->{
-                        t.prepareSend(false);
-                        remote.startSendTransfer(t);
-                    }).start();
+                    if (!isTextMessage) {
+                        t.setStatus(Transfer.Status.INITIALIZING);
+                        new Thread(() -> {
+                            t.prepareSend(false);
+                            remote.startSendTransfer(t);
+                        }).start();
+                    } else {
+                        t.direction = Transfer.Direction.SEND;
+                        t.message = editMessage.getText().toString();
+                        t.startTime = System.currentTimeMillis();
+                        t.setStatus(Transfer.Status.TRANSFERRING);
+                        remote.sendTextMessage(t);
+                    }
+
                     Intent i = new Intent(app, TransfersActivity.class);
                     i.putExtra("remote", remote.uuid);
                     i.putExtra("shareMode", true);

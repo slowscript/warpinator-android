@@ -41,6 +41,8 @@
         Tento program je šířen bez jakékoliv záruky.&lt;br&gt;Více informací naleznete v podmínkách licence.</string>
     <string name="devices_to_share_with">Dostupná zařízení</string>
     <string name="nothing_to_share">Neobdrželi jsme nic ke sdílení</string>
+    <string name="edit_message_before_sending">Upravte zprávu před odesláním:</string>
+    <!--  Setting  -->
     <string name="identity_settings_category">Identita</string>
     <string name="transfer_setting_category">Přenos</string>
     <string name="network_setting_category">Síť</string>

@@ -301,8 +301,13 @@ public class Utils {
     }
 
     static void setContentInsets(View content) {
+        setContentInsets(content, false);
+    }
+    static void setContentInsets(View content, boolean handleIme) {
         ViewCompat.setOnApplyWindowInsetsListener(content, (v, i) -> {
-            Insets insets = i.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+            var insetTypes = WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout();
+            if (handleIme) insetTypes |= WindowInsetsCompat.Type.ime();
+            Insets insets = i.getInsets(insetTypes);
             v.setPadding(insets.left, 0, insets.right, insets.bottom);
             return WindowInsetsCompat.CONSUMED;
         });
