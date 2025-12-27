@@ -24,9 +24,12 @@ import com.google.protobuf.ByteString;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLConnection;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -53,6 +56,7 @@ public class Transfer {
     private static final int CHUNK_SIZE = 1024 * 512; //512 kB
     private static final long UI_UPDATE_LIMIT = 250;
     private static final String NOTIFICATION_GROUP_MESSAGE = "slowscript.warpinator.MESSAGE_NOTIFICATION";
+    private static final String TMP_FILE_SUFFIX = ".warpinatortmp";
 
     private final AtomicReference<Status> status = new AtomicReference<>();
     public Direction direction;
@@ -81,6 +85,7 @@ public class Transfer {
     Uri currentUri;
     File currentFile;
     private OutputStream currentStream;
+    private boolean safeOverwriteFlag = false;
     public final ArrayList<String> errors = new ArrayList<>();
     private boolean cancelled = false;
     public long bytesTransferred;
@@ -423,6 +428,7 @@ public class Transfer {
                 setLastModified();
                 currentLastMod = -1;
             }
+            finishSafeOverwrite();
             //Begin new file
             currentRelativePath = chunk.getRelativePath();
             if ("".equals(Server.current.downloadDirUri)) {
@@ -488,9 +494,29 @@ public class Transfer {
         closeStream();
         if (currentLastMod > 0)
             setLastModified();
+        finishSafeOverwrite();
         if (!Server.current.downloadDirUri.startsWith("content:"))
             MediaScannerConnection.scanFile(svc, recvdPaths.toArray(new String[0]), null, null);
         updateUI();
+    }
+
+    private void finishSafeOverwrite() {
+        if (safeOverwriteFlag) {
+            safeOverwriteFlag = false;
+            String p = currentFile.getPath();
+            assert p.endsWith(TMP_FILE_SUFFIX);
+            String dst = p.substring(0, p.length()-TMP_FILE_SUFFIX.length());
+            Log.d(TAG, "Renaming tempfile to " + dst);
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                    java.nio.file.Files.move(currentFile.toPath(), Paths.get(dst), StandardCopyOption.ATOMIC_MOVE);
+                else if (!currentFile.renameTo(new File(dst)))
+                    throw new IOException("Could not rename temp file to target name");
+            } catch (IOException e) {
+                Log.e(TAG, "Could not replace target file with temp file", e);
+                errors.add("Failed to overwrite " + currentRelativePath);
+            }
+        }
     }
 
     private void stopReceiving() {
@@ -547,8 +573,9 @@ public class Transfer {
     private File handleFileExists(File f) {
         Log.d(TAG, "File exists: " + f.getAbsolutePath());
         if(Server.current.allowOverwrite) {
-            Log.v(TAG, "Overwriting");
-            f.delete();
+            f = new File(f.getParentFile(), f.getName() + TMP_FILE_SUFFIX);
+            Log.v(TAG, "Writing to temp file " + f);
+            safeOverwriteFlag = true;
         } else {
             String name = f.getParent() + "/" + Files.getNameWithoutExtension(f.getAbsolutePath());
             String ext = Files.getFileExtension(f.getAbsolutePath());
@@ -651,7 +678,8 @@ public class Transfer {
             }
             if (!validateFile(currentFile))
                 throw new IllegalArgumentException("The file name leads to a file outside download dir");
-            recvdPaths.add(currentFile.getAbsolutePath());
+            if (!safeOverwriteFlag)
+                recvdPaths.add(currentFile.getAbsolutePath());
             return new FileOutputStream(currentFile, false);
         }
     }
