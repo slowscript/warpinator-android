@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -77,6 +78,7 @@ public class TransfersActivity extends AppCompatActivity {
         }
         remote = MainService.remotes.get(id);
         receiver = newBroadcastReceiver();
+        getOnBackPressedDispatcher().addCallback(this, backCallback);
 
         recyclerView = findViewById(R.id.recyclerView2);
         adapter = new TransfersAdapter(this);
@@ -162,17 +164,21 @@ public class TransfersActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 
-    @Override
-    public void onBackPressed(){
-        if (shareMode) {
-            if (transferInProgress())
-                Toast.makeText(this, R.string.dont_close_when_sharing, Toast.LENGTH_LONG).show();
-            else finishAffinity(); //Close everything incl. ShareActivity
-        } else {
-            super.onBackPressed();
-            TransfersActivity.this.overridePendingTransition(R.anim.anim_null, R.anim.anim_push_down);
+    // onBackPressed() is not called when targeting Android 16 (API 36) with predictive back,
+    // so Back is handled by a callback instead
+    private final OnBackPressedCallback backCallback = new OnBackPressedCallback(true) {
+        @Override
+        public void handleOnBackPressed() {
+            if (shareMode) {
+                if (transferInProgress())
+                    Toast.makeText(TransfersActivity.this, R.string.dont_close_when_sharing, Toast.LENGTH_LONG).show();
+                else finishAffinity(); //Close everything incl. ShareActivity
+            } else {
+                finish();
+                overridePendingTransition(R.anim.anim_null, R.anim.anim_push_down);
+            }
         }
-    }
+    };
 
     private BroadcastReceiver newBroadcastReceiver() {
         Context ctx = this;
